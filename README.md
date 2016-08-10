@@ -1,2 +1,2 @@
 # Swift-Kuery
-SQL abstraction layer
+SQL database abstraction layer
