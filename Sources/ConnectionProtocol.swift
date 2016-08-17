@@ -23,12 +23,9 @@ public typealias ValueType = AnyValue
 public typealias ValueType = Any
 #endif
 
-public struct ConnectionOptions {
+public protocol Connection {
+    
+    func execute(query: Query, onCompletion: ((QueryResult) -> ()))
+    func execute(query: Query, parameters: ValueType..., onCompletion: ((QueryResult) -> ()))
 }
 
-public protocol Connection {
-    var conectionOptions : ConnectionOptions {get}
-    
-    func execute(query: Query, onCompletion: (QueryResult))
-    func execute(query: Query, parameters: ValueType..., onCompletion: (QueryResult))
-}

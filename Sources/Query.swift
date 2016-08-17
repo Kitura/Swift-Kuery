@@ -39,7 +39,7 @@ public protocol Query {
 
 extension Query {
     
-    public func execute() {
-        
+    public func execute(_ connection: Connection, onCompletion: ((QueryResult) -> ())) {
+        connection.execute(query: self, onCompletion: onCompletion)
     }
 }
