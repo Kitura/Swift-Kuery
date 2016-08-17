@@ -159,7 +159,7 @@ public func convert(_ item: ValueType) -> String {
 
 
 public func == (lhs: Field, rhs: ValueType) -> Where {
-    return Where("\(lhs.description) == \(convert(rhs))")
+    return Where("\(lhs.description)=\(convert(rhs))")
 }
 
 public func || (lhs: Where, rhs: Where) -> Where {

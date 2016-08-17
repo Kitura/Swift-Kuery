@@ -18,7 +18,7 @@
 import Foundation
 
 public struct Delete: Query {
-
+    
     public var table: String
     private var whereClause: Where?
     

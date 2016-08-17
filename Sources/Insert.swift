@@ -47,9 +47,9 @@ public struct Insert : Query {
     public var description : String {
         var result =  "INSERT INTO \(table) "
         if let columns = columns, columns.count != 0 {
-                result += "( \(columns.map { $0.description }.joined(separator: ", ")) )"
+            result += "( \(columns.map { $0.description }.joined(separator: ", ")) )"
         }
-        result += "VALUES ( \(values.map { packType($0) }.joined(separator: ", ")) )"
+        result += "VALUES ( \(values.map { packType($0) }.joined(separator: ", ")) );"
         
         return result
     }

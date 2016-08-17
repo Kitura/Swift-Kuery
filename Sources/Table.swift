@@ -18,20 +18,26 @@
 import Foundation
 
 public protocol Table {
-    var name : String { get }
+    static var name : String { get }
 }
 
 extension Table {
-    public func select(_ fields: Field...) -> Select {
+    public static func select(_ fields: Field...) -> Select {
         return Select(fields: fields, from: self.name)
     }
-    public func delete() -> Delete {
+    public static func delete() -> Delete {
         return Delete(table: self.name)
     }
-    public func update(values: [Field: Any]) -> Update {
-        return Update(values: values, table: self.name)
+    public static func update(values: [Field: Any], cond: Where) -> Update {
+        return Update(values: values, conditions: cond, table: self.name)
     }
-    public func insert(values: [Field: Any]) -> Insert {
+    public static func insert(values: [Field: Any]) -> Insert {
         return Insert(into: self.name, columns: [Field](values.keys), values: [Any](values.values))
+    }
+    public static func truncate() -> Raw {
+        return Raw(query: "TRUNCATE \(self.name)")
+    }
+    public static func drop() -> Raw {
+        return Raw(query: "DROP TABLE \(Self.tableName)")
     }
 }

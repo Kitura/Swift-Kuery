@@ -14,27 +14,23 @@
  limitations under the License.
  */
 
-
 import Foundation
 
-public struct Update: Query {
-    public var table: String
+public struct Raw: Query {
     
-    private var whereClause: Where
-    private let values: [Field: Any]
+    public var query: String
+    
+    public var table: String = ""
     
     public var description: String {
-        let vals = values.map {key, value in "\(key.name) = \(packType(value))" }.joined(separator: ", ")
-        return "UPDATE \(table) SET \(vals) WHERE \(whereClause.predicate);"
+        return query
     }
     
     public func build() -> String {
         return description
     }
     
-    public init(values: [Field: Any], conditions: Where, table: String) {
-        self.table = table
-        self.values = values
-        self.whereClause = conditions
+    public init(query: String) {
+        self.query = query
     }
 }
