@@ -32,7 +32,7 @@ public struct Select : Query {
         self.table = table
     }
     
-    public init(_ fields: [Field], from table: String){
+    public init(fields: [Field], from table: String){
         self.fields = fields
         self.table = table
     }

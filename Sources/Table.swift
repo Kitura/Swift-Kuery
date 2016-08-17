@@ -23,7 +23,7 @@ public protocol Table {
 
 extension Table {
     public func select(_ fields: Field...) -> Select {
-        return Select(fields, from: self.name)
+        return Select(fields: fields, from: self.name)
     }
     public func delete() -> Delete {
         return Delete(table: self.name)
