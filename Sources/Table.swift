@@ -38,6 +38,6 @@ extension Table {
         return Raw(query: "TRUNCATE \(self.name)")
     }
     public static func drop() -> Raw {
-        return Raw(query: "DROP TABLE \(Self.tableName)")
+        return Raw(query: "DROP TABLE \(self.name)")
     }
 }
