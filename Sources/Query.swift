@@ -60,7 +60,7 @@ public protocol Query {
 
 extension Query {
     
-    public func execute(_ connection: Connection, onCompletion: ((QueryResult) -> ())) {
+    public func execute(_ connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
         connection.execute(query: self, onCompletion: onCompletion)
     }
 }

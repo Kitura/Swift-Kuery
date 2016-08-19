@@ -25,7 +25,7 @@ public typealias ValueType = Any
 
 public protocol Connection {
     
-    func execute(query: Query, onCompletion: ((QueryResult) -> ()))
-    func execute(query: Query, parameters: ValueType..., onCompletion: ((QueryResult) -> ()))
+    func execute(query: Query, onCompletion: @escaping ((QueryResult) -> ()))
+    func execute(query: Query, parameters: ValueType..., onCompletion: @escaping ((QueryResult) -> ()))
 }
 
