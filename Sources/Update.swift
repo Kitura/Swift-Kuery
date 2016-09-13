@@ -1,0 +1,40 @@
+/**
+ Copyright IBM Corporation 2016
+ 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+
+import Foundation
+
+public struct Update: Query {
+    public var table: String
+    
+    private var whereClause: Where
+    private let values: [Field: Any]
+    
+    public var description: String {
+        let vals = values.map {key, value in "\(key.name) = \(packType(value))" }.joined(separator: ", ")
+        return "UPDATE \(table) SET \(vals) WHERE \(whereClause.predicate);"
+    }
+    
+    public func build() -> String {
+        return description
+    }
+    
+    public init(values: [Field: Any], conditions: Where, table: String) {
+        self.table = table
+        self.values = values
+        self.whereClause = conditions
+    }
+}
