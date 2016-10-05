@@ -17,27 +17,52 @@
 
 import Foundation
 
-public protocol Table {
-    static var name : String { get }
+public protocol Table  {
+    var name: String { get set }
+    
+//    var rename: String? { get set }
+    
+    func build(queryBuilder: QueryBuilder) -> String
 }
 
-extension Table {
-    public static func select(_ fields: Field...) -> Select {
-        return Select(fields: fields, from: self.name)
+public extension Table {
+    public func build(queryBuilder: QueryBuilder) -> String {
+//        if let rename = rename {
+//            return name + " AS " + rename
+//        }
+//        else {
+            return name
+//        }
     }
-    public static func delete() -> Delete {
-        return Delete(table: self.name)
-    }
-    public static func update(values: [Field: Any], cond: Where) -> Update {
-        return Update(values: values, conditions: cond, table: self.name)
-    }
-    public static func insert(values: [Field: Any]) -> Insert {
-        return Insert(into: self.name, columns: [Field](values.keys), values: [Any](values.values))
-    }
-    public static func truncate() -> Raw {
-        return Raw(query: "TRUNCATE \(self.name)")
-    }
-    public static func drop() -> Raw {
-        return Raw(query: "DROP TABLE \(self.name)")
-    }
+    
+//    public func `as`(_ newName: String) -> Table {
+//        var new = self
+//        new.rename = newName
+//        return new
+//    }
 }
+
+public func select(_ fields: Field..., from table: Table) -> Select {
+    return Select(fields: fields, from: table)
+}
+
+public func delete(from table: Table) -> Delete {
+    return Delete(from: table)
+}
+
+public func update(table: Table, set: [(Field, ValueType)], conditions: Where?=nil) -> Update {
+    return Update(table: table, set: set, conditions: conditions)
+}
+
+public func insert(into table: Table, valueTuples: [(Column, ValueType)]) -> Insert {
+    return Insert(into: table, valueTuples: valueTuples)
+}
+
+public func truncate(table: Table) -> Raw {
+    return Raw(query: "TRUNCATE TABLE", table: table)
+}
+
+public func drop(table: Table) -> Raw {
+    return Raw(query: "DROP TABLE", table: table)
+}
+

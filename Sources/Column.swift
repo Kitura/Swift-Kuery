@@ -17,12 +17,30 @@
 
 import Foundation
 
-func packType(_ item: ValueType) -> String {
-    switch item {
-    case let val as String:
-        return "'\(val)'"
-    //...
-    default:
-        return String(describing: item)
+public struct Column : Field {
+    public private (set) var name: String
+        
+    public init(_ name: String) {
+        self.name = name
+    }
+    
+    private var alias: String?
+    
+    public var rename: String? {
+        get {
+            return alias
+        }
+        set {
+            alias = newValue
+        }
+    }
+    
+    public func build(queryBuilder: QueryBuilder) -> String {
+        var result = name
+        if let alias = alias {
+            result += " AS " + alias
+        }
+        return result
     }
 }
+

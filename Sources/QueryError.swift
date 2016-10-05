@@ -17,12 +17,8 @@
 
 import Foundation
 
-func packType(_ item: ValueType) -> String {
-    switch item {
-    case let val as String:
-        return "'\(val)'"
-    //...
-    default:
-        return String(describing: item)
-    }
+public enum QueryError: Error {
+    case connection
+    case noResult
+    case databaseError(String)
 }

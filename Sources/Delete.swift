@@ -18,32 +18,28 @@
 import Foundation
 
 public struct Delete: Query {
-    
-    public var table: String
-    private var whereClause: Where?
-    
-    public var description: String {
-        if let whcl = whereClause {
-            return "DELETE FROM \(table) WHERE \(whcl.predicate)"
+    public let table: Table
+    public private (set) var whereClause: Where?
+       
+    public func build(queryBuilder: QueryBuilder) -> String {
+        var result = "DELETE FROM " + table.build(queryBuilder: queryBuilder)
+        if let whereClause = whereClause {
+            result += " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
-        return "DELETE FROM \(table)"
+        return result
     }
     
-    public func build() -> String {
-        return description
-    }
-    
-    public init(table: String) {
+    public init(from table: Table) {
         self.table = table
     }
     
-    public mutating func filtered(by clause: Where) {
-        whereClause = clause
-    }
-    public func filter(by clause: Where) -> Delete {
+    public func `where`(_ conditions: Where) -> Delete {
         var new = self
-        new.filtered(by: clause)
+        new.whereClause = conditions
         return new
     }
-    
+
+//    public mutating func `where`(_ conditions: Where) {
+//        whereClause = conditions
+//    }
 }

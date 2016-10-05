@@ -18,42 +18,50 @@
 import Foundation
 
 public struct Insert : Query {
-    public var columns : [Field]?
-    public var values : [ValueType]
+    public let columns: [Column]?
+    public let values: [[ValueType]]
+    public let table: Table
     
-    public let table: String
-    
-    public init(into table: String, values: ValueType...) {
-        self.values = values
-        self.table = table
-    }
-    
-    public init(into table: String, columns: [Field], values: [ValueType]) {
-        self.values = values
+   public init(into table: Table, columns: [Column]?, values: [ValueType]) {
         self.columns = columns
+        var valuesToInsert = [[ValueType]]()
+        valuesToInsert.append(values)
+        self.values = valuesToInsert
         self.table = table
     }
     
-    public init(into table: String, valueTuples: (Field, ValueType)...) {
-        columns = Array<Field>()
-        values = Array<ValueType>()
+    public init(into table: Table, columns: [Column]?=nil, rows: [[ValueType]]) {
+        self.columns = columns
+        self.values = rows
+        self.table = table
+    }
+    
+    public init(into table: Table, values: ValueType...) {
+        self.init(into: table, columns: nil, values: values)
+    }
+    
+    public init(into table: Table, valueTuples: [(Column, ValueType)]) {
+        var columnsArray = Array<Column>()
+        var valuesArray = Array<ValueType>()
         for (column, value) in valueTuples {
-            columns!.append(column)
-            values.append(value)
+            columnsArray.append(column)
+            valuesArray.append(value)
         }
-        self.table = table
+        self.init(into: table, columns: columnsArray, values: valuesArray)
     }
     
-    public var description : String {
-        var result =  "INSERT INTO \(table) "
-        if let columns = columns, columns.count != 0 {
-            result += "( \(columns.map { $0.description }.joined(separator: ", ")) )"
-        }
-        result += "VALUES ( \(values.map { packType($0) }.joined(separator: ", ")) );"
-        
-        return result
+    public init(into table: Table, valueTuples: (Column, ValueType)...) {
+        self.init(into: table, valueTuples: valueTuples)
     }
-    public func build() -> String {
-        return self.description
+        
+    public func build(queryBuilder: QueryBuilder) -> String {
+        var result =  "INSERT INTO " + table.build(queryBuilder: queryBuilder) + " "
+        if let columns = columns, columns.count != 0 {
+            result += "(\(columns.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))) "
+        }
+        result += "VALUES ("
+        result += "\(values.map { "\($0.map { packType($0) }.joined(separator: ", "))" }.joined(separator: "), ("))"
+        result += ")"
+        return result
     }
 }

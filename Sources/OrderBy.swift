@@ -14,18 +14,17 @@
  limitations under the License.
  */
 
-
-import Foundation
-
-#if os(Linux)
-public typealias ValueType = AnyValue
-#else
-public typealias ValueType = Any
-#endif
-
-public protocol Connection {
-    
-    func execute(query: Query, onCompletion: @escaping ((QueryResult) -> ()))
-    func execute(query: Query, parameters: ValueType..., onCompletion: @escaping ((QueryResult) -> ()))
+public enum OrderBy {
+    case ASCD(Field)
+    case DESC(Field)
+        
+    public func build(queryBuilder: QueryBuilder) -> String {
+        switch self {
+        case .ASCD(let field):
+            return field.build(queryBuilder: queryBuilder) + " " + queryBuilder.names[QueryBuilder.QueryNames.ascd.rawValue]
+        case .DESC(let field):
+            return field.build(queryBuilder: queryBuilder) + " DESC"
+        }
+    }
 }
 

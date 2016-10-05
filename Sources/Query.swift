@@ -17,49 +17,13 @@
 
 import Foundation
 
-public enum QueryError: Error {
-    case connection
-    //...
-}
-public enum QueryResult {
-    case error(Error)
-    case rows([[String: ValueType]])
-    case success(ValueType)
-    //...
-    
-    public var success: Bool {
-        switch self {
-        case .error : return false
-        default     : return true
-        }
-    }
-    
-    public var asRows: [[String: ValueType]]? {
-        switch self {
-        case .rows(let rows) : return rows
-        default              : return nil
-        }
-    }
-    
-    public var asError: Error? {
-        switch self {
-        case .error(let err) : return err
-        default              : return nil
-        }
-    }
-}
-
 public protocol Query {
-    var table : String { get }
-    
-    var description : String { get }
-    
-    func build() -> String
-    
+    var table: Table { get }
+        
+    func build(queryBuilder: QueryBuilder) -> String
 }
 
-extension Query {
-    
+extension Query {    
     public func execute(_ connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
         connection.execute(query: self, onCompletion: onCompletion)
     }

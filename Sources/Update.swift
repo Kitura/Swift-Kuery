@@ -17,24 +17,34 @@
 
 import Foundation
 
-public struct Update: Query {
-    public var table: String
+public struct Update : Query {
+    public let table: Table
+    public private (set) var whereClause: Where?
+    private let valueTuples: [(Field, ValueType)]
     
-    private var whereClause: Where
-    private let values: [Field: Any]
-    
-    public var description: String {
-        let vals = values.map {key, value in "\(key.name) = \(packType(value))" }.joined(separator: ", ")
-        return "UPDATE \(table) SET \(vals) WHERE \(whereClause.predicate);"
+    public func build(queryBuilder: QueryBuilder) -> String {
+        let values = valueTuples.map {key, value in "\(key.build(queryBuilder: queryBuilder)) = \(packType(value))" }.joined(separator: ", ")
+        var result = "UPDATE " + table.build(queryBuilder: queryBuilder) + " SET \(values)"
+        if let whereClause = whereClause {
+            result += " WHERE " + whereClause.build(queryBuilder: queryBuilder)
+        }
+        return result
     }
     
-    public func build() -> String {
-        return description
-    }
-    
-    public init(values: [Field: Any], conditions: Where, table: String) {
+    public init(table: Table, set: [(Field, ValueType)], conditions: Where?=nil) {
         self.table = table
-        self.values = values
+        self.valueTuples = set
         self.whereClause = conditions
     }
+    
+//    public mutating func `where`(_ conditions: Where) {
+//        whereClause = conditions
+//    }
+    
+    public func `where`(_ conditions: Where) -> Update {
+        var new = self
+        new.whereClause = conditions
+        return new
+    }
+
 }

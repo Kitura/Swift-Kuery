@@ -17,104 +17,118 @@
 import Foundation
 
 public struct Select : Query {
-    public var fields : [Field]?
-    public var whereClause : Where?
-    public var distinct = false
-    public var top : Int?
-    public var orderBy : String?
-    public var groupBy : String?
-    public var having : Having?
+    public let fields: [Field]?
+    public private (set) var whereClause: Where?
+    public private (set) var distinct = false
+    public private (set) var top: Int?
+    public private (set) var orderBy: [OrderBy]?
+    public private (set) var groupBy: [Field]?
+    public private (set) var havingClause: Having?
     
-    public let table: String
+    public let table: Table
     
-    public init(_ fields: Field..., from table: String){
+    public init(_ fields: Field..., from table: Table) {
         self.fields = fields
         self.table = table
     }
     
-    public init(fields: [Field], from table: String){
+    public init(fields: [Field], from table: Table) {
         self.fields = fields
         self.table = table
     }
     
-    public var description : String {
+    public func build(queryBuilder: QueryBuilder) -> String {
         var result =  "SELECT "
+        if distinct {
+            result += "DISTINCT "
+        }
         if let fields = fields, fields.count != 0 {
-            result += "\(fields.map { $0.description }.joined(separator: ", "))"
+            result += "\(fields.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
         }
         else {
-            result += " *"
+            result += "*"
         }
-        result += " FROM \(table)"
+        result += " FROM " + table.build(queryBuilder: queryBuilder)
         if let whereClause = whereClause {
-            result += " WHERE \(whereClause.predicate)"
+            result += " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
         if let groupClause = groupBy {
-            result += " GROUP BY \(groupClause)"
+            result += " GROUP BY " + groupClause.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
+        }
+        if let havingClause = havingClause {
+            result += " HAVING " + havingClause.build(queryBuilder: queryBuilder)
         }
         if let orderClause = orderBy {
-            result += " ORDER BY \(orderClause)"
+            result += " ORDER BY " + orderClause.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }
-        if let havingClause = having {
-            result += " HAVING \(havingClause.clause)"
-        }
-        if let tp = top {
-            result += " LIMIT \(tp)"
+        if let top = top {
+            result += " LIMIT \(top)"
         }
         return result
     }
     
-    public func build() -> String {
-        return self.description
-    }
-    
-    private mutating func havingClause(_ clause: Having) {
-        having = clause
-    }
-    
     public func having(_ clause: Having) -> Select {
         var new = self
-        new.havingClause(clause)
+        new.havingClause = clause
         return new
     }
     
-    private mutating func order(by clause: [Order]) {
-        orderBy = clause.map { $0.description }.joined(separator: ", ")
-    }
-    
-    public func ordered(by clause: Order...) -> Select {
+    public func order(by clause: OrderBy...) -> Select {
         var new = self
-        new.order(by: clause)
+        new.orderBy = clause
         return new
     }
     
-    private mutating func group(by clause: [Field]) {
-        groupBy = clause.map { $0.description }.joined(separator: ", ")
-    }
-    
-    public func grouped(by clause: Field...) -> Select {
+    public func group(by clause: Field...) -> Select {
         var new = self
-        new.group(by: clause)
+        new.groupBy = clause
         return new
     }
     
-    private mutating func limit(to newLimit: Int) {
-        top = newLimit
-    }
-    
-    public func limited(to newLimit: Int) -> Select {
+    public func limit(to newLimit: Int) -> Select {
         var new = self
-        new.limit(to: newLimit)
+        new.top = newLimit
         return new
     }
     
-    public mutating func filtered(by conditions: Where) {
-        self.whereClause = conditions
-    }
-    
-    public func filter(by conditions: Where) -> Select {
+    public func `where`(_ conditions: Where) -> Select {
         var new = self
-        new.filtered(by: conditions)
+        new.whereClause = conditions
         return new
     }
+    
+    public static func distinct(_ fields: Field..., from table: Table) -> Select {
+        var selectQuery = Select(fields: fields, from: table)
+        selectQuery.distinct = true
+        return selectQuery
+    }
+    
+    public static func distinct(fields: [Field], from table: Table)  -> Select {
+        var selectQuery = Select(fields: fields, from: table)
+        selectQuery.distinct = true
+        return selectQuery
+    }
+
+
+//    public mutating   having(_ clause: Having) {
+//        havingClause = clause
+//    }
+//    
+//    public mutating func order(by clause: OrderBy...) {
+//        orderBy = clause
+//    }
+//    
+//    public mutating func group(by clause: Field...) {
+//        groupBy = clause
+//    }
+//    
+//    public mutating func limit(to newLimit: Int) {
+//        top = newLimit
+//    }
+//    
+//    public mutating func `where`(_ conditions: Where) {
+//        whereClause = conditions
+//    }
+//
 }
+

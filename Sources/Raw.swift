@@ -20,17 +20,14 @@ public struct Raw: Query {
     
     public var query: String
     
-    public var table: String = ""
-    
-    public var description: String {
-        return query
+    public var table: Table
+       
+    public func build(queryBuilder: QueryBuilder) -> String {
+        return query + " " + table.build(queryBuilder: queryBuilder)
     }
     
-    public func build() -> String {
-        return description
-    }
-    
-    public init(query: String) {
+    public init(query: String, table: Table) {
         self.query = query
+        self.table = table
     }
 }
