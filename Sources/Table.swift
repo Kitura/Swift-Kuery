@@ -20,26 +20,13 @@ import Foundation
 public protocol Table  {
     var name: String { get set }
     
-//    var rename: String? { get set }
-    
     func build(queryBuilder: QueryBuilder) -> String
 }
 
 public extension Table {
     public func build(queryBuilder: QueryBuilder) -> String {
-//        if let rename = rename {
-//            return name + " AS " + rename
-//        }
-//        else {
-            return name
-//        }
+        return name
     }
-    
-//    public func `as`(_ newName: String) -> Table {
-//        var new = self
-//        new.rename = newName
-//        return new
-//    }
 }
 
 public func select(_ fields: Field..., from table: Table) -> Select {

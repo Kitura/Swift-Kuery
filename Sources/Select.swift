@@ -19,6 +19,7 @@ import Foundation
 public struct Select : Query {
     public let fields: [Field]?
     public private (set) var whereClause: Where?
+    public private (set) var rawWhereClause: String?
     public private (set) var distinct = false
     public private (set) var top: Int?
     public private (set) var orderBy: [OrderBy]?
@@ -51,6 +52,9 @@ public struct Select : Query {
         result += " FROM " + table.build(queryBuilder: queryBuilder)
         if let whereClause = whereClause {
             result += " WHERE " + whereClause.build(queryBuilder: queryBuilder)
+        }
+        else if let rawWhereClause = rawWhereClause {
+            result += " WHERE " + rawWhereClause
         }
         if let groupClause = groupBy {
             result += " GROUP BY " + groupClause.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
@@ -91,9 +95,16 @@ public struct Select : Query {
         return new
     }
     
+    // Check that only one where clause is set?
     public func `where`(_ conditions: Where) -> Select {
         var new = self
         new.whereClause = conditions
+        return new
+    }
+    
+    public func `where`(_ raw: String) -> Select {
+        var new = self
+        new.rawWhereClause = raw
         return new
     }
     

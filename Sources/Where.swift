@@ -100,9 +100,9 @@ public extension ScalarColumnExpression {
         return Where(lhs: .scalarColumnExpression(self), rhs: .value(packType(value1) + " AND " + packType(value2)), condition: .between)
     }
     
-    public func `in`(values: String...) -> Where {
+    public func `in`(_ values: String...) -> Where {
         let rhs = "(\(values.map { packType($0) }.joined(separator: ", ")))"
-        return Where(lhs: .scalarColumnExpression(self), rhs: .string(rhs), condition: .isIn)
+        return Where(lhs: .scalarColumnExpression(self), rhs: .value(rhs), condition: .isIn)
     }
 }
 
@@ -115,9 +115,9 @@ public extension Column {
         return Where(lhs: .column(self), rhs: .value(packType(value1) + " AND " + packType(value2)), condition: .between)
     }
 
-    public func `in`(values: String...) -> Where {
+    public func `in`(_ values: String...) -> Where {
         let rhs = "(\(values.map { packType($0) }.joined(separator: ", ")))"
-        return Where(lhs: .column(self), rhs: .string(rhs), condition: .isIn)
+        return Where(lhs: .column(self), rhs: .value(rhs), condition: .isIn)
     }
 }
 

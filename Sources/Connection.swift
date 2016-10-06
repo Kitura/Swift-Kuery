@@ -31,6 +31,7 @@ public protocol Connection {
     func connect(onCompletion: (String?) -> ())
     func closeConnection()
     func execute(query: Query, onCompletion: @escaping ((QueryResult) -> ()))
+    func execute(_ raw: String, onCompletion: @escaping ((QueryResult) -> ()))
     func execute(query: Query, parameters: ValueType..., onCompletion: @escaping ((QueryResult) -> ()))
     func descriptionOf(query: Query) -> String
 }

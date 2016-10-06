@@ -20,11 +20,15 @@ import Foundation
 public struct Delete: Query {
     public let table: Table
     public private (set) var whereClause: Where?
+    public private (set) var rawWhereClause: String?
        
     public func build(queryBuilder: QueryBuilder) -> String {
         var result = "DELETE FROM " + table.build(queryBuilder: queryBuilder)
         if let whereClause = whereClause {
             result += " WHERE " + whereClause.build(queryBuilder: queryBuilder)
+        }
+        else if let rawWhereClause = rawWhereClause {
+            result += " WHERE " + rawWhereClause
         }
         return result
     }
@@ -38,6 +42,13 @@ public struct Delete: Query {
         new.whereClause = conditions
         return new
     }
+
+    public func `where`(_ raw: String) -> Delete {
+        var new = self
+        new.rawWhereClause = raw
+        return new
+    }
+    
 
 //    public mutating func `where`(_ conditions: Where) {
 //        whereClause = conditions
