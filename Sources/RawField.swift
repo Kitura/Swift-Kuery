@@ -17,21 +17,17 @@
 
 import Foundation
 
-public struct Column : Field {
-    public private (set) var name: String
-        
+public struct RawField : Field {
+    public let query: String
+    
     public var alias: String?
-
-    public init(_ name: String) {
-        self.name = name
+    
+    public init(_ query: String) {
+        self.query = query
     }
     
     public func build(queryBuilder: QueryBuilder) -> String {
-        var result = name
-        if let alias = alias {
-            result += " AS " + alias
-        }
-        return result
+        return query
     }
 }
 

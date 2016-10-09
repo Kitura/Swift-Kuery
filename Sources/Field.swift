@@ -17,7 +17,7 @@ limitations under the License.
 
 public protocol Field {
     
-    var rename: String? { get set }
+    var alias: String? { get set }
     
     func `as`(_ newName: String) -> Field
     
@@ -27,7 +27,7 @@ public protocol Field {
 public extension Field {
     public func `as`(_ newName: String) -> Field {
         var new = self
-        new.rename = newName
+        new.alias = newName
         return new
     }
 }

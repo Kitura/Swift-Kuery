@@ -16,19 +16,10 @@
 
 public struct ScalarColumnExpression : Field {
     
-    private var alias: String?
+    public var alias: String?
     
     public private (set) var function: ScalarFunction
-    
-    public var rename: String? {
-        get {
-            return alias
-        }
-        set {
-            alias = newValue
-        }
-    }
-    
+        
     init(_ function: ScalarFunction) {
         self.function = function
     }

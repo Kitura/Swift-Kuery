@@ -25,6 +25,7 @@ public struct Select : Query {
     public private (set) var orderBy: [OrderBy]?
     public private (set) var groupBy: [Field]?
     public private (set) var havingClause: Having?
+    public private (set) var rawHavingClause: String?
     
     public let table: Table
     
@@ -62,6 +63,9 @@ public struct Select : Query {
         if let havingClause = havingClause {
             result += " HAVING " + havingClause.build(queryBuilder: queryBuilder)
         }
+        else if let rawHavingClause = rawHavingClause {
+            result += " HAVING " + rawHavingClause
+        }
         if let orderClause = orderBy {
             result += " ORDER BY " + orderClause.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }
@@ -74,6 +78,12 @@ public struct Select : Query {
     public func having(_ clause: Having) -> Select {
         var new = self
         new.havingClause = clause
+        return new
+    }
+    
+    public func having(_ raw: String) -> Select {
+        var new = self
+        new.rawHavingClause = raw
         return new
     }
     
@@ -119,27 +129,27 @@ public struct Select : Query {
         selectQuery.distinct = true
         return selectQuery
     }
-
-
-//    public mutating   having(_ clause: Having) {
-//        havingClause = clause
-//    }
-//    
-//    public mutating func order(by clause: OrderBy...) {
-//        orderBy = clause
-//    }
-//    
-//    public mutating func group(by clause: Field...) {
-//        groupBy = clause
-//    }
-//    
-//    public mutating func limit(to newLimit: Int) {
-//        top = newLimit
-//    }
-//    
-//    public mutating func `where`(_ conditions: Where) {
-//        whereClause = conditions
-//    }
-//
+    
+    
+    //    public mutating   having(_ clause: Having) {
+    //        havingClause = clause
+    //    }
+    //
+    //    public mutating func order(by clause: OrderBy...) {
+    //        orderBy = clause
+    //    }
+    //
+    //    public mutating func group(by clause: Field...) {
+    //        groupBy = clause
+    //    }
+    //
+    //    public mutating func limit(to newLimit: Int) {
+    //        top = newLimit
+    //    }
+    //
+    //    public mutating func `where`(_ conditions: Where) {
+    //        whereClause = conditions
+    //    }
+    //
 }
 

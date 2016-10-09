@@ -15,19 +15,10 @@
  */
 
 public struct AggregateColumnExpression : Field {
-    private var alias: String?
+    public var alias: String?
     
     public private (set) var function: AggregateFunction
-    
-    public var rename: String? {
-        get {
-            return alias
-        }
-        set {
-            alias = newValue
-        }
-    }
-    
+        
     init(_ function: AggregateFunction) {
         self.function = function
     }
