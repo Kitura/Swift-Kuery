@@ -19,8 +19,8 @@ import Foundation
 
 public enum QueryResult {
     case error(Error)
-    case rows(titles: [String], rows: [[ValueType?]])
-    case success(ValueType)
+    case rows(titles: [String], rows: [[Any?]])
+    case success(Any)
     case successNoData
     //...
     
@@ -33,7 +33,7 @@ public enum QueryResult {
         }
     }
     
-    public var asRows: ([String], [[ValueType?]])? {
+    public var asRows: ([String], [[Any?]])? {
         switch self {
         case .rows(let titles, let rows):
             return (titles, rows)
@@ -51,7 +51,7 @@ public enum QueryResult {
         }
     }
     
-    public var asValue: ValueType? {
+    public var asValue: Any? {
         switch self {
         case .success(let value):
             return value

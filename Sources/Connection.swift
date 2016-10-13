@@ -17,36 +17,12 @@
 
 import Foundation
 
-#if os(Linux)
-public typealias ValueType = Any
-#else
-public typealias ValueType = Any
-#endif
-
 public protocol Connection {
     
-    var queryBuilder: QueryBuilder { get }
-    
-    init(host: String, port: Int32, queryBuilder: QueryBuilder, options: [ConnectionOptions]?)
-    func connect(onCompletion: (String?) -> ())
+    func connect(onCompletion: (QueryError?) -> ())
     func closeConnection()
     func execute(query: Query, onCompletion: @escaping ((QueryResult) -> ()))
     func execute(_ raw: String, onCompletion: @escaping ((QueryResult) -> ()))
-    func execute(query: Query, parameters: ValueType..., onCompletion: @escaping ((QueryResult) -> ()))
+    func execute(query: Query, parameters: Any..., onCompletion: @escaping ((QueryResult) -> ()))
     func descriptionOf(query: Query) -> String
 }
-
-public enum ConnectionOptions {
-    case options(String)
-    case databaseName(String)
-    case userName(String)
-    case password(String)
-    case connectionTimeout(Int)
-}
-
-public extension Connection {
-    public var queryBuilder: QueryBuilder {
-        return self.queryBuilder
-    }
-}
-

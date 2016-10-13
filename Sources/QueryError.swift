@@ -17,8 +17,21 @@
 
 import Foundation
 
-public enum QueryError: Error {
-    case connection
-    case noResult
+public enum QueryError : Error {
+    case connection(String)
+    case noResult(String)
     case databaseError(String)
+}
+
+extension QueryError : CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .connection(let error):
+            return error
+        case .noResult(let error):
+            return error
+        case .databaseError(let error):
+            return error
+        }
+    }
 }

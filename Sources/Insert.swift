@@ -19,30 +19,30 @@ import Foundation
 
 public struct Insert : Query {
     public let columns: [Column]?
-    public let values: [[ValueType]]
+    public let values: [[Any]]
     public let table: Table
     
-   public init(into table: Table, columns: [Column]?, values: [ValueType]) {
+   public init(into table: Table, columns: [Column]?, values: [Any]) {
         self.columns = columns
-        var valuesToInsert = [[ValueType]]()
+        var valuesToInsert = [[Any]]()
         valuesToInsert.append(values)
         self.values = valuesToInsert
         self.table = table
     }
     
-    public init(into table: Table, columns: [Column]?=nil, rows: [[ValueType]]) {
+    public init(into table: Table, columns: [Column]?=nil, rows: [[Any]]) {
         self.columns = columns
         self.values = rows
         self.table = table
     }
     
-    public init(into table: Table, values: ValueType...) {
+    public init(into table: Table, values: Any...) {
         self.init(into: table, columns: nil, values: values)
     }
     
-    public init(into table: Table, valueTuples: [(Column, ValueType)]) {
+    public init(into table: Table, valueTuples: [(Column, Any)]) {
         var columnsArray = Array<Column>()
-        var valuesArray = Array<ValueType>()
+        var valuesArray = Array<Any>()
         for (column, value) in valueTuples {
             columnsArray.append(column)
             valuesArray.append(value)
@@ -50,7 +50,7 @@ public struct Insert : Query {
         self.init(into: table, columns: columnsArray, values: valuesArray)
     }
     
-    public init(into table: Table, valueTuples: (Column, ValueType)...) {
+    public init(into table: Table, valueTuples: (Column, Any)...) {
         self.init(into: table, valueTuples: valueTuples)
     }
         

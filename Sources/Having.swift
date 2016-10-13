@@ -36,7 +36,7 @@ public indirect enum HavingPredicate {
     case havingClause(Having)
     case string(String)
     case number(NSNumber)
-    case value(ValueType)
+    case value(Any)
     case column(Column)
     case aggregateColumnExpression(AggregateColumnExpression)
         

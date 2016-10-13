@@ -37,11 +37,11 @@ public func delete(from table: Table) -> Delete {
     return Delete(from: table)
 }
 
-public func update(table: Table, set: [(Field, ValueType)], conditions: Where?=nil) -> Update {
+public func update(table: Table, set: [(Field, Any)], conditions: Where?=nil) -> Update {
     return Update(table: table, set: set, conditions: conditions)
 }
 
-public func insert(into table: Table, valueTuples: [(Column, ValueType)]) -> Insert {
+public func insert(into table: Table, valueTuples: [(Column, Any)]) -> Insert {
     return Insert(into: table, valueTuples: valueTuples)
 }
 

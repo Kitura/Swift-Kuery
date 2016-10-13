@@ -21,6 +21,7 @@ public class QueryBuilder {
         case ucase
         case lcase
         case ascd
+        case len
         case namesCount // last case, add new values before it
     }
     
@@ -29,6 +30,7 @@ public class QueryBuilder {
         names[QueryNames.ucase.rawValue] = "UCASE"
         names[QueryNames.lcase.rawValue] = "LCASE"
         names[QueryNames.ascd.rawValue] = "ASCD"
+        names[QueryNames.len.rawValue] = "LEN"
     }
     
     public func updateNames(_ newNames: [QueryNames:String]) {

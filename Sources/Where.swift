@@ -36,7 +36,7 @@ public indirect enum WherePredicate {
     case whereClause(Where)
     case string(String)
     case number(NSNumber)
-    case value(ValueType)
+    case value(Any)
     case column(Column)
     case scalarColumnExpression(ScalarColumnExpression)
     
