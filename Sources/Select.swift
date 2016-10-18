@@ -44,31 +44,38 @@ public struct Select : Query {
         if distinct {
             result += "DISTINCT "
         }
+        
         if let fields = fields, fields.count != 0 {
             result += "\(fields.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
         }
         else {
             result += "*"
         }
+        
         result += " FROM " + table.build(queryBuilder: queryBuilder)
+        
         if let whereClause = whereClause {
             result += " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
         else if let rawWhereClause = rawWhereClause {
             result += " WHERE " + rawWhereClause
         }
+        
         if let groupClause = groupBy {
             result += " GROUP BY " + groupClause.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }
+        
         if let havingClause = havingClause {
             result += " HAVING " + havingClause.build(queryBuilder: queryBuilder)
         }
         else if let rawHavingClause = rawHavingClause {
             result += " HAVING " + rawHavingClause
         }
+        
         if let orderClause = orderBy {
             result += " ORDER BY " + orderClause.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }
+        
         if let top = top {
             result += " LIMIT \(top)"
         }

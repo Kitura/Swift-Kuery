@@ -17,13 +17,20 @@
 
 import Foundation
 
-public protocol Table  {
-    var name: String { get set }
+open class Table  {
+    open var name : String {
+        return ""
+    }
     
-    func build(queryBuilder: QueryBuilder) -> String
-}
-
-public extension Table {
+    public init() {
+        let mirror = Mirror(reflecting: self)
+        for child in mirror.children {
+            if let ch = child.value as? Column {
+                ch.table = self
+            }
+        }
+    }
+    
     public func build(queryBuilder: QueryBuilder) -> String {
         return name
     }

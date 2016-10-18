@@ -17,10 +17,12 @@
 
 import Foundation
 
-public struct Column : Field {
+public class Column : Field {
     public private (set) var name: String
         
     public var alias: String?
+    
+    public weak var table: Table!
 
     public init(_ name: String) {
         self.name = name

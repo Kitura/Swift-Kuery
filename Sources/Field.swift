@@ -31,19 +31,3 @@ public extension Field {
         return new
     }
 }
-
-
-//precedencegroup RenamePrecedence {
-//    associativity: left
-//    higherThan: LogicalConjunctionPrecedence
-//}
-//
-//infix operator |> : RenamePrecedence
-//public func |> ( lhs: Field, rhs: String) -> Field {
-//    var field = lhs
-//    print("field  ", lhs.rename)
-//    print("new name ", rhs)
-//    field.rename = rhs
-//    print("renamed ", field.rename)
-//    return field
-//}
