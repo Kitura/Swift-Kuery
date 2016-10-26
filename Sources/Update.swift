@@ -19,7 +19,7 @@ import Foundation
 
 public struct Update : Query {
     public let table: Table
-    public private (set) var whereClause: Where?
+    public private (set) var whereClause: Filter?
     public private (set) var rawWhereClause: String?
     private let valueTuples: [(Field, Any)]
     
@@ -35,17 +35,13 @@ public struct Update : Query {
         return result
     }
     
-    public init(table: Table, set: [(Field, Any)], conditions: Where?=nil) {
+    public init(table: Table, set: [(Field, Any)], conditions: Filter?=nil) {
         self.table = table
         self.valueTuples = set
         self.whereClause = conditions
     }
-    
-//    public mutating func `where`(_ conditions: Where) {
-//        whereClause = conditions
-//    }
-    
-    public func `where`(_ conditions: Where) -> Update {
+        
+    public func `where`(_ conditions: Filter) -> Update {
         var new = self
         new.whereClause = conditions
         return new

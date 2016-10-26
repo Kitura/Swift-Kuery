@@ -18,7 +18,7 @@ import Foundation
 
 public struct Select : Query {
     public let fields: [Field]?
-    public private (set) var whereClause: Where?
+    public private (set) var whereClause: Filter?
     public private (set) var rawWhereClause: String?
     public private (set) var distinct = false
     public private (set) var top: Int?
@@ -113,7 +113,7 @@ public struct Select : Query {
     }
     
     // Check that only one where clause is set?
-    public func `where`(_ conditions: Where) -> Select {
+    public func `where`(_ conditions: Filter) -> Select {
         var new = self
         new.whereClause = conditions
         return new
@@ -136,27 +136,5 @@ public struct Select : Query {
         selectQuery.distinct = true
         return selectQuery
     }
-    
-    
-    //    public mutating   having(_ clause: Having) {
-    //        havingClause = clause
-    //    }
-    //
-    //    public mutating func order(by clause: OrderBy...) {
-    //        orderBy = clause
-    //    }
-    //
-    //    public mutating func group(by clause: Field...) {
-    //        groupBy = clause
-    //    }
-    //
-    //    public mutating func limit(to newLimit: Int) {
-    //        top = newLimit
-    //    }
-    //
-    //    public mutating func `where`(_ conditions: Where) {
-    //        whereClause = conditions
-    //    }
-    //
 }
 

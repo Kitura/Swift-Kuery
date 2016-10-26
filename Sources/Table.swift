@@ -56,7 +56,7 @@ public func delete(from table: Table) -> Delete {
     return Delete(from: table)
 }
 
-public func update(table: Table, set: [(Field, Any)], conditions: Where?=nil) -> Update {
+public func update(table: Table, set: [(Field, Any)], conditions: Filter?=nil) -> Update {
     return Update(table: table, set: set, conditions: conditions)
 }
 
