@@ -18,11 +18,13 @@
 import Foundation
 
 open class Table  {
-    open var name : String {
+    open var name: String {
         return ""
     }
     
-    public init() {
+    public var alias: String?
+    
+    public required init() {
         let mirror = Mirror(reflecting: self)
         for child in mirror.children {
             if let ch = child.value as? Column {
@@ -32,7 +34,17 @@ open class Table  {
     }
     
     public func build(queryBuilder: QueryBuilder) -> String {
-        return name
+        var result = name
+        if let alias = alias {
+            result += " AS " + alias
+        }
+        return result
+    }
+
+    public func `as`(_ newName: String) -> Self {
+        let new =  type(of: self).init()
+        new.alias = newName
+        return new
     }
 }
 

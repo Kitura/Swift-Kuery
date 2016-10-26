@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-public enum Condition : CustomStringConvertible {
+public enum Condition {
     case equal
     case notEqual
     case greaterThan
@@ -27,35 +27,6 @@ public enum Condition : CustomStringConvertible {
     case isIn
     case and
     case or
-    
-    public var description: String {
-        switch self {
-        case .equal:
-            return "="
-        case .notEqual:
-            return "<>"
-        case .greaterThan:
-            return ">"
-        case .lessThan:
-            return "<"
-        case .greaterThanOrEqual:
-            return ">="
-        case .lessThanOrEqual:
-            return "<="
-        case .between:
-            return "BETWEEN"
-        case .notBetween:
-            return "NOT BETWEEN"
-        case .like:
-            return "LIKE"
-        case .isIn:
-            return "IN"
-        case .and:
-            return "AND"
-        case .or:
-            return "OR"
-        }
-    }
     
     public func build(queryBuilder: QueryBuilder) -> String {
         switch self {

@@ -35,5 +35,12 @@ public class Column : Field {
         }
         return result
     }
+    
+    public func `as`(_ newName: String) -> Column {
+        let new = Column(name)
+        new.alias = newName
+        new.table = table
+        return new
+    }
 }
 
