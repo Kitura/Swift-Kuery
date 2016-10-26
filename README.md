@@ -1,8 +1,8 @@
 # Swift-Kuery
 SQL database abstraction layer
 
-## Examples
-* SELECT * FROM t1;
+## Examples:
+##### SELECT * FROM t1;
 ```swift
 let t1 = T1()
 let s = Select(from: t1)
