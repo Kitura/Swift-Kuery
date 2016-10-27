@@ -33,9 +33,9 @@ s.execute(connection) { queryResult in
 ```
 
 <br>                                                      
-SELECT a, b FROM t1      
+__SELECT a, b FROM t1      
    WHERE (a LIKE '%b' OR a = 'apple') AND b > 5  
-   ORDER BY b ASC, a DESC;
+   ORDER BY b ASC, a DESC;__
 
 ```swift
 ...
