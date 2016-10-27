@@ -11,7 +11,7 @@ class T1 {
 }
 ```
 <br>
-** SELECT * FROM t1; **
+SELECT * FROM t1;
 ```swift
 let t1 = T1()
 let s = Select(from: t1)
@@ -33,20 +33,20 @@ s.execute(connection) { queryResult in
 ```
 
 <br>                                                      
-** SELECT a, b FROM t1      
+SELECT a, b FROM t1      
    WHERE (a LIKE '%b' OR a = 'apple') AND b > 5  
-   ORDER BY b ASC, a DESC;**
+   ORDER BY b ASC, a DESC;
 
-  ```swift
-  ...
-  let s = Select(t1.a, t1.b, from: t1)
-    .where((t.a.like("b%") || (t.a == "apple")) && t.b > 5)
-    .order(by: .ASC(t.b), .DESC(t.a))
+```swift
+...
+let s = Select(t1.a, t1.b, from: t1)
+  .where((t.a.like("b%") || (t.a == "apple")) && t.b > 5)
+  .order(by: .ASC(t.b), .DESC(t.a))
 
-    connection.execute(query: s) { queryResult in
-      ...
-    }
-    ```
+  connection.execute(query: s) { queryResult in
+   ...
+  }
+```
 
 <br>
 ** SELECT UCASE(a) AS name FROM t1    
