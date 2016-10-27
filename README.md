@@ -121,7 +121,7 @@ __UPDATE t1 SET a = 'peach', b = 2
 WHERE a = 'banana';__
 ```swift
 ...
-let u = Update(table: t1, set: [(t1.a, "peach"), (t1.b, 2)])
+let u = Update(t1, set: [(t1.a, "peach"), (t1.b, 2)])
   .where(t1.a == "banana")
 ...
 ```

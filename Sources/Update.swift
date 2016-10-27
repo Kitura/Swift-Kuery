@@ -35,7 +35,7 @@ public struct Update : Query {
         return result
     }
     
-    public init(table: Table, set: [(Column, Any)], conditions: Filter?=nil) {
+    public init(_ table: Table, set: [(Column, Any)], conditions: Filter?=nil) {
         self.table = table
         self.valueTuples = set
         self.whereClause = conditions

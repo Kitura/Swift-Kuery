@@ -64,8 +64,8 @@ public func delete(from table: Table) -> Delete {
     return Delete(from: table)
 }
 
-public func update(table: Table, set: [(Column, Any)], conditions: Filter?=nil) -> Update {
-    return Update(table: table, set: set, conditions: conditions)
+public func update(_ table: Table, set: [(Column, Any)], conditions: Filter?=nil) -> Update {
+    return Update(table, set: set, conditions: conditions)
 }
 
 public func insert(into table: Table, valueTuples: [(Column, Any)]) -> Insert {
