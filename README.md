@@ -100,32 +100,30 @@ let u = Update(table: t1, set: [(t1.a, "peach"), (t1.b, 2)])
 ```
 
 <br>
-__SELECT * FROM table1 AS t1            
-LEFT JOIN table2 AS t2           
-ON t1.b = t2.b;__
+__SELECT * FROM t1 AS left            
+LEFT JOIN t2 AS right           
+ON left.b = right.b;__
 ```swift
-let table1 = T1()
-let table2 = T2()
+let t1 = T1()
+let t2 = T2()
 
-let t1 = table1.as("t1")
-let t2 = table2.as("t2")
-let s2 = Select(from: t1)
-  .leftJoin(t2)
-  .on(t1.b == t2.b)
+let leftTable = t1.as("left")
+let rightTable = t2.as("right")
+let s2 = Select(from: leftTable)
+  .leftJoin(rightTable)
+  .on(leftTable.b == rightTable.b)
 ...
 ```
 
 <br>
-__SELECT * FROM table1           
-JOIN table2           
+__SELECT * FROM t1           
+JOIN t2           
 USING (b);__
 ```swift
-let table1 = T1()
-let table2 = T2()
-
-let s2 = Select(from: table1)
-  .join(table2)
-  .using(table1.b)
+...
+let s2 = Select(from: t1)
+  .join(t2)
+  .using(t1.b)
 ...
 ```
 
