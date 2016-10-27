@@ -10,8 +10,8 @@ class T1 {
   var b = Column("b")
 }
 ```
-
-##### SELECT * FROM t1;
+<br>
+** SELECT * FROM t1; **
 ```swift
 let t1 = T1()
 let s = Select(from: t1)
@@ -32,25 +32,28 @@ s.execute(connection) { queryResult in
 }
 ```
 
-##### SELECT a, b FROM t1
-##### WHERE (a LIKE '%b' OR a = 'apple') AND b > 5
-##### ORDER BY b ASC, a DESC;
-```swift
-...
-let s = Select(t1.a, t1.b, from: t1)
-  .where((t.a.like("b%") || (t.a == "apple")) && t.b > 5)
-  .order(by: .ASC(t.b), .DESC(t.a))
+<br>                                                      
+** SELECT a, b FROM t1      
+   WHERE (a LIKE '%b' OR a = 'apple') AND b > 5  
+   ORDER BY b ASC, a DESC;**
 
-connection.execute(query: s) { queryResult in
+  ```swift
   ...
-}
-```
+  let s = Select(t1.a, t1.b, from: t1)
+    .where((t.a.like("b%") || (t.a == "apple")) && t.b > 5)
+    .order(by: .ASC(t.b), .DESC(t.a))
 
-##### SELECT UCASE(a) AS name FROM t1
-##### WHERE b >= 0
-##### GROUP BY a
-##### HAVING SUM(b) > 3
-##### ORDER BY a DESC;
+    connection.execute(query: s) { queryResult in
+      ...
+    }
+    ```
+
+<br>
+** SELECT UCASE(a) AS name FROM t1    
+ WHERE b >= 0         
+ GROUP BY a         
+ HAVING SUM(b) > 3        
+ ORDER BY a DESC; **
 ```swift
 ...
 let s = Select(ucase(t.a).as("name"), from: t)
