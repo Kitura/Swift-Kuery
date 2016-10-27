@@ -53,7 +53,7 @@ let s = Select(t1.a, t1.b, from: t1)
 
 connection.execute(query: s) { queryResult in
    ...
-  }
+}
 ```
 
 <br>
