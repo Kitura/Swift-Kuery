@@ -29,7 +29,7 @@ public class Column : Field {
     }
     
     public func build(queryBuilder: QueryBuilder) -> String {
-        var result = name
+        var result = table.nameInQuery() + "." + name
         if let alias = alias {
             result += " AS " + alias
         }

@@ -15,13 +15,13 @@
  */
 
 public enum OrderBy {
-    case ASCD(Field)
+    case ASC(Field)
     case DESC(Field)
         
     public func build(queryBuilder: QueryBuilder) -> String {
         switch self {
-        case .ASCD(let field):
-            return field.build(queryBuilder: queryBuilder) + " " + queryBuilder.names[QueryBuilder.QueryNames.ascd.rawValue]
+        case .ASC(let field):
+            return field.build(queryBuilder: queryBuilder) + " ASC"
         case .DESC(let field):
             return field.build(queryBuilder: queryBuilder) + " DESC"
         }

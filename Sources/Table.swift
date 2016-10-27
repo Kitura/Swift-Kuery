@@ -18,9 +18,7 @@
 import Foundation
 
 open class Table  {
-    open var name: String {
-        return ""
-    }
+    private var _name = ""
     
     public var alias: String?
     
@@ -30,11 +28,14 @@ open class Table  {
             if let ch = child.value as? Column {
                 ch.table = self
             }
+            else if let label = child.label, label == "name" {
+                _name = child.value as! String
+            }
         }
     }
     
     public func build(queryBuilder: QueryBuilder) -> String {
-        var result = name
+        var result = _name
         if let alias = alias {
             result += " AS " + alias
         }
@@ -42,9 +43,16 @@ open class Table  {
     }
 
     public func `as`(_ newName: String) -> Self {
-        let new =  type(of: self).init()
+        let new = type(of: self).init()
         new.alias = newName
         return new
+    }
+    
+    public func nameInQuery() -> String {
+        if let alias = alias {
+            return alias
+        }
+        return _name
     }
 }
 
@@ -56,7 +64,7 @@ public func delete(from table: Table) -> Delete {
     return Delete(from: table)
 }
 
-public func update(table: Table, set: [(Field, Any)], conditions: Filter?=nil) -> Update {
+public func update(table: Table, set: [(Column, Any)], conditions: Filter?=nil) -> Update {
     return Update(table: table, set: set, conditions: conditions)
 }
 

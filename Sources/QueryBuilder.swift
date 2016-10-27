@@ -20,7 +20,6 @@ public class QueryBuilder {
     public enum QueryNames : Int {
         case ucase
         case lcase
-        case ascd
         case len
         case namesCount // last case, add new values before it
     }
@@ -29,7 +28,6 @@ public class QueryBuilder {
         names = Array(repeating: "", count: QueryNames.namesCount.rawValue)
         names[QueryNames.ucase.rawValue] = "UCASE"
         names[QueryNames.lcase.rawValue] = "LCASE"
-        names[QueryNames.ascd.rawValue] = "ASCD"
         names[QueryNames.len.rawValue] = "LEN"
     }
     

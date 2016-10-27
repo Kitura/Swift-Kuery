@@ -67,6 +67,10 @@ public func == (lhs: Column, rhs: String) -> Filter {
     return Filter(lhs: .column(lhs), rhs: .string(rhs), condition: .equal)
 }
 
+public func == (lhs: Column, rhs: Column) -> Filter {
+    return Filter(lhs: .column(lhs), rhs: .column(rhs), condition: .equal)
+}
+
 public func >= (lhs: ScalarColumnExpression, rhs: Int) -> Filter {
     return Filter(lhs: .scalarColumnExpression(lhs), rhs: .number(NSNumber(value: rhs)), condition: .greaterThanOrEqual)
 }

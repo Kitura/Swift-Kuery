@@ -57,7 +57,7 @@ public struct Insert : Query {
     public func build(queryBuilder: QueryBuilder) -> String {
         var result =  "INSERT INTO " + table.build(queryBuilder: queryBuilder) + " "
         if let columns = columns, columns.count != 0 {
-            result += "(\(columns.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))) "
+            result += "(\(columns.map { $0.name }.joined(separator: ", "))) "
         }
         result += "VALUES ("
         result += "\(values.map { "\($0.map { packType($0) }.joined(separator: ", "))" }.joined(separator: "), ("))"

@@ -26,6 +26,9 @@ public struct Select : Query {
     public private (set) var groupBy: [Field]?
     public private (set) var havingClause: Having?
     public private (set) var rawHavingClause: String?
+    public private (set) var join: Join?
+    public private (set) var onClause: Filter?
+    public private (set) var using: [Column]?
     
     public let table: Table
     
@@ -54,6 +57,18 @@ public struct Select : Query {
         
         result += " FROM " + table.build(queryBuilder: queryBuilder)
         
+        if let join = join {
+            result += join.build(queryBuilder: queryBuilder)
+        }
+        
+        if let onClause = onClause {
+            result += " ON " + onClause.build(queryBuilder: queryBuilder)
+        }
+        else if let using = using {
+            result += " USING (" + using.map { $0.name }.joined(separator: ", ")
+            result += ")"
+        }
+        
         if let whereClause = whereClause {
             result += " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
@@ -80,6 +95,12 @@ public struct Select : Query {
             result += " LIMIT \(top)"
         }
         return result
+    }
+    
+    public func using(_ columns: Column...) -> Select {
+        var new = self
+        new.using = columns
+        return new
     }
     
     public func having(_ clause: Having) -> Select {
@@ -125,6 +146,12 @@ public struct Select : Query {
         return new
     }
     
+    public func on(_ conditions: Filter) -> Select {
+        var new = self
+        new.onClause = conditions
+        return new
+    }
+    
     public static func distinct(_ fields: Field..., from table: Table) -> Select {
         var selectQuery = Select(fields: fields, from: table)
         selectQuery.distinct = true
@@ -136,5 +163,61 @@ public struct Select : Query {
         selectQuery.distinct = true
         return selectQuery
     }
+    
+    public func join(_ table: Table) -> Select {
+        var new = self
+        new.join = .join(table)
+        return new
+    }
+    
+    public func leftJoin(_ table: Table) -> Select {
+        var new = self
+        new.join = .left(table)
+        return new
+    }
+    
+    public func rightJoin(_ table: Table) -> Select {
+        var new = self
+        new.join = .right(table)
+        return new
+    }
+    
+    public func fullJoin(_ table: Table) -> Select {
+        var new = self
+        new.join = .full(table)
+        return new
+    }
+    
+    public func crossJoin(_ table: Table) -> Select {
+        var new = self
+        new.join = .cross(table)
+        return new
+    }
+    
+    public func naturalJoin(_ table: Table) -> Select {
+        var new = self
+        new.join = .natural(table)
+        return new
+    }
+
+    public func naturalLeftJoin(_ table: Table) -> Select {
+        var new = self
+        new.join = .naturalLeft(table)
+        return new
+    }
+
+    public func naturalRightJoin(_ table: Table) -> Select {
+        var new = self
+        new.join = .naturalRight(table)
+        return new
+    }
+
+    public func naturalFullJoin(_ table: Table) -> Select {
+        var new = self
+        new.join = .naturalFull(table)
+        return new
+    }
+
+
 }
 
