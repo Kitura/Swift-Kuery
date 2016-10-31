@@ -15,13 +15,11 @@ limitations under the License.
 */
 
 
-public protocol Field {
+public protocol Field : Buildable {
     
     var alias: String? { get set }
     
     func `as`(_ newName: String) -> Field
-    
-    func build(queryBuilder: QueryBuilder) -> String
 }
 
 public extension Field {

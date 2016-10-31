@@ -16,7 +16,7 @@
 
 import Foundation
 
-public struct Filter {
+public struct Filter : Buildable {
     public let lhs: FilterPredicate
     public let rhs: FilterPredicate
     public let condition: Condition

@@ -14,9 +14,6 @@
  limitations under the License.
  */
 
-
-import Foundation
-
 public struct Delete: Query {
     public let table: Table
     public private (set) var whereClause: Filter?

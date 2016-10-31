@@ -14,15 +14,40 @@
  limitations under the License.
  */
 
+// MARK: Connection protocol
 
-import Foundation
-
+/// Defines the protocol which all database plugins must implement.
 public protocol Connection {
-    
+    /// Establish a connection with the database.
+    ///
+    /// - Parameter onCompletion: The function to be called once the connection is established.
     func connect(onCompletion: (QueryError?) -> ())
+
+    /// Close the connection to the database.
     func closeConnection()
+    
+    /// Execute a query.
+    ///
+    /// - Parameter query: The query to execute.
+    /// - Parameter onCompletion: The function to be called once the execution of the query is completed.
     func execute(query: Query, onCompletion: @escaping ((QueryResult) -> ()))
+    
+    /// Execute a raw query.
+    ///
+    /// - Parameter query: A String with the query to execute.
+    /// - Parameter onCompletion: The function to be called once the execution of the query is completed.
     func execute(_ raw: String, onCompletion: @escaping ((QueryResult) -> ()))
+    
+    /// Execute a query with parameters.
+    ///
+    /// - Parameter query: The query to execute.
+    /// - Parameter parameters: A list of the parameters.
+    /// - Parameter onCompletion: The function to be called once the execution of the query is completed.
     func execute(query: Query, parameters: Any..., onCompletion: @escaping ((QueryResult) -> ()))
+
+    /// Return a String representation of the query.
+    ///
+    /// - Parameter query: The query.
+    /// - Returns: A String representation of the query.
     func descriptionOf(query: Query) -> String
 }

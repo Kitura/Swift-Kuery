@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-public enum Join {
+public enum Join : Buildable {
     case join(Table)
     case left(Table)
     case right(Table)

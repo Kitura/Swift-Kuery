@@ -14,9 +14,6 @@
  limitations under the License.
  */
 
-
-import Foundation
-
 public struct Update : Query {
     public let table: Table
     public private (set) var whereClause: Filter?
@@ -35,7 +32,7 @@ public struct Update : Query {
         return result
     }
     
-    public init(_ table: Table, set: [(Column, Any)], conditions: Filter?=nil) {
+    public init(_ table: Table, set: [(Column, Any)], where conditions: Filter?=nil) {
         self.table = table
         self.valueTuples = set
         self.whereClause = conditions

@@ -14,9 +14,6 @@
  limitations under the License.
  */
 
-
-import Foundation
-
 public enum QueryResult {
     case error(Error)
     case rows(titles: [String], rows: [[Any?]])

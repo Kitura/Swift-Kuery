@@ -14,18 +14,8 @@
  limitations under the License.
  */
 
-public struct Raw: Query {
-    
-    public var query: String
-    
-    public var table: Table
-       
-    public func build(queryBuilder: QueryBuilder) -> String {
-        return query + " " + table.build(queryBuilder: queryBuilder)
-    }
-    
-    public init(query: String, table: Table) {
-        self.query = query
-        self.table = table
-    }
+
+public protocol Buildable {
+    func build(queryBuilder: QueryBuilder) -> String
 }
+

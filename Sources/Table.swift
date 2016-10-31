@@ -15,9 +15,7 @@
  */
 
 
-import Foundation
-
-open class Table  {
+open class Table : Buildable {
     private var _name = ""
     
     public var alias: String?
@@ -65,7 +63,7 @@ public func delete(from table: Table) -> Delete {
 }
 
 public func update(_ table: Table, set: [(Column, Any)], conditions: Filter?=nil) -> Update {
-    return Update(table, set: set, conditions: conditions)
+    return Update(table, set: set, where: conditions)
 }
 
 public func insert(into table: Table, valueTuples: [(Column, Any)]) -> Insert {

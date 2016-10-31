@@ -14,13 +14,11 @@
  limitations under the License.
  */
 
-
-import Foundation
-
 public enum QueryError : Error {
     case connection(String)
     case noResult(String)
     case databaseError(String)
+    case syntaxError(String)
 }
 
 extension QueryError : CustomStringConvertible {
@@ -31,6 +29,8 @@ extension QueryError : CustomStringConvertible {
         case .noResult(let error):
             return error
         case .databaseError(let error):
+            return error
+        case .syntaxError(let error):
             return error
         }
     }

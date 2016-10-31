@@ -14,9 +14,6 @@
  limitations under the License.
  */
 
-
-import Foundation
-
 public class Column : Field {
     public private (set) var name: String
         

@@ -14,8 +14,6 @@
  limitations under the License.
  */
 
-import Foundation
-
 public struct Select : Query {
     public let fields: [Field]?
     public private (set) var whereClause: Filter?

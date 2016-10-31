@@ -14,9 +14,6 @@
  limitations under the License.
  */
 
-
-import Foundation
-
 public struct RawField : Field {
     public let query: String
     

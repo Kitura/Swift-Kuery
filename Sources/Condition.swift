@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-public enum Condition {
+public enum Condition : Buildable {
     case equal
     case notEqual
     case greaterThan

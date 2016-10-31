@@ -14,9 +14,6 @@
  limitations under the License.
  */
 
-
-import Foundation
-
 public struct Insert : Query {
     public let columns: [Column]?
     public let values: [[Any]]

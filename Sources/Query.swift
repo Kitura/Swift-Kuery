@@ -15,12 +15,8 @@
  */
 
 
-import Foundation
-
-public protocol Query {
+public protocol Query : Buildable {
     var table: Table { get }
-        
-    func build(queryBuilder: QueryBuilder) -> String
 }
 
 extension Query {    
