@@ -21,7 +21,7 @@ public struct Update : Query {
     private let valueTuples: [(Column, Any)]
     
     public func build(queryBuilder: QueryBuilder) -> String {
-        let values = valueTuples.map {column, value in "\(column.name) = \(packType(value))" }.joined(separator: ", ")
+        let values = valueTuples.map {column, value in "\(column.name) = \(packType(value, queryBuilder: queryBuilder))" }.joined(separator: ", ")
         var result = "UPDATE " + table.build(queryBuilder: queryBuilder) + " SET \(values)"
         if let whereClause = whereClause {
             result += " WHERE " + whereClause.build(queryBuilder: queryBuilder)
@@ -29,6 +29,7 @@ public struct Update : Query {
         else if let rawWhereClause = rawWhereClause {
             result += " WHERE " + rawWhereClause
         }
+        result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
     

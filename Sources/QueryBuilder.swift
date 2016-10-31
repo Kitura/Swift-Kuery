@@ -16,24 +16,37 @@
 
 
 public class QueryBuilder {
-    public var names: [String]
-    public enum QueryNames : Int {
+    public var substitutions: [String]
+    public enum QuerySubstitutionNames : Int {
         case ucase
         case lcase
         case len
+        case numberedParameter
+        case namedParameter
         case namesCount // last case, add new values before it
     }
     
-    public init() {
-        names = Array(repeating: "", count: QueryNames.namesCount.rawValue)
-        names[QueryNames.ucase.rawValue] = "UCASE"
-        names[QueryNames.lcase.rawValue] = "LCASE"
-        names[QueryNames.len.rawValue] = "LEN"
+    public var addNumbersToParameters = true
+    public var firstParameterIndex = 1
+    
+    public init(addNumbersToParameters: Bool?=nil, firstParameterIndex: Int?=nil) {
+        substitutions = Array(repeating: "", count: QuerySubstitutionNames.namesCount.rawValue)
+        substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"
+        substitutions[QuerySubstitutionNames.lcase.rawValue] = "LCASE"
+        substitutions[QuerySubstitutionNames.len.rawValue] = "LEN"
+        substitutions[QuerySubstitutionNames.numberedParameter.rawValue] = "?"
+        substitutions[QuerySubstitutionNames.namedParameter.rawValue] = "@"
+        if let addNumbersToParameters = addNumbersToParameters {
+            self.addNumbersToParameters = addNumbersToParameters
+        }
+        if let firstParameterIndex = firstParameterIndex {
+            self.firstParameterIndex = firstParameterIndex
+        }
     }
     
-    public func updateNames(_ newNames: [QueryNames:String]) {
-        for (index, name) in newNames {
-            names[index.rawValue] = name
+    public func updateSubstitutions(_ newSubstitutions: [QuerySubstitutionNames:String]) {
+        for (index, substitution) in newSubstitutions {
+            substitutions[index.rawValue] = substitution
         }
     }
 }

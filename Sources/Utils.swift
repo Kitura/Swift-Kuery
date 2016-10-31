@@ -22,3 +22,30 @@ func packType(_ item: Any) -> String {
         return String(describing: item)
     }
 }
+
+func packType(_ item: Any, queryBuilder: QueryBuilder) -> String {
+    switch item {
+    case let val as String:
+        return "'\(val)'"
+    case let val as Parameter:
+        return val.build(queryBuilder: queryBuilder)
+    default:
+        return String(describing: item)
+    }
+}
+
+func updateParameterNumbers(query: String, queryBuilder: QueryBuilder) -> String {
+    var resultQuery = ""
+    var inputQuery = query
+    let marker = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.numberedParameter.rawValue]
+    var range = inputQuery.range(of: marker)
+    var index = 1
+    while range != nil {
+        resultQuery += inputQuery.substring(to: range!.upperBound) + "\(index)"
+        index += 1
+        inputQuery = inputQuery.substring(from: range!.upperBound)
+        range = inputQuery.range(of: marker)
+    }
+    resultQuery += inputQuery
+    return resultQuery
+}

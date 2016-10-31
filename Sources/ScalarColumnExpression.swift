@@ -38,9 +38,9 @@ public struct ScalarColumnExpression : Field {
             case .now:
                 return "NOW()"
             case .ucase(let field):
-                return queryBuilder.names[QueryBuilder.QueryNames.ucase.rawValue] + "(" + field.build(queryBuilder: queryBuilder) + ")"
+                return queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.ucase.rawValue] + "(" + field.build(queryBuilder: queryBuilder) + ")"
             case .lcase(let field):
-                return queryBuilder.names[QueryBuilder.QueryNames.lcase.rawValue] + "(" + field.build(queryBuilder: queryBuilder) + ")"
+                return queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.lcase.rawValue] + "(" + field.build(queryBuilder: queryBuilder) + ")"
             case .round(let field, let decimal):
                 return "ROUND(" + field.build(queryBuilder: queryBuilder) + ", \(decimal))"
             case .mid(let field, let start, let length):

@@ -57,8 +57,9 @@ public struct Insert : Query {
             result += "(\(columns.map { $0.name }.joined(separator: ", "))) "
         }
         result += "VALUES ("
-        result += "\(values.map { "\($0.map { packType($0) }.joined(separator: ", "))" }.joined(separator: "), ("))"
+        result += "\(values.map { "\($0.map { packType($0, queryBuilder: queryBuilder) }.joined(separator: ", "))" }.joined(separator: "), ("))"
         result += ")"
+        result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
 }
