@@ -25,7 +25,7 @@ public class Column : Field {
         self.name = name
     }
     
-    public func build(queryBuilder: QueryBuilder) -> String {
+    public func build(queryBuilder: QueryBuilder) throws -> String {
         var result = table.nameInQuery() + "." + name
         if let alias = alias {
             result += " AS " + alias

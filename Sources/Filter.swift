@@ -27,12 +27,12 @@ public struct Filter : Buildable {
         self.condition = condition
     }
     
-    public func build(queryBuilder: QueryBuilder) -> String {
-        return lhs.build(queryBuilder: queryBuilder) + " " + condition.build(queryBuilder: queryBuilder) + " " + rhs.build(queryBuilder: queryBuilder)
+    public func build(queryBuilder: QueryBuilder) throws -> String {
+        return try lhs.build(queryBuilder: queryBuilder) + " " + condition.build(queryBuilder: queryBuilder) + " " + rhs.build(queryBuilder: queryBuilder)
     }
 }
 
-public indirect enum FilterPredicate {
+public indirect enum FilterPredicate : Buildable {
     case filter(Filter)
     case string(String)
     case number(NSNumber)
@@ -40,10 +40,10 @@ public indirect enum FilterPredicate {
     case column(Column)
     case scalarColumnExpression(ScalarColumnExpression)
     
-    public func build(queryBuilder: QueryBuilder) -> String {
+    public func build(queryBuilder: QueryBuilder) throws -> String {
         switch self {
         case .filter(let filter):
-            return "(" + filter.build(queryBuilder: queryBuilder) + ")"
+            return try "(" + filter.build(queryBuilder: queryBuilder) + ")"
         case .string(let string):
             return packType(string)
         case .number(let number):
@@ -51,9 +51,9 @@ public indirect enum FilterPredicate {
         case .value(let value):
             return value as! String
         case .column(let column):
-            return column.build(queryBuilder: queryBuilder)
+            return try column.build(queryBuilder: queryBuilder)
         case .scalarColumnExpression(let scalarColumnExpression):
-            return scalarColumnExpression.build(queryBuilder: queryBuilder)
+            return try scalarColumnExpression.build(queryBuilder: queryBuilder)
         }
     }
 

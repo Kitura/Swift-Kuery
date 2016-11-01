@@ -25,7 +25,7 @@ public enum Join : Buildable {
     case naturalRight(Table)
     case naturalFull(Table)
 
-    public func build(queryBuilder: QueryBuilder) -> String {
+    public func build(queryBuilder: QueryBuilder) throws -> String {
         switch self {
         case .join(let table):
             return " JOIN " + table.build(queryBuilder: queryBuilder)

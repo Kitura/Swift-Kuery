@@ -33,30 +33,30 @@ public struct AggregateColumnExpression : Field {
         case count(field: Field)
         case countDistinct(field: Field)
         
-        public func build(queryBuilder: QueryBuilder) -> String {
+        public func build(queryBuilder: QueryBuilder) throws -> String {
             switch self {
             case .avg(let field):
-                return "AVG(" + field.build(queryBuilder: queryBuilder) + ")"
+                return try "AVG(" + field.build(queryBuilder: queryBuilder) + ")"
             case .max(let field):
-                return "MAX(" + field.build(queryBuilder: queryBuilder) + ")"
+                return try "MAX(" + field.build(queryBuilder: queryBuilder) + ")"
             case .min(let field):
-                return "MIN(" + field.build(queryBuilder: queryBuilder) + ")"
+                return try "MIN(" + field.build(queryBuilder: queryBuilder) + ")"
             case .sum(let field):
-                return "SUM(" + field.build(queryBuilder: queryBuilder) + ")"
+                return try "SUM(" + field.build(queryBuilder: queryBuilder) + ")"
             case .last(let field):
-                return "LAST(" + field.build(queryBuilder: queryBuilder) + ")"
+                return try "LAST(" + field.build(queryBuilder: queryBuilder) + ")"
             case .first(let field):
-                return "FIRST(" + field.build(queryBuilder: queryBuilder) + ")"
+                return try "FIRST(" + field.build(queryBuilder: queryBuilder) + ")"
             case .count(let field):
-                return "COUNT(" + field.build(queryBuilder: queryBuilder) + ")"
+                return try "COUNT(" + field.build(queryBuilder: queryBuilder) + ")"
             case .countDistinct(let field):
-                return "COUNT(DISTINCT(" + field.build(queryBuilder: queryBuilder) + "))"
+                return try "COUNT(DISTINCT(" + field.build(queryBuilder: queryBuilder) + "))"
             }
         }
     }
     
-    public func build(queryBuilder: QueryBuilder) -> String {
-        var result = function.build(queryBuilder: queryBuilder)
+    public func build(queryBuilder: QueryBuilder) throws -> String {
+        var result = try function.build(queryBuilder: queryBuilder)
         if let alias = alias {
             result += " AS " + alias
         }

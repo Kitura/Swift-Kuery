@@ -22,18 +22,17 @@ public struct Parameter : Buildable {
         self.name = name
     }
     
-    public func build(queryBuilder: QueryBuilder) -> String {
+    public func build(queryBuilder: QueryBuilder) throws -> String {
         if let name = name {
             let marker = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.namedParameter.rawValue]
-//            if marker == "" {
-//                // Error?
-//            }
-//            else {
+            if marker == "" {
+                throw QueryError.syntaxError("No marker specified in QueryBuilder for named query parameters")
+            }
+            else {
                 return marker + name
-//            }
+            }
         }
         else {
-            // Check?
             let marker = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.numberedParameter.rawValue]
             return marker
         }

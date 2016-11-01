@@ -20,11 +20,11 @@ public struct Update : Query {
     public private (set) var rawWhereClause: String?
     private let valueTuples: [(Column, Any)]
     
-    public func build(queryBuilder: QueryBuilder) -> String {
-        let values = valueTuples.map {column, value in "\(column.name) = \(packType(value, queryBuilder: queryBuilder))" }.joined(separator: ", ")
+    public func build(queryBuilder: QueryBuilder) throws -> String {
+        let values = try valueTuples.map {column, value in "\(column.name) = \(try packType(value, queryBuilder: queryBuilder))" }.joined(separator: ", ")
         var result = "UPDATE " + table.build(queryBuilder: queryBuilder) + " SET \(values)"
         if let whereClause = whereClause {
-            result += " WHERE " + whereClause.build(queryBuilder: queryBuilder)
+            result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
         else if let rawWhereClause = rawWhereClause {
             result += " WHERE " + rawWhereClause

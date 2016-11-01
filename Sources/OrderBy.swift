@@ -14,16 +14,16 @@
  limitations under the License.
  */
 
-public enum OrderBy {
+public enum OrderBy : Buildable {
     case ASC(Field)
     case DESC(Field)
         
-    public func build(queryBuilder: QueryBuilder) -> String {
+    public func build(queryBuilder: QueryBuilder) throws -> String {
         switch self {
         case .ASC(let field):
-            return field.build(queryBuilder: queryBuilder) + " ASC"
+            return try field.build(queryBuilder: queryBuilder) + " ASC"
         case .DESC(let field):
-            return field.build(queryBuilder: queryBuilder) + " DESC"
+            return try field.build(queryBuilder: queryBuilder) + " DESC"
         }
     }
 }

@@ -16,6 +16,6 @@
 
 
 public protocol Buildable {
-    func build(queryBuilder: QueryBuilder) -> String
+    func build(queryBuilder: QueryBuilder) throws -> String
 }
 

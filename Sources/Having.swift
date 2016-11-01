@@ -16,7 +16,7 @@
 
 import Foundation
 
-public struct Having {
+public struct Having : Buildable {
     public let lhs: HavingPredicate
     public let rhs: HavingPredicate
     public let condition: Condition
@@ -27,12 +27,12 @@ public struct Having {
         self.condition = condition
     }
     
-    public func build(queryBuilder: QueryBuilder) -> String {
-        return lhs.build(queryBuilder: queryBuilder) + " " + condition.build(queryBuilder: queryBuilder) + " " + rhs.build(queryBuilder: queryBuilder)
+    public func build(queryBuilder: QueryBuilder) throws -> String {
+        return try lhs.build(queryBuilder: queryBuilder) + " " + condition.build(queryBuilder: queryBuilder) + " " + rhs.build(queryBuilder: queryBuilder)
     }
 }
 
-public indirect enum HavingPredicate {
+public indirect enum HavingPredicate : Buildable {
     case havingClause(Having)
     case string(String)
     case number(NSNumber)
@@ -40,10 +40,10 @@ public indirect enum HavingPredicate {
     case column(Column)
     case aggregateColumnExpression(AggregateColumnExpression)
         
-    public func build(queryBuilder: QueryBuilder) -> String {
+    public func build(queryBuilder: QueryBuilder) throws -> String {
         switch self {
         case .havingClause(let havingClause):
-            return "(" + havingClause.build(queryBuilder: queryBuilder) + ")"
+            return try "(" + havingClause.build(queryBuilder: queryBuilder) + ")"
         case .string(let string):
             return packType(string)
         case .number(let number):
@@ -51,9 +51,9 @@ public indirect enum HavingPredicate {
         case .value(let value):
             return packType(value)
         case .column(let column):
-            return "(" + column.build(queryBuilder: queryBuilder) + ")"
+            return try "(" + column.build(queryBuilder: queryBuilder) + ")"
         case .aggregateColumnExpression(let aggregateColumnExpression):
-            return "(" + aggregateColumnExpression.build(queryBuilder: queryBuilder) + ")"
+            return try "(" + aggregateColumnExpression.build(queryBuilder: queryBuilder) + ")"
         }
     }
 }

@@ -23,12 +23,12 @@ func packType(_ item: Any) -> String {
     }
 }
 
-func packType(_ item: Any, queryBuilder: QueryBuilder) -> String {
+func packType(_ item: Any, queryBuilder: QueryBuilder) throws -> String {
     switch item {
     case let val as String:
         return "'\(val)'"
     case let val as Parameter:
-        return val.build(queryBuilder: queryBuilder)
+        return try val.build(queryBuilder: queryBuilder)
     default:
         return String(describing: item)
     }

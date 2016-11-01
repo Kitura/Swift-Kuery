@@ -41,13 +41,21 @@ public protocol Connection {
     /// Execute a query with parameters.
     ///
     /// - Parameter query: The query to execute.
-    /// - Parameter parameters: A list of the parameters.
+    /// - Parameter parameters: An array of the parameters.
     /// - Parameter onCompletion: The function to be called once the execution of the query is completed.
-    func execute(query: Query, parameters: Any..., onCompletion: @escaping ((QueryResult) -> ()))
-
+    func execute(query: Query, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ()))
+    
+    /// Execute a raw query with parameters.
+    ///
+    /// - Parameter query: A String with the query to execute.
+    /// - Parameter parameters: An array of the parameters.
+    /// - Parameter onCompletion: The function to be called once the execution of the query is completed.
+    func execute(_ raw: String, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ()))
+    
     /// Return a String representation of the query.
     ///
     /// - Parameter query: The query.
     /// - Returns: A String representation of the query.
-    func descriptionOf(query: Query) -> String
+    /// - Throws: QueryError.syntaxError if query build fails.
+    func descriptionOf(query: Query) throws -> String
 }

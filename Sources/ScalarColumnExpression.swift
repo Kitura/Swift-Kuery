@@ -24,7 +24,7 @@ public struct ScalarColumnExpression : Field {
         self.function = function
     }
     
-    public indirect enum ScalarFunction {
+    public indirect enum ScalarFunction : Buildable {
         case now()
         case ucase(field: Field)
         case lcase(field: Field)
@@ -33,28 +33,28 @@ public struct ScalarColumnExpression : Field {
         case len(field: Field)
         case format(field: Field, format: String)
         
-        public func build(queryBuilder: QueryBuilder) -> String {
+        public func build(queryBuilder: QueryBuilder) throws -> String {
             switch self {
             case .now:
                 return "NOW()"
             case .ucase(let field):
-                return queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.ucase.rawValue] + "(" + field.build(queryBuilder: queryBuilder) + ")"
+                return try queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.ucase.rawValue] + "(" + field.build(queryBuilder: queryBuilder) + ")"
             case .lcase(let field):
-                return queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.lcase.rawValue] + "(" + field.build(queryBuilder: queryBuilder) + ")"
+                return try queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.lcase.rawValue] + "(" + field.build(queryBuilder: queryBuilder) + ")"
             case .round(let field, let decimal):
-                return "ROUND(" + field.build(queryBuilder: queryBuilder) + ", \(decimal))"
+                return try "ROUND(" + field.build(queryBuilder: queryBuilder) + ", \(decimal))"
             case .mid(let field, let start, let length):
-                return "MID(" + field.build(queryBuilder: queryBuilder) + ", \(start), \(length))"
+                return try "MID(" + field.build(queryBuilder: queryBuilder) + ", \(start), \(length))"
             case .len(let field):
-                return "LEN(" + field.build(queryBuilder: queryBuilder) + ")"
+                return try "LEN(" + field.build(queryBuilder: queryBuilder) + ")"
             case .format(let field, let format):
-                return "FORMAT(" + field.build(queryBuilder: queryBuilder) + ", \(format))"
+                return try "FORMAT(" + field.build(queryBuilder: queryBuilder) + ", \(format))"
             }
         }
     }
     
-    public func build(queryBuilder: QueryBuilder) -> String {
-        var result = function.build(queryBuilder: queryBuilder)
+    public func build(queryBuilder: QueryBuilder) throws -> String {
+        var result = try function.build(queryBuilder: queryBuilder)
         if let alias = alias {
             result += " AS " + alias
         }

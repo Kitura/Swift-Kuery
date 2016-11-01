@@ -40,14 +40,14 @@ public struct Select : Query {
         self.table = table
     }
     
-    public func build(queryBuilder: QueryBuilder) -> String {
+    public func build(queryBuilder: QueryBuilder) throws -> String {
         var result =  "SELECT "
         if distinct {
             result += "DISTINCT "
         }
         
         if let fields = fields, fields.count != 0 {
-            result += "\(fields.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
+            result += try "\(fields.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
         }
         else {
             result += "*"
@@ -56,11 +56,11 @@ public struct Select : Query {
         result += " FROM " + table.build(queryBuilder: queryBuilder)
         
         if let join = join {
-            result += join.build(queryBuilder: queryBuilder)
+            result += try join.build(queryBuilder: queryBuilder)
         }
         
         if let onClause = onClause {
-            result += " ON " + onClause.build(queryBuilder: queryBuilder)
+            result += try " ON " + onClause.build(queryBuilder: queryBuilder)
         }
         else if let using = using {
             result += " USING (" + using.map { $0.name }.joined(separator: ", ")
@@ -68,25 +68,25 @@ public struct Select : Query {
         }
         
         if let whereClause = whereClause {
-            result += " WHERE " + whereClause.build(queryBuilder: queryBuilder)
+            result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
         else if let rawWhereClause = rawWhereClause {
             result += " WHERE " + rawWhereClause
         }
         
         if let groupClause = groupBy {
-            result += " GROUP BY " + groupClause.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
+            result += try " GROUP BY " + groupClause.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }
         
         if let havingClause = havingClause {
-            result += " HAVING " + havingClause.build(queryBuilder: queryBuilder)
+            result += try " HAVING " + havingClause.build(queryBuilder: queryBuilder)
         }
         else if let rawHavingClause = rawHavingClause {
             result += " HAVING " + rawHavingClause
         }
         
         if let orderClause = orderBy {
-            result += " ORDER BY " + orderClause.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
+            result += try " ORDER BY " + orderClause.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }
         
         if let top = top {

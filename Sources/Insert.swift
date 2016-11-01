@@ -51,13 +51,13 @@ public struct Insert : Query {
         self.init(into: table, valueTuples: valueTuples)
     }
         
-    public func build(queryBuilder: QueryBuilder) -> String {
-        var result =  "INSERT INTO " + table.build(queryBuilder: queryBuilder) + " "
+    public func build(queryBuilder: QueryBuilder) throws -> String {
+        var result = "INSERT INTO " + table.build(queryBuilder: queryBuilder) + " "
         if let columns = columns, columns.count != 0 {
             result += "(\(columns.map { $0.name }.joined(separator: ", "))) "
         }
         result += "VALUES ("
-        result += "\(values.map { "\($0.map { packType($0, queryBuilder: queryBuilder) }.joined(separator: ", "))" }.joined(separator: "), ("))"
+        result += try "\(values.map { "\(try $0.map { try packType($0, queryBuilder: queryBuilder) }.joined(separator: ", "))" }.joined(separator: "), ("))"
         result += ")"
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result

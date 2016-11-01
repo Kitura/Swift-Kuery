@@ -23,7 +23,7 @@ public struct RawField : Field {
         self.query = query
     }
     
-    public func build(queryBuilder: QueryBuilder) -> String {
+    public func build(queryBuilder: QueryBuilder) throws -> String {
         return query
     }
 }

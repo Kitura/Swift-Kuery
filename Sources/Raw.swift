@@ -20,7 +20,7 @@ public struct Raw: Query {
     
     public var table: Table
        
-    public func build(queryBuilder: QueryBuilder) -> String {
+    public func build(queryBuilder: QueryBuilder) throws -> String {
         return query + " " + table.build(queryBuilder: queryBuilder)
     }
     

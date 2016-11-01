@@ -19,10 +19,10 @@ public struct Delete: Query {
     public private (set) var whereClause: Filter?
     public private (set) var rawWhereClause: String?
        
-    public func build(queryBuilder: QueryBuilder) -> String {
+    public func build(queryBuilder: QueryBuilder) throws -> String {
         var result = "DELETE FROM " + table.build(queryBuilder: queryBuilder)
         if let whereClause = whereClause {
-            result += " WHERE " + whereClause.build(queryBuilder: queryBuilder)
+            result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
         else if let rawWhereClause = rawWhereClause {
             result += " WHERE " + rawWhereClause
