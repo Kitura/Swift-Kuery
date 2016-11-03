@@ -14,11 +14,33 @@
  limitations under the License.
  */
 
+// MARK: Delete
+
+/// The SQL DELETE statement.
 public struct Delete: Query {
+    /// The table to delete rows from.
     public let table: Table
+
+    /// The SQL WHERE clause containing the filter for rows to delete.
     public private (set) var whereClause: Filter?
+
+    /// A String containg the raw SQL WHERE clause to filter the rows to delete.
     public private (set) var rawWhereClause: String?
        
+    /// Initialize an instance of Delete.
+    ///
+    /// - Parameter from: The table to delete rows from.
+    /// - Parameter conditions: An optional where clause to apply.
+    public init(from table: Table, where conditions: Filter?=nil) {
+        self.table = table
+        self.whereClause = conditions
+    }
+    
+    /// Build the query using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the query.
+    /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
         var result = "DELETE FROM " + table.build(queryBuilder: queryBuilder)
         if let whereClause = whereClause {
@@ -30,16 +52,20 @@ public struct Delete: Query {
         return result
     }
     
-    public init(from table: Table) {
-        self.table = table
-    }
-    
+    /// Add an SQL WHERE clause to the delete statement.
+    ///
+    /// - Parameter conditions: The SQL WHERE clause to apply.
+    /// - Returns: A new instance of Delete.
     public func `where`(_ conditions: Filter) -> Delete {
         var new = self
         new.whereClause = conditions
         return new
     }
 
+    /// Add a raw SQL WHERE clause to the delete statement.
+    ///
+    /// - Parameter conditions: A String containing the SQL WHERE clause to apply.
+    /// - Returns: A new instance of Delete.
     public func `where`(_ raw: String) -> Delete {
         var new = self
         new.rawWhereClause = raw

@@ -14,10 +14,20 @@
  limitations under the License.
  */
 
+// MARK: OrderBy
+
+/// An SQL ORDER BY keyword.
 public enum OrderBy : Buildable {
+    /// Order ascending.
     case ASC(Field)
+    /// Order descending.
     case DESC(Field)
         
+    /// Build the query component using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the query component.
+    /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
         switch self {
         case .ASC(let field):

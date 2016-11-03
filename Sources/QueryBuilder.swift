@@ -14,21 +14,43 @@
  limitations under the License.
  */
 
+// MARK: QueryBuilder
 
+/// A table of query substituions per connection.
+/// Since different databases have different query syntax, sometimes connections
+/// need to make changes in the query. The changes should be done by updating QueryBuilder
+/// substitutions array. Every query component then builds its string representation using
+/// that array.
 public class QueryBuilder {
+    /// An array of substitutions to be made in query String representation.
     public var substitutions: [String]
+    
+    /// The index for the substitutions array.
     public enum QuerySubstitutionNames : Int {
+        /// The SQL UCASE scalar function.
         case ucase
+        /// The SQL LCASE scalar function.
         case lcase
+        /// The SQL LEN scalar function.
         case len
+        /// The marker for the query numbered parameters.
         case numberedParameter
+        /// The marker for the query named parameters.
         case namedParameter
-        case namesCount // last case, add new values before it
+        /// Last case, add new values before it.
+        case namesCount
     }
     
+    /// An indication whether the parameters should be numbered (e.g., '$1, $2'), or just marked
+    /// with the numbered parameter marker (e.g., '?').
     public var addNumbersToParameters = true
+    /// The starting index for numbered parameters.
     public var firstParameterIndex = 1
     
+    /// Initialize an instance of QueryBuilder.
+    ///
+    /// - Parameter addNumbersToParameters: An indication whether query parameters should be numbered.
+    /// - Parameter firstParameterIndex: The starting index for numbered parameters.
     public init(addNumbersToParameters: Bool?=nil, firstParameterIndex: Int?=nil) {
         substitutions = Array(repeating: "", count: QuerySubstitutionNames.namesCount.rawValue)
         substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"
@@ -44,6 +66,9 @@ public class QueryBuilder {
         }
     }
     
+    /// Update substitutions array.
+    ///
+    /// - Parameter newSubstitutions: A Dictionary containing the entries to update.
     public func updateSubstitutions(_ newSubstitutions: [QuerySubstitutionNames:String]) {
         for (index, substitution) in newSubstitutions {
             substitutions[index.rawValue] = substitution

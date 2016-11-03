@@ -14,20 +14,39 @@
  limitations under the License.
  */
 
+// MARK: Condition
+
+/// An enumeration of condition operators supported in `Filter` and `Having`.
 public enum Condition : Buildable {
+    /// The SQL == operator.
     case equal
+    /// The SQL != operator.
     case notEqual
+    /// The SQL > operator.
     case greaterThan
+    /// The SQL < operator.
     case lessThan
+    /// The SQL >= operator.
     case greaterThanOrEqual
+    /// The SQL <= operator.
     case lessThanOrEqual
+    /// The SQL BETWEEN operator.
     case between
+    /// The SQL NOT BETWEEN operator.
     case notBetween
+    /// The SQL LIKE operator.
     case like
+    /// The SQL IN operator.
     case isIn
+    /// The SQL AND operator.
     case and
+    /// The SQL OR operator.
     case or
     
+    /// Build the condition, i.e., return its representation as a String.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the condition.
     public func build(queryBuilder: QueryBuilder) -> String {
         switch self {
         case .equal:

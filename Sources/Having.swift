@@ -14,11 +14,17 @@
  limitations under the License.
  */
 
+// MARK: Having
+
 import Foundation
 
+/// An SQL HAVING clause.
 public struct Having : Buildable {
+    /// The left hand side of the conditional clause.
     public let lhs: HavingPredicate
+    /// The left hand side of the conditional clause.
     public let rhs: HavingPredicate
+    /// The operator of the conditional clause.
     public let condition: Condition
     
     init(lhs: HavingPredicate, rhs: HavingPredicate, condition: Condition) {
@@ -27,33 +33,50 @@ public struct Having : Buildable {
         self.condition = condition
     }
     
+    /// Build the clause using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the clause.
+    /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
         return try lhs.build(queryBuilder: queryBuilder) + " " + condition.build(queryBuilder: queryBuilder) + " " + rhs.build(queryBuilder: queryBuilder)
     }
-}
-
-public indirect enum HavingPredicate : Buildable {
-    case havingClause(Having)
-    case string(String)
-    case number(NSNumber)
-    case value(Any)
-    case column(Column)
-    case aggregateColumnExpression(AggregateColumnExpression)
+    
+    /// An operand of `Having`: either a `Having` itself, or a value, a column, or an `AggregateColumnExpression`.
+    public indirect enum HavingPredicate : Buildable {
+        /// A `Having` clause.
+        case havingClause(Having)
+        /// A String.
+        case string(String)
+        /// A number.
+        case number(NSNumber)
+        /// A value of type Any.
+        case value(Any)
+        /// A `Column`.
+        case column(Column)
+        /// An `AggregateColumnExpression`.
+        case aggregateColumnExpression(AggregateColumnExpression)
         
-    public func build(queryBuilder: QueryBuilder) throws -> String {
-        switch self {
-        case .havingClause(let havingClause):
-            return try "(" + havingClause.build(queryBuilder: queryBuilder) + ")"
-        case .string(let string):
-            return packType(string)
-        case .number(let number):
-            return packType(number)
-        case .value(let value):
-            return packType(value)
-        case .column(let column):
-            return try "(" + column.build(queryBuilder: queryBuilder) + ")"
-        case .aggregateColumnExpression(let aggregateColumnExpression):
-            return try "(" + aggregateColumnExpression.build(queryBuilder: queryBuilder) + ")"
+        /// Build the having predicate using `QueryBuilder`.
+        ///
+        /// - Parameter queryBuilder: The QueryBuilder to use.
+        /// - Returns: A String representation of the havinh predicate.
+        /// - Throws: QueryError.syntaxError if query build fails.
+        public func build(queryBuilder: QueryBuilder) throws -> String {
+            switch self {
+            case .havingClause(let havingClause):
+                return try "(" + havingClause.build(queryBuilder: queryBuilder) + ")"
+            case .string(let string):
+                return packType(string)
+            case .number(let number):
+                return packType(number)
+            case .value(let value):
+                return packType(value)
+            case .column(let column):
+                return "(" + column.build(queryBuilder: queryBuilder) + ")"
+            case .aggregateColumnExpression(let aggregateColumnExpression):
+                return try "(" + aggregateColumnExpression.build(queryBuilder: queryBuilder) + ")"
+            }
         }
     }
 }

@@ -15,14 +15,26 @@ limitations under the License.
 */
 
 
+// MARK: Field protocol
+
+/// Defines the protocol for columns, and aggregate and scalar functions on columns.
 public protocol Field : Buildable {
     
+    /// The alias of the field.
     var alias: String? { get set }
     
+    /// Add alias to the field, i.e., implement SQL AS operator.
+    ///
+    /// - Parameter newName: A String containing the alias for the field.
+    /// - Returns: A new Field instance with the alias.
     func `as`(_ newName: String) -> Field
 }
 
 public extension Field {
+    /// Add alias to the field, i.e., implement SQL AS operator.
+    ///
+    /// - Parameter newName: A String containing the alias for the field.
+    /// - Returns: A new Field instance with the alias.
     public func `as`(_ newName: String) -> Field {
         var new = self
         new.alias = newName

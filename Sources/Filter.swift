@@ -14,11 +14,16 @@
  limitations under the License.
  */
 
+// MARK: Filter
 import Foundation
 
+/// A condition used in SQL WHERE and ON clauses.
 public struct Filter : Buildable {
+    /// The left hand side of the conditional clause.
     public let lhs: FilterPredicate
+    /// The right hand side of the conditional clause.
     public let rhs: FilterPredicate
+    /// The operator of the conditional clause.
     public let condition: Condition
     
     init(lhs: FilterPredicate, rhs: FilterPredicate, condition: Condition) {
@@ -27,36 +32,52 @@ public struct Filter : Buildable {
         self.condition = condition
     }
     
+    /// Build the filter using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the filter.
+    /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
         return try lhs.build(queryBuilder: queryBuilder) + " " + condition.build(queryBuilder: queryBuilder) + " " + rhs.build(queryBuilder: queryBuilder)
     }
-}
-
-public indirect enum FilterPredicate : Buildable {
-    case filter(Filter)
-    case string(String)
-    case number(NSNumber)
-    case value(Any)
-    case column(Column)
-    case scalarColumnExpression(ScalarColumnExpression)
     
-    public func build(queryBuilder: QueryBuilder) throws -> String {
-        switch self {
-        case .filter(let filter):
-            return try "(" + filter.build(queryBuilder: queryBuilder) + ")"
-        case .string(let string):
-            return packType(string)
-        case .number(let number):
-            return packType(number)
-        case .value(let value):
-            return value as! String
-        case .column(let column):
-            return try column.build(queryBuilder: queryBuilder)
-        case .scalarColumnExpression(let scalarColumnExpression):
-            return try scalarColumnExpression.build(queryBuilder: queryBuilder)
+    /// An operand of `Filter`: either a `Filter` itself, or a value, a column, or a `ScalarColumnExpression`.
+    public indirect enum FilterPredicate : Buildable {
+        /// A `Filter`.
+        case filter(Filter)
+        /// A String.
+        case string(String)
+        /// A number.
+        case number(NSNumber)
+        /// A value of type Any.
+        case value(Any)
+        /// A `Column`.
+        case column(Column)
+        /// A `ScalarColumnExpression`.
+        case scalarColumnExpression(ScalarColumnExpression)
+        
+        /// Build the filter predicate using `QueryBuilder`.
+        ///
+        /// - Parameter queryBuilder: The QueryBuilder to use.
+        /// - Returns: A String representation of the filter predicate.
+        /// - Throws: QueryError.syntaxError if query build fails.
+        public func build(queryBuilder: QueryBuilder) throws -> String {
+            switch self {
+            case .filter(let filter):
+                return try "(" + filter.build(queryBuilder: queryBuilder) + ")"
+            case .string(let string):
+                return packType(string)
+            case .number(let number):
+                return packType(number)
+            case .value(let value):
+                return value as! String
+            case .column(let column):
+                return column.build(queryBuilder: queryBuilder)
+            case .scalarColumnExpression(let scalarColumnExpression):
+                return try scalarColumnExpression.build(queryBuilder: queryBuilder)
+            }
         }
     }
-
 }
 
 public func == (lhs: ScalarColumnExpression, rhs: String) -> Filter {
@@ -99,7 +120,7 @@ public extension ScalarColumnExpression {
     public func like(_ pattern: String) -> Filter {
         return Filter(lhs: .scalarColumnExpression(self), rhs: .string(pattern), condition: .like)
     }
-
+    
     public func between(_ value1: String, and value2: String) -> Filter {
         return Filter(lhs: .scalarColumnExpression(self), rhs: .value(packType(value1) + " AND " + packType(value2)), condition: .between)
     }
@@ -114,11 +135,11 @@ public extension Column {
     public func like(_ pattern: String) -> Filter {
         return Filter(lhs: .column(self), rhs: .string(pattern), condition: .like)
     }
-
+    
     public func between(_ value1: String, and value2: String) -> Filter {
         return Filter(lhs: .column(self), rhs: .value(packType(value1) + " AND " + packType(value2)), condition: .between)
     }
-
+    
     public func `in`(_ values: String...) -> Filter {
         let rhs = "(\(values.map { packType($0) }.joined(separator: ", ")))"
         return Filter(lhs: .column(self), rhs: .value(rhs), condition: .isIn)

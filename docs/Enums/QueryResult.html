@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>QueryResult Enum Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Enum/QueryResult" class="dashAnchor"></a>
+
+    <a title="QueryResult Enum Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          SwiftKuery Docs
+        </a>
+         (91% documented)
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/IBM-Swift/Swift-Kuery/">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">SwiftKuery Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      QueryResult Enum Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Column.html">Column</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/QueryBuilder.html">QueryBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/QueryBuilder/QuerySubstitutionNames.html">– QuerySubstitutionNames</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/Condition.html">Condition</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/Join.html">Join</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/OrderBy.html">OrderBy</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/QueryError.html">QueryError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/QueryResult.html">QueryResult</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2aaFTVS_6FilterS0__S0_">&amp;&amp;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2aaFTVS_6HavingS0__S0_">&amp;&amp;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_25AggregateColumnExpressionSi_VS_6Having">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnSi_VS_6Having">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnSS_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnS0__VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnSS_VS_6Having">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_25AggregateColumnExpressionSS_VS_6Having">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_22ScalarColumnExpressionSi_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnSi_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_22ScalarColumnExpressionSS_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi1gFTVS_25AggregateColumnExpressionSi_VS_6Having">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi1gFTCS_6ColumnSi_VS_6Having">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2geFTVS_22ScalarColumnExpressionSi_VS_6Filter">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2geFTCS_6ColumnSi_VS_6Filter">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery3avgFVS_25AggregateColumnExpressionS0_">avg(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery3avgFCS_6ColumnVS_25AggregateColumnExpression">avg(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery5countFVS_25AggregateColumnExpressionS0_">count(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery5countFCS_6ColumnVS_25AggregateColumnExpression">count(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery13countDistinctFVS_25AggregateColumnExpressionS0_">countDistinct(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery13countDistinctFCS_6ColumnVS_25AggregateColumnExpression">countDistinct(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery6deleteFT4fromCS_5Table_VS_6Delete">delete(from:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery4dropFT5tableCS_5Table_VS_3Raw">drop(table:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery5firstFCS_6ColumnVS_25AggregateColumnExpression">first(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery5firstFVS_25AggregateColumnExpressionS0_">first(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery6insertFT4intoCS_5Table11valueTuplesGSaTCS_6ColumnP____VS_6Insert">insert(into:valueTuples:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery4lastFVS_25AggregateColumnExpressionS0_">last(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery4lastFCS_6ColumnVS_25AggregateColumnExpression">last(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery5lcaseFVS_22ScalarColumnExpressionS0_">lcase(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery5lcaseFCS_6ColumnVS_22ScalarColumnExpression">lcase(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery3lenFCS_6ColumnVS_22ScalarColumnExpression">len(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery3lenFVS_22ScalarColumnExpressionS0_">len(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery3maxFCS_6ColumnVS_25AggregateColumnExpression">max(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery3maxFVS_25AggregateColumnExpressionS0_">max(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery3midFTVS_22ScalarColumnExpression5startSi6lengthSi_S0_">mid(_:start:length:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery3midFTCS_6Column5startSi6lengthSi_VS_22ScalarColumnExpression">mid(_:start:length:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery3minFCS_6ColumnVS_25AggregateColumnExpression">min(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery3minFVS_25AggregateColumnExpressionS0_">min(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery3nowFT_VS_22ScalarColumnExpression">now()</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery5roundFTCS_6Column2toSi_VS_22ScalarColumnExpression">round(_:to:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery5roundFTVS_22ScalarColumnExpression2toSi_S0_">round(_:to:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery6selectFTGSaPS_5Field__4fromCS_5Table_VS_6Select">select(_:from:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery3sumFVS_25AggregateColumnExpressionS0_">sum(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery3sumFCS_6ColumnVS_25AggregateColumnExpression">sum(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery8truncateFT5tableCS_5Table_VS_3Raw">truncate(table:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery5ucaseFVS_22ScalarColumnExpressionS0_">ucase(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery5ucaseFCS_6ColumnVS_22ScalarColumnExpression">ucase(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKuery6updateFTCS_5Table3setGSaTCS_6ColumnP___10conditionsGSqVS_6Filter__VS_6Update">update(_:set:conditions:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2ooFTVS_6FilterS0__S0_">||(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2ooFTVS_6HavingS0__S0_">||(_:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Buildable.html">Buildable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Connection.html">Connection</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Field.html">Field</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Query.html">Query</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/AggregateColumnExpression.html">AggregateColumnExpression</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/AggregateColumnExpression/AggregateFunction.html">– AggregateFunction</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Delete.html">Delete</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Filter.html">Filter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Filter/FilterPredicate.html">– FilterPredicate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Having.html">Having</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Having/HavingPredicate.html">– HavingPredicate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Insert.html">Insert</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Parameter.html">Parameter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Raw.html">Raw</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/RawField.html">RawField</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ScalarColumnExpression.html">ScalarColumnExpression</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ScalarColumnExpression/ScalarFunction.html">– ScalarFunction</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Select.html">Select</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Update.html">Update</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>QueryResult</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">QueryResult</span></code></pre>
+
+                </div>
+              </div>
+            <p>The result of the query execution.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FO10SwiftKuery11QueryResult5errorFMS0_FPs5Error_S0_"></a>
+                    <a name="//apple_ref/swift/Element/error" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FO10SwiftKuery11QueryResult5errorFMS0_FPs5Error_S0_">error</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An error occurred while executing the query.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="nf">error</span><span class="p">(</span><span class="kt">Error</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FO10SwiftKuery11QueryResult4rowsFMS0_FT6titlesGSaSS_4rowsGSaGSaGSqP_____S0_"></a>
+                    <a name="//apple_ref/swift/Element/rows" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FO10SwiftKuery11QueryResult4rowsFMS0_FT6titlesGSaSS_4rowsGSaGSaGSqP_____S0_">rows</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The result of the query execution as an Array of column titles and an Array of table rows.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="nf">rows</span><span class="p">(</span><span class="nv">titles</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">],</span> <span class="nv">rows</span><span class="p">:</span> <span class="p">[[</span><span class="kt">Any</span><span class="p">?]])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FO10SwiftKuery11QueryResult7successFMS0_FP_S0_"></a>
+                    <a name="//apple_ref/swift/Element/success" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FO10SwiftKuery11QueryResult7successFMS0_FP_S0_">success</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An indication whether the query was succesfully executed.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="nf">success</span><span class="p">(</span><span class="kt">Any</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FO10SwiftKuery11QueryResult13successNoDataFMS0_S0_"></a>
+                    <a name="//apple_ref/swift/Element/successNoData" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FO10SwiftKuery11QueryResult13successNoDataFMS0_S0_">successNoData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An indication whether the query was succesfully executed, and returned no data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="n">successNoData</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vO10SwiftKuery11QueryResult7successSb"></a>
+                    <a name="//apple_ref/swift/Property/success" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vO10SwiftKuery11QueryResult7successSb">success</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An indication whether the query was succesfully executed.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">success</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vO10SwiftKuery11QueryResult6asRowsGSqTGSaSS_GSaGSaGSqP______"></a>
+                    <a name="//apple_ref/swift/Property/asRows" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vO10SwiftKuery11QueryResult6asRowsGSqTGSaSS_GSaGSaGSqP______">asRows</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Data received from the query execution represented as a tuple of (titles, rows),
+where titles are the names of the returned columns,
+and rows are an Array of rows, i.e., an Array of Arrays of values.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">asRows</span><span class="p">:</span> <span class="p">([</span><span class="kt">String</span><span class="p">],</span> <span class="p">[[</span><span class="kt">Any</span><span class="p">?]])?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vO10SwiftKuery11QueryResult7asErrorGSqPs5Error__"></a>
+                    <a name="//apple_ref/swift/Property/asError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vO10SwiftKuery11QueryResult7asErrorGSqPs5Error__">asError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An error that may occur during query execution.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">asError</span><span class="p">:</span> <span class="kt">Error</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vO10SwiftKuery11QueryResult7asValueGSqP__"></a>
+                    <a name="//apple_ref/swift/Property/asValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vO10SwiftKuery11QueryResult7asValueGSqP__">asValue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The result of the query execution as a single value.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">asValue</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-11-03)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

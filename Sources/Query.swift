@@ -14,13 +14,29 @@
  limitations under the License.
  */
 
+// MARK: Query protocol
 
+/// Defines the protocol for queries.
 public protocol Query : Buildable {
+    /// The table on which the query operates.
     var table: Table { get }
 }
 
-extension Query {    
+public extension Query {
+    /// Execute the query.
+    ///
+    /// - Parameter connection: The plugin that implements the Connection protocol and executes the query.
+    /// - Parameter onCompletion: The function to be called once the execution of the query is completed.
     public func execute(_ connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
         connection.execute(query: self, onCompletion: onCompletion)
+    }
+    
+    /// Execute the query with parameters.
+    ///
+    /// - Parameter connection: The plugin that implements the Connection protocol and executes the query.
+    /// - Parameter parameters: An array of the query parameters.
+    /// - Parameter onCompletion: The function to be called once the execution of the query is completed.
+    public func execute(_ connection: Connection, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ())) {
+        connection.execute(query: self, parameters: parameters, onCompletion: onCompletion)
     }
 }

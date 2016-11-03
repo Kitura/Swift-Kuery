@@ -14,18 +14,35 @@
  limitations under the License.
  */
 
+// MARK: Join
+
+/// The SQL SELECT JOIN.
 public enum Join : Buildable {
+    /// The SQL INNER JOIN.
     case join(Table)
+    /// The SQL LEFT OUTER JOIN.
     case left(Table)
+    /// The SQL RIGHT OUTER JOIN.
     case right(Table)
+    /// The SQL FULL OUTER JOIN.
     case full(Table)
+    /// The SQL CROSS JOIN.
     case cross(Table)
+    /// The SQL NATURAL INNER JOIN.
     case natural(Table)
+    /// The SQL NATURAL LEFT OUTER JOIN.
     case naturalLeft(Table)
+    /// The SQL NATURAL RIGHT OUTER JOIN.
     case naturalRight(Table)
+    /// The SQL NATURAL FULL OUTER JOIN.
     case naturalFull(Table)
 
-    public func build(queryBuilder: QueryBuilder) throws -> String {
+    /// Build the query component using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the query component.
+    /// - Throws: QueryError.syntaxError if query build fails.
+    public func build(queryBuilder: QueryBuilder) -> String {
         switch self {
         case .join(let table):
             return " JOIN " + table.build(queryBuilder: queryBuilder)

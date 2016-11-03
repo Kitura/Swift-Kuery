@@ -14,8 +14,16 @@
  limitations under the License.
  */
 
+// MARK: Buildable protocol
 
+/// Defines the protocol which all query components must implement.
+/// Each query component should be able to return its representation as a String.
 public protocol Buildable {
+    /// Build the query component using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the query component.
+    /// - Throws: QueryError.syntaxError if query build fails.
     func build(queryBuilder: QueryBuilder) throws -> String
 }
 

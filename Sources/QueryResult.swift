@@ -14,13 +14,20 @@
  limitations under the License.
  */
 
+// MARK: QueryResult
+
+/// The result of the query execution.
 public enum QueryResult {
+    /// An error occurred while executing the query.
     case error(Error)
+    /// The result of the query execution as an Array of column titles and an Array of table rows.
     case rows(titles: [String], rows: [[Any?]])
+    /// An indication whether the query was succesfully executed.
     case success(Any)
+    /// An indication whether the query was succesfully executed, and returned no data.
     case successNoData
-    //...
     
+    /// An indication whether the query was succesfully executed.
     public var success: Bool {
         switch self {
         case .error:
@@ -30,6 +37,9 @@ public enum QueryResult {
         }
     }
     
+    /// Data received from the query execution represented as a tuple of (titles, rows),
+    /// where titles are the names of the returned columns,
+    /// and rows are an Array of rows, i.e., an Array of Arrays of values.
     public var asRows: ([String], [[Any?]])? {
         switch self {
         case .rows(let titles, let rows):
@@ -39,6 +49,7 @@ public enum QueryResult {
         }
     }
     
+    /// An error that may occur during query execution.
     public var asError: Error? {
         switch self {
         case .error(let error):
@@ -48,11 +59,11 @@ public enum QueryResult {
         }
     }
     
+    /// The result of the query execution as a single value.
     public var asValue: Any? {
         switch self {
         case .success(let value):
             return value
-            
         default:
             return nil
         }

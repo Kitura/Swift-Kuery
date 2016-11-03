@@ -14,17 +14,32 @@
  limitations under the License.
  */
 
+// MARK: RawField
+
+/// An arbitrary field represented by a String.
 public struct RawField : Field {
-    public let query: String
+    /// A String containg the field.
+    public let field: String
     
+    /// The alias of the field.
     public var alias: String?
     
-    public init(_ query: String) {
-        self.query = query
+    /// Initialize an instance of RawField.
+    ///
+    /// - Parameter field: A String containing the field.
+    public init(_ field: String) {
+        self.field = field
     }
     
-    public func build(queryBuilder: QueryBuilder) throws -> String {
-        return query
+    /// Build the field using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the field.
+    public func build(queryBuilder: QueryBuilder) -> String {
+        var result = field
+        if let alias = alias {
+            result += " AS " + alias
+        }
+        return result
     }
 }
-

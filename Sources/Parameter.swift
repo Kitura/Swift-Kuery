@@ -14,14 +14,27 @@
  limitations under the License.
  */
 
+// MARK: Parameter
 
+/// Query parameter, either numbered, or named, or just marked with a marker.
 public struct Parameter : Buildable {
+    /// An optional name of the parameter.
     public private (set) var name: String?
     
+    /// Initialize an instance of Parameter.
+    ///
+    /// - Parameter name: An optional name of the parameter.
     public init(_ name: String?=nil) {
         self.name = name
     }
     
+    /// Build the parameter using `QueryBuilder`. If the parameter's name is set,
+    /// return it along with the named parameter marker in `QueryBuilder`. Otherwise, 
+    /// return the numbered parameter marker in `QueryBuilder`. 
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the parameter.
+    /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
         if let name = name {
             let marker = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.namedParameter.rawValue]

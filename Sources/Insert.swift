@@ -14,12 +14,25 @@
  limitations under the License.
  */
 
+// MARK: Insert
+
+/// The SQL INSERT statement.
 public struct Insert : Query {
-    public let columns: [Column]?
-    public let values: [[Any]]
+    /// The table to insert rows.
     public let table: Table
     
-   public init(into table: Table, columns: [Column]?, values: [Any]) {
+    /// An array of columns to insert. If not specified, values of all the columns have to be provided.
+    public let columns: [Column]?
+    
+    /// An array of rows (values to insert in each row).
+    public let values: [[Any]]
+    
+    /// Initialize an instance of Insert.
+    ///
+    /// - Parameter into: The table to insert rows.
+    /// - Parameter columns: An optional array of columns to insert. If nil, values of all the columns have to be provided.
+    /// - Parameter values: An array containg the row to insert.
+    public init(into table: Table, columns: [Column]?, values: [Any]) {
         self.columns = columns
         var valuesToInsert = [[Any]]()
         valuesToInsert.append(values)
@@ -27,16 +40,29 @@ public struct Insert : Query {
         self.table = table
     }
     
+    /// Initialize an instance of Insert.
+    ///
+    /// - Parameter into: The table to insert rows.
+    /// - Parameter columns: An optional array of columns to insert. If not specified, values of all the columns have to be provided.
+    /// - Parameter values: An array of rows (values to insert in each row).
     public init(into table: Table, columns: [Column]?=nil, rows: [[Any]]) {
         self.columns = columns
         self.values = rows
         self.table = table
     }
     
+    /// Initialize an instance of Insert.
+    ///
+    /// - Parameter into: The table to insert rows.
+    /// - Parameter values: A list of values (the row) to insert.
     public init(into table: Table, values: Any...) {
         self.init(into: table, columns: nil, values: values)
     }
     
+    /// Initialize an instance of Insert.
+    ///
+    /// - Parameter into: The table to insert rows.
+    /// - Parameter valueTuples: An array of (column, value) pairs to insert.
     public init(into table: Table, valueTuples: [(Column, Any)]) {
         var columnsArray = Array<Column>()
         var valuesArray = Array<Any>()
@@ -47,10 +73,19 @@ public struct Insert : Query {
         self.init(into: table, columns: columnsArray, values: valuesArray)
     }
     
+    /// Initialize an instance of Insert.
+    ///
+    /// - Parameter into: The table to insert rows.
+    /// - Parameter valueTuples: A list of (column, value) pairs to insert.
     public init(into table: Table, valueTuples: (Column, Any)...) {
         self.init(into: table, valueTuples: valueTuples)
     }
-        
+    
+    /// Build the query using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the query.
+    /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
         var result = "INSERT INTO " + table.build(queryBuilder: queryBuilder) + " "
         if let columns = columns, columns.count != 0 {

@@ -14,25 +14,42 @@
  limitations under the License.
  */
 
+// MARK: Column
+
+/// Definition of table column.
 public class Column : Field {
+    /// The name of the column.
     public private (set) var name: String
-        
+    
+    /// The alias of the column.
     public var alias: String?
     
+    /// The table to which the column belongs.
     public weak var table: Table!
 
+    /// Initialize an instance of Column.
+    ///
+    /// - Parameter name: The name of the column.
     public init(_ name: String) {
         self.name = name
     }
     
-    public func build(queryBuilder: QueryBuilder) throws -> String {
+    /// Build the column using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the column.
+    public func build(queryBuilder: QueryBuilder) -> String {
         var result = table.nameInQuery() + "." + name
         if let alias = alias {
             result += " AS " + alias
         }
         return result
     }
-    
+
+    /// Add alias to the column, i.e., implement SQL AS operator.
+    ///
+    /// - Parameter newName: A String containing the alias for the column.
+    /// - Returns: A new Column instance with the alias.
     public func `as`(_ newName: String) -> Column {
         let new = Column(name)
         new.alias = newName
