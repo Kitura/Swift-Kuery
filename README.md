@@ -66,7 +66,7 @@ connection.connect() { error: QueryError in
 ```
 Now lets build the query. Suppose we want to retrieve the average grades for courses with average greater than 90, and sort the results by the average ascending. Here is the SQL query we need to build:
 ```SQL
-SELECT course, ROUND(AVG(grade), 1) AS "average grade" FROM grades
+SELECT course, ROUND(AVG(grade), 1) AS "average" FROM grades
 GROUP BY course
 HAVING AVG(grade) > 90
 ORDER BY AVG(grade) ASC
