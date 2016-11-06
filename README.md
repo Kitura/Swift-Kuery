@@ -21,6 +21,7 @@ Swift-Kuery is easy to learn, consumable framework that comes with a set of [imp
 
 ## Example
 This example demonstrates how to execute an SQL query using Swift-Kuery and Swift-Kuery-PostgreSQL. It assumes there is a PostgreSQL server running on localhost:5432, that contains a table called Grades:
+
 ```
  id   |  course   | grade
 ------+-----------+-------
@@ -37,12 +38,14 @@ This example demonstrates how to execute an SQL query using Swift-Kuery and Swif
 ```
 
 First we import Swift-Kuery and Swift-Kuery-PostgreSQL:
+
 ```swift
 import SwiftKuery
 import SwiftKueryPostgreSQL
 ```
 
 Now we create a `Table` that corresponds to our Grades table in PostgreSQL - we set the table's name and its columns:
+
 ```swift
 class Grades : Table {
     let name = "Grades"
@@ -54,6 +57,7 @@ let grades = Grades()
 ```
 
 Next we create a connection to PostgreSQL and connect to it. Note that the API is asynchronous:
+
 ```swift
 let connection = PostgreSQLConnection(host: "localhost", port: 5432, options: [.userName("username"), .password("password")])
 connection.connect() { error: QueryError in
@@ -64,7 +68,9 @@ connection.connect() { error: QueryError in
     // Build and execute your query here.
   }
 ```
+
 Now lets build the query. Suppose we want to retrieve the average grades for courses with average greater than 90, and sort the results by the average ascending. Here is the SQL query we need to build:
+
 ```SQL
 SELECT course, ROUND(AVG(grade), 1) AS "average" FROM grades
 GROUP BY course
@@ -74,6 +80,7 @@ ORDER BY AVG(grade) ASC
 Note, that we also round the average grades and alias this column in the result as "average".
 
 Here is how to create such query using Swift-Kuery:
+
 ```swift
 let query = Select(grades.course, round(avg(grades.grade), 1).as("average"), from: grades)
             .group(by: grades.course)
@@ -83,6 +90,7 @@ let query = Select(grades.course, round(avg(grades.grade), 1).as("average"), fro
 As you can see, it is very similar to the SQL query syntax.
 
 Now we execute the created query on our PostgreSQL connection:
+
 ```swift
 connection.execute(query: query) { result: QueryResult in
   if let (titles, rows) = result.asRows {
@@ -101,6 +109,7 @@ connection.execute(query: query) { result: QueryResult in
 }
 ```
 The expected result is:
+
 ```
 course     average
 chemistry  92.0
@@ -111,6 +120,7 @@ history    96.0
 Lets see more examples of how to build and execute SQL queries using Swift-Kuery.
 
 #### Classes used in the examples:
+
 ```swift
 class T1 {
   let name = "t1"
@@ -126,6 +136,7 @@ class T2 {
 ```
 <br>
 __SELECT * FROM t1;__
+
 ```swift
 let t1 = T1()
 
@@ -170,6 +181,7 @@ __SELECT UCASE(a) AS name FROM t1
  GROUP BY a         
  HAVING SUM(b) > 3        
  ORDER BY a DESC;__
+
 ```swift
 ...
 let s = Select(ucase(t1.a).as("name"), from: t1)
@@ -183,6 +195,7 @@ let s = Select(ucase(t1.a).as("name"), from: t1)
 <br>
 __INSERT INTO t1             
 VALUES ('apple', 10), ('apricot', 3), ('banana', 17);__
+
 ```swift
 ...
 let i = Insert(into: t1, rows: [["apple", 10], ["apricot", 3], ["banana", 17]])
@@ -200,6 +213,7 @@ connection.execute(query: i) { queryResult in
 <br>
 __INSERT INTO t1             
 VALUES ('apple', 10);__
+
 ```swift
 ...
 let i = Insert(into: t1, values: "apple", 10)
@@ -210,6 +224,7 @@ let i = Insert(into: t1, values: "apple", 10)
 <br>
 __INSERT INTO t1 (a, b)              
 VALUES ('apricot', '3');__
+
 ```swift
 ...
 let i = Insert(into: t1, valueTuples: (t1.a, "apricot"), (t1.b, "3"))
@@ -219,6 +234,7 @@ let i = Insert(into: t1, valueTuples: (t1.a, "apricot"), (t1.b, "3"))
 <br>
 __INSERT INTO t1 (a, b)              
 VALUES ('apricot', '3');__
+
 ```swift
 ...
 let i = Insert(into: t1, columns: [t1.a, t1.b], values: ["apricot", 3])
@@ -227,6 +243,7 @@ let i = Insert(into: t1, columns: [t1.a, t1.b], values: ["apricot", 3])
 <br>
 __UPDATE t1 SET a = 'peach', b = 2            
 WHERE a = 'banana';__
+
 ```swift
 ...
 let u = Update(t1, set: [(t1.a, "peach"), (t1.b, 2)])
@@ -238,6 +255,7 @@ let u = Update(t1, set: [(t1.a, "peach"), (t1.b, 2)])
 __SELECT * FROM t1 AS left            
 LEFT JOIN t2 AS right           
 ON left.b = right.b;__
+
 ```swift
 let t1 = T1()
 let t2 = T2()
@@ -254,6 +272,7 @@ let s2 = Select(from: leftTable)
 __SELECT * FROM t1           
 JOIN t2           
 USING (b);__
+
 ```swift
 ...
 let s2 = Select(from: t1)
@@ -265,6 +284,7 @@ let s2 = Select(from: t1)
 <br>
 __INSERT INTO t1             
 VALUES (@0,@1);__
+
 ```swift
 let i = Insert(into: t1, values: Parameter(), Parameter())
 
@@ -276,6 +296,7 @@ connection.execute(query: i1, parameters: "banana", 28) { queryResult in
 <br>
 __INSERT INTO t1             
 VALUES (@fruit,@number);__
+
 ```swift
 let i = Insert(into: t1, values: Parameter("fruit"), Parameter("number"))
 
@@ -285,6 +306,7 @@ connection.execute(query: i1, parameters: ["number" : 28, "fruit" : "banana"]) {
 ```
 <br>
 __Raw query:__
+
 ```swift
 connection.execute("CREATE TABLE myTable (a varchar(40), b integer)") {  queryResult in
   ...
@@ -296,6 +318,7 @@ __SELECT LEFT(a, 2) as raw FROM t1
  GROUP BY a         
  HAVING sum(b) > 3               
  ORDER BY a DESC;__
+
 ```swift
 ...
 let s = Select(RawField("LEFT(a, 2) as raw"), from: t1)

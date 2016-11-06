@@ -60,6 +60,18 @@ public struct AggregateColumnExpression : Field {
         case count(field: Field)
         /// The SQL COUNT DISTINCT function.
         case countDistinct(field: Field)
+        /// The SQL UCASE function.
+        case ucase(field: Field)
+        /// The SQL LCASE function.
+        case lcase(field: Field)
+        /// The SQL ROUND function.
+        case round(field: Field, to: Int)
+        /// The SQL MID function.
+        case mid(field: Field, start: Int, length: Int)
+        /// The SQL LEN function.
+        case len(field: Field)
+        /// The SQL FORMAT function.
+        case format(field: Field, format: String)
         
         /// Build the query component using `QueryBuilder`.
         ///
@@ -84,6 +96,18 @@ public struct AggregateColumnExpression : Field {
                 return try "COUNT(" + field.build(queryBuilder: queryBuilder) + ")"
             case .countDistinct(let field):
                 return try "COUNT(DISTINCT(" + field.build(queryBuilder: queryBuilder) + "))"
+            case .ucase(let field):
+                return try queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.ucase.rawValue] + "(" + field.build(queryBuilder: queryBuilder) + ")"
+            case .lcase(let field):
+                return try queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.lcase.rawValue] + "(" + field.build(queryBuilder: queryBuilder) + ")"
+            case .round(let field, let decimal):
+                return try "ROUND(" + field.build(queryBuilder: queryBuilder) + ", \(decimal))"
+            case .mid(let field, let start, let length):
+                return try "MID(" + field.build(queryBuilder: queryBuilder) + ", \(start), \(length))"
+            case .len(let field):
+                return try "LEN(" + field.build(queryBuilder: queryBuilder) + ")"
+            case .format(let field, let format):
+                return try "FORMAT(" + field.build(queryBuilder: queryBuilder) + ", \(format))"
             }
         }
     }
@@ -91,128 +115,109 @@ public struct AggregateColumnExpression : Field {
 
 /// Create an `AggregateColumnExpression` using AVG function.
 ///
-/// - Parameter field: The `AggregateColumnExpression` to apply the function on.
+/// - Parameter field: The `Field` to apply the function on.
 /// - Returns: An instance of `AggregateColumnExpression`.
-public func avg(_ field: AggregateColumnExpression) -> AggregateColumnExpression {
+public func avg(_ field: Field) -> AggregateColumnExpression {
     return AggregateColumnExpression(.avg(field: field))
 }
 
 /// Create an `AggregateColumnExpression` using MAX function.
 ///
-/// - Parameter field: The `AggregateColumnExpression` to apply the function on.
+/// - Parameter field: The `Field` to apply the function on.
 /// - Returns: An instance of `AggregateColumnExpression`.
-public func max(_ field: AggregateColumnExpression) -> AggregateColumnExpression {
+public func max(_ field: Field) -> AggregateColumnExpression {
     return AggregateColumnExpression(.max(field: field))
 }
 
 /// Create an `AggregateColumnExpression` using MIN function.
 ///
-/// - Parameter field: The `AggregateColumnExpression` to apply the function on.
+/// - Parameter field: The `Field` to apply the function on.
 /// - Returns: An instance of `AggregateColumnExpression`.
-public func min(_ field: AggregateColumnExpression) -> AggregateColumnExpression {
+public func min(_ field: Field) -> AggregateColumnExpression {
     return AggregateColumnExpression(.min(field: field))
 }
 
 /// Create an `AggregateColumnExpression` using SUM function.
 ///
-/// - Parameter field: The `AggregateColumnExpression` to apply the function on.
+/// - Parameter field: The `Field` to apply the function on.
 /// - Returns: An instance of `AggregateColumnExpression`.
-public func sum(_ field: AggregateColumnExpression) -> AggregateColumnExpression {
+public func sum(_ field: Field) -> AggregateColumnExpression {
     return AggregateColumnExpression(.sum(field: field))
 }
 
 /// Create an `AggregateColumnExpression` using LAST function.
 ///
-/// - Parameter field: The `AggregateColumnExpression` to apply the function on.
+/// - Parameter field: The `Field` to apply the function on.
 /// - Returns: An instance of `AggregateColumnExpression`.
-public func last(_ field: AggregateColumnExpression) -> AggregateColumnExpression {
+public func last(_ field: Field) -> AggregateColumnExpression {
     return AggregateColumnExpression(.last(field: field))
 }
 
 /// Create an `AggregateColumnExpression` using FIRST function.
 ///
-/// - Parameter field: The `AggregateColumnExpression` to apply the function on.
+/// - Parameter field: The `Field` to apply the function on.
 /// - Returns: An instance of `AggregateColumnExpression`.
-public func first(_ field: AggregateColumnExpression) -> AggregateColumnExpression {
+public func first(_ field: Field) -> AggregateColumnExpression {
     return AggregateColumnExpression(.first(field: field))
 }
 
 /// Create an `AggregateColumnExpression` using COUNT function.
 ///
-/// - Parameter field: The `AggregateColumnExpression` to apply the function on.
+/// - Parameter field: The `Field` to apply the function on.
 /// - Returns: An instance of `AggregateColumnExpression`.
-public func count(_ field: AggregateColumnExpression) -> AggregateColumnExpression {
+public func count(_ field: Field) -> AggregateColumnExpression {
     return AggregateColumnExpression(.count(field: field))
 }
 
 /// Create an `AggregateColumnExpression` using COUNT DISTINCT function.
 ///
+/// - Parameter field: The `Field` to apply the function on.
+/// - Returns: An instance of `AggregateColumnExpression`.
+public func countDistinct(_ field: Field) -> AggregateColumnExpression {
+    return AggregateColumnExpression(.countDistinct(field: field))
+}
+
+/// Create a `AggregateColumnExpression` using LEN function.
+///
 /// - Parameter field: The `AggregateColumnExpression` to apply the function on.
 /// - Returns: An instance of `AggregateColumnExpression`.
-public func countDistinct(_ field: AggregateColumnExpression) -> AggregateColumnExpression {
-    return AggregateColumnExpression(.countDistinct(field: field))
+public func len(_ field: AggregateColumnExpression) -> AggregateColumnExpression {
+    return AggregateColumnExpression(.len(field: field))
 }
 
-/// Create an `AggregateColumnExpression` using AVG function.
+/// Create a `AggregateColumnExpression` using UCASE function.
 ///
-/// - Parameter field: The `Column` to apply the function on.
+/// - Parameter field: The `AggregateColumnExpression` to apply the function on.
 /// - Returns: An instance of `AggregateColumnExpression`.
-public func avg(_ field: Column) -> AggregateColumnExpression {
-    return AggregateColumnExpression(.avg(field: field))
+public func ucase(_ field: AggregateColumnExpression) -> AggregateColumnExpression {
+    return AggregateColumnExpression(.ucase(field: field))
 }
 
-/// Create an `AggregateColumnExpression` using MAX function.
+/// Create a `AggregateColumnExpression` using LCASE function.
 ///
-/// - Parameter field: The `Column` to apply the function on.
+/// - Parameter field: The `AggregateColumnExpression` to apply the function on.
 /// - Returns: An instance of `AggregateColumnExpression`.
-public func max(_ field: Column) -> AggregateColumnExpression {
-    return AggregateColumnExpression(.max(field: field))
+public func lcase(_ field: AggregateColumnExpression) -> AggregateColumnExpression {
+    return AggregateColumnExpression(.lcase(field: field))
 }
 
-/// Create an `AggregateColumnExpression` using MIN function.
+/// Create a `AggregateColumnExpression` using ROUND function.
 ///
-/// - Parameter field: The `Column` to apply the function on.
+/// - Parameter field: The `AggregateColumnExpression` to apply the function on.
+/// - Parameter to: The decimal to round the values to.
 /// - Returns: An instance of `AggregateColumnExpression`.
-public func min(_ field: Column) -> AggregateColumnExpression {
-    return AggregateColumnExpression(.min(field: field))
+public func round(_ field: AggregateColumnExpression, to decimal: Int) -> AggregateColumnExpression {
+    return AggregateColumnExpression(.round(field: field, to: decimal))
 }
 
-/// Create an `AggregateColumnExpression` using SUM function.
+/// Create a `AggregateColumnExpression` using MID function.
 ///
-/// - Parameter field: The `Column` to apply the function on.
+/// - Parameter field: The `AggregateColumnExpression` to apply the function on.
+/// - Parameter start: The starting position for the text extraction.
+/// - Parameter length: The number of characters to return.
 /// - Returns: An instance of `AggregateColumnExpression`.
-public func sum(_ field: Column) -> AggregateColumnExpression {
-    return AggregateColumnExpression(.sum(field: field))
+public func mid(_ field: AggregateColumnExpression, start: Int, length: Int) -> AggregateColumnExpression {
+    return AggregateColumnExpression(.mid(field: field, start: start, length: length))
 }
 
-/// Create an `AggregateColumnExpression` using LAST function.
-///
-/// - Parameter field: The `Column` to apply the function on.
-/// - Returns: An instance of `AggregateColumnExpression`.
-public func last(_ field: Column) -> AggregateColumnExpression {
-    return AggregateColumnExpression(.last(field: field))
-}
 
-/// Create an `AggregateColumnExpression` using FIRST function.
-///
-/// - Parameter field: The `Column` to apply the function on.
-/// - Returns: An instance of `AggregateColumnExpression`.
-public func first(_ field: Column) -> AggregateColumnExpression {
-    return AggregateColumnExpression(.first(field: field))
-}
-
-/// Create an `AggregateColumnExpression` using COUNT function.
-///
-/// - Parameter field: The `Column` to apply the function on.
-/// - Returns: An instance of `AggregateColumnExpression`.
-public func count(_ field: Column) -> AggregateColumnExpression {
-    return AggregateColumnExpression(.count(field: field))
-}
-
-/// Create an`AggregateColumnExpression` using COUNT DISTINCT function.
-///
-/// - Parameter field: The `Column` to apply the function on.
-/// - Returns: An instance of `AggregateColumnExpression`.
-public func countDistinct(_ field: Column) -> AggregateColumnExpression {
-    return AggregateColumnExpression(.countDistinct(field: field))
-}
