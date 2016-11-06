@@ -1,6 +1,11 @@
 import XCTest
-@testable import Swift_KueryTests
+@testable import SwiftKueryTests
 
 XCTMain([
-     testCase(Swift_KueryTests.allTests),
+     testCase(TestSelect.allTests),
+     testCase(TestInsert.allTests),
+     testCase(TestUpdate.allTests),
+     testCase(TestAlias.allTests),
+     testCase(TestParameters.allTests),
+     testCase(TestJoin.allTests),
 ])
