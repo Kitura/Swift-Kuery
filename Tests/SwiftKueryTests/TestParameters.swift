@@ -51,5 +51,20 @@ class TestParameters: XCTestCase {
         kuery = connection.descriptionOf(query: u)
         query = "UPDATE tableParameters SET a = @name, b = ?1 WHERE tableParameters.a = 'banana'"
         XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+
+        let d = Delete(from: t)
+            .where(t.b == Parameter())
+        kuery = connection.descriptionOf(query: d)
+        query = "DELETE FROM tableParameters WHERE tableParameters.b = ?1"
+        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+
+        let s = Select(t.a, from: t)
+            .where(t.b.notBetween(Parameter(), and: Parameter()))
+            .group(by: t.a)
+            .order(by: .DESC(t.a))
+            .having(sum(t.b) < Parameter())
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT tableParameters.a FROM tableParameters WHERE tableParameters.b NOT BETWEEN ?1 AND ?2 GROUP BY tableParameters.a HAVING (SUM(tableParameters.b)) < ?3 ORDER BY tableParameters.a DESC"
+        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
     }
 }

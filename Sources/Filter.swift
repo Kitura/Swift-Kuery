@@ -53,6 +53,8 @@ public struct Filter : Buildable {
                 rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
             case .arrayOfBool(let array):
                 rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+            case .arrayOfParameter(let array):
+                rhsBuilt = try packType(array[0], queryBuilder: queryBuilder) + " AND " + packType(array[1], queryBuilder: queryBuilder)
             default:
                 throw QueryError.syntaxError("Wrong type for rhs operand in \(conditionBuilt) expression")
             }
@@ -69,6 +71,8 @@ public struct Filter : Buildable {
                 rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
             case .arrayOfBool(let array):
                 rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+            case .arrayOfParameter(let array):
+                rhsBuilt = try "(\(array.map { try packType($0, queryBuilder: queryBuilder) }.joined(separator: ", ")))"
             default:
                 throw QueryError.syntaxError("Wrong type for rhs operand in \(conditionBuilt) expression")
             }
@@ -107,6 +111,10 @@ public struct Filter : Buildable {
         case column(Column)
         /// A `ScalarColumnExpression`.
         case scalarColumnExpression(ScalarColumnExpression)
+        /// A parameter.
+        case parameter(Parameter)
+        /// An array of Parameter.
+        case arrayOfParameter([Parameter])
         
         /// Build the filter predicate using `QueryBuilder`.
         ///
@@ -131,6 +139,8 @@ public struct Filter : Buildable {
                 return column.build(queryBuilder: queryBuilder)
             case .scalarColumnExpression(let scalarColumnExpression):
                 return try scalarColumnExpression.build(queryBuilder: queryBuilder)
+            case .parameter(let parameter):
+                return try parameter.build(queryBuilder: queryBuilder)
             default:
                 return ""
             }

@@ -49,6 +49,7 @@ public struct Delete: Query {
         else if let rawWhereClause = rawWhereClause {
             result += " WHERE " + rawWhereClause
         }
+        result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
     

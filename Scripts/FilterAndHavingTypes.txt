@@ -18,6 +18,10 @@ Filter ScalarColumnExpression Double
 Filter Double ScalarColumnExpression
 Filter Column Double
 Filter Double Column
+Filter ScalarColumnExpression Parameter
+Filter Parameter ScalarColumnExpression
+Filter Column Parameter
+Filter Parameter Column
 Having AggregateColumnExpression String
 Having String AggregateColumnExpression
 Having Column String
@@ -38,3 +42,7 @@ Having AggregateColumnExpression Double
 Having Double AggregateColumnExpression
 Having Column Double
 Having Double Column
+Having AggregateColumnExpression Parameter
+Having Parameter AggregateColumnExpression
+Having Column Parameter
+Having Parameter Column

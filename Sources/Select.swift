@@ -136,6 +136,7 @@ public struct Select : Query {
         if let top = top {
             result += " LIMIT \(top)"
         }
+        result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
 

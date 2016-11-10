@@ -54,6 +54,8 @@ public struct Having : Buildable {
                 rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
             case .arrayOfBool(let array):
                 rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+            case .arrayOfParameter(let array):
+                rhsBuilt = try packType(array[0], queryBuilder: queryBuilder) + " AND " + packType(array[1], queryBuilder: queryBuilder)
             default:
                 throw QueryError.syntaxError("Wrong type for rhs operand in \(conditionBuilt) expression")
             }
@@ -70,6 +72,8 @@ public struct Having : Buildable {
                 rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
             case .arrayOfBool(let array):
                 rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+            case .arrayOfParameter(let array):
+                rhsBuilt = try "(\(array.map { try packType($0, queryBuilder: queryBuilder) }.joined(separator: ", ")))"
             default:
                 throw QueryError.syntaxError("Wrong type for rhs operand in \(conditionBuilt) expression")
             }
@@ -108,6 +112,10 @@ public struct Having : Buildable {
         case column(Column)
         /// An `AggregateColumnExpression`.
         case aggregateColumnExpression(AggregateColumnExpression)
+        /// A parameter.
+        case parameter(Parameter)
+        /// An array of Parameter.
+        case arrayOfParameter([Parameter])
         
         /// Build the having predicate using `QueryBuilder`.
         ///
@@ -132,6 +140,8 @@ public struct Having : Buildable {
                 return "(" + column.build(queryBuilder: queryBuilder) + ")"
             case .aggregateColumnExpression(let aggregateColumnExpression):
                 return try "(" + aggregateColumnExpression.build(queryBuilder: queryBuilder) + ")"
+            case .parameter(let parameter):
+                return try parameter.build(queryBuilder: queryBuilder)
             default:
                 return ""
             }
