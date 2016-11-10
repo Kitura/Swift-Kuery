@@ -39,7 +39,45 @@ public struct Having : Buildable {
     /// - Returns: A String representation of the clause.
     /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
-        return try lhs.build(queryBuilder: queryBuilder) + " " + condition.build(queryBuilder: queryBuilder) + " " + rhs.build(queryBuilder: queryBuilder)
+        let lhsBuilt = try lhs.build(queryBuilder: queryBuilder)
+        let conditionBuilt = condition.build(queryBuilder: queryBuilder)
+        var rhsBuilt = ""
+        if condition == .between || condition == .notBetween {
+            switch rhs {
+            case .arrayOfString(let array):
+                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+            case .arrayOfInt(let array):
+                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+            case .arrayOfFloat(let array):
+                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+            case .arrayOfDouble(let array):
+                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+            case .arrayOfBool(let array):
+                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+            default:
+                throw QueryError.syntaxError("Wrong type for rhs operand in \(conditionBuilt) expression")
+            }
+        }
+        else if condition == .in || condition == .notIn {
+            switch rhs {
+            case .arrayOfString(let array):
+                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+            case .arrayOfInt(let array):
+                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+            case .arrayOfFloat(let array):
+                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+            case .arrayOfDouble(let array):
+                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+            case .arrayOfBool(let array):
+                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+            default:
+                throw QueryError.syntaxError("Wrong type for rhs operand in \(conditionBuilt) expression")
+            }
+        }
+        else {
+            rhsBuilt = try rhs.build(queryBuilder: queryBuilder)
+        }
+        return lhsBuilt + " " + conditionBuilt + " " + rhsBuilt
     }
     
     /// An operand of `Having`: either a `Having` itself, or a value, a column, or an `AggregateColumnExpression`.
@@ -48,10 +86,24 @@ public struct Having : Buildable {
         case havingClause(Having)
         /// A String.
         case string(String)
-        /// A number.
-        case number(NSNumber)
-        /// A value of type Any.
-        case value(Any)
+        /// An integer.
+        case int(Int)
+        /// A float.
+        case float(Float)
+        /// A double.
+        case double(Double)
+        /// A boolean.
+        case bool(Bool)
+        /// An array of String.
+        case arrayOfString([String])
+        /// An array of Int.
+        case arrayOfInt([Int])
+        /// An array of Float.
+        case arrayOfFloat([Float])
+        /// An array of Double.
+        case arrayOfDouble([Double])
+        /// An array of Bool.
+        case arrayOfBool([Bool])
         /// A `Column`.
         case column(Column)
         /// An `AggregateColumnExpression`.
@@ -68,41 +120,23 @@ public struct Having : Buildable {
                 return try "(" + havingClause.build(queryBuilder: queryBuilder) + ")"
             case .string(let string):
                 return packType(string)
-            case .number(let number):
-                return packType(number)
-            case .value(let value):
+            case .int(let value):
                 return packType(value)
+            case .float(let value):
+                return packType(value)
+            case .double(let value):
+                return packType(value)
+            case .bool(let value):
+                return String(value)
             case .column(let column):
                 return "(" + column.build(queryBuilder: queryBuilder) + ")"
             case .aggregateColumnExpression(let aggregateColumnExpression):
                 return try "(" + aggregateColumnExpression.build(queryBuilder: queryBuilder) + ")"
+            default:
+                return ""
             }
         }
     }
-}
-
-public func == (lhs: AggregateColumnExpression, rhs: String) -> Having {
-    return Having(lhs: .aggregateColumnExpression(lhs), rhs: .string(rhs), condition: .equal)
-}
-
-public func == (lhs: Column, rhs: String) -> Having {
-    return Having(lhs: .column(lhs), rhs: .string(rhs), condition: .equal)
-}
-
-public func == (lhs: Column, rhs: Int) -> Having {
-    return Having(lhs: .column(lhs), rhs: .number(NSNumber(value: rhs)), condition: .equal)
-}
-
-public func > (lhs: Column, rhs: Int) -> Having {
-    return Having(lhs: .column(lhs), rhs: .number(NSNumber(value: rhs)), condition: .greaterThan)
-}
-
-public func > (lhs: AggregateColumnExpression, rhs: Int) -> Having {
-    return Having(lhs: .aggregateColumnExpression(lhs), rhs: .number(NSNumber(value: rhs)), condition: .greaterThan)
-}
-
-public func == (lhs: AggregateColumnExpression, rhs: Int) -> Having {
-    return Having(lhs: .aggregateColumnExpression(lhs), rhs: .number(NSNumber(value: rhs)), condition: .equal)
 }
 
 public func || (lhs: Having, rhs: Having) -> Having {

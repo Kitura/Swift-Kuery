@@ -1,0 +1,6 @@
+== equal
+>= greaterThanOrEqual
+> greaterThan
+<= lessThanOrEqual
+< lessThan
+!= notEqual

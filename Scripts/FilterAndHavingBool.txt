@@ -1,0 +1,16 @@
+== equal Filter ScalarColumnExpression Bool
+== equal Filter Bool ScalarColumnExpression
+== equal Filter Column Bool
+== equal Filter Bool Column
+!= notEqual Filter ScalarColumnExpression Bool
+!= notEqual Filter Bool ScalarColumnExpression
+!= notEqual Filter Column Bool
+!= notEqual Filter Bool Column
+== equal Having AggregateColumnExpression Bool
+== equal Having Bool AggregateColumnExpression
+== equal Having Column Bool
+== equal Having Bool Column
+!= notEqual Having AggregateColumnExpression Bool
+!= notEqual Having Bool AggregateColumnExpression
+!= notEqual Having Column Bool
+!= notEqual Having Bool Column

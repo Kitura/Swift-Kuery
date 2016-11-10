@@ -55,12 +55,12 @@ class TestSelect: XCTestCase {
         XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
         
         s = Select(t.a, from: t)
-            .where(t.b >= 0)
+            .where(t.b >= 0.76)
             .group(by: t.a)
             .order(by: .DESC(t.a))
             .having(sum(t.b) > 3)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT tableSelect.a FROM tableSelect WHERE tableSelect.b >= 0 GROUP BY tableSelect.a HAVING (SUM(tableSelect.b)) > 3 ORDER BY tableSelect.a DESC"
+        query = "SELECT tableSelect.a FROM tableSelect WHERE tableSelect.b >= 0.76 GROUP BY tableSelect.a HAVING (SUM(tableSelect.b)) > 3 ORDER BY tableSelect.a DESC"
         XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
         
         s = Select(RawField("left(a, 2) as raw"), from: t)

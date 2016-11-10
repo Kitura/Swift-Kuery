@@ -38,7 +38,45 @@ public struct Filter : Buildable {
     /// - Returns: A String representation of the filter.
     /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
-        return try lhs.build(queryBuilder: queryBuilder) + " " + condition.build(queryBuilder: queryBuilder) + " " + rhs.build(queryBuilder: queryBuilder)
+        let lhsBuilt = try lhs.build(queryBuilder: queryBuilder)
+        let conditionBuilt = condition.build(queryBuilder: queryBuilder)
+        var rhsBuilt = ""
+        if condition == .between || condition == .notBetween {
+            switch rhs {
+            case .arrayOfString(let array):
+                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+            case .arrayOfInt(let array):
+                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+            case .arrayOfFloat(let array):
+                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+            case .arrayOfDouble(let array):
+                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+            case .arrayOfBool(let array):
+                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+            default:
+                throw QueryError.syntaxError("Wrong type for rhs operand in \(conditionBuilt) expression")
+            }
+        }
+        else if condition == .in || condition == .notIn {
+            switch rhs {
+            case .arrayOfString(let array):
+                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+            case .arrayOfInt(let array):
+                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+            case .arrayOfFloat(let array):
+                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+            case .arrayOfDouble(let array):
+                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+            case .arrayOfBool(let array):
+                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+            default:
+                throw QueryError.syntaxError("Wrong type for rhs operand in \(conditionBuilt) expression")
+            }
+        }
+        else {
+            rhsBuilt = try rhs.build(queryBuilder: queryBuilder)
+        }
+        return lhsBuilt + " " + conditionBuilt + " " + rhsBuilt
     }
     
     /// An operand of `Filter`: either a `Filter` itself, or a value, a column, or a `ScalarColumnExpression`.
@@ -47,10 +85,24 @@ public struct Filter : Buildable {
         case filter(Filter)
         /// A String.
         case string(String)
-        /// A number.
-        case number(NSNumber)
-        /// A value of type Any.
-        case value(Any)
+        /// An integer.
+        case int(Int)
+        /// A float.
+        case float(Float)
+        /// A double.
+        case double(Double)
+        /// A boolean.
+        case bool(Bool)
+        /// An array of String.
+        case arrayOfString([String])
+        /// An array of Int.
+        case arrayOfInt([Int])
+        /// An array of Float.
+        case arrayOfFloat([Float])
+        /// An array of Double.
+        case arrayOfDouble([Double])
+        /// An array of Bool.
+        case arrayOfBool([Bool])
         /// A `Column`.
         case column(Column)
         /// A `ScalarColumnExpression`.
@@ -67,45 +119,23 @@ public struct Filter : Buildable {
                 return try "(" + filter.build(queryBuilder: queryBuilder) + ")"
             case .string(let string):
                 return packType(string)
-            case .number(let number):
-                return packType(number)
-            case .value(let value):
-                return value as! String
+            case .int(let value):
+                return packType(value)
+            case .float(let value):
+                return packType(value)
+            case .double(let value):
+                return packType(value)
+            case .bool(let value):
+                return String(value)
             case .column(let column):
                 return column.build(queryBuilder: queryBuilder)
             case .scalarColumnExpression(let scalarColumnExpression):
                 return try scalarColumnExpression.build(queryBuilder: queryBuilder)
+            default:
+                return ""
             }
         }
     }
-}
-
-public func == (lhs: ScalarColumnExpression, rhs: String) -> Filter {
-    return Filter(lhs: .scalarColumnExpression(lhs), rhs: .string(rhs), condition: .equal)
-}
-
-public func == (lhs: Column, rhs: String) -> Filter {
-    return Filter(lhs: .column(lhs), rhs: .string(rhs), condition: .equal)
-}
-
-public func == (lhs: Column, rhs: Column) -> Filter {
-    return Filter(lhs: .column(lhs), rhs: .column(rhs), condition: .equal)
-}
-
-public func >= (lhs: ScalarColumnExpression, rhs: Int) -> Filter {
-    return Filter(lhs: .scalarColumnExpression(lhs), rhs: .number(NSNumber(value: rhs)), condition: .greaterThanOrEqual)
-}
-
-public func >= (lhs: Column, rhs: Int) -> Filter {
-    return Filter(lhs: .column(lhs), rhs: .number(NSNumber(value: rhs)), condition: .greaterThanOrEqual)
-}
-
-public func == (lhs: Column, rhs: Int) -> Filter {
-    return Filter(lhs: .column(lhs), rhs: .number(NSNumber(value: rhs)), condition: .equal)
-}
-
-public func == (lhs: ScalarColumnExpression, rhs: Int) -> Filter {
-    return Filter(lhs: .scalarColumnExpression(lhs), rhs: .number(NSNumber(value: rhs)), condition: .equal)
 }
 
 public func || (lhs: Filter, rhs: Filter) -> Filter {
@@ -114,35 +144,5 @@ public func || (lhs: Filter, rhs: Filter) -> Filter {
 
 public func && (lhs: Filter, rhs: Filter) -> Filter {
     return Filter(lhs: .filter(lhs), rhs: .filter(rhs), condition: .and)
-}
-
-public extension ScalarColumnExpression {
-    public func like(_ pattern: String) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .string(pattern), condition: .like)
-    }
-    
-    public func between(_ value1: String, and value2: String) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .value(packType(value1) + " AND " + packType(value2)), condition: .between)
-    }
-    
-    public func `in`(_ values: String...) -> Filter {
-        let rhs = "(\(values.map { packType($0) }.joined(separator: ", ")))"
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .value(rhs), condition: .isIn)
-    }
-}
-
-public extension Column {
-    public func like(_ pattern: String) -> Filter {
-        return Filter(lhs: .column(self), rhs: .string(pattern), condition: .like)
-    }
-    
-    public func between(_ value1: String, and value2: String) -> Filter {
-        return Filter(lhs: .column(self), rhs: .value(packType(value1) + " AND " + packType(value2)), condition: .between)
-    }
-    
-    public func `in`(_ values: String...) -> Filter {
-        let rhs = "(\(values.map { packType($0) }.joined(separator: ", ")))"
-        return Filter(lhs: .column(self), rhs: .value(rhs), condition: .isIn)
-    }
 }
 
