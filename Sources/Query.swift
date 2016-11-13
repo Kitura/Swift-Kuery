@@ -18,8 +18,6 @@
 
 /// Defines the protocol for queries.
 public protocol Query : Buildable {
-    /// The table on which the query operates.
-    var table: Table { get }
 }
 
 public extension Query {

@@ -32,6 +32,20 @@ class TestSelect: XCTestCase {
         let name = "tableSelect"
     }
     
+    class MyTable2 : Table {
+        let c = Column("c")
+        let b = Column("b")
+        
+        let name = "tableSelect2"
+    }
+    
+    class MyTable3 : Table {
+        let d = Column("d")
+        let b = Column("b")
+        
+        let name = "tableSelect3"
+    }
+  
     func testSelect() {
         let t = MyTable()
         let connection = createConnection()
@@ -95,6 +109,15 @@ class TestSelect: XCTestCase {
             .where("a IN ('apple', 'lalala')")
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM tableSelect WHERE a IN ('apple', 'lalala')"
+        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        
+        let t2 = MyTable2()
+        let t3 = MyTable3()
+        
+        s = Select(from: [t2, t3, t])
+            .where((t2.b == t3.b) && (t2.b == t.b))
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT * FROM tableSelect2, tableSelect3, tableSelect WHERE (tableSelect2.b = tableSelect3.b) AND (tableSelect2.b = tableSelect.b)"
         XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
     }
 }

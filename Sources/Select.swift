@@ -22,7 +22,7 @@ public struct Select : Query {
     public let fields: [Field]?
     
     /// The table to select rows from.
-    public let table: Table
+    public let tables: [Table]
 
     /// The SQL WHERE clause containing the filter for rows to select.
     public private (set) var whereClause: Filter?
@@ -67,18 +67,27 @@ public struct Select : Query {
     /// - Parameter from table: The table to select from.
     public init(_ fields: Field..., from table: Table) {
         self.fields = fields
-        self.table = table
+        self.tables = [table]
     }
     
     /// Initialize an instance of Select.
     ///
     /// - Parameter fields: An array of `Field` elements to select.
-    /// - Parameter from table: The table to select from.
-    public init(fields: [Field], from table: Table) {
+    /// - Parameter from table: The table(s) to select from.
+    public init(fields: [Field], from table: Table...) {
         self.fields = fields
-        self.table = table
+        self.tables = table
     }
-    
+
+    /// Initialize an instance of Select.
+    ///
+    /// - Parameter fields: A list of `Field` elements to select.
+    /// - Parameter from table: An array of tables to select from.
+    public init(_ fields: Field..., from tables: [Table]) {
+        self.fields = fields
+        self.tables = tables
+    }
+
     /// Build the query using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
@@ -97,7 +106,8 @@ public struct Select : Query {
             result += "*"
         }
         
-        result += " FROM " + table.build(queryBuilder: queryBuilder)
+        result += " FROM "
+        result += "\(tables.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
         
         if let join = join {
             result += join.build(queryBuilder: queryBuilder)
