@@ -8,4 +8,5 @@ XCTMain([
      testCase(TestAlias.allTests),
      testCase(TestParameters.allTests),
      testCase(TestJoin.allTests),
+     testCase(TestSyntaxError.allTests),
 ])

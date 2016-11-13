@@ -26,7 +26,9 @@ public struct Insert : Query {
     
     /// An array of rows (values to insert in each row).
     public let values: [[Any]]
-    
+
+    var syntaxError = ""
+
     /// Initialize an instance of Insert.
     ///
     /// - Parameter into: The table to insert rows.
@@ -38,6 +40,9 @@ public struct Insert : Query {
         valuesToInsert.append(values)
         self.values = valuesToInsert
         self.table = table
+        if let tableColumns = self.columns, tableColumns.count != values.count {
+            syntaxError = "Values count doesn't match column count. "
+        }
     }
     
     /// Initialize an instance of Insert.
@@ -87,6 +92,9 @@ public struct Insert : Query {
     /// - Returns: A String representation of the query.
     /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
+        if syntaxError != "" {
+            throw QueryError.syntaxError(syntaxError)
+        }
         var result = "INSERT INTO " + table.build(queryBuilder: queryBuilder) + " "
         if let columns = columns, columns.count != 0 {
             result += "(\(columns.map { $0.name }.joined(separator: ", "))) "

@@ -29,6 +29,8 @@ public struct Update : Query {
     
     private let valueTuples: [(Column, Any)]
     
+    var syntaxError = ""
+    
     /// Initialize an instance of Update.
     ///
     /// - Parameter table: The table to update.
@@ -46,6 +48,9 @@ public struct Update : Query {
     /// - Returns: A String representation of the query.
     /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
+        if syntaxError != "" {
+            throw QueryError.syntaxError(syntaxError)
+        }
         let values = try valueTuples.map {
             column, value in "\(column.name) = \(try packType(value, queryBuilder: queryBuilder))"
             }.joined(separator: ", ")
@@ -66,7 +71,12 @@ public struct Update : Query {
     /// - Returns: A new instance of Update.
     public func `where`(_ conditions: Filter) -> Update {
         var new = self
-        new.whereClause = conditions
+        if whereClause != nil || rawWhereClause != nil {
+            new.syntaxError += "Multiple where clauses. "
+        }
+        else {
+            new.whereClause = conditions
+        }
         return new
     }
 
@@ -76,7 +86,12 @@ public struct Update : Query {
     /// - Returns: A new instance of Update.
     public func `where`(_ raw: String) -> Update {
         var new = self
-        new.rawWhereClause = raw
+        if whereClause != nil || rawWhereClause != nil {
+            new.syntaxError += "Multiple where clauses. "
+        }
+        else {
+            new.rawWhereClause = raw
+        }
         return new
     }
 }

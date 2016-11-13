@@ -31,7 +31,7 @@ public class TestConnection : Connection {
     public required init() {
         self.queryBuilder = QueryBuilder()
     }
-
+    
     public func connect(onCompletion: (QueryError?) -> ()) {}
     
     public func closeConnection() {}
@@ -54,7 +54,6 @@ public class TestConnection : Connection {
             return ""
         }
     }
-    
 }
 
 

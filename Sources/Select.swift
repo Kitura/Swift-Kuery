@@ -61,6 +61,8 @@ public struct Select : Query {
     /// The SQL USING clause: an array of `Column` elements that have to match in a JOIN query.
     public private (set) var using: [Column]?
 
+    var syntaxError = ""
+
     /// Initialize an instance of Select.
     ///
     /// - Parameter fields: A list of `Field` elements to select.
@@ -88,12 +90,25 @@ public struct Select : Query {
         self.tables = tables
     }
 
+    /// Initialize an instance of Select.
+    ///
+    /// - Parameter fields: An array of `Field` elements to select.
+    /// - Parameter from table: An array of tables to select from.
+    public init(_ fields: [Field], from tables: [Table]) {
+        self.fields = fields
+        self.tables = tables
+    }
+
     /// Build the query using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the query.
     /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
+        if syntaxError != "" {
+            throw QueryError.syntaxError(syntaxError)
+        }
+
         var result =  "SELECT "
         if distinct {
             result += "DISTINCT "
@@ -166,8 +181,30 @@ public struct Select : Query {
     /// - Parameter fields: An array of `Field`s to select.
     /// - Parameter from table: The table to select from.
     /// - Returns: A new instance of Select with `distinct` flag set.
-    public static func distinct(fields: [Field], from table: Table)  -> Select {
-        var selectQuery = Select(fields: fields, from: table)
+    public static func distinct(fields: [Field], from table: Table...) -> Select {
+        var selectQuery = Select(fields, from: table)
+        selectQuery.distinct = true
+        return selectQuery
+    }
+    
+    /// Create a SELECT DISTINCT query.
+    ///
+    /// - Parameter fields: A list of `Field`s to select.
+    /// - Parameter from: An array of tables to select from.
+    /// - Returns: A new instance of Select with `distinct` flag set.
+    public static func distinct(_ fields: Field..., from tables: [Table]) -> Select {
+        var selectQuery = Select(fields, from: tables)
+        selectQuery.distinct = true
+        return selectQuery
+    }
+
+    /// Create a SELECT DISTINCT query.
+    ///
+    /// - Parameter fields: An array of `Field`s to select.
+    /// - Parameter from: An array of tables to select from.
+    /// - Returns: A new instance of Select with `distinct` flag set.
+    public static func distinct(_ fields: [Field], from tables: [Table]) -> Select  {
+        var selectQuery = Select(fields, from: tables)
         selectQuery.distinct = true
         return selectQuery
     }
@@ -178,7 +215,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select with the `Having` clause.
     public func having(_ clause: Having) -> Select {
         var new = self
-        new.havingClause = clause
+        if havingClause != nil || rawHavingClause != nil {
+            new.syntaxError += "Multiple having clauses. "
+        }
+        else {
+            new.havingClause = clause
+        }
         return new
     }
     
@@ -188,7 +230,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select with the clause.
     public func having(_ raw: String) -> Select {
         var new = self
-        new.rawHavingClause = raw
+        if havingClause != nil || rawHavingClause != nil {
+            new.syntaxError += "Multiple having clauses. "
+        }
+        else {
+            new.rawHavingClause = raw
+        }
         return new
     }
     
@@ -198,7 +245,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select with the ORDER BY keyword.
     public func order(by clause: OrderBy...) -> Select {
         var new = self
-        new.orderBy = clause
+        if orderBy != nil {
+            new.syntaxError += "Multiple order by clauses. "
+        }
+        else {
+            new.orderBy = clause
+        }
         return new
     }
     
@@ -208,7 +260,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select with the GROUP BY clause.
     public func group(by clause: Field...) -> Select {
         var new = self
-        new.groupBy = clause
+        if groupBy != nil {
+            new.syntaxError += "Multiple group by clauses. "
+        }
+        else {
+            new.groupBy = clause
+        }
         return new
     }
     
@@ -218,7 +275,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select with the LIMIT clause.
     public func limit(to newLimit: Int) -> Select {
         var new = self
-        new.top = newLimit
+        if top != nil {
+            new.syntaxError += "Multiple limits. "
+        }
+        else {
+            new.top = newLimit
+        }
         return new
     }
     
@@ -228,7 +290,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select with the WHERE clause.
     public func `where`(_ conditions: Filter) -> Select {
         var new = self
-        new.whereClause = conditions
+        if whereClause != nil || rawWhereClause != nil {
+            new.syntaxError += "Multiple where clauses. "
+        }
+        else {
+            new.whereClause = conditions
+        }
         return new
     }
     
@@ -238,7 +305,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select with the WHERE clause.
     public func `where`(_ raw: String) -> Select {
         var new = self
-        new.rawWhereClause = raw
+        if whereClause != nil || rawWhereClause != nil {
+            new.syntaxError += "Multiple where clauses. "
+        }
+        else {
+            new.rawWhereClause = raw
+        }
         return new
     }
     
@@ -248,7 +320,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select with the ON clause.
     public func on(_ conditions: Filter) -> Select {
         var new = self
-        new.onClause = conditions
+        if onClause != nil {
+            new.syntaxError += "Multiple on clauses. "
+        }
+        else {
+            new.onClause = conditions
+        }
         return new
     }
     
@@ -258,7 +335,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select with the USING clause.
     public func using(_ columns: Column...) -> Select {
         var new = self
-        new.using = columns
+        if using != nil {
+            new.syntaxError += "Multiple using clauses. "
+        }
+        else {
+            new.using = columns
+        }
         return new
     }
     
@@ -268,7 +350,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select corresponding to SELECT INNER JOIN.
     public func join(_ table: Table) -> Select {
         var new = self
-        new.join = .join(table)
+        if join != nil {
+            new.syntaxError += "Multiple joins. "
+        }
+        else {
+            new.join = .join(table)
+        }
         return new
     }
     
@@ -278,7 +365,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select corresponding to SELECT LEFT JOIN.
     public func leftJoin(_ table: Table) -> Select {
         var new = self
-        new.join = .left(table)
+        if join != nil {
+            new.syntaxError += "Multiple joins. "
+        }
+        else {
+            new.join = .left(table)
+        }
         return new
     }
     
@@ -288,7 +380,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select corresponding to SELECT RIGHT JOIN.
     public func rightJoin(_ table: Table) -> Select {
         var new = self
-        new.join = .right(table)
+        if join != nil {
+            new.syntaxError += "Multiple joins. "
+        }
+        else {
+            new.join = .right(table)
+        }
         return new
     }
     
@@ -298,7 +395,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select corresponding to SELECT FULL JOIN.
     public func fullJoin(_ table: Table) -> Select {
         var new = self
-        new.join = .full(table)
+        if join != nil {
+            new.syntaxError += "Multiple joins. "
+        }
+        else {
+            new.join = .full(table)
+        }
         return new
     }
     
@@ -308,7 +410,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select corresponding to SELECT CROSS JOIN.
     public func crossJoin(_ table: Table) -> Select {
         var new = self
-        new.join = .cross(table)
+        if join != nil {
+            new.syntaxError += "Multiple joins. "
+        }
+        else {
+            new.join = .cross(table)
+        }
         return new
     }
     
@@ -318,7 +425,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select corresponding to SELECT NATURAL JOIN.
     public func naturalJoin(_ table: Table) -> Select {
         var new = self
-        new.join = .natural(table)
+        if join != nil {
+            new.syntaxError += "Multiple joins. "
+        }
+        else {
+            new.join = .natural(table)
+        }
         return new
     }
 
@@ -328,7 +440,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select corresponding to SELECT NATURAL LEFT JOIN.
     public func naturalLeftJoin(_ table: Table) -> Select {
         var new = self
-        new.join = .naturalLeft(table)
+        if join != nil {
+            new.syntaxError += "Multiple joins. "
+        }
+        else {
+            new.join = .naturalLeft(table)
+        }
         return new
     }
 
@@ -338,7 +455,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select corresponding to SELECT NATURAL RIGHT JOIN.
     public func naturalRightJoin(_ table: Table) -> Select {
         var new = self
-        new.join = .naturalRight(table)
+        if join != nil {
+            new.syntaxError += "Multiple joins. "
+        }
+        else {
+            new.join = .naturalRight(table)
+        }
         return new
     }
 
@@ -348,7 +470,12 @@ public struct Select : Query {
     /// - Returns: A new instance of Select corresponding to SELECT NATURAL FULL JOIN.
     public func naturalFullJoin(_ table: Table) -> Select {
         var new = self
-        new.join = .naturalFull(table)
+        if join != nil {
+            new.syntaxError += "Multiple joins. "
+        }
+        else {
+            new.join = .naturalFull(table)
+        }
         return new
     }
 }

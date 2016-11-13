@@ -19,18 +19,18 @@
 /// An arbitrary query represented by a String.
 public struct Raw: Query {
     /// A String containing the query.
-    public var query: String
+    public let query: String
     
     /// The table to apply the query on.
-    public var table: Table
+    public let tables: [Table]
     
     /// Initialize an instance of Raw.
     ///
     /// - Parameter query: A String containing the query.
-    /// - Parameter table: The table to apply the query on.
-    public init(query: String, table: Table) {
+    /// - Parameter table: The table(s) to apply the query on.
+    public init(query: String, table: Table...) {
         self.query = query
-        self.table = table
+        self.tables = table
     }
 
     /// Build the query using `QueryBuilder`.
@@ -38,6 +38,7 @@ public struct Raw: Query {
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the query.
     public func build(queryBuilder: QueryBuilder) -> String {
-        return query + " " + table.build(queryBuilder: queryBuilder)
+        return query + " " + "\(tables.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
+
     }
 }

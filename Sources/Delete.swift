@@ -26,7 +26,9 @@ public struct Delete: Query {
 
     /// A String containg the raw SQL WHERE clause to filter the rows to delete.
     public private (set) var rawWhereClause: String?
-       
+
+    var syntaxError = ""
+
     /// Initialize an instance of Delete.
     ///
     /// - Parameter from: The table to delete rows from.
@@ -42,6 +44,9 @@ public struct Delete: Query {
     /// - Returns: A String representation of the query.
     /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
+        if syntaxError != "" {
+            throw QueryError.syntaxError(syntaxError)
+        }
         var result = "DELETE FROM " + table.build(queryBuilder: queryBuilder)
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
@@ -59,7 +64,12 @@ public struct Delete: Query {
     /// - Returns: A new instance of Delete.
     public func `where`(_ conditions: Filter) -> Delete {
         var new = self
-        new.whereClause = conditions
+        if whereClause != nil || rawWhereClause != nil {
+            new.syntaxError += "Multiple where clauses. "
+        }
+        else {
+            new.whereClause = conditions
+        }
         return new
     }
 
@@ -69,7 +79,12 @@ public struct Delete: Query {
     /// - Returns: A new instance of Delete.
     public func `where`(_ raw: String) -> Delete {
         var new = self
-        new.rawWhereClause = raw
+        if whereClause != nil || rawWhereClause != nil {
+            new.syntaxError += "Multiple where clauses. "
+        }
+        else {
+            new.rawWhereClause = raw
+        }
         return new
     }
 }
