@@ -40,6 +40,10 @@ public enum Condition : Buildable {
     case `in`
     /// The SQL NOT IN operator.
     case notIn
+    /// The SQL EXISTS operator.
+    case exists
+    /// The SQL NOT EXISTS operator.
+    case notExists
     /// The SQL AND operator.
     case and
     /// The SQL OR operator.
@@ -73,6 +77,10 @@ public enum Condition : Buildable {
             return "IN"
         case .notIn:
             return "NOT IN"
+        case .exists:
+            return "EXISTS"
+        case .notExists:
+            return "NOT EXISTS"
         case .and:
             return "AND"
         case .or:

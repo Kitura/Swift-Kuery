@@ -49,8 +49,8 @@ public class TestConnection : Connection {
             let kuery = try query.build(queryBuilder: queryBuilder)
             return kuery
         }
-        catch {
-            XCTFail("Failed to build query")
+        catch let error {
+            XCTFail("Failed to build query: \(error)")
             return ""
         }
     }

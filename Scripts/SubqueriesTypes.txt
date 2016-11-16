@@ -1,0 +1,16 @@
+Filter ScalarColumnExpression Filter.FilterPredicate
+Filter String Filter.FilterPredicate
+Filter Column Filter.FilterPredicate
+Filter Int Filter.FilterPredicate
+Filter Float Filter.FilterPredicate
+Filter Double Filter.FilterPredicate
+Filter Parameter Filter.FilterPredicate
+Filter Bool Filter.FilterPredicate
+Having AggregateColumnExpression Having.HavingPredicate
+Having String Having.HavingPredicate
+Having Column Having.HavingPredicate
+Having Int Having.HavingPredicate
+Having Float Having.HavingPredicate
+Having Double Having.HavingPredicate
+Having Parameter Having.HavingPredicate
+Having Bool Having.HavingPredicate

@@ -35,7 +35,12 @@ INPUT_OPERATORS_FILE="${PKG_DIR}/Scripts/FilterAndHavingOperators.txt"
 INPUT_TYPES_FILE="${PKG_DIR}/Scripts/FilterAndHavingTypes.txt"
 INPUT_BOOL_FILE="${PKG_DIR}/Scripts/FilterAndHavingBool.txt"
 INPUT_BETWEEN_FILE="${PKG_DIR}/Scripts/FilterBetweenInTypes.txt"
+INPUT_BETWEEN__OPERATORS_FILE="${PKG_DIR}/Scripts/BetweenInOperators.txt"
 INPUT_BETWEEN_EXTENSION_FILE="${PKG_DIR}/Scripts/FilterBetweenInExtension.txt"
+INPUT_SUBQUERIES_OPERATORS_FILE="${PKG_DIR}/Scripts/SubqueriesOperators.txt"
+INPUT_SUBQUERIES_TYPES_FILE="${PKG_DIR}/Scripts/SubqueriesTypes.txt"
+INPUT_IN_SUBQUERY_TYPES_FILE="${PKG_DIR}/Scripts/InSelectTypes.txt"
+
 OUTPUT_FILE="${PKG_DIR}/Sources/FilterAndHaving_GlobalFunctions.swift"
 
 echo "--- Generating ${OUTPUT_FILE}"
@@ -59,6 +64,7 @@ cat <<'EOF' > ${OUTPUT_FILE}
 
 EOF
 
+# Generate operators for simple conditions that return Filter and Having
 while read -r LINE; do
     stringarray=($LINE)
     OPERATOR=${stringarray[0]}
@@ -87,6 +93,7 @@ EOF
     done < $INPUT_TYPES_FILE
 done < $INPUT_OPERATORS_FILE
 
+# Generate operators for Bool for simple conditions that return Filter and Having
 while read -r LINE; do
     stringarray=($LINE)
     OPERATOR=${stringarray[0]}
@@ -112,6 +119,7 @@ EOF
 
 done < $INPUT_BOOL_FILE
 
+# Generate extensions for Scalar/AggregateColumnExpression and Column for LIKE, BETWEEN, and IN operators
 while read -r LINE; do
     stringarray=($LINE)
     CLAUSE_TYPE=${stringarray[0]}
@@ -134,6 +142,7 @@ EOF
         PARAM_TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${PARAM_TYPE:0:1})${PARAM_TYPE:1}"
 
 cat <<EOF >> ${OUTPUT_FILE}
+
     /// Create a \`$CLAUSE_TYPE\` clause using the BETWEEN operator for $PARAM_TYPE.
     ///
     /// - Parameter value1: The left hand side of the BETWEEN expression.
@@ -177,5 +186,143 @@ EOF
 done < $INPUT_BETWEEN_FILE
 echo "}" >> ${OUTPUT_FILE}
 done < $INPUT_BETWEEN_EXTENSION_FILE
+
+# Generate operators with subqueries, i.e. 'expression operator ANY/ALL(subquery)'
+while read -r LINE; do
+    stringarray=($LINE)
+    OPERATOR=${stringarray[0]}
+    CASE=${stringarray[1]}
+    while read -r LINE; do
+        stringarray=($LINE)
+        TYPE=${stringarray[0]}
+        LHS_TYPE=${stringarray[1]}
+        RHS_TYPE=${stringarray[2]}
+        LHS_TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${LHS_TYPE:0:1})${LHS_TYPE:1}"
+
+cat <<EOF >> ${OUTPUT_FILE}
+/// Create a \`$TYPE\` clause using the operator $OPERATOR for $LHS_TYPE
+/// and subquery.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A \`$TYPE\` containing the clause.
+public func $OPERATOR(lhs: $LHS_TYPE, rhs: $RHS_TYPE) -> $TYPE {
+    return $TYPE(lhs: .$LHS_TYPE_LOWER(lhs), rhs: rhs, condition: .$CASE)
+}
+
+EOF
+
+done < $INPUT_SUBQUERIES_TYPES_FILE
+done < $INPUT_SUBQUERIES_OPERATORS_FILE
+
+
+# Generate extensions for Int, Double, String, Bool, Float and Parameter IN, NOT IN, BETWEEN and NOT BETWEEN
+declare -a clauses=("Filter" "Having")
+
+for TYPE in `sed '/^$/d' ${INPUT_BETWEEN_FILE} | sed '/^#/d'`; do
+TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${TYPE:0:1})${TYPE:1}"
+
+echo "public extension $TYPE {" >> ${OUTPUT_FILE}
+
+    for CLAUSE in Filter Having; do
+
+        for OPERATOR in \`in\` notIn; do
+
+cat <<EOF >> ${OUTPUT_FILE}
+
+    /// Create a \`$CLAUSE\` clause using the $OPERATOR operator.
+    ///
+    /// - Parameter values: The list of values for the $OPERATOR expression.
+    /// - Returns: A \`$CLAUSE\` containing the clause.
+    public func $OPERATOR(_ values: $TYPE...) -> $CLAUSE {
+        return $CLAUSE(lhs: .$TYPE_LOWER(self), rhs: .arrayOf$TYPE(values), condition: .$OPERATOR)
+    }
+EOF
+
+            if [ $TYPE != Parameter ]; then
+
+cat <<EOF >> ${OUTPUT_FILE}
+
+    /// Create a \`$CLAUSE\` clause using the $OPERATOR operator and \`Parameter\`.
+    ///
+    /// - Parameter values: The list of values for the $OPERATOR expression.
+    /// - Returns: A \`$CLAUSE\` containing the clause.
+    public func $OPERATOR(_ values: Parameter...) -> $CLAUSE {
+        return $CLAUSE(lhs: .$TYPE_LOWER(self), rhs: .arrayOfParameter(values), condition: .$OPERATOR)
+    }
+EOF
+            fi
+        done
+
+        for OPERATOR in between notBetween; do
+
+cat <<EOF >> ${OUTPUT_FILE}
+
+    /// Create a \`$CLAUSE\` clause using the $OPERATOR operator.
+    ///
+    /// - Parameter value1: The left hand side of the $OPERATOR expression.
+    /// - Parameter and value2: The right hand side of the $OPERATOR expression.
+    /// - Returns: A \`$CLAUSE\` containing the clause.
+    public func $OPERATOR(_ value1: $TYPE, and value2: $TYPE) -> $CLAUSE {
+        var array = [$TYPE]()
+        array.append(value1)
+        array.append(value2)
+        return $CLAUSE(lhs: .$TYPE_LOWER(self), rhs: .arrayOf$TYPE(array), condition: .$OPERATOR)
+    }
+EOF
+
+            if [ $TYPE != Parameter ]; then
+
+cat <<EOF >> ${OUTPUT_FILE}
+
+    /// Create a \`$CLAUSE\` clause using the $OPERATOR operator  and \`Parameter\`.
+    ///
+    /// - Parameter value1: The left hand side of the $OPERATOR expression.
+    /// - Parameter and value2: The right hand side of the $OPERATOR expression.
+    /// - Returns: A \`$CLAUSE\` containing the clause.
+    public func $OPERATOR(_ value1: Parameter, and value2: Parameter) -> $CLAUSE {
+        var array = [Parameter]()
+        array.append(value1)
+        array.append(value2)
+        return $CLAUSE(lhs: .$TYPE_LOWER(self), rhs: .arrayOfParameter(array), condition: .$OPERATOR)
+    }
+EOF
+            fi
+       done
+done
+echo "}" >> ${OUTPUT_FILE}
+done < $INPUT_BETWEEN_FILE
+
+# Generate extensions for IN, NOT IN with subquery
+
+while read -r LINE; do
+    stringarray=($LINE)
+    CLAUSE=${stringarray[0]}
+    TYPE=${stringarray[1]}
+    TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${TYPE:0:1})${TYPE:1}"
+
+echo "public extension $TYPE {" >> ${OUTPUT_FILE}
+
+cat <<EOF >> ${OUTPUT_FILE}
+
+    /// Create a \`$CLAUSE\` clause using the IN operator for subquery.
+    ///
+    /// - Parameter query: The subquery.
+    /// - Returns: A \`$CLAUSE\` containing the clause.
+    public func \`in\`(_ query: Select) -> $CLAUSE {
+        return $CLAUSE(lhs: .$TYPE_LOWER(self), rhs: .select(query), condition: .in)
+    }
+
+    /// Create a \`$CLAUSE\` clause using the NOT IN operator for subquery.
+    ///
+    /// - Parameter query: The subquery.
+    /// - Returns: A \`$CLAUSE\` containing the clause.
+    public func notIn(_ query: Select) -> $CLAUSE {
+        return $CLAUSE(lhs: .$TYPE_LOWER(self), rhs: .select(query), condition: .notIn)
+    }
+EOF
+echo "}" >> ${OUTPUT_FILE}
+done < $INPUT_IN_SUBQUERY_TYPES_FILE
+
 
 

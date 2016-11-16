@@ -22,6 +22,13 @@ Filter ScalarColumnExpression Parameter
 Filter Parameter ScalarColumnExpression
 Filter Column Parameter
 Filter Parameter Column
+Filter ScalarColumnExpression Select
+Filter String Select
+Filter Column Select
+Filter Int Select
+Filter Float Select
+Filter Double Select
+Filter Parameter Select
 Having AggregateColumnExpression String
 Having String AggregateColumnExpression
 Having Column String
@@ -46,3 +53,10 @@ Having AggregateColumnExpression Parameter
 Having Parameter AggregateColumnExpression
 Having Column Parameter
 Having Parameter Column
+Having AggregateColumnExpression Select
+Having String Select
+Having Column Select
+Having Int Select
+Having Float Select
+Having Double Select
+Having Parameter Select

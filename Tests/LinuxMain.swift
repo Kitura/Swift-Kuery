@@ -9,4 +9,5 @@ XCTMain([
      testCase(TestParameters.allTests),
      testCase(TestJoin.allTests),
      testCase(TestSyntaxError.allTests),
+     testCase(TestSubquery.allTests),
 ])
