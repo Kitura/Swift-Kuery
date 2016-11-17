@@ -37,7 +37,11 @@ public struct Select : Query {
     /// The number of rows to select.
     /// If specified, corresponds to the SQL SELECT TOP/DISTINCT clause.
     public private (set) var top: Int?
-    
+
+    /// The number of rows to skip.
+    /// If specified, corresponds to the SQL SELECT OFFSET clause.
+    public private (set) var offset: Int?
+
     /// An array containing `OrderBy` elements to sort the selected row.
     /// The SQL ORDER BY keyword.
     public private (set) var orderBy: [OrderBy]?
@@ -161,6 +165,11 @@ public struct Select : Query {
         if let top = top {
             result += " LIMIT \(top)"
         }
+        
+        if let offset = offset {
+            result += " OFFSET \(offset)"
+        }
+
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
@@ -283,6 +292,22 @@ public struct Select : Query {
         }
         return new
     }
+    
+    /// Add the OFFSET clause to the query.
+    ///
+    /// - Parameter to: The number of rows to skip.
+    /// - Returns: A new instance of Select with the OFFSET clause.
+    public func offset(_ offset: Int) -> Select {
+        var new = self
+        if new.offset != nil {
+            new.syntaxError += "Multiple offsets. "
+        }
+        else {
+            new.offset = offset
+        }
+        return new
+    }
+
     
     /// Add an SQL WHERE clause to the select statement.
     ///

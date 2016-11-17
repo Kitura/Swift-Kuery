@@ -57,8 +57,9 @@ class TestSelect: XCTestCase {
         
         s = Select.distinct(t.a, from: t)
             .where(t.a.notLike("b%"))
+            .offset(2)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT DISTINCT tableSelect.a FROM tableSelect WHERE tableSelect.a NOT LIKE 'b%'"
+        query = "SELECT DISTINCT tableSelect.a FROM tableSelect WHERE tableSelect.a NOT LIKE 'b%' OFFSET 2"
         XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
         
         s = Select(t.b, t.a, from: t)
