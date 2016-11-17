@@ -27,6 +27,9 @@ public struct Update : Query {
     /// A String containg the raw SQL WHERE clause to filter the rows to update.
     public private (set) var rawWhereClause: String?
     
+    /// A `Returning` enum value corresponding to the SQL RETURNING clause.
+    public private (set) var returningClause: Returning?
+    
     private let valueTuples: [(Column, Any)]
     
     var syntaxError = ""
@@ -61,6 +64,9 @@ public struct Update : Query {
         else if let rawWhereClause = rawWhereClause {
             result += " WHERE " + rawWhereClause
         }
+        if let returning = returningClause {
+            result += " RETURNING " + returning.build(queryBuilder: queryBuilder)
+        }
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
@@ -94,4 +100,40 @@ public struct Update : Query {
         }
         return new
     }
+    
+    /// Add an SQL RETURNING clause to the update statement.
+    ///
+    /// - Parameter columns: An optionl array of `Column`s to be returned. If not specified, all columns are returned.
+    /// - Returns: A new instance of Update.
+    public func returning(_ columns: [Column]?=nil) -> Update {
+        var new = self
+        if returningClause != nil {
+            new.syntaxError += "Multiple returning clauses. "
+        }
+        else {
+            if let columns = columns {
+                new.returningClause = Returning.columns(columns)
+            }
+            else {
+                new.returningClause = Returning.all
+            }
+        }
+        return new
+    }
+    
+    /// Add an SQL RETURNING clause to the update statement.
+    ///
+    /// - Parameter columns: A list of `Column`s to be returned.
+    /// - Returns: A new instance of Update.
+    public func returning(_ columns: Column...) -> Update {
+        var new = self
+        if returningClause != nil {
+            new.syntaxError += "Multiple returning clauses. "
+        }
+        else {
+            new.returningClause = Returning.columns(columns)
+        }
+        return new
+    }
+
 }

@@ -27,6 +27,9 @@ public struct Insert : Query {
     /// An array of rows (values to insert in each row).
     public let values: [[Any]]
 
+    /// A `Returning` enum value corresponding to the SQL RETURNING clause.
+    public private (set) var returningClause: Returning?
+
     var syntaxError = ""
 
     /// Initialize an instance of Insert.
@@ -102,7 +105,45 @@ public struct Insert : Query {
         result += "VALUES ("
         result += try "\(values.map { "\(try $0.map { try packType($0, queryBuilder: queryBuilder) }.joined(separator: ", "))" }.joined(separator: "), ("))"
         result += ")"
+        if let returning = returningClause {
+            result += " RETURNING " + returning.build(queryBuilder: queryBuilder)
+        }
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
+    }
+    
+    /// Add an SQL RETURNING clause to the Insert statement.
+    ///
+    /// - Parameter columns: An optionl array of `Column`s to be returned. If not specified, all columns are returned.
+    /// - Returns: A new instance of Insert.
+    public func returning(_ columns: [Column]?=nil) -> Insert {
+        var new = self
+        if returningClause != nil {
+            new.syntaxError += "Multiple returning clauses. "
+        }
+        else {
+            if let columns = columns {
+                new.returningClause = Returning.columns(columns)
+            }
+            else {
+                new.returningClause = Returning.all
+            }
+        }
+        return new
+    }
+    
+    /// Add an SQL RETURNING clause to the Insert statement.
+    ///
+    /// - Parameter columns: A list of `Column`s to be returned.
+    /// - Returns: A new instance of Insert.
+    public func returning(_ columns: Column...) -> Insert {
+        var new = self
+        if returningClause != nil {
+            new.syntaxError += "Multiple returning clauses. "
+        }
+        else {
+            new.returningClause = Returning.columns(columns)
+        }
+        return new
     }
 }

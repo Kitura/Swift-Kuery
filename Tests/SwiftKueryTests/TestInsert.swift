@@ -48,8 +48,9 @@ class TestInsert: XCTestCase {
         XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
         
         i = Insert(into: t, columns: [t.a, t.b], values: ["banana", 17])
+            .returning()
         kuery = connection.descriptionOf(query: i)
-        query = "INSERT INTO tableInsert (a, b) VALUES ('banana', 17)"
+        query = "INSERT INTO tableInsert (a, b) VALUES ('banana', 17) RETURNING *"
         XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
         
         i = Insert(into: t, rows: [["apple", 17], ["banana", -7], ["banana", 27]])

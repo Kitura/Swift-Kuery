@@ -36,21 +36,40 @@ class TestUpdate: XCTestCase {
         let t = MyTable()
         let connection = createConnection()
         
-        let u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
+        var u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
             .where(t.a == "banana")
         var kuery = connection.descriptionOf(query: u)
         var query = "UPDATE tableUpdate SET a = 'peach', b = 2 WHERE tableUpdate.a = 'banana'"
-        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
  
+        u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
+            .where(t.a == "banana")
+            .returning()
+        kuery = connection.descriptionOf(query: u)
+        query = "UPDATE tableUpdate SET a = 'peach', b = 2 WHERE tableUpdate.a = 'banana' RETURNING *"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+ 
+        u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
+            .returning([t.b, t.a])
+        kuery = connection.descriptionOf(query: u)
+        query = "UPDATE tableUpdate SET a = 'peach', b = 2 RETURNING tableUpdate.b, tableUpdate.a"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
+            .returning(t.b)
+        kuery = connection.descriptionOf(query: u)
+        query = "UPDATE tableUpdate SET a = 'peach', b = 2 RETURNING tableUpdate.b"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
         var d = Delete(from: t)
             .where(t.b == "2")
         kuery = connection.descriptionOf(query: d)
         query = "DELETE FROM tableUpdate WHERE tableUpdate.b = '2'"
-        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         d = Delete(from: t)
         kuery = connection.descriptionOf(query: d)
         query = "DELETE FROM tableUpdate"
-        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
 }
