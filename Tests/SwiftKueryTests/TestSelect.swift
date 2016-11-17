@@ -56,9 +56,9 @@ class TestSelect: XCTestCase {
         XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
         
         s = Select.distinct(t.a, from: t)
-            .where(t.a.like("b%"))
+            .where(t.a.notLike("b%"))
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT DISTINCT tableSelect.a FROM tableSelect WHERE tableSelect.a LIKE 'b%'"
+        query = "SELECT DISTINCT tableSelect.a FROM tableSelect WHERE tableSelect.a NOT LIKE 'b%'"
         XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
         
         s = Select(t.b, t.a, from: t)

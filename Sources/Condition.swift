@@ -36,6 +36,8 @@ public enum Condition : Buildable {
     case notBetween
     /// The SQL LIKE operator.
     case like
+    /// The SQL LIKE operator.
+    case notLike
     /// The SQL IN operator.
     case `in`
     /// The SQL NOT IN operator.
@@ -73,6 +75,8 @@ public enum Condition : Buildable {
             return "NOT BETWEEN"
         case .like:
             return "LIKE"
+        case .notLike:
+            return "NOT LIKE"
         case .in:
             return "IN"
         case .notIn:
