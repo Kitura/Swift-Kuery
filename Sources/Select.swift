@@ -46,9 +46,9 @@ public struct Select : Query {
     /// The SQL ORDER BY keyword.
     public private (set) var orderBy: [OrderBy]?
     
-    /// An array containing `Field` elements to group the selected row.
+    /// An array containing `Column` elements to group the selected row.
     /// The SQL GROUP BY statement.
-    public private (set) var groupBy: [Field]?
+    public private (set) var groupBy: [Column]?
 
     /// The SQL HAVING clause containing the filter for rows to select when aggregate functions are used.
     public private (set) var havingClause: Having?
@@ -148,7 +148,7 @@ public struct Select : Query {
         }
         
         if let groupClause = groupBy {
-            result += try " GROUP BY " + groupClause.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
+            result += " GROUP BY " + groupClause.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }
         
         if let havingClause = havingClause {
@@ -265,9 +265,9 @@ public struct Select : Query {
     
     /// Add the GROUP BY clause to the query.
     ///
-    /// - Parameter by: A list of `Field`s to group by.
+    /// - Parameter by: A list of `Column`s to group by.
     /// - Returns: A new instance of Select with the GROUP BY clause.
-    public func group(by clause: Field...) -> Select {
+    public func group(by clause: Column...) -> Select {
         var new = self
         if groupBy != nil {
             new.syntaxError += "Multiple group by clauses. "
