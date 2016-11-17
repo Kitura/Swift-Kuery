@@ -137,6 +137,14 @@ public extension $TYPE {
         return $CLAUSE_TYPE(lhs: .$TYPE_LOWER(self), rhs: .string(pattern), condition: .like)
     }
 
+    /// Create a \`$CLAUSE_TYPE\` clause using the LIKE operator with \`Parameter\`.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression as \`Parameter\`.
+    /// - Returns: A \`$CLAUSE_TYPE\` containing the clause.
+    public func like(_ pattern: Parameter) -> $CLAUSE_TYPE {
+        return $CLAUSE_TYPE(lhs: .$TYPE_LOWER(self), rhs: .parameter(pattern), condition: .like)
+    }
+
 EOF
     for PARAM_TYPE in `sed '/^$/d' ${INPUT_BETWEEN_FILE} | sed '/^#/d'`; do
         PARAM_TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${PARAM_TYPE:0:1})${PARAM_TYPE:1}"
@@ -217,8 +225,6 @@ done < $INPUT_SUBQUERIES_OPERATORS_FILE
 
 
 # Generate extensions for Int, Double, String, Bool, Float and Parameter IN, NOT IN, BETWEEN and NOT BETWEEN
-declare -a clauses=("Filter" "Having")
-
 for TYPE in `sed '/^$/d' ${INPUT_BETWEEN_FILE} | sed '/^#/d'`; do
 TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${TYPE:0:1})${TYPE:1}"
 
@@ -324,5 +330,33 @@ EOF
 echo "}" >> ${OUTPUT_FILE}
 done < $INPUT_IN_SUBQUERY_TYPES_FILE
 
+# Generate extensions for String and Parameter for the LIKE operator
 
+for TYPE in String Parameter; do
+TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${TYPE:0:1})${TYPE:1}"
 
+echo "public extension $TYPE {" >> ${OUTPUT_FILE}
+
+    for CLAUSE_TYPE in Filter Having; do
+
+cat <<EOF >> ${OUTPUT_FILE}
+    /// Create a \`$CLAUSE_TYPE\` clause using the LIKE operator.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression.
+    /// - Returns: A \`$CLAUSE_TYPE\` containing the clause.
+    public func like(_ pattern: String) -> $CLAUSE_TYPE {
+        return $CLAUSE_TYPE(lhs: .$TYPE_LOWER(self), rhs: .string(pattern), condition: .like)
+    }
+
+    /// Create a \`$CLAUSE_TYPE\` clause using the LIKE operator with \`Parameter\`.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression as \`Parameter\`.
+    /// - Returns: A \`$CLAUSE_TYPE\` containing the clause.
+    public func like(_ pattern: Parameter) -> $CLAUSE_TYPE {
+        return $CLAUSE_TYPE(lhs: .$TYPE_LOWER(self), rhs: .parameter(pattern), condition: .like)
+    }
+
+EOF
+done
+echo "}" >> ${OUTPUT_FILE}
+done

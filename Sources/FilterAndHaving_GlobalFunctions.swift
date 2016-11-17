@@ -3903,6 +3903,14 @@ public extension ScalarColumnExpression {
         return Filter(lhs: .scalarColumnExpression(self), rhs: .string(pattern), condition: .like)
     }
 
+    /// Create a `Filter` clause using the LIKE operator with `Parameter`.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression as `Parameter`.
+    /// - Returns: A `Filter` containing the clause.
+    public func like(_ pattern: Parameter) -> Filter {
+        return Filter(lhs: .scalarColumnExpression(self), rhs: .parameter(pattern), condition: .like)
+    }
+
 
     /// Create a `Filter` clause using the BETWEEN operator for Bool.
     ///
@@ -4151,6 +4159,14 @@ public extension Column {
     /// - Returns: A `Filter` containing the clause.
     public func like(_ pattern: String) -> Filter {
         return Filter(lhs: .column(self), rhs: .string(pattern), condition: .like)
+    }
+
+    /// Create a `Filter` clause using the LIKE operator with `Parameter`.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression as `Parameter`.
+    /// - Returns: A `Filter` containing the clause.
+    public func like(_ pattern: Parameter) -> Filter {
+        return Filter(lhs: .column(self), rhs: .parameter(pattern), condition: .like)
     }
 
 
@@ -4403,6 +4419,14 @@ public extension AggregateColumnExpression {
         return Having(lhs: .aggregateColumnExpression(self), rhs: .string(pattern), condition: .like)
     }
 
+    /// Create a `Having` clause using the LIKE operator with `Parameter`.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression as `Parameter`.
+    /// - Returns: A `Having` containing the clause.
+    public func like(_ pattern: Parameter) -> Having {
+        return Having(lhs: .aggregateColumnExpression(self), rhs: .parameter(pattern), condition: .like)
+    }
+
 
     /// Create a `Having` clause using the BETWEEN operator for Bool.
     ///
@@ -4651,6 +4675,14 @@ public extension Column {
     /// - Returns: A `Having` containing the clause.
     public func like(_ pattern: String) -> Having {
         return Having(lhs: .column(self), rhs: .string(pattern), condition: .like)
+    }
+
+    /// Create a `Having` clause using the LIKE operator with `Parameter`.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression as `Parameter`.
+    /// - Returns: A `Having` containing the clause.
+    public func like(_ pattern: Parameter) -> Having {
+        return Having(lhs: .column(self), rhs: .parameter(pattern), condition: .like)
     }
 
 
@@ -7033,4 +7065,72 @@ public extension Bool {
     public func notIn(_ query: Select) -> Having {
         return Having(lhs: .bool(self), rhs: .select(query), condition: .notIn)
     }
+}
+public extension String {
+    /// Create a `Filter` clause using the LIKE operator.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func like(_ pattern: String) -> Filter {
+        return Filter(lhs: .string(self), rhs: .string(pattern), condition: .like)
+    }
+
+    /// Create a `Filter` clause using the LIKE operator with `Parameter`.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression as `Parameter`.
+    /// - Returns: A `Filter` containing the clause.
+    public func like(_ pattern: Parameter) -> Filter {
+        return Filter(lhs: .string(self), rhs: .parameter(pattern), condition: .like)
+    }
+
+    /// Create a `Having` clause using the LIKE operator.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression.
+    /// - Returns: A `Having` containing the clause.
+    public func like(_ pattern: String) -> Having {
+        return Having(lhs: .string(self), rhs: .string(pattern), condition: .like)
+    }
+
+    /// Create a `Having` clause using the LIKE operator with `Parameter`.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression as `Parameter`.
+    /// - Returns: A `Having` containing the clause.
+    public func like(_ pattern: Parameter) -> Having {
+        return Having(lhs: .string(self), rhs: .parameter(pattern), condition: .like)
+    }
+
+}
+public extension Parameter {
+    /// Create a `Filter` clause using the LIKE operator.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func like(_ pattern: String) -> Filter {
+        return Filter(lhs: .parameter(self), rhs: .string(pattern), condition: .like)
+    }
+
+    /// Create a `Filter` clause using the LIKE operator with `Parameter`.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression as `Parameter`.
+    /// - Returns: A `Filter` containing the clause.
+    public func like(_ pattern: Parameter) -> Filter {
+        return Filter(lhs: .parameter(self), rhs: .parameter(pattern), condition: .like)
+    }
+
+    /// Create a `Having` clause using the LIKE operator.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression.
+    /// - Returns: A `Having` containing the clause.
+    public func like(_ pattern: String) -> Having {
+        return Having(lhs: .parameter(self), rhs: .string(pattern), condition: .like)
+    }
+
+    /// Create a `Having` clause using the LIKE operator with `Parameter`.
+    ///
+    /// - Parameter pattern: The pattern to use in the LIKE expression as `Parameter`.
+    /// - Returns: A `Having` containing the clause.
+    public func like(_ pattern: Parameter) -> Having {
+        return Having(lhs: .parameter(self), rhs: .parameter(pattern), condition: .like)
+    }
+
 }
