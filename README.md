@@ -48,7 +48,7 @@ Now we create a `Table` that corresponds to our Grades table in PostgreSQL - we 
 
 ```swift
 class Grades : Table {
-    let name = "Grades"
+    let tableName = "Grades"
     let id = Column("id")
     let course = Column("course")
     let grade = Column("grade")
@@ -123,13 +123,13 @@ Lets see more examples of how to build and execute SQL queries using Swift-Kuery
 
 ```swift
 class T1 {
-  let name = "t1"
+  let tableName = "t1"
   let a = Column("a")
   let b = Column("b")
 }
 
 class T2 {
-  let name = "t2"
+  let tableName = "t2"
   let c = Column("c")
   let b = Column("b")
 }
@@ -328,6 +328,40 @@ let s = Select(RawField("LEFT(a, 2) as raw"), from: t1)
   .order(by: .DESC(t1.a))
 ...
 ```
+
+<br>
+__SELECT * FROM t1     
+WHERE b >= ANY (SELECT b FROM t2);__
+
+```swift
+...
+let s = Select(from: t1)
+  .where(t1.b >= any(Select(t2.b, from: t2)))
+...
+```
+<br>
+__SELECT * FROM t1     
+WHERE NOT EXISTS (SELECT * FROM t2 WHERE b < 8);__
+
+```swift
+...
+let s = Select(from: t1)
+  .where(notExists(Select(from: t2).where(t2.b < 8)))
+...
+```
+<br>
+__SELECT c FROM t2
+GROUP BY c     
+HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = 'apple');__
+
+```swift
+...
+s = Select(t2.c, from: t2)
+    .group(by: t2.c)
+    .having(sum(t2.b).notIn(Select(t1.b, from: t1).where(t1.a == "apple")))
+...
+```
+
 ## List of plugins:
 
 * [PostgreSQL](https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL)

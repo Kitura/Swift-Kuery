@@ -30,7 +30,7 @@ open class Table : Buildable {
             if let ch = child.value as? Column {
                 ch.table = self
             }
-            else if let label = child.label, label == "name" {
+            else if let label = child.label, label == "tableName" {
                 _name = child.value as! String
             }
         }
