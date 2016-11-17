@@ -30,14 +30,14 @@ class TestJoin: XCTestCase {
         let a = Column("a")
         let b = Column("b")
         
-        let name = "table1Join"
+        let tableName = "table1Join"
     }
     
     class MyTable2 : Table {
         let c = Column("c")
         let b = Column("b")
         
-        let name = "table2Join"
+        let tableName = "table2Join"
     }
     
     func testJoin() {

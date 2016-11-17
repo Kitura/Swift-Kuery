@@ -29,21 +29,21 @@ class TestSelect: XCTestCase {
         let a = Column("a")
         let b = Column("b")
         
-        let name = "tableSelect"
+        let tableName = "tableSelect"
     }
     
     class MyTable2 : Table {
         let c = Column("c")
         let b = Column("b")
         
-        let name = "tableSelect2"
+        let tableName = "tableSelect2"
     }
     
     class MyTable3 : Table {
         let d = Column("d")
         let b = Column("b")
         
-        let name = "tableSelect3"
+        let tableName = "tableSelect3"
     }
   
     func testSelect() {

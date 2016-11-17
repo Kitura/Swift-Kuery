@@ -30,7 +30,7 @@ class TestAlias: XCTestCase {
         let a = Column("a")
         let b = Column("b")
         
-        let name = "tableAlias"
+        let tableName = "tableAlias"
     }
     
     func testAlias() {

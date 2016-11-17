@@ -29,7 +29,7 @@ class TestUpdate: XCTestCase {
         let a = Column("a")
         let b = Column("b")
         
-        let name = "tableUpdate"
+        let tableName = "tableUpdate"
     }
     
     func testUpdateAndDelete () {

@@ -30,7 +30,7 @@ class TestInsert: XCTestCase {
         let a = Column("a")
         let b = Column("b")
         
-        let name = "tableInsert"
+        let tableName = "tableInsert"
     }
     
     func testInsert() {

@@ -30,7 +30,7 @@ class TestParameters: XCTestCase {
         let a = Column("a")
         let b = Column("b")
         
-        let name = "tableParameters"
+        let tableName = "tableParameters"
     }
     
     func testParameters() {

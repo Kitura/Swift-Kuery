@@ -29,7 +29,7 @@ class TestSyntaxError: XCTestCase {
         let a = Column("a")
         let b = Column("b")
         
-        let name = "tableSelect"
+        let tableName = "tableSelect"
     }
     
     func testSyntaxError() {
