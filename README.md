@@ -162,13 +162,15 @@ s.execute(connection) { queryResult in
 <br>                                                      
 __SELECT a, b FROM t1      
    WHERE (a LIKE '%b' OR a = 'apple') AND b > 5  
-   ORDER BY b ASC, a DESC;__
+   ORDER BY b ASC, a DESC       
+   OFFSET 5;__
 
 ```swift
 ...
 let s = Select(t1.a, t1.b, from: t1)
   .where((t1.a.like("b%") || t1.a == "apple") && t1.b > 5)
   .order(by: .ASC(t1.b), .DESC(t1.a))
+  .offset(5)
 
 connection.execute(query: s) { queryResult in
    ...
@@ -242,12 +244,14 @@ let i = Insert(into: t1, columns: [t1.a, t1.b], values: ["apricot", 3])
 ```
 <br>
 __UPDATE t1 SET a = 'peach', b = 2            
-WHERE a = 'banana';__
+WHERE a = 'banana'        
+RETURNING b;__
 
 ```swift
 ...
 let u = Update(t1, set: [(t1.a, "peach"), (t1.b, 2)])
   .where(t1.a == "banana")
+  .returning(t1.b)
 ...
 ```
 
@@ -356,7 +360,7 @@ HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = 'apple');__
 
 ```swift
 ...
-s = Select(t2.c, from: t2)
+let s = Select(t2.c, from: t2)
     .group(by: t2.c)
     .having(sum(t2.b).notIn(Select(t1.b, from: t1).where(t1.a == "apple")))
 ...
