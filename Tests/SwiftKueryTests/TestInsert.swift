@@ -32,7 +32,14 @@ class TestInsert: XCTestCase {
         
         let tableName = "tableInsert"
     }
-    
+
+    class MyTable2 : Table {
+        let a = Column("a")
+        let b = Column("b")
+        
+        let tableName = "tableInsert2"
+    }
+
     func testInsert() {
         let t = MyTable()
         let connection = createConnection()
@@ -40,22 +47,29 @@ class TestInsert: XCTestCase {
         var i = Insert(into: t, values: "apple", 10)
         var kuery = connection.descriptionOf(query: i)
         var query = "INSERT INTO tableInsert VALUES ('apple', 10)"
-        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         i = Insert(into: t, valueTuples: (t.a, "apricot"), (t.b, "3"))
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO tableInsert (a, b) VALUES ('apricot', '3')"
-        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         i = Insert(into: t, columns: [t.a, t.b], values: ["banana", 17])
             .returning()
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO tableInsert (a, b) VALUES ('banana', 17) RETURNING *"
-        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         i = Insert(into: t, rows: [["apple", 17], ["banana", -7], ["banana", 27]])
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO tableInsert VALUES ('apple', 17), ('banana', -7), ('banana', 27)"
-        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        
+        let t2 = MyTable2()
+        i = Insert(into: t, columns: [t.a], Select(t2.a, from: t2))
+            .returning(t.a)
+        kuery = connection.descriptionOf(query: i)
+        query = "INSERT INTO tableInsert (a) SELECT tableInsert2.a FROM tableInsert2 RETURNING tableInsert.a"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
 }

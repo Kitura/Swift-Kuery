@@ -1904,11 +1904,13 @@ history    96.0
 <p><br><br>
 <strong>SELECT a, b FROM t1<br>
    WHERE (a LIKE &rsquo;%b&rsquo; OR a = &lsquo;apple&rsquo;) AND b &gt; 5<br>
-   ORDER BY b ASC, a DESC;</strong></p>
+   ORDER BY b ASC, a DESC<br>
+   OFFSET 5;</strong></p>
 <pre class="highlight swift"><code><span class="o">...</span>
 <span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">where</span><span class="p">((</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="nf">like</span><span class="p">(</span><span class="s">"b%"</span><span class="p">)</span> <span class="o">||</span> <span class="n">t1</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="s">"apple"</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">t1</span><span class="o">.</span><span class="n">b</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">order</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="o">.</span><span class="kt">ASC</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">),</span> <span class="o">.</span><span class="kt">DESC</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">))</span>
+  <span class="o">.</span><span class="nf">offset</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span> <span class="n">queryResult</span> <span class="k">in</span>
    <span class="o">...</span>
@@ -1972,10 +1974,12 @@ VALUES (&#39;apricot&rsquo;, &#39;3&rsquo;);</strong></p>
 
 <p><br>
 <strong>UPDATE t1 SET a = &#39;peach&rsquo;, b = 2<br>
-WHERE a = &#39;banana&rsquo;;</strong></p>
+WHERE a = &#39;banana&rsquo;<br>
+RETURNING b;</strong></p>
 <pre class="highlight swift"><code><span class="o">...</span>
 <span class="k">let</span> <span class="nv">u</span> <span class="o">=</span> <span class="kt">Update</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="nv">set</span><span class="p">:</span> <span class="p">[(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="s">"peach"</span><span class="p">),</span> <span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
   <span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="s">"banana"</span><span class="p">)</span>
+  <span class="o">.</span><span class="nf">returning</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
 <span class="o">...</span>
 </code></pre>
 
@@ -2070,7 +2074,7 @@ WHERE NOT EXISTS (SELECT * FROM t2 WHERE b &lt; 8);</strong></p>
 GROUP BY c<br>
 HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = &#39;apple&rsquo;);</strong></p>
 <pre class="highlight swift"><code><span class="o">...</span>
-<span class="n">s</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="n">t2</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t2</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="n">t2</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t2</span><span class="p">)</span>
     <span class="o">.</span><span class="nf">group</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">t2</span><span class="o">.</span><span class="n">c</span><span class="p">)</span>
     <span class="o">.</span><span class="nf">having</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="n">t2</span><span class="o">.</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="nf">notIn</span><span class="p">(</span><span class="kt">Select</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span><span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="s">"apple"</span><span class="p">)))</span>
 <span class="o">...</span>
@@ -2092,7 +2096,7 @@ HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = &#39;apple&rsquo;);</strong></p
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-11-17)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-11-20)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

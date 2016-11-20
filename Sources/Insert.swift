@@ -25,10 +25,13 @@ public struct Insert : Query {
     public let columns: [Column]?
     
     /// An array of rows (values to insert in each row).
-    public let values: [[Any]]
+    public private (set) var values: [[Any]]?
 
     /// A `Returning` enum value corresponding to the SQL RETURNING clause.
     public private (set) var returningClause: Returning?
+    
+    /// The select query that retrieves the rows to insert (for INSERT INTO SELECT).
+    public private (set) var query: Select?
 
     var syntaxError = ""
 
@@ -89,6 +92,17 @@ public struct Insert : Query {
         self.init(into: table, valueTuples: valueTuples)
     }
     
+    /// Initialize an instance of Insert.
+    ///
+    /// - Parameter into: The table to insert rows.
+    /// - Parameter columns: An optional array of columns to insert. If nil, values of all the columns have to be provided.
+    /// - Parameter query: The select query that retrieves the rows to insert.
+    public init(into table: Table, columns: [Column]?=nil, _ query: Select) {
+        self.columns = columns
+        self.table = table
+        self.query = query
+    }
+
     /// Build the query using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
@@ -102,9 +116,17 @@ public struct Insert : Query {
         if let columns = columns, columns.count != 0 {
             result += "(\(columns.map { $0.name }.joined(separator: ", "))) "
         }
-        result += "VALUES ("
-        result += try "\(values.map { "\(try $0.map { try packType($0, queryBuilder: queryBuilder) }.joined(separator: ", "))" }.joined(separator: "), ("))"
-        result += ")"
+        if let values = values {
+            result += "VALUES ("
+            result += try "\(values.map { "\(try $0.map { try packType($0, queryBuilder: queryBuilder) }.joined(separator: ", "))" }.joined(separator: "), ("))"
+            result += ")"
+        }
+        else if let query = query {
+            result += try query.build(queryBuilder: queryBuilder)
+        }
+        else {
+            throw QueryError.syntaxError("Insert query doesn't have any values to insert.")
+        }
         if let returning = returningClause {
             result += " RETURNING " + returning.build(queryBuilder: queryBuilder)
         }
