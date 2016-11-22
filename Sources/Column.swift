@@ -39,9 +39,9 @@ public class Column : Field {
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the column.
     public func build(queryBuilder: QueryBuilder) -> String {
-        var result = table.nameInQuery() + "." + name
+        var result = table.nameInQuery() + "." + packName(name)
         if let alias = alias {
-            result += " AS " + alias
+            result += " AS " + packName(alias)
         }
         return result
     }

@@ -41,9 +41,9 @@ open class Table : Buildable {
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the table.
     public func build(queryBuilder: QueryBuilder) -> String {
-        var result = _name
+        var result = packName(_name)
         if let alias = alias {
-            result += " AS " + alias
+            result += " AS " + packName(alias)
         }
         return result
     }
@@ -64,9 +64,9 @@ open class Table : Buildable {
     /// - Returns: A String containing the name of the table to be used inside query.
     public func nameInQuery() -> String {
         if let alias = alias {
-            return alias
+            return packName(alias)
         }
-        return _name
+        return packName(_name)
     }
 }
 

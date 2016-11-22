@@ -34,6 +34,14 @@ func packType(_ item: Any, queryBuilder: QueryBuilder) throws -> String {
     }
 }
 
+func packName(_ name: String) -> String {
+    var result = name
+    if result.contains(" ") && !result.hasPrefix("\"") {
+        result = "\"" + result + "\""
+    }
+   return result
+}
+
 func updateParameterNumbers(query: String, queryBuilder: QueryBuilder) -> String {
     var resultQuery = ""
     var inputQuery = query
