@@ -93,15 +93,15 @@ Now we execute the created query on our PostgreSQL connection:
 
 ```swift
 connection.execute(query: query) { result: QueryResult in
-  if let (titles, rows) = result.asRows {
-      for title in titles {
-          // The column names of the result.
+  if let resultSet = queryResult.asResultSet {
+    for title in resultSet.titles {
+      // The column names of the result.
+    }
+    for row in resultSet.rows {
+      for value in row {
+        ...
       }
-      for row in rows {
-          for value in row {
-            // ...
-        }
-      }
+    }
   }
   else if let queryError = result.asError {
       // Something went wrong.
