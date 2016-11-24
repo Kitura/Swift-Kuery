@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Int Extension Reference</title>
+    <title>ResultFetcher Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -11,9 +11,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Extension/Int" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Protocol/ResultFetcher" class="dashAnchor"></a>
 
-    <a title="Int Extension Reference"></a>
+    <a title="ResultFetcher Protocol Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -35,7 +35,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">SwiftKuery Reference</a>
       <img class="carat" src="../img/carat.png" />
-      Int Extension Reference
+      ResultFetcher Protocol Reference
     </p>
 
     <div class="content-wrapper">
@@ -1763,14 +1763,15 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>Int</h1>
+            <h1>ResultFetcher</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">struct</span> <span class="kt">Int</span> <span class="p">:</span> <span class="kt">SignedInteger</span><span class="p">,</span> <span class="kt">Comparable</span><span class="p">,</span> <span class="kt">Equatable</span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">ResultFetcher</span></code></pre>
 
                 </div>
               </div>
-            
+            <p>A protocol for retrieving query results. All database plugins must implement this protocol.</p>
+
           </div>
         </section>
 
@@ -1781,9 +1782,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FE10SwiftKuerySi2inFtGSaSi__VS_6Filter"></a>
-                    <a name="//apple_ref/swift/Method/in(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi2inFtGSaSi__VS_6Filter">in(_:)</a>
+                    <a name="/s:FP10SwiftKuery13ResultFetcher9fetchNextFT_GSqGSaGSqP____"></a>
+                    <a name="//apple_ref/swift/Method/fetchNext()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP10SwiftKuery13ResultFetcher9fetchNextFT_GSqGSaGSqP____">fetchNext()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1791,17 +1792,11 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the <code>in</code> operator.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter values: The list of values for the <code>in</code> expression.
-
-</div>
+                        <p>Fetch the next row of the query result. This function is blocking.</p>
 
 <div class="aside aside-returns">
     <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+    An array of values of type Any? representing the next row from the query result.
 
 </div>
 
@@ -1810,33 +1805,13 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">in</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="kt">Int</span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">fetchNext</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Any</span><span class="p">?]?</span></code></pre>
 
                         </div>
                       </div>
                       <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>values</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The list of values for the <code>in</code> expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
                         <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
+                        <p>An array of values of type Any? representing the next row from the query result.</p>
 
                       </div>
                     </section>
@@ -1845,9 +1820,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FE10SwiftKuerySi2inFtGSaVS_9Parameter__VS_6Filter"></a>
-                    <a name="//apple_ref/swift/Method/in(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi2inFtGSaVS_9Parameter__VS_6Filter">in(_:)</a>
+                    <a name="/s:FP10SwiftKuery13ResultFetcher9fetchNextFT8callbackFGSqGSaGSqP____T__T_"></a>
+                    <a name="//apple_ref/swift/Method/fetchNext(callback:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP10SwiftKuery13ResultFetcher9fetchNextFT8callbackFGSqGSaGSqP____T__T_">fetchNext(callback:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1855,17 +1830,11 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the <code>in</code> operator and <code><a href="../Structs/Parameter.html">Parameter</a></code>.</p>
+                        <p>Fetch the next row of the query result. This function is non-blocking.</p>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter values: The list of values for the <code>in</code> expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+    Parameter callback: A callback to call when the next row of the query result is ready.
 
 </div>
 
@@ -1874,7 +1843,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">in</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">fetchNext</span><span class="p">(</span><span class="nv">callback</span><span class="p">:</span> <span class="p">([</span><span class="kt">Any</span><span class="p">?]?)</span> <span class="o">-&gt;</span><span class="p">())</span></code></pre>
 
                         </div>
                       </div>
@@ -1885,23 +1854,18 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>values</em>
+                                <em>callback</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The list of values for the <code>in</code> expression.</p>
+                                  <p>A callback to call when the next row of the query result is ready.</p>
 
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
-
                       </div>
                     </section>
                   </div>
@@ -1909,9 +1873,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FE10SwiftKuerySi5notInFtGSaSi__VS_6Filter"></a>
-                    <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi5notInFtGSaSi__VS_6Filter">notIn(_:)</a>
+                    <a name="/s:FP10SwiftKuery13ResultFetcher11fetchTitlesFT_GSaSS_"></a>
+                    <a name="//apple_ref/swift/Method/fetchTitles()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FP10SwiftKuery13ResultFetcher11fetchTitlesFT_GSaSS_">fetchTitles()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1919,17 +1883,11 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the notIn operator.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter values: The list of values for the notIn expression.
-
-</div>
+                        <p>Fetch the titles of the query result. This function is blocking.</p>
 
 <div class="aside aside-returns">
     <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+    An array of column titles of type String.
 
 </div>
 
@@ -1938,1281 +1896,13 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notIn</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="kt">Int</span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">fetchTitles</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
                       <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>values</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The list of values for the notIn expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
                         <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi5notInFtGSaVS_9Parameter__VS_6Filter"></a>
-                    <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi5notInFtGSaVS_9Parameter__VS_6Filter">notIn(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the notIn operator and <code><a href="../Structs/Parameter.html">Parameter</a></code>.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter values: The list of values for the notIn expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notIn</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>values</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The list of values for the notIn expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi7betweenFTSi3andSi_VS_6Filter"></a>
-                    <a name="//apple_ref/swift/Method/between(_:and:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi7betweenFTSi3andSi_VS_6Filter">between(_:and:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the between operator.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter value1: The left hand side of the between expression.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter and value2: The right hand side of the between expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">between</span><span class="p">(</span><span class="n">_</span> <span class="nv">value1</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">and</span> <span class="nv">value2</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>value1</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The left hand side of the between expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>and value2</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right hand side of the between expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi7betweenFTVS_9Parameter3andS0__VS_6Filter"></a>
-                    <a name="//apple_ref/swift/Method/between(_:and:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi7betweenFTVS_9Parameter3andS0__VS_6Filter">between(_:and:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the between operator  and <code><a href="../Structs/Parameter.html">Parameter</a></code>.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter value1: The left hand side of the between expression.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter and value2: The right hand side of the between expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">between</span><span class="p">(</span><span class="n">_</span> <span class="nv">value1</span><span class="p">:</span> <span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="p">,</span> <span class="n">and</span> <span class="nv">value2</span><span class="p">:</span> <span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>value1</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The left hand side of the between expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>and value2</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right hand side of the between expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi10notBetweenFTSi3andSi_VS_6Filter"></a>
-                    <a name="//apple_ref/swift/Method/notBetween(_:and:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi10notBetweenFTSi3andSi_VS_6Filter">notBetween(_:and:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the notBetween operator.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter value1: The left hand side of the notBetween expression.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter and value2: The right hand side of the notBetween expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notBetween</span><span class="p">(</span><span class="n">_</span> <span class="nv">value1</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">and</span> <span class="nv">value2</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>value1</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The left hand side of the notBetween expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>and value2</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right hand side of the notBetween expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi10notBetweenFTVS_9Parameter3andS0__VS_6Filter"></a>
-                    <a name="//apple_ref/swift/Method/notBetween(_:and:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi10notBetweenFTVS_9Parameter3andS0__VS_6Filter">notBetween(_:and:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the notBetween operator  and <code><a href="../Structs/Parameter.html">Parameter</a></code>.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter value1: The left hand side of the notBetween expression.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter and value2: The right hand side of the notBetween expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notBetween</span><span class="p">(</span><span class="n">_</span> <span class="nv">value1</span><span class="p">:</span> <span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="p">,</span> <span class="n">and</span> <span class="nv">value2</span><span class="p">:</span> <span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>value1</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The left hand side of the notBetween expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>and value2</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right hand side of the notBetween expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi2inFtGSaSi__VS_6Having"></a>
-                    <a name="//apple_ref/swift/Method/in(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi2inFtGSaSi__VS_6Having">in(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the <code>in</code> operator.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter values: The list of values for the <code>in</code> expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">in</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="kt">Int</span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Having.html">Having</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>values</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The list of values for the <code>in</code> expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi2inFtGSaVS_9Parameter__VS_6Having"></a>
-                    <a name="//apple_ref/swift/Method/in(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi2inFtGSaVS_9Parameter__VS_6Having">in(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the <code>in</code> operator and <code><a href="../Structs/Parameter.html">Parameter</a></code>.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter values: The list of values for the <code>in</code> expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">in</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Having.html">Having</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>values</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The list of values for the <code>in</code> expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi5notInFtGSaSi__VS_6Having"></a>
-                    <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi5notInFtGSaSi__VS_6Having">notIn(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the notIn operator.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter values: The list of values for the notIn expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notIn</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="kt">Int</span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Having.html">Having</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>values</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The list of values for the notIn expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi5notInFtGSaVS_9Parameter__VS_6Having"></a>
-                    <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi5notInFtGSaVS_9Parameter__VS_6Having">notIn(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the notIn operator and <code><a href="../Structs/Parameter.html">Parameter</a></code>.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter values: The list of values for the notIn expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notIn</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Having.html">Having</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>values</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The list of values for the notIn expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi7betweenFTSi3andSi_VS_6Having"></a>
-                    <a name="//apple_ref/swift/Method/between(_:and:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi7betweenFTSi3andSi_VS_6Having">between(_:and:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the between operator.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter value1: The left hand side of the between expression.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter and value2: The right hand side of the between expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">between</span><span class="p">(</span><span class="n">_</span> <span class="nv">value1</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">and</span> <span class="nv">value2</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Having.html">Having</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>value1</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The left hand side of the between expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>and value2</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right hand side of the between expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi7betweenFTVS_9Parameter3andS0__VS_6Having"></a>
-                    <a name="//apple_ref/swift/Method/between(_:and:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi7betweenFTVS_9Parameter3andS0__VS_6Having">between(_:and:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the between operator  and <code><a href="../Structs/Parameter.html">Parameter</a></code>.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter value1: The left hand side of the between expression.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter and value2: The right hand side of the between expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">between</span><span class="p">(</span><span class="n">_</span> <span class="nv">value1</span><span class="p">:</span> <span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="p">,</span> <span class="n">and</span> <span class="nv">value2</span><span class="p">:</span> <span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Having.html">Having</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>value1</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The left hand side of the between expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>and value2</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right hand side of the between expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi10notBetweenFTSi3andSi_VS_6Having"></a>
-                    <a name="//apple_ref/swift/Method/notBetween(_:and:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi10notBetweenFTSi3andSi_VS_6Having">notBetween(_:and:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the notBetween operator.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter value1: The left hand side of the notBetween expression.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter and value2: The right hand side of the notBetween expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notBetween</span><span class="p">(</span><span class="n">_</span> <span class="nv">value1</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">and</span> <span class="nv">value2</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Having.html">Having</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>value1</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The left hand side of the notBetween expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>and value2</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right hand side of the notBetween expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi10notBetweenFTVS_9Parameter3andS0__VS_6Having"></a>
-                    <a name="//apple_ref/swift/Method/notBetween(_:and:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi10notBetweenFTVS_9Parameter3andS0__VS_6Having">notBetween(_:and:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the notBetween operator  and <code><a href="../Structs/Parameter.html">Parameter</a></code>.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter value1: The left hand side of the notBetween expression.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter and value2: The right hand side of the notBetween expression.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notBetween</span><span class="p">(</span><span class="n">_</span> <span class="nv">value1</span><span class="p">:</span> <span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="p">,</span> <span class="n">and</span> <span class="nv">value2</span><span class="p">:</span> <span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Having.html">Having</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>value1</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The left hand side of the notBetween expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>and value2</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right hand side of the notBetween expression.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi2inFVS_6SelectVS_6Filter"></a>
-                    <a name="//apple_ref/swift/Method/in(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi2inFVS_6SelectVS_6Filter">in(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the IN operator for subquery.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter query: The subquery.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">in</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">query</span><span class="p">:</span> <span class="kt"><a href="../Structs/Select.html">Select</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>query</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The subquery.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi5notInFVS_6SelectVS_6Filter"></a>
-                    <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi5notInFVS_6SelectVS_6Filter">notIn(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the NOT IN operator for subquery.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter query: The subquery.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notIn</span><span class="p">(</span><span class="n">_</span> <span class="nv">query</span><span class="p">:</span> <span class="kt"><a href="../Structs/Select.html">Select</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>query</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The subquery.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi2inFVS_6SelectVS_6Having"></a>
-                    <a name="//apple_ref/swift/Method/in(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi2inFVS_6SelectVS_6Having">in(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the IN operator for subquery.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter query: The subquery.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">in</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">query</span><span class="p">:</span> <span class="kt"><a href="../Structs/Select.html">Select</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Having.html">Having</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>query</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The subquery.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE10SwiftKuerySi5notInFVS_6SelectVS_6Having"></a>
-                    <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE10SwiftKuerySi5notInFVS_6SelectVS_6Having">notIn(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the NOT IN operator for subquery.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter query: The subquery.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notIn</span><span class="p">(</span><span class="n">_</span> <span class="nv">query</span><span class="p">:</span> <span class="kt"><a href="../Structs/Select.html">Select</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Having.html">Having</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>query</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The subquery.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="../Structs/Having.html">Having</a></code> containing the clause.</p>
+                        <p>An array of column titles of type String.</p>
 
                       </div>
                     </section>

@@ -1696,6 +1696,9 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/Query.html">Query</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ResultFetcher.html">ResultFetcher</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -1733,6 +1736,12 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/RawField.html">RawField</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ResultSet.html">ResultSet</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/RowSequence.html">RowSequence</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/ScalarColumnExpression.html">ScalarColumnExpression</a>
@@ -2372,6 +2381,78 @@ The SQL GROUP BY statement.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:FV10SwiftKuery6SelectcFT6fieldsGSaPS_5Field__4fromGSaCS_5Table__S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(fields:from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery6SelectcFT6fieldsGSaPS_5Field__4fromGSaCS_5Table__S0_">init(fields:from:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize an instance of Select.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter fields: An array of <code><a href="../Protocols/Field.html">Field</a></code> elements to select.
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter from table: An array of tables to select from.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">fields</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/Field.html">Field</a></span><span class="p">],</span> <span class="n">from</span> <span class="nv">tables</span><span class="p">:</span> <span class="p">[</span><span class="kt">Table</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fields</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of <code>Field</code> elements to select.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>from table</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of tables to select from.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:FV10SwiftKuery6Select5buildFzT12queryBuilderCS_12QueryBuilder_SS"></a>
                     <a name="//apple_ref/swift/Method/build(queryBuilder:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:FV10SwiftKuery6Select5buildFzT12queryBuilderCS_12QueryBuilder_SS">build(queryBuilder:)</a>
@@ -2660,6 +2741,89 @@ The SQL GROUP BY statement.</p>
                               <td>
                                 <div>
                                   <p>A list of <code>Field</code>s to select.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>from</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of tables to select from.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new instance of Select with <code><a href="../Structs/Select.html#/s:vV10SwiftKuery6Select8distinctSb">distinct</a></code> flag set.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFV10SwiftKuery6Select8distinctFT6fieldsGSaPS_5Field__4fromGSaCS_5Table__S0_"></a>
+                    <a name="//apple_ref/swift/Method/distinct(fields:from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFV10SwiftKuery6Select8distinctFT6fieldsGSaPS_5Field__4fromGSaCS_5Table__S0_">distinct(fields:from:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a SELECT DISTINCT query.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter fields: An array of <code><a href="../Protocols/Field.html">Field</a></code>s to select.
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter from: An array of tables to select from.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A new instance of Select with <code><a href="../Structs/Select.html#/s:vV10SwiftKuery6Select8distinctSb">distinct</a></code> flag set.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">distinct</span><span class="p">(</span><span class="nv">fields</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/Field.html">Field</a></span><span class="p">],</span> <span class="n">from</span> <span class="nv">tables</span><span class="p">:</span> <span class="p">[</span><span class="kt">Table</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fields</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of <code>Field</code>s to select.</p>
 
                                 </div>
                               </td>
@@ -3912,7 +4076,7 @@ The SQL GROUP BY statement.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-11-20)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-11-24)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

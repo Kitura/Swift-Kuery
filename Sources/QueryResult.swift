@@ -20,8 +20,8 @@
 public enum QueryResult {
     /// An error occurred while executing the query.
     case error(Error)
-    /// The result of the query execution as an Array of column titles and an Array of table rows.
-    case rows(titles: [String], rows: [[Any?]])
+    /// The result of the query execution as an a `ResultSet`.
+    case resultSet(ResultSet)
     /// An indication whether the query was succesfully executed.
     case success(Any)
     /// An indication whether the query was succesfully executed, and returned no data.
@@ -36,17 +36,16 @@ public enum QueryResult {
             return true
         }
     }
-    
-    /// Data received from the query execution represented as a tuple of (titles, rows),
-    /// where titles are the names of the returned columns,
-    /// and rows are an Array of rows, i.e., an Array of Arrays of values.
-    public var asRows: ([String], [[Any?]])? {
+        
+    /// Data received from the query execution represented as a `ResultSet`.
+    public var asResultSet: ResultSet? {
         switch self {
-        case .rows(let titles, let rows):
-            return (titles, rows)
+        case .resultSet(let resultSet):
+            return resultSet
         default:
             return nil
         }
+        
     }
     
     /// An error that may occur during query execution.

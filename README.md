@@ -82,7 +82,7 @@ Note, that we also round the average grades and alias this column in the result 
 Here is how to create such query using Swift-Kuery:
 
 ```swift
-let query = Select(grades.course, round(avg(grades.grade), 1).as("average"), from: grades)
+let query = Select(grades.course, round(avg(grades.grade), to: 1).as("average"), from: grades)
             .group(by: grades.course)
             .having(avg(grades.grade) > 90)
             .order(by: .ASC(avg(grades.grade)))
@@ -143,11 +143,11 @@ let t1 = T1()
 let s = Select(from: t1)
 
 s.execute(connection) { queryResult in
-  if let (titles, rows) = result.asRows {
-    for title in titles {
+  if let resultSet = queryResult.asResultSet {
+    for title in resultSet.titles {
       ...
     }
-    for row in rows {
+    for row in resultSet.rows {
       for value in row {
         ...
       }
