@@ -28,6 +28,8 @@ public struct Parameter: Buildable {
         self.name = name
     }
     
+    static var numberedParameterMarker = "\u{00}\u{01}\u{01}\u{00}"
+    
     /// Build the parameter using `QueryBuilder`. If the parameter's name is set,
     /// return it along with the named parameter marker in `QueryBuilder`. Otherwise, 
     /// return the numbered parameter marker in `QueryBuilder`. 
@@ -46,8 +48,7 @@ public struct Parameter: Buildable {
             }
         }
         else {
-            let marker = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.numberedParameter.rawValue]
-            return marker
+            return Parameter.numberedParameterMarker
         }
     }
 }
