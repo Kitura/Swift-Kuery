@@ -147,7 +147,7 @@ public struct Insert: Query {
     
     /// Add an SQL RETURNING clause to the Insert statement.
     ///
-    /// - Parameter columns: An optionl array of `Column`s to be returned. If not specified, all columns are returned.
+    /// - Parameter columns: An optional array of `Column`s to be returned. If not specified, all columns are returned.
     /// - Returns: A new instance of Insert.
     public func returning(_ columns: [Column]?=nil) -> Insert {
         var new = self
