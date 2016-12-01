@@ -16,7 +16,7 @@
 
 // MARK: QueryResult
 
-/// The result of an executiona of a query.
+/// The result of an execution of a query.
 public enum QueryResult {
     /// An error occurred while executing the query.
     case error(Error)

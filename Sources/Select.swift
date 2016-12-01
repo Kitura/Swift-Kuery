@@ -62,7 +62,7 @@ public struct Select: Query {
     /// The SQL ON clause containing the filter for the rows to select in a JOIN query.
     public private (set) var onClause: Filter?
 
-    /// A String containg the raw SQL ON clause to filter for the rows to select in a JOIN query.
+    /// A String containg the raw SQL ON clause to filter the rows to select in a JOIN query.
     public private (set) var rawOnClause: String?
 
     /// The SQL USING clause: an array of `Column` elements that have to match in a JOIN query.
