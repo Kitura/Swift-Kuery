@@ -17,11 +17,11 @@
 // MARK: Update
 
 /// The SQL UPDATE statement.
-public struct Update : Query {
+public struct Update: Query {
     /// The table to update.
     public let table: Table
 
-    /// The SQL WHERE clause containing the filter for rows to update.
+    /// The SQL WHERE clause containing the filter for the rows to update.
     public private (set) var whereClause: Filter?
     
     /// A String containg the raw SQL WHERE clause to filter the rows to update.
@@ -32,7 +32,7 @@ public struct Update : Query {
     
     private let valueTuples: [(Column, Any)]
     
-    var syntaxError = ""
+    private var syntaxError = ""
     
     /// Initialize an instance of Update.
     ///
@@ -43,6 +43,9 @@ public struct Update : Query {
         self.table = table
         self.valueTuples = set
         self.whereClause = conditions
+        if set.count == 0 {
+            syntaxError = "An empty set of (column, value) tuples. "
+        }
     }
 
     /// Build the query using `QueryBuilder`.
@@ -54,11 +57,11 @@ public struct Update : Query {
         if syntaxError != "" {
             throw QueryError.syntaxError(syntaxError)
         }
-        let values = try valueTuples.map {
+        var result = "UPDATE " + table.build(queryBuilder: queryBuilder)
+        result += try " SET " + valueTuples.map {
             column, value in "\(column.name) = \(try packType(value, queryBuilder: queryBuilder))"
             }.joined(separator: ", ")
-        var result = "UPDATE " + table.build(queryBuilder: queryBuilder) + " SET \(values)"
-        if let whereClause = whereClause {
+       if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
         else if let rawWhereClause = rawWhereClause {

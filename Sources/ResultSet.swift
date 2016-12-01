@@ -16,7 +16,7 @@
 
 // MARK: ResultSet
 
-/// Query result representation as either a blocking `RowSequence` or as a non-blocking nextRow() function.
+/// Represents a query result set. The rows are accessable either in a blocking fashion using a `RowSequence` or in a non-blocking fashion using nextRow() function.
 public struct ResultSet {
     private var resultFetcher: ResultFetcher
     
@@ -40,7 +40,7 @@ public struct ResultSet {
         }
     }
     
-    /// The column titles of the query result. Blocking.
+    /// The column titles of the query result. This function is blocking.
     public var titles: [String] {
         return resultFetcher.fetchTitles()
     }

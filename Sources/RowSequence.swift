@@ -17,16 +17,16 @@
 // MARK: RowSequence
 
 /// A query result as a Sequence of rows.
-public struct RowSequence : Sequence, IteratorProtocol  {
+public struct RowSequence: Sequence, IteratorProtocol  {
     private var resultFetcher: ResultFetcher
     
     init(_ resultFetcher: ResultFetcher) {
         self.resultFetcher = resultFetcher
     }
     
-    /// Get the next row. This function is non-blocking.
+    /// Get the next row. This function is blocking.
     ///
-    /// - Returns: An array of values of type Any? representing the next row from the query result.
+    /// - Returns: An array of values of type Any? representing the next row from the query result set.
     public mutating func next() -> [Any?]? {
         return resultFetcher.fetchNext()
     }

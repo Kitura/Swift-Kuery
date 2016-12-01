@@ -17,7 +17,7 @@
 // MARK: Parameter
 
 /// Query parameter, either numbered, or named, or just marked with a marker.
-public struct Parameter : Buildable {
+public struct Parameter: Buildable {
     /// An optional name of the parameter.
     public private (set) var name: String?
     

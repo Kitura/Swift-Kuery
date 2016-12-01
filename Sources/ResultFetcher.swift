@@ -19,7 +19,7 @@
 /// A protocol for retrieving query results. All database plugins must implement this protocol.
 public protocol ResultFetcher {
     
-   	/// Fetch the next row of the query result. This function is blocking.
+    /// Fetch the next row of the query result. This function is blocking.
     ///
     /// - Returns: An array of values of type Any? representing the next row from the query result.
     func fetchNext() -> [Any?]?

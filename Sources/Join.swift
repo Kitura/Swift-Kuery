@@ -16,25 +16,25 @@
 
 // MARK: Join
 
-/// The SQL SELECT JOIN.
-public enum Join : Buildable {
-    /// The SQL INNER JOIN.
+/// The SQL SELECT JOIN statement.
+public enum Join: Buildable {
+    /// The SQL INNER JOIN statement.
     case join(Table)
-    /// The SQL LEFT OUTER JOIN.
+    /// The SQL LEFT OUTER JOIN statement.
     case left(Table)
-    /// The SQL RIGHT OUTER JOIN.
+    /// The SQL RIGHT OUTER JOIN statement.
     case right(Table)
-    /// The SQL FULL OUTER JOIN.
+    /// The SQL FULL OUTER JOIN statement.
     case full(Table)
-    /// The SQL CROSS JOIN.
+    /// The SQL CROSS JOIN statement.
     case cross(Table)
-    /// The SQL NATURAL INNER JOIN.
+    /// The SQL NATURAL INNER JOIN statement.
     case natural(Table)
-    /// The SQL NATURAL LEFT OUTER JOIN.
+    /// The SQL NATURAL LEFT OUTER JOIN statement.
     case naturalLeft(Table)
-    /// The SQL NATURAL RIGHT OUTER JOIN.
+    /// The SQL NATURAL RIGHT OUTER JOIN statement.
     case naturalRight(Table)
-    /// The SQL NATURAL FULL OUTER JOIN.
+    /// The SQL NATURAL FULL OUTER JOIN statement.
     case naturalFull(Table)
 
     /// Build the query component using `QueryBuilder`.

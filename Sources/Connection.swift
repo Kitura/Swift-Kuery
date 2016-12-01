@@ -20,7 +20,7 @@
 public protocol Connection {
     /// Establish a connection with the database.
     ///
-    /// - Parameter onCompletion: The function to be called once the connection is established.
+    /// - Parameter onCompletion: The function to be called when the connection is established.
     func connect(onCompletion: (QueryError?) -> ())
 
     /// Close the connection to the database.
@@ -29,27 +29,27 @@ public protocol Connection {
     /// Execute a query.
     ///
     /// - Parameter query: The query to execute.
-    /// - Parameter onCompletion: The function to be called once the execution of the query is completed.
+    /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     func execute(query: Query, onCompletion: @escaping ((QueryResult) -> ()))
     
     /// Execute a raw query.
     ///
     /// - Parameter query: A String with the query to execute.
-    /// - Parameter onCompletion: The function to be called once the execution of the query is completed.
+    /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     func execute(_ raw: String, onCompletion: @escaping ((QueryResult) -> ()))
     
     /// Execute a query with parameters.
     ///
     /// - Parameter query: The query to execute.
     /// - Parameter parameters: An array of the parameters.
-    /// - Parameter onCompletion: The function to be called once the execution of the query is completed.
+    /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     func execute(query: Query, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ()))
     
     /// Execute a raw query with parameters.
     ///
     /// - Parameter query: A String with the query to execute.
     /// - Parameter parameters: An array of the parameters.
-    /// - Parameter onCompletion: The function to be called once the execution of the query is completed.
+    /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     func execute(_ raw: String, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ()))
     
     /// Return a String representation of the query.

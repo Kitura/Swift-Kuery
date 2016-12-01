@@ -16,18 +16,18 @@
 
 // Mark: Select
 
-/// The SQL SELECT query.
-public struct Select : Query {
+/// The SQL SELECT statement.
+public struct Select: Query {
     /// An array of `Field` elements to select.
     public let fields: [Field]?
     
     /// The table to select rows from.
     public let tables: [Table]
 
-    /// The SQL WHERE clause containing the filter for rows to select.
+    /// The SQL WHERE clause containing the filter for rows to retrieve.
     public private (set) var whereClause: Filter?
     
-    /// A String containg the raw SQL WHERE clause to filter the rows to select.
+    /// A String containg the raw SQL WHERE clause to filter the rows to retrieve.
     public private (set) var rawWhereClause: String?
     
     /// A boolean indicating whether the selected values have to be distinct.
@@ -35,37 +35,40 @@ public struct Select : Query {
     public private (set) var distinct = false
     
     /// The number of rows to select.
-    /// If specified, corresponds to the SQL SELECT TOP/DISTINCT clause.
+    /// If specified, corresponds to the SQL SELECT TOP/LIMIT clause.
     public private (set) var top: Int?
 
     /// The number of rows to skip.
     /// If specified, corresponds to the SQL SELECT OFFSET clause.
     public private (set) var offset: Int?
 
-    /// An array containing `OrderBy` elements to sort the selected row.
+    /// An array containing `OrderBy` elements to sort the selected rows.
     /// The SQL ORDER BY keyword.
     public private (set) var orderBy: [OrderBy]?
     
-    /// An array containing `Column` elements to group the selected row.
+    /// An array containing `Column` elements to group the selected rows.
     /// The SQL GROUP BY statement.
     public private (set) var groupBy: [Column]?
 
-    /// The SQL HAVING clause containing the filter for rows to select when aggregate functions are used.
+    /// The SQL HAVING clause containing the filter for the rows to select when aggregate functions are used.
     public private (set) var havingClause: Having?
    
-    /// A String with the raw SQL HAVING clause containing the filter for rows to select when aggregate functions are used.
+    /// A String with the raw SQL HAVING clause containing the filter for the rows to select when aggregate functions are used.
     public private (set) var rawHavingClause: String?
     
     /// The SQL JOIN clause.
     public private (set) var join: Join?
     
-    /// The SQL ON clause containing the filter for rows to select in a JOIN query.
+    /// The SQL ON clause containing the filter for the rows to select in a JOIN query.
     public private (set) var onClause: Filter?
-    
+
+    /// A String containg the raw SQL ON clause to filter for the rows to select in a JOIN query.
+    public private (set) var rawOnClause: String?
+
     /// The SQL USING clause: an array of `Column` elements that have to match in a JOIN query.
     public private (set) var using: [Column]?
 
-    var syntaxError = ""
+    private var syntaxError = ""
 
     /// Initialize an instance of Select.
     ///
@@ -109,11 +112,25 @@ public struct Select : Query {
     /// - Returns: A String representation of the query.
     /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
+        var syntaxError = self.syntaxError
+        if join == nil {
+            if onClause != nil || rawOnClause != nil {
+                syntaxError += "On clause set for statement that is not join. "
+            }
+            if using != nil {
+                syntaxError += "On clause set for statement that is not join. "
+            }
+        }
+        
+        if groupBy == nil && (havingClause != nil || rawHavingClause != nil) {
+            syntaxError += "Having clause is not allowed without a group by clause. "
+        }
+        
         if syntaxError != "" {
             throw QueryError.syntaxError(syntaxError)
         }
 
-        var result =  "SELECT "
+        var result = "SELECT "
         if distinct {
             result += "DISTINCT "
         }
@@ -136,8 +153,7 @@ public struct Select : Query {
             result += try " ON " + onClause.build(queryBuilder: queryBuilder)
         }
         else if let using = using {
-            result += " USING (" + using.map { $0.name }.joined(separator: ", ")
-            result += ")"
+            result += " USING (" + using.map { $0.name }.joined(separator: ", ") + ")"
         }
         
         if let whereClause = whereClause {
@@ -341,12 +357,15 @@ public struct Select : Query {
     
     /// Add an SQL ON clause to the JOIN statement.
     ///
-    /// - Parameter conditions: The `Filter`s to apply.
+    /// - Parameter conditions: The `Filter` to apply.
     /// - Returns: A new instance of Select with the ON clause.
     public func on(_ conditions: Filter) -> Select {
         var new = self
-        if onClause != nil {
+        if onClause != nil || rawOnClause != nil {
             new.syntaxError += "Multiple on clauses. "
+        }
+        else if using != nil {
+            new.syntaxError += "An on clause is not allowed with a using clause. "
         }
         else {
             new.onClause = conditions
@@ -354,14 +373,36 @@ public struct Select : Query {
         return new
     }
     
+    /// Add a raw SQL ON clause to the JOIN statement.
+    ///
+    /// - Parameter conditions: A String containing the SQL ON clause to apply.
+    /// - Returns: A new instance of Select with the ON clause.
+    public func on(_ raw: String) -> Select {
+        var new = self
+        if onClause != nil || rawOnClause != nil {
+            new.syntaxError += "Multiple on clauses. "
+        }
+        else if using != nil {
+            new.syntaxError += "An on clause is not allowed with a using clause. "
+        }
+        else {
+            new.rawOnClause = raw
+        }
+        return new
+    }
+
+    
     /// Add an SQL USING clause to the JOIN statement.
     ///
-    /// - Parameter columns: A list of `Column`s to match in JOIN statement.
+    /// - Parameter columns: A list of `Column`s to match in the JOIN statement.
     /// - Returns: A new instance of Select with the USING clause.
     public func using(_ columns: Column...) -> Select {
         var new = self
         if using != nil {
             new.syntaxError += "Multiple using clauses. "
+        }
+        else if onClause != nil || rawOnClause != nil {
+            new.syntaxError += "A using clause is not allowed with an on clause. "
         }
         else {
             new.using = columns
@@ -371,8 +412,8 @@ public struct Select : Query {
     
     /// Create an SQL SELECT INNER JOIN statement.
     ///
-    /// - Parameter table: The right table to perform join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to SELECT INNER JOIN.
+    /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
+    /// - Returns: A new instance of Select corresponding to the SELECT INNER JOIN.
     public func join(_ table: Table) -> Select {
         var new = self
         if join != nil {
@@ -386,8 +427,8 @@ public struct Select : Query {
     
     /// Create an SQL SELECT LEFT JOIN statement.
     ///
-    /// - Parameter table: The right table to perform join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to SELECT LEFT JOIN.
+    /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
+    /// - Returns: A new instance of Select corresponding to the SELECT LEFT JOIN.
     public func leftJoin(_ table: Table) -> Select {
         var new = self
         if join != nil {
@@ -401,8 +442,8 @@ public struct Select : Query {
     
     /// Create an SQL SELECT RIGHT JOIN statement.
     ///
-    /// - Parameter table: The right table to perform join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to SELECT RIGHT JOIN.
+    /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
+    /// - Returns: A new instance of Select corresponding to the SELECT RIGHT JOIN.
     public func rightJoin(_ table: Table) -> Select {
         var new = self
         if join != nil {
@@ -416,8 +457,8 @@ public struct Select : Query {
     
     /// Create an SQL SELECT FULL JOIN statement.
     ///
-    /// - Parameter table: The right table to perform join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to SELECT FULL JOIN.
+    /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
+    /// - Returns: A new instance of Select corresponding to the SELECT FULL JOIN.
     public func fullJoin(_ table: Table) -> Select {
         var new = self
         if join != nil {
@@ -431,8 +472,8 @@ public struct Select : Query {
     
     /// Create an SQL SELECT CROSS JOIN statement.
     ///
-    /// - Parameter table: The right table to perform join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to SELECT CROSS JOIN.
+    /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
+    /// - Returns: A new instance of Select corresponding to the SELECT CROSS JOIN.
     public func crossJoin(_ table: Table) -> Select {
         var new = self
         if join != nil {
@@ -446,8 +487,8 @@ public struct Select : Query {
     
     /// Create an SQL SELECT NATURAL JOIN statement.
     ///
-    /// - Parameter table: The right table to perform join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to SELECT NATURAL JOIN.
+    /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
+    /// - Returns: A new instance of Select corresponding to the SELECT NATURAL JOIN.
     public func naturalJoin(_ table: Table) -> Select {
         var new = self
         if join != nil {
@@ -461,8 +502,8 @@ public struct Select : Query {
 
     /// Create an SQL SELECT NATURAL LEFT JOIN statement.
     ///
-    /// - Parameter table: The right table to perform join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to SELECT NATURAL LEFT JOIN.
+    /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
+    /// - Returns: A new instance of Select corresponding to the SELECT NATURAL LEFT JOIN.
     public func naturalLeftJoin(_ table: Table) -> Select {
         var new = self
         if join != nil {
@@ -476,8 +517,8 @@ public struct Select : Query {
 
     /// Create an SQL SELECT NATURAL RIGHT JOIN statement.
     ///
-    /// - Parameter table: The right table to perform join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to SELECT NATURAL RIGHT JOIN.
+    /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
+    /// - Returns: A new instance of Select corresponding to the SELECT NATURAL RIGHT JOIN.
     public func naturalRightJoin(_ table: Table) -> Select {
         var new = self
         if join != nil {
@@ -491,8 +532,8 @@ public struct Select : Query {
 
     /// Create an SQL SELECT NATURAL FULL JOIN statement.
     ///
-    /// - Parameter table: The right table to perform join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to SELECT NATURAL FULL JOIN.
+    /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
+    /// - Returns: A new instance of Select corresponding to the SELECT NATURAL FULL JOIN.
     public func naturalFullJoin(_ table: Table) -> Select {
         var new = self
         if join != nil {

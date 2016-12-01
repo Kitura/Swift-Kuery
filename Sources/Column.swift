@@ -17,7 +17,7 @@
 // MARK: Column
 
 /// Definition of table column.
-public class Column : Field {
+public class Column: Field {
     /// The name of the column.
     public private (set) var name: String
     
@@ -39,14 +39,14 @@ public class Column : Field {
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the column.
     public func build(queryBuilder: QueryBuilder) -> String {
-        var result = table.nameInQuery() + "." + packName(name)
+        var result = table.nameInQuery + "." + packName(name)
         if let alias = alias {
             result += " AS " + packName(alias)
         }
         return result
     }
 
-    /// Add alias to the column, i.e., implement SQL AS operator.
+    /// Add an alias to the column, i.e., implement the SQL AS operator.
     ///
     /// - Parameter newName: A String containing the alias for the column.
     /// - Returns: A new Column instance with the alias.

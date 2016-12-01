@@ -17,7 +17,7 @@
 // MARK: Insert
 
 /// The SQL INSERT statement.
-public struct Insert : Query {
+public struct Insert: Query {
     /// The table to insert rows.
     public let table: Table
     
@@ -26,15 +26,15 @@ public struct Insert : Query {
     
     /// An array of rows (values to insert in each row).
     public private (set) var values: [[Any]]?
-
+    
     /// A `Returning` enum value corresponding to the SQL RETURNING clause.
     public private (set) var returningClause: Returning?
     
     /// The select query that retrieves the rows to insert (for INSERT INTO SELECT).
     public private (set) var query: Select?
-
-    var syntaxError = ""
-
+    
+    private var syntaxError = ""
+    
     /// Initialize an instance of Insert.
     ///
     /// - Parameter into: The table to insert rows.
@@ -60,6 +60,13 @@ public struct Insert : Query {
         self.columns = columns
         self.values = rows
         self.table = table
+        if let tableColumns = self.columns {
+            for (index, row) in rows.enumerated() {
+                if tableColumns.count != row.count {
+                    syntaxError += "Values count in row number \(index) doesn't match column count. "
+                }
+            }
+        }
     }
     
     /// Initialize an instance of Insert.
@@ -101,8 +108,12 @@ public struct Insert : Query {
         self.columns = columns
         self.table = table
         self.query = query
+        if let tableColumns = self.columns, let selectColumns = query.fields,
+            tableColumns.count != selectColumns.count {
+            syntaxError = "Number of columns in Select doesn't match column count. "
+        }
     }
-
+    
     /// Build the query using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.

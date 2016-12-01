@@ -16,8 +16,8 @@
 
 // MARK: OrderBy
 
-/// An SQL ORDER BY keyword.
-public enum OrderBy : Buildable {
+/// An SQL ORDER BY clause.
+public enum OrderBy: Buildable {
     /// Order ascending.
     case ASC(Field)
     /// Order descending.

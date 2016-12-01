@@ -16,18 +16,18 @@
 
 // MARK: QueryResult
 
-/// The result of the query execution.
+/// The result of an executiona of a query.
 public enum QueryResult {
     /// An error occurred while executing the query.
     case error(Error)
     /// The result of the query execution as an a `ResultSet`.
     case resultSet(ResultSet)
-    /// An indication whether the query was succesfully executed.
+    /// Indicates the query executed successfully and returned data.
     case success(Any)
-    /// An indication whether the query was succesfully executed, and returned no data.
+    /// Indicates the query executed successfully and returned no data.
     case successNoData
     
-    /// An indication whether the query was succesfully executed.
+    /// Indicates the query executed successfully.
     public var success: Bool {
         switch self {
         case .error:
@@ -48,7 +48,7 @@ public enum QueryResult {
         
     }
     
-    /// An error that may occur during query execution.
+    /// The error that occurred during query execution.
     public var asError: Error? {
         switch self {
         case .error(let error):
@@ -66,6 +66,5 @@ public enum QueryResult {
         default:
             return nil
         }
-    }
+    }    
 }
-

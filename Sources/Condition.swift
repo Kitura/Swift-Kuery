@@ -17,7 +17,7 @@
 // MARK: Condition
 
 /// An enumeration of condition operators supported in `Filter` and `Having`.
-public enum Condition : Buildable {
+public enum Condition: Buildable {
     /// The SQL == operator.
     case equal
     /// The SQL != operator.

@@ -17,7 +17,7 @@
 // MARK: ScalarColumnExpression
 
 /// An expression containing a scalar function applied on a column.
-public struct ScalarColumnExpression : Field {
+public struct ScalarColumnExpression: Field {
     
     /// The alias of the field.
     public var alias: String?
@@ -43,7 +43,7 @@ public struct ScalarColumnExpression : Field {
     }
 
     /// An enumeration of the supported scalar functions that can applied on a column.
-    public indirect enum ScalarFunction : Buildable {
+    public enum ScalarFunction: Buildable {
         /// The SQL NOW function.
         case now()
         /// The SQL UCASE function.
@@ -85,14 +85,16 @@ public struct ScalarColumnExpression : Field {
     }    
 }
 
-/// Create a `ScalarColumnExpression` using NOW function.
+// MARK Global functions
+
+/// Create a `ScalarColumnExpression` using the NOW function.
 ///
 /// - Returns: An instance of `ScalarColumnExpression`.
 public func now() -> ScalarColumnExpression {
     return ScalarColumnExpression(.now())
 }
 
-/// Create a `ScalarColumnExpression` using LEN function.
+/// Create a `ScalarColumnExpression` using the LEN function.
 ///
 /// - Parameter field: The `ScalarColumnExpression` to apply the function on.
 /// - Returns: An instance of `ScalarColumnExpression`.
@@ -100,7 +102,7 @@ public func len(_ field: ScalarColumnExpression) -> ScalarColumnExpression {
     return ScalarColumnExpression(.len(field: field))
 }
 
-/// Create a `ScalarColumnExpression` using UCASE function.
+/// Create a `ScalarColumnExpression` using the UCASE function.
 ///
 /// - Parameter field: The `ScalarColumnExpression` to apply the function on.
 /// - Returns: An instance of `ScalarColumnExpression`.
@@ -108,7 +110,7 @@ public func ucase(_ field: ScalarColumnExpression) -> ScalarColumnExpression {
     return ScalarColumnExpression(.ucase(field: field))
 }
 
-/// Create a `ScalarColumnExpression` using LCASE function.
+/// Create a `ScalarColumnExpression` using the LCASE function.
 ///
 /// - Parameter field: The `ScalarColumnExpression` to apply the function on.
 /// - Returns: An instance of `ScalarColumnExpression`.
@@ -116,7 +118,7 @@ public func lcase(_ field: ScalarColumnExpression) -> ScalarColumnExpression {
     return ScalarColumnExpression(.lcase(field: field))
 }
 
-/// Create a `ScalarColumnExpression` using ROUND function.
+/// Create a `ScalarColumnExpression` using the ROUND function.
 ///
 /// - Parameter field: The `ScalarColumnExpression` to apply the function on.
 /// - Parameter to: The decimal to round the values to.
@@ -125,7 +127,7 @@ public func round(_ field: ScalarColumnExpression, to decimal: Int) -> ScalarCol
     return ScalarColumnExpression(.round(field: field, to: decimal))
 }
 
-/// Create a `ScalarColumnExpression` using MID function.
+/// Create a `ScalarColumnExpression` using the MID function.
 ///
 /// - Parameter field: The `ScalarColumnExpression` to apply the function on.
 /// - Parameter start: The starting position for the text extraction.
@@ -135,7 +137,7 @@ public func mid(_ field: ScalarColumnExpression, start: Int, length: Int) -> Sca
     return ScalarColumnExpression(.mid(field: field, start: start, length: length))
 }
 
-/// Create a `ScalarColumnExpression` using LEN function.
+/// Create a `ScalarColumnExpression` using the LEN function.
 ///
 /// - Parameter field: The `Column` to apply the function on.
 /// - Returns: An instance of `ScalarColumnExpression`.
@@ -143,7 +145,7 @@ public func len(_ field: Column) -> ScalarColumnExpression {
     return ScalarColumnExpression(.len(field: field))
 }
 
-/// Create a `ScalarColumnExpression` using UCASE function.
+/// Create a `ScalarColumnExpression` using the UCASE function.
 ///
 /// - Parameter field: The `Column` to apply the function on.
 /// - Returns: An instance of `ScalarColumnExpression`.
@@ -151,7 +153,7 @@ public func ucase(_ field: Column) -> ScalarColumnExpression {
     return ScalarColumnExpression(.ucase(field: field))
 }
 
-/// Create a `ScalarColumnExpression` using LCASE function.
+/// Create a `ScalarColumnExpression` using the LCASE function.
 ///
 /// - Parameter field: The `Column` to apply the function on.
 /// - Returns: An instance of `ScalarColumnExpression`.
@@ -159,7 +161,7 @@ public func lcase(_ field: Column) -> ScalarColumnExpression {
     return ScalarColumnExpression(.lcase(field: field))
 }
 
-/// Create a `ScalarColumnExpression` using ROUND function.
+/// Create a `ScalarColumnExpression` using the ROUND function.
 ///
 /// - Parameter field: The `Column` to apply the function on.
 /// - Parameter to: The decimal to round the values to.
@@ -168,7 +170,7 @@ public func round(_ field: Column, to decimal: Int) -> ScalarColumnExpression {
     return ScalarColumnExpression(.round(field: field, to: decimal))
 }
 
-/// Create a `ScalarColumnExpression` using MID function.
+/// Create a `ScalarColumnExpression` using the MID function.
 ///
 /// - Parameter field: The `Column` to apply the function on.
 /// - Parameter start: The starting position for the text extraction.

@@ -17,7 +17,7 @@
 // MARK: RawField
 
 /// An arbitrary field represented by a String.
-public struct RawField : Field {
+public struct RawField: Field {
     /// A String containg the field.
     public let field: String
     

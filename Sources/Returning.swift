@@ -16,8 +16,8 @@
 
 // MARK: Returning
 
-/// An SQL RETURNING.
-public enum Returning : Buildable {
+/// An SQL RETURNING clause.
+public enum Returning: Buildable {
     /// An array of `Columns` to return.
     case columns([Column])
     /// Return all columns, i.e. RETURNING *

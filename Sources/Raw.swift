@@ -16,7 +16,8 @@
 
 // MARK: Raw
 
-/// An arbitrary query represented by a String.
+/// An arbitrary query represented by a String. The generated query will be a concatenation of the 
+/// supplied query string and tables.
 public struct Raw: Query {
     /// A String containing the query.
     public let query: String
@@ -39,6 +40,5 @@ public struct Raw: Query {
     /// - Returns: A String representation of the query.
     public func build(queryBuilder: QueryBuilder) -> String {
         return query + " " + "\(tables.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
-
     }
 }

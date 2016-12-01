@@ -17,18 +17,18 @@
 // MARK: QueryError
 
 /// An enumeration of errors that may occur during query construction and execution.
-public enum QueryError : Error {
-    /// An error in connection to the database.
+public enum QueryError: Error {
+    /// An error connectining to the database.
     case connection(String)
     /// No result was received from the query execution.
     case noResult(String)
-    /// The database generated error for the query execution.
+    /// The database generated an error for the query execution.
     case databaseError(String)
     /// A syntax error occurred while constructing the query.
     case syntaxError(String)
 }
 
-extension QueryError : CustomStringConvertible {
+extension QueryError: CustomStringConvertible {
     /// A String representation of the error.
     public var description: String {
         switch self {

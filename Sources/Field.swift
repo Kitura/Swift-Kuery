@@ -23,7 +23,7 @@ public protocol Field : Buildable {
     /// The alias of the field.
     var alias: String? { get set }
     
-    /// Add alias to the field, i.e., implement SQL AS operator.
+    /// Add an alias to the field, i.e., implement the SQL AS operator.
     ///
     /// - Parameter newName: A String containing the alias for the field.
     /// - Returns: A new Field instance with the alias.
@@ -31,7 +31,7 @@ public protocol Field : Buildable {
 }
 
 public extension Field {
-    /// Add alias to the field, i.e., implement SQL AS operator.
+    /// Add an alias to the field, i.e., implement the SQL AS operator.
     ///
     /// - Parameter newName: A String containing the alias for the field.
     /// - Returns: A new Field instance with the alias.

@@ -27,7 +27,7 @@ public struct Delete: Query {
     /// A String containg the raw SQL WHERE clause to filter the rows to delete.
     public private (set) var rawWhereClause: String?
 
-    var syntaxError = ""
+    private var syntaxError = ""
 
     /// Initialize an instance of Delete.
     ///

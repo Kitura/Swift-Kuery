@@ -19,7 +19,7 @@
 import Foundation
 
 /// An SQL HAVING clause.
-public struct Having : Buildable {
+public struct Having: Buildable {
     /// The left hand side of the conditional clause.
     public let lhs: HavingPredicate?
     /// The left hand side of the conditional clause.
@@ -43,7 +43,7 @@ public struct Having : Buildable {
             return try condition.build(queryBuilder: queryBuilder) + " " + rhs.build(queryBuilder: queryBuilder)
         }
         guard lhs != nil else {
-            throw QueryError.syntaxError("No lhs operand in having clause.")
+            throw QueryError.syntaxError("No left hand side operand in having clause.")
         }
         let lhsBuilt = try lhs!.build(queryBuilder: queryBuilder)
         let conditionBuilt = condition.build(queryBuilder: queryBuilder)
@@ -63,7 +63,7 @@ public struct Having : Buildable {
             case .arrayOfParameter(let array):
                 rhsBuilt = try packType(array[0], queryBuilder: queryBuilder) + " AND " + packType(array[1], queryBuilder: queryBuilder)
             default:
-                throw QueryError.syntaxError("Wrong type for rhs operand in \(conditionBuilt) expression")
+                throw QueryError.syntaxError("Wrong type for right hand side operand in \(conditionBuilt) expression")
             }
         }
         else if condition == .in || condition == .notIn {
@@ -83,7 +83,7 @@ public struct Having : Buildable {
             case .select(let query):
                 rhsBuilt = try "(" + query.build(queryBuilder: queryBuilder) + ")"
             default:
-                throw QueryError.syntaxError("Wrong type for rhs operand in \(conditionBuilt) expression")
+                throw QueryError.syntaxError("Wrong type for right hand side operand in \(conditionBuilt) expression")
             }
         }
         else {
@@ -92,8 +92,8 @@ public struct Having : Buildable {
         return lhsBuilt + " " + conditionBuilt + " " + rhsBuilt
     }
     
-    /// An operand of `Having`: either a `Having` itself, or a value, a column, or an `AggregateColumnExpression`.
-    public indirect enum HavingPredicate : Buildable {
+    /// An operand of a `Having`.
+    public indirect enum HavingPredicate: Buildable {
         /// A `Having` clause.
         case havingClause(Having)
         /// A String.
@@ -169,6 +169,8 @@ public struct Having : Buildable {
     }
 }
 
+// MARK Global functions
+
 /// Create a `Having` clause using the OR operator.
 ///
 /// - Parameter lhs: A `Having` - the left hand side of the clause.
@@ -187,6 +189,22 @@ public func && (lhs: Having, rhs: Having) -> Having {
     return Having(lhs: .havingClause(lhs), rhs: .havingClause(rhs), condition: .and)
 }
 
+/// Create a `Having` clause using the EXISTS operator.
+///
+/// - Parameter query: The `Select` query to apply EXISTS on.
+/// - Returns: A `Having` containing the clause.
+public func exists(_ query: Select) -> Having {
+    return Having(rhs: .select(query), condition: .exists)
+}
+
+/// Create a `Having` clause using the NOT EXISTS operator.
+///
+/// - Parameter query: The `Select` query to apply  NOT EXISTS on.
+/// - Returns: A `Having` containing the clause.
+public func notExists(_ query: Select) -> Having {
+    return Having(rhs: .select(query), condition: .notExists)
+}
+
 /// Create a `HavingPredicate` using the ANY operator.
 ///
 /// - Parameter query: The `Select` query to apply ANY on.
@@ -201,20 +219,4 @@ public func any(_ query: Select) -> Having.HavingPredicate {
 /// - Returns: A `HavingPredicate` containing the allSubquery.
 public func all(_ query: Select) -> Having.HavingPredicate {
     return .allSubquery(query)
-}
-
-/// Create a `Having` clasue using the EXISTS operator.
-///
-/// - Parameter query: The `Select` query to apply EXISTS on.
-/// - Returns: A `Having` containing the clause.
-public func exists(_ query: Select) -> Having {
-    return Having(rhs: .select(query), condition: .exists)
-}
-
-/// Create a `Having` clasue using the NOT EXISTS operator.
-///
-/// - Parameter query: The `Select` query to apply  NOT EXISTS on.
-/// - Returns: A `Having` containing the clause.
-public func notExists(_ query: Select) -> Having {
-    return Having(rhs: .select(query), condition: .notExists)
 }

@@ -17,8 +17,8 @@
 // MARK: Filter
 import Foundation
 
-/// A condition used in SQL WHERE and ON clauses.
-public struct Filter : Buildable {
+/// A condition used in an SQL WHERE or ON clause.
+public struct Filter: Buildable {
     /// The left hand side of the conditional clause.
     public let lhs: FilterPredicate?
     /// The right hand side of the conditional clause.
@@ -42,7 +42,7 @@ public struct Filter : Buildable {
             return try condition.build(queryBuilder: queryBuilder) + " " + rhs.build(queryBuilder: queryBuilder)
         }
         guard lhs != nil else {
-            throw QueryError.syntaxError("No lhs operand in filter.")
+            throw QueryError.syntaxError("No left hand side operand in filter.")
         }
         let lhsBuilt = try lhs!.build(queryBuilder: queryBuilder)
         let conditionBuilt = condition.build(queryBuilder: queryBuilder)
@@ -62,7 +62,7 @@ public struct Filter : Buildable {
             case .arrayOfParameter(let array):
                 rhsBuilt = try packType(array[0], queryBuilder: queryBuilder) + " AND " + packType(array[1], queryBuilder: queryBuilder)
             default:
-                throw QueryError.syntaxError("Wrong type for rhs operand in \(conditionBuilt) expression.")
+                throw QueryError.syntaxError("Wrong type for right hand side operand in \(conditionBuilt) expression.")
             }
         }
         else if condition == .in || condition == .notIn {
@@ -82,7 +82,7 @@ public struct Filter : Buildable {
             case .select(let query):
                 rhsBuilt = try "(" + query.build(queryBuilder: queryBuilder) + ")"
             default:
-                throw QueryError.syntaxError("Wrong type for rhs operand in \(conditionBuilt) expression.")
+                throw QueryError.syntaxError("Wrong type for right hand side operand in \(conditionBuilt) expression.")
             }
         }
         else {
@@ -91,8 +91,8 @@ public struct Filter : Buildable {
         return lhsBuilt + " " + conditionBuilt + " " + rhsBuilt
     }
     
-    /// An operand of `Filter`: either a `Filter` itself, or a value, a column, or a `ScalarColumnExpression`.
-    public indirect enum FilterPredicate : Buildable {
+    /// An operand of a `Filter`.
+    public indirect enum FilterPredicate: Buildable {
         /// A `Filter`.
         case filter(Filter)
         /// A String.
@@ -168,6 +168,8 @@ public struct Filter : Buildable {
     }
 }
 
+// MARK Global functions
+
 /// Create a `Filter` clause using the OR operator.
 ///
 /// - Parameter lhs: A `Filter` - the left hand side of the clause.
@@ -186,6 +188,22 @@ public func && (lhs: Filter, rhs: Filter) -> Filter {
     return Filter(lhs: .filter(lhs), rhs: .filter(rhs), condition: .and)
 }
 
+/// Create a `Filter` clause using the EXISTS operator.
+///
+/// - Parameter query: The `Select` query to apply EXISTS on.
+/// - Returns: A `Filter` containing the clause.
+public func exists(_ query: Select) -> Filter {
+    return Filter(rhs: .select(query), condition: .exists)
+}
+
+/// Create a `Filter` clause using the NOT EXISTS operator.
+///
+/// - Parameter query: The `Select` query to apply NOT EXISTS on.
+/// - Returns: A `Filter` containing the clause.
+public func notExists(_ query: Select) -> Filter {
+    return Filter(rhs: .select(query), condition: .notExists)
+}
+
 /// Create a `FilterPredicate` using the ANY operator.
 ///
 /// - Parameter query: The `Select` query to apply ANY on.
@@ -202,18 +220,3 @@ public func all(_ query: Select) -> Filter.FilterPredicate {
     return .allSubquery(query)
 }
 
-/// Create a `Filter` clasue using the EXISTS operator.
-///
-/// - Parameter query: The `Select` query to apply EXISTS on.
-/// - Returns: A `Filter` containing the clause.
-public func exists(_ query: Select) -> Filter {
-    return Filter(rhs: .select(query), condition: .exists)
-}
-
-/// Create a `Filter` clasue using the NOT EXISTS operator.
-///
-/// - Parameter query: The `Select` query to apply NOT EXISTS on.
-/// - Returns: A `Filter` containing the clause.
-public func notExists(_ query: Select) -> Filter {
-    return Filter(rhs: .select(query), condition: .notExists)
-}

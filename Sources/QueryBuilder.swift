@@ -16,11 +16,11 @@
 
 // MARK: QueryBuilder
 
-/// A table of query substituions per connection.
-/// Since different databases have different query syntax, sometimes connections
-/// need to make changes in the query. The changes should be done by updating QueryBuilder
-/// substitutions array. Every query component then builds its string representation using
-/// that array.
+/// Used in code dealing with variances between the various database engines. As
+/// different databases have different query syntax, sometimes changes need to be
+/// made when generating the actual SQL statement to run. Additional needed changes
+/// should be done by updating QueryBuilder substitutions array. Every query component
+/// then builds its string representation using that array.
 public class QueryBuilder {
     /// An array of substitutions to be made in query String representation.
     public var substitutions: [String]

@@ -17,14 +17,14 @@
 // MARK: Query protocol
 
 /// Defines the protocol for queries.
-public protocol Query : Buildable {
+public protocol Query: Buildable {
 }
 
 public extension Query {
     /// Execute the query.
     ///
     /// - Parameter connection: The plugin that implements the Connection protocol and executes the query.
-    /// - Parameter onCompletion: The function to be called once the execution of the query is completed.
+    /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func execute(_ connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
         connection.execute(query: self, onCompletion: onCompletion)
     }
@@ -33,7 +33,7 @@ public extension Query {
     ///
     /// - Parameter connection: The plugin that implements the Connection protocol and executes the query.
     /// - Parameter parameters: An array of the query parameters.
-    /// - Parameter onCompletion: The function to be called once the execution of the query is completed.
+    /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func execute(_ connection: Connection, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ())) {
         connection.execute(query: self, parameters: parameters, onCompletion: onCompletion)
     }

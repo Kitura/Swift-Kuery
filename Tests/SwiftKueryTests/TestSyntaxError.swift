@@ -103,17 +103,43 @@ class TestSyntaxError: XCTestCase {
             XCTFail("Other than syntax error.")
         }
         
+        let i2 = Insert(into: t, columns: [t.a], rows: [["plum", 8, 0], ["apple"], []])
+        do {
+            let _ = try i2.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        }
+        catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "Values count in row number 0 doesn't match column count. Values count in row number 2 doesn't match column count. ")
+        }
+        catch {
+            XCTFail("Other than syntax error.")
+        }
+
+        let i3 = Insert(into: t, columns: [t.a], Select(t.a, t.b, from: t))
+        do {
+            let _ = try i3.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        }
+        catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "Number of columns in Select doesn't match column count. ")
+        }
+        catch {
+            XCTFail("Other than syntax error.")
+        }
+
         var s = Select.distinct(t.a, from: t)
             .limit(to: 2)
             .where(t.a.like("b%"))
             .where(t.b >= 0.76)
             .limit(to: 100)
+            .on(t.b == 9)
+            .using(t.a, t.b)
         do {
             let _ = try s.build(queryBuilder: connection.queryBuilder)
             XCTFail("No syntax error.")
         }
         catch QueryError.syntaxError(let error) {
-            XCTAssertEqual(error, "Multiple where clauses. Multiple limits. ")
+            XCTAssertEqual(error, "Multiple where clauses. Multiple limits. A using clause is not allowed with an on clause. On clause set for statement that is not join. ")
         }
         catch {
             XCTFail("Other than syntax error.")
