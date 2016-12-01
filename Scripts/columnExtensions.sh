@@ -59,6 +59,8 @@ EOF
 
 # Generate extensions for Scalar/AggregateColumnExpression and Column for (NOT)LIKE, (NOT)BETWEEN, and (NOT)IN operators
 while read -r LINE; do
+    [ -z "$LINE" ] && continue
+    [[ "$LINE" =~ ^#.*$ ]] && continue
     stringarray=($LINE)
     CLAUSE_TYPE=${stringarray[0]}
     TYPE=${stringarray[1]}

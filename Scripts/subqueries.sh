@@ -60,10 +60,14 @@ EOF
 
 # Generate operators with subqueries, i.e. 'expression operator ANY/ALL(subquery)'
 while read -r LINE; do
+    [ -z "$LINE" ] && continue
+    [[ "$LINE" =~ ^#.*$ ]] && continue
     stringarray=($LINE)
     OPERATOR=${stringarray[0]}
     CASE=${stringarray[1]}
     while read -r LINE; do
+        [ -z "$LINE" ] && continue
+        [[ "$LINE" =~ ^#.*$ ]] && continue
         stringarray=($LINE)
         TYPE=${stringarray[0]}
         LHS_TYPE=${stringarray[1]}
@@ -89,6 +93,8 @@ done < $INPUT_SUBQUERIES_OPERATORS_FILE
 # Generate extensions for IN, NOT IN with subquery
 
 while read -r LINE; do
+    [ -z "$LINE" ] && continue
+    [[ "$LINE" =~ ^#.*$ ]] && continue
     stringarray=($LINE)
     CLAUSE=${stringarray[0]}
     TYPE=${stringarray[1]}

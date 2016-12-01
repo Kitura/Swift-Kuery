@@ -60,10 +60,14 @@ EOF
 
 # Generate operators for simple conditions that return Filter and Having
 while read -r LINE; do
+    [ -z "$LINE" ] && continue
+    [[ "$LINE" =~ ^#.*$ ]] && continue
     stringarray=($LINE)
     OPERATOR=${stringarray[0]}
     CASE=${stringarray[1]}
     while read -r LINE; do
+        [ -z "$LINE" ] && continue
+        [[ "$LINE" =~ ^#.*$ ]] && continue
         stringarray=($LINE)
         TYPE=${stringarray[0]}
         LHS_TYPE=${stringarray[1]}
@@ -89,6 +93,8 @@ done < $INPUT_OPERATORS_FILE
 
 # Generate operators for Bool for simple conditions that return Filter and Having
 while read -r LINE; do
+    [ -z "$LINE" ] && continue
+    [[ "$LINE" =~ ^#.*$ ]] && continue
     stringarray=($LINE)
     OPERATOR=${stringarray[0]}
     CASE=${stringarray[1]}
