@@ -40,16 +40,17 @@ class TestAlias: XCTestCase {
         var s = Select(t.a.as("\"fruit name\""), t.b.as("number"), from: t)
         var kuery = connection.descriptionOf(query: s)
         var query = "SELECT tableAlias.a AS \"fruit name\", tableAlias.b AS number FROM tableAlias"
-        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: t.as("new"))
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM tableAlias AS new"
-        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         let t2 = t.as("\"t 2\"")
         s = Select(t2.a, from: t2)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT \"t 2\".a FROM tableAlias AS \"t 2 \""
+        query = "SELECT \"t 2\".a FROM tableAlias AS \"t 2\""
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
 }

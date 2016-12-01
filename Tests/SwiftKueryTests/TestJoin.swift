@@ -50,7 +50,7 @@ class TestJoin: XCTestCase {
             .on(myTable1.b == myTable2.b)
         var kuery = connection.descriptionOf(query: s)
         var query = "SELECT * FROM table1Join JOIN table2Join ON table1Join.b = table2Join.b"
-        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         let t1 = myTable1.as("t1")
         let t2 = myTable2.as("t2")
@@ -59,20 +59,20 @@ class TestJoin: XCTestCase {
             .on(t1.b == t2.b)
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM table1Join AS t1 JOIN table2Join AS t2 ON t1.b = t2.b"
-        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(from: myTable1)
             .leftJoin(myTable2)
             .on(myTable1.a == myTable2.c)
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM table1Join LEFT JOIN table2Join ON table1Join.a = table2Join.c"
-        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: t1)
             .fullJoin(t2)
             .using(t1.b)
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM table1Join AS t1 FULL JOIN table2Join AS t2 USING (b)"
-        XCTAssertEqual(kuery, query, "Error in query construction: \(kuery) \ninstead of \(query)")
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
 }
