@@ -27,6 +27,9 @@ func packType(_ item: Any, queryBuilder: QueryBuilder) throws -> String {
     switch item {
     case let val as String:
         return "'\(val)'"
+    case let val as Bool:
+        return val ? queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.booleanTrue.rawValue]
+            : queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.booleanFalse.rawValue]
     case let val as Parameter:
         return try val.build(queryBuilder: queryBuilder)
     default:

@@ -58,7 +58,7 @@ public struct Filter: Buildable {
             case .arrayOfDouble(let array):
                 rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
             case .arrayOfBool(let array):
-                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+                rhsBuilt = try packType(array[0], queryBuilder: queryBuilder) + " AND " + packType(array[1], queryBuilder: queryBuilder)
             case .arrayOfParameter(let array):
                 rhsBuilt = try packType(array[0], queryBuilder: queryBuilder) + " AND " + packType(array[1], queryBuilder: queryBuilder)
             default:
@@ -76,7 +76,7 @@ public struct Filter: Buildable {
             case .arrayOfDouble(let array):
                 rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
             case .arrayOfBool(let array):
-                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+                rhsBuilt = try "(\(array.map { try packType($0, queryBuilder: queryBuilder) }.joined(separator: ", ")))"
             case .arrayOfParameter(let array):
                 rhsBuilt = try "(\(array.map { try packType($0, queryBuilder: queryBuilder) }.joined(separator: ", ")))"
             case .select(let query):
@@ -148,7 +148,7 @@ public struct Filter: Buildable {
             case .double(let value):
                 return packType(value)
             case .bool(let value):
-                return String(value)
+                return try packType(value, queryBuilder: queryBuilder)
             case .column(let column):
                 return column.build(queryBuilder: queryBuilder)
             case .scalarColumnExpression(let scalarColumnExpression):

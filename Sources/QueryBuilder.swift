@@ -37,6 +37,10 @@ public class QueryBuilder {
         case numberedParameter
         /// The marker for the query named parameters.
         case namedParameter
+        /// The boolean true
+        case booleanTrue
+        /// The boolean false
+        case booleanFalse
         /// Last case, add new values before it.
         case namesCount
     }
@@ -58,6 +62,9 @@ public class QueryBuilder {
         substitutions[QuerySubstitutionNames.len.rawValue] = "LEN"
         substitutions[QuerySubstitutionNames.numberedParameter.rawValue] = "?"
         substitutions[QuerySubstitutionNames.namedParameter.rawValue] = "@"
+        substitutions[QuerySubstitutionNames.booleanTrue.rawValue] = "true"
+        substitutions[QuerySubstitutionNames.booleanFalse.rawValue] = "false"
+        
         if let addNumbersToParameters = addNumbersToParameters {
             self.addNumbersToParameters = addNumbersToParameters
         }
