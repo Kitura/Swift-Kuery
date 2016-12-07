@@ -26,6 +26,8 @@ public enum QueryError: Error {
     case databaseError(String)
     /// A syntax error occurred while constructing the query.
     case syntaxError(String)
+    /// The query or its execution is not supported.
+    case unsupported(String)
 }
 
 extension QueryError: CustomStringConvertible {
@@ -39,6 +41,8 @@ extension QueryError: CustomStringConvertible {
         case .databaseError(let error):
             return error
         case .syntaxError(let error):
+            return error
+        case .unsupported(let error):
             return error
         }
     }

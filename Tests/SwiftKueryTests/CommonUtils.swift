@@ -44,6 +44,10 @@ public class TestConnection : Connection {
     
     public func execute(_ raw: String, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ())) {}
     
+    public func execute(query: Query, parameters: [String:Any], onCompletion: @escaping ((QueryResult) -> ())) {}
+    
+    public func execute(_ raw: String, parameters: [String:Any], onCompletion: @escaping ((QueryResult) -> ())) {}
+
     public func descriptionOf(query: Query) -> String {
         do {
             let kuery = try query.build(queryBuilder: queryBuilder)
