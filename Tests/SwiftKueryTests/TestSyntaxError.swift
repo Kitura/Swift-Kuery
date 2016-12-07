@@ -25,13 +25,18 @@ class TestSyntaxError: XCTestCase {
         ]
     }
     
-    class MyTable : Table {
+    class MyTable: Table {
         let a = Column("a")
         let b = Column("b")
         
         let tableName = "tableSelect"
     }
-    
+
+    class NoNameTable: Table {
+        let a = Column("a")
+        let b = Column("b")
+    }
+
     func testSyntaxError() {
         let t = MyTable()
         let connection = createConnection()
@@ -160,6 +165,19 @@ class TestSyntaxError: XCTestCase {
         }
         catch QueryError.syntaxError(let error) {
             XCTAssertEqual(error, "Multiple order by clauses. Multiple where clauses. Multiple group by clauses. ")
+        }
+        catch {
+            XCTFail("Other than syntax error.")
+        }
+        
+        let noNameTable = NoNameTable()
+        let i4 = Insert(into: noNameTable, values: "apple", 22)
+        do {
+            let _ = try i4.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        }
+        catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "Table name not set. ")
         }
         catch {
             XCTFail("Other than syntax error.")

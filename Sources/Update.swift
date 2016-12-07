@@ -57,7 +57,7 @@ public struct Update: Query {
         if syntaxError != "" {
             throw QueryError.syntaxError(syntaxError)
         }
-        var result = "UPDATE " + table.build(queryBuilder: queryBuilder)
+        var result = try "UPDATE " + table.build(queryBuilder: queryBuilder)
         result += try " SET " + valueTuples.map {
             column, value in "\(column.name) = \(try packType(value, queryBuilder: queryBuilder))"
             }.joined(separator: ", ")
@@ -68,7 +68,7 @@ public struct Update: Query {
             result += " WHERE " + rawWhereClause
         }
         if let returning = returningClause {
-            result += " RETURNING " + returning.build(queryBuilder: queryBuilder)
+            result += try " RETURNING " + returning.build(queryBuilder: queryBuilder)
         }
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result

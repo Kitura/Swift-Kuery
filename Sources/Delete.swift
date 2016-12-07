@@ -47,7 +47,7 @@ public struct Delete: Query {
         if syntaxError != "" {
             throw QueryError.syntaxError(syntaxError)
         }
-        var result = "DELETE FROM " + table.build(queryBuilder: queryBuilder)
+        var result = try "DELETE FROM " + table.build(queryBuilder: queryBuilder)
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }

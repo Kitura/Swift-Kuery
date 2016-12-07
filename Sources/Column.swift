@@ -38,8 +38,13 @@ public class Column: Field {
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the column.
-    public func build(queryBuilder: QueryBuilder) -> String {
-        var result = table.nameInQuery + "." + packName(name)
+    /// - Throws: QueryError.syntaxError if query build fails.
+    public func build(queryBuilder: QueryBuilder) throws -> String {
+        let tableName = table.nameInQuery
+        if tableName == "" {
+            throw QueryError.syntaxError("Table name not set. ")
+        }
+        var result = tableName + "." + packName(name)
         if let alias = alias {
             result += " AS " + packName(alias)
         }

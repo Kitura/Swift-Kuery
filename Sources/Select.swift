@@ -143,10 +143,10 @@ public struct Select: Query {
         }
         
         result += " FROM "
-        result += "\(tables.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
+        result += try "\(tables.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
         
         if let join = join {
-            result += join.build(queryBuilder: queryBuilder)
+            result += try join.build(queryBuilder: queryBuilder)
         }
         
         if let onClause = onClause {
@@ -164,7 +164,7 @@ public struct Select: Query {
         }
         
         if let groupClause = groupBy {
-            result += " GROUP BY " + groupClause.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
+            result += try " GROUP BY " + groupClause.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }
         
         if let havingClause = havingClause {

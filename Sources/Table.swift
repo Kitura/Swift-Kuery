@@ -49,7 +49,11 @@ open class Table: Buildable {
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the table.
-    public func build(queryBuilder: QueryBuilder) -> String {
+    /// - Throws: QueryError.syntaxError if query build fails.
+    public func build(queryBuilder: QueryBuilder) throws -> String {
+        if _name == "" {
+            throw QueryError.syntaxError("Table name not set. ")
+        }
         var result = packName(_name)
         if let alias = alias {
             result += " AS " + packName(alias)

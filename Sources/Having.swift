@@ -151,7 +151,7 @@ public struct Having: Buildable {
             case .bool(let value):
                 return try packType(value, queryBuilder: queryBuilder)
             case .column(let column):
-                return "(" + column.build(queryBuilder: queryBuilder) + ")"
+                return try "(" + column.build(queryBuilder: queryBuilder) + ")"
             case .aggregateColumnExpression(let aggregateColumnExpression):
                 return try "(" + aggregateColumnExpression.build(queryBuilder: queryBuilder) + ")"
             case .parameter(let parameter):

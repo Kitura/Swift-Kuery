@@ -27,10 +27,11 @@ public enum Returning: Buildable {
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the query component.
-    public func build(queryBuilder: QueryBuilder) -> String {
+    /// - Throws: QueryError.syntaxError if query build fails.
+    public func build(queryBuilder: QueryBuilder) throws -> String {
         switch self {
         case .columns(let columns):
-            return "\(columns.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
+            return try "\(columns.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
         case .all:
             return "*"
         }

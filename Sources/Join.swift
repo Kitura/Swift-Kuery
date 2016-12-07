@@ -42,26 +42,26 @@ public enum Join: Buildable {
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the query component.
     /// - Throws: QueryError.syntaxError if query build fails.
-    public func build(queryBuilder: QueryBuilder) -> String {
+    public func build(queryBuilder: QueryBuilder) throws -> String {
         switch self {
         case .join(let table):
-            return " JOIN " + table.build(queryBuilder: queryBuilder)
+            return try " JOIN " + table.build(queryBuilder: queryBuilder)
         case .left(let table):
-            return " LEFT JOIN " + table.build(queryBuilder: queryBuilder)
+            return try " LEFT JOIN " + table.build(queryBuilder: queryBuilder)
         case .right(let table):
-            return " RIGHT JOIN " + table.build(queryBuilder: queryBuilder)
+            return try " RIGHT JOIN " + table.build(queryBuilder: queryBuilder)
         case .full(let table):
-            return " FULL JOIN " + table.build(queryBuilder: queryBuilder)
+            return try " FULL JOIN " + table.build(queryBuilder: queryBuilder)
         case .cross(let table):
-            return " CROSS JOIN " + table.build(queryBuilder: queryBuilder)
+            return try " CROSS JOIN " + table.build(queryBuilder: queryBuilder)
         case .natural(let table):
-            return " NATURAL JOIN " + table.build(queryBuilder: queryBuilder)
+            return try " NATURAL JOIN " + table.build(queryBuilder: queryBuilder)
         case .naturalLeft(let table):
-            return " NATURAL LEFT JOIN " + table.build(queryBuilder: queryBuilder)
+            return try " NATURAL LEFT JOIN " + table.build(queryBuilder: queryBuilder)
         case .naturalRight(let table):
-            return " NATURAL RIGHT JOIN " + table.build(queryBuilder: queryBuilder)
+            return try " NATURAL RIGHT JOIN " + table.build(queryBuilder: queryBuilder)
         case .naturalFull(let table):
-            return " NATURAL FULL JOIN " + table.build(queryBuilder: queryBuilder)
+            return try " NATURAL FULL JOIN " + table.build(queryBuilder: queryBuilder)
         }
     }
 }

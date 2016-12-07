@@ -123,7 +123,7 @@ public struct Insert: Query {
         if syntaxError != "" {
             throw QueryError.syntaxError(syntaxError)
         }
-        var result = "INSERT INTO " + table.build(queryBuilder: queryBuilder) + " "
+        var result = try "INSERT INTO " + table.build(queryBuilder: queryBuilder) + " "
         if let columns = columns, columns.count != 0 {
             result += "(\(columns.map { $0.name }.joined(separator: ", "))) "
         }
@@ -139,7 +139,7 @@ public struct Insert: Query {
             throw QueryError.syntaxError("Insert query doesn't have any values to insert.")
         }
         if let returning = returningClause {
-            result += " RETURNING " + returning.build(queryBuilder: queryBuilder)
+            result += try " RETURNING " + returning.build(queryBuilder: queryBuilder)
         }
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result

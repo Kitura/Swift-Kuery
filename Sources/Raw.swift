@@ -38,7 +38,8 @@ public struct Raw: Query {
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the query.
-    public func build(queryBuilder: QueryBuilder) -> String {
-        return query + " " + "\(tables.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
+    /// - Throws: QueryError.syntaxError if query build fails.
+    public func build(queryBuilder: QueryBuilder) throws -> String {
+        return try query + " " + "\(tables.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
     }
 }
