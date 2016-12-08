@@ -37,7 +37,7 @@ public struct ScalarColumnExpression: Field {
     public func build(queryBuilder: QueryBuilder) throws -> String {
         var result = try function.build(queryBuilder: queryBuilder)
         if let alias = alias {
-            result += " AS " + alias
+            result += " AS " + packName(alias)
         }
         return result
     }
