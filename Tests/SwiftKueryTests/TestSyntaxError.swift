@@ -37,6 +37,10 @@ class TestSyntaxError: XCTestCase {
         let b = Column("b")
     }
 
+    class NoColumnsTable: Table {
+        let tableName = "tableSelect"
+    }
+    
     func testSyntaxError() {
         let t = MyTable()
         let connection = createConnection()
@@ -178,6 +182,19 @@ class TestSyntaxError: XCTestCase {
         }
         catch QueryError.syntaxError(let error) {
             XCTAssertEqual(error, "Table name not set. ")
+        }
+        catch {
+            XCTFail("Other than syntax error.")
+        }
+        
+        let noColumnsTable = NoColumnsTable()
+        let i5 = Insert(into: noColumnsTable, values: "apple", 22)
+        do {
+            let _ = try i5.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        }
+        catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "No columns in the table. ")
         }
         catch {
             XCTFail("Other than syntax error.")

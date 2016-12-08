@@ -19,6 +19,7 @@
 /// Subclasses of the Table class are metadata describing a table in a relational database that you want to work with.
 open class Table: Buildable {
     private var _name = ""
+    private var numberOfColumns = 0
     
     /// The alias of the table.
     public var alias: String?
@@ -35,14 +36,17 @@ open class Table: Buildable {
     /// Initialize an instance of Table.
     public required init() {
         let mirror = Mirror(reflecting: self)
+        var columnsCount = 0
         for child in mirror.children {
             if let ch = child.value as? Column {
                 ch.table = self
+                columnsCount += 1
             }
             else if let label = child.label, label == "tableName" {
                 _name = child.value as! String
             }
         }
+        numberOfColumns = columnsCount
     }
     
     /// Build the table using `QueryBuilder`.
@@ -51,6 +55,9 @@ open class Table: Buildable {
     /// - Returns: A String representation of the table.
     /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
+        if numberOfColumns == 0 {
+            throw QueryError.syntaxError("No columns in the table. ")
+        }
         if _name == "" {
             throw QueryError.syntaxError("Table name not set. ")
         }
