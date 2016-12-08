@@ -26,23 +26,31 @@ class TestJoin: XCTestCase {
         ]
     }
     
-    class MyTable1 : Table {
+    class MyTable1: Table {
         let a = Column("a")
         let b = Column("b")
         
         let tableName = "table1Join"
     }
     
-    class MyTable2 : Table {
+    class MyTable2: Table {
         let c = Column("c")
         let b = Column("b")
         
         let tableName = "table2Join"
     }
     
+    class MyTable3: Table {
+        let d = Column("d")
+        let b = Column("b")
+        
+        let tableName = "table3Join"
+    }
+    
     func testJoin() {
         let myTable1 = MyTable1()
         let myTable2 = MyTable2()
+        let myTable3 = MyTable3()
         let connection = createConnection()
         
         var s = Select(from: myTable1)
@@ -73,6 +81,13 @@ class TestJoin: XCTestCase {
             .using(t1.b)
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM table1Join AS t1 FULL JOIN table2Join AS t2 USING (b)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        
+        s = Select(myTable1.a, from: myTable1)
+            .union(Select(myTable2.c, from: myTable2))
+            .unionAll(Select(myTable3.d, from: myTable3))
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT table1Join.a FROM table1Join UNION SELECT table2Join.c FROM table2Join UNION ALL SELECT table3Join.d FROM table3Join"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
 }

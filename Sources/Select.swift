@@ -56,9 +56,12 @@ public struct Select: Query {
     /// A String with the raw SQL HAVING clause containing the filter for the rows to select when aggregate functions are used.
     public private (set) var rawHavingClause: String?
     
+    /// The SQL UNION clauses.
+    public private (set) var unions: [Union]?
+
     /// The SQL JOIN clause.
     public private (set) var join: Join?
-    
+
     /// The SQL ON clause containing the filter for the rows to select in a JOIN query.
     public private (set) var onClause: Filter?
 
@@ -184,6 +187,12 @@ public struct Select: Query {
         
         if let offset = offset {
             result += " OFFSET \(offset)"
+        }
+        
+        if let unions = unions, unions.count != 0 {
+            for union in unions {
+                result += try union.build(queryBuilder: queryBuilder)
+            }
         }
 
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
@@ -407,6 +416,32 @@ public struct Select: Query {
         else {
             new.using = columns
         }
+        return new
+    }
+    
+    /// Create an SQL SELECT UNION statement.
+    ///
+    /// - Parameter table: The second Select query used in performing the union. 
+    /// - Returns: A new instance of Select corresponding to the SELECT UNION.
+    public func union(_ query: Select) -> Select {
+        var new = self
+        if unions == nil {
+            new.unions = [Union]()
+        }
+        new.unions!.append(.union(query))
+        return new
+    }
+
+    /// Create an SQL SELECT UNION ALL statement.
+    ///
+    /// - Parameter table: The second Select query used in performing the union.
+    /// - Returns: A new instance of Select corresponding to the SELECT UNION ALL.
+    public func unionAll(_ query: Select) -> Select {
+        var new = self
+        if unions == nil {
+            new.unions = [Union]()
+        }
+        new.unions!.append(.unionAll(query))
         return new
     }
     
