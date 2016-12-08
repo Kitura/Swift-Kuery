@@ -375,18 +375,18 @@ public struct Select: Query {
     private func on(clause: Any) -> Select {
         var new = self
         
-        guard self.joins.count > 0 else {
+        guard new.joins.count > 0 else {
             new.syntaxError += "On clause set for statement that is not join. "
             return new
         }
         
-        if self.joins.last?.on != nil {
+        if new.joins.last?.on != nil {
             new.syntaxError += "Multiple on clauses for a single join."
-        } else if self.joins.last?.using != nil {
+        } else if new.joins.last?.using != nil {
             new.syntaxError += "An on clause is not allowed with a using clause for a single join."
         }
         else {
-            new.joins[self.joins.count - 1].on = clause
+            new.joins[new.joins.count - 1].on = clause
         }
         return new
     }
@@ -399,18 +399,18 @@ public struct Select: Query {
     public func using(_ columns: Column...) -> Select {
         var new = self
         
-        guard self.joins.count > 0 else {
+        guard new.joins.count > 0 else {
             new.syntaxError += "Using clause set for statement that is not join. "
             return new
         }
         
-        if self.joins.last?.using != nil {
+        if new.joins.last?.using != nil {
             new.syntaxError += "Multiple using clauses for a single join."
-        } else if self.joins.last?.on != nil {
+        } else if new.joins.last?.on != nil {
             new.syntaxError += "A using clause is not allowed with an on clause for single join."
         }
         else {
-            new.joins[self.joins.count - 1].using = columns
+            new.joins[new.joins.count - 1].using = columns
         }
         return new
     }
