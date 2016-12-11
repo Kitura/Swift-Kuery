@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+import Foundation
+
 func packType(_ item: Any) -> String {
     switch item {
     case let val as String:

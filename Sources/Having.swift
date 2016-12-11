@@ -16,156 +16,21 @@
 
 // MARK: Having
 
-import Foundation
-
 /// An SQL HAVING clause.
-public struct Having: Buildable {
+public struct Having: ConditionalClause {
+    public typealias ClauseType = Having
+    public typealias ColumnExpressionType = AggregateColumnExpression
     /// The left hand side of the conditional clause.
-    public let lhs: HavingPredicate?
+    public let lhs: Predicate<Having, AggregateColumnExpression>?
     /// The left hand side of the conditional clause.
-    public let rhs: HavingPredicate
+    public let rhs: Predicate<Having, AggregateColumnExpression>
     /// The operator of the conditional clause.
     public let condition: Condition
     
-    init(lhs: HavingPredicate?=nil, rhs: HavingPredicate, condition: Condition) {
+    init(lhs: Predicate<Having, AggregateColumnExpression>?=nil, rhs: Predicate<Having, AggregateColumnExpression>, condition: Condition) {
         self.lhs = lhs
         self.rhs = rhs
         self.condition = condition
-    }
-    
-    /// Build the clause using `QueryBuilder`.
-    ///
-    /// - Parameter queryBuilder: The QueryBuilder to use.
-    /// - Returns: A String representation of the clause.
-    /// - Throws: QueryError.syntaxError if query build fails.
-    public func build(queryBuilder: QueryBuilder) throws -> String {
-        if condition == .exists || condition == .notExists {
-            return try condition.build(queryBuilder: queryBuilder) + " " + rhs.build(queryBuilder: queryBuilder)
-        }
-        guard lhs != nil else {
-            throw QueryError.syntaxError("No left hand side operand in having clause.")
-        }
-        let lhsBuilt = try lhs!.build(queryBuilder: queryBuilder)
-        let conditionBuilt = condition.build(queryBuilder: queryBuilder)
-        var rhsBuilt = ""
-        if condition == .between || condition == .notBetween {
-            switch rhs {
-            case .arrayOfString(let array):
-                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
-            case .arrayOfInt(let array):
-                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
-            case .arrayOfFloat(let array):
-                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
-            case .arrayOfDouble(let array):
-                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
-            case .arrayOfBool(let array):
-                rhsBuilt = try packType(array[0], queryBuilder: queryBuilder) + " AND " + packType(array[1], queryBuilder: queryBuilder)
-            case .arrayOfParameter(let array):
-                rhsBuilt = try packType(array[0], queryBuilder: queryBuilder) + " AND " + packType(array[1], queryBuilder: queryBuilder)
-            default:
-                throw QueryError.syntaxError("Wrong type for right hand side operand in \(conditionBuilt) expression")
-            }
-        }
-        else if condition == .in || condition == .notIn {
-            switch rhs {
-            case .arrayOfString(let array):
-                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
-            case .arrayOfInt(let array):
-                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
-            case .arrayOfFloat(let array):
-                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
-            case .arrayOfDouble(let array):
-                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
-            case .arrayOfBool(let array):
-                rhsBuilt = try "(\(array.map { try packType($0, queryBuilder: queryBuilder) }.joined(separator: ", ")))"
-            case .arrayOfParameter(let array):
-                rhsBuilt = try "(\(array.map { try packType($0, queryBuilder: queryBuilder) }.joined(separator: ", ")))"
-            case .select(let query):
-                rhsBuilt = try "(" + query.build(queryBuilder: queryBuilder) + ")"
-            default:
-                throw QueryError.syntaxError("Wrong type for right hand side operand in \(conditionBuilt) expression")
-            }
-        }
-        else {
-            rhsBuilt = try rhs.build(queryBuilder: queryBuilder)
-        }
-        return lhsBuilt + " " + conditionBuilt + " " + rhsBuilt
-    }
-    
-    /// An operand of a `Having`.
-    public indirect enum HavingPredicate: Buildable {
-        /// A `Having` clause.
-        case havingClause(Having)
-        /// A String.
-        case string(String)
-        /// An integer.
-        case int(Int)
-        /// A float.
-        case float(Float)
-        /// A double.
-        case double(Double)
-        /// A boolean.
-        case bool(Bool)
-        /// An array of String.
-        case arrayOfString([String])
-        /// An array of Int.
-        case arrayOfInt([Int])
-        /// An array of Float.
-        case arrayOfFloat([Float])
-        /// An array of Double.
-        case arrayOfDouble([Double])
-        /// An array of Bool.
-        case arrayOfBool([Bool])
-        /// A `Column`.
-        case column(Column)
-        /// An `AggregateColumnExpression`.
-        case aggregateColumnExpression(AggregateColumnExpression)
-        /// A parameter.
-        case parameter(Parameter)
-        /// An array of Parameter.
-        case arrayOfParameter([Parameter])
-        /// A `Select` query.
-        case select(Select)
-        /// ANY applied on a `Select` query.
-        case anySubquery(Select)
-        /// ALL applied on a `Select` query.
-        case allSubquery(Select)
-        
-        /// Build the having predicate using `QueryBuilder`.
-        ///
-        /// - Parameter queryBuilder: The QueryBuilder to use.
-        /// - Returns: A String representation of the havinh predicate.
-        /// - Throws: QueryError.syntaxError if query build fails.
-        public func build(queryBuilder: QueryBuilder) throws -> String {
-            switch self {
-            case .havingClause(let havingClause):
-                return try "(" + havingClause.build(queryBuilder: queryBuilder) + ")"
-            case .string(let string):
-                return packType(string)
-            case .int(let value):
-                return packType(value)
-            case .float(let value):
-                return packType(value)
-            case .double(let value):
-                return packType(value)
-            case .bool(let value):
-                return try packType(value, queryBuilder: queryBuilder)
-            case .column(let column):
-                return try "(" + column.build(queryBuilder: queryBuilder) + ")"
-            case .aggregateColumnExpression(let aggregateColumnExpression):
-                return try "(" + aggregateColumnExpression.build(queryBuilder: queryBuilder) + ")"
-            case .parameter(let parameter):
-                return try parameter.build(queryBuilder: queryBuilder)
-            case .select(let subquery):
-                return try "(" + subquery.build(queryBuilder: queryBuilder) + ")"
-            case .anySubquery(let subquery):
-                return try "ANY (" + subquery.build(queryBuilder: queryBuilder) + ")"
-            case .allSubquery(let subquery):
-                return try "ALL (" + subquery.build(queryBuilder: queryBuilder) + ")"
-            default:
-                return ""
-            }
-        }
     }
 }
 
@@ -177,7 +42,7 @@ public struct Having: Buildable {
 /// - Parameter rhs: A `Having` - the right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
 public func || (lhs: Having, rhs: Having) -> Having {
-    return Having(lhs: .havingClause(lhs), rhs: .havingClause(rhs), condition: .or)
+    return Having(lhs: .clause(lhs), rhs: .clause(rhs), condition: .or)
 }
 
 /// Create a `Having` clause using the AND operator.
@@ -186,7 +51,7 @@ public func || (lhs: Having, rhs: Having) -> Having {
 /// - Parameter rhs: A `Having` - the right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
 public func && (lhs: Having, rhs: Having) -> Having {
-    return Having(lhs: .havingClause(lhs), rhs: .havingClause(rhs), condition: .and)
+    return Having(lhs: .clause(lhs), rhs: .clause(rhs), condition: .and)
 }
 
 /// Create a `Having` clause using the EXISTS operator.
@@ -208,15 +73,15 @@ public func notExists(_ query: Select) -> Having {
 /// Create a `HavingPredicate` using the ANY operator.
 ///
 /// - Parameter query: The `Select` query to apply ANY on.
-/// - Returns: A `HavingPredicate` containing the anySubquery.
-public func any(_ query: Select) -> Having.HavingPredicate {
+/// - Returns: A `Predicate<Having, AggregateColumnExpression>` containing the anySubquery.
+public func any(_ query: Select) -> Predicate<Having, AggregateColumnExpression> {
     return .anySubquery(query)
 }
 
 /// Create a `HavingPredicate` using the ALL operator.
 ///
 /// - Parameter query: The `Select` query to apply ALL on.
-/// - Returns: A `HavingPredicate` containing the allSubquery.
-public func all(_ query: Select) -> Having.HavingPredicate {
+/// - Returns: A `Predicate<Having, AggregateColumnExpression>` containing the allSubquery.
+public func all(_ query: Select) -> Predicate<Having, AggregateColumnExpression> {
     return .allSubquery(query)
 }
