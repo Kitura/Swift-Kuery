@@ -20,8 +20,8 @@
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func ==(lhs: ScalarColumnExpression, rhs: Filter.FilterPredicate) -> Filter {
-    return Filter(lhs: .scalarColumnExpression(lhs), rhs: rhs, condition: .equal)
+public func ==(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
+    return Filter(lhs: .columnExpression(lhs), rhs: rhs, condition: .equal)
 }
 
 /// Create a `Filter` clause using the operator == for String
@@ -30,7 +30,7 @@ public func ==(lhs: ScalarColumnExpression, rhs: Filter.FilterPredicate) -> Filt
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func ==(lhs: String, rhs: Filter.FilterPredicate) -> Filter {
+public func ==(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .string(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -40,7 +40,7 @@ public func ==(lhs: String, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func ==(lhs: Column, rhs: Filter.FilterPredicate) -> Filter {
+public func ==(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .column(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -50,7 +50,7 @@ public func ==(lhs: Column, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func ==(lhs: Int, rhs: Filter.FilterPredicate) -> Filter {
+public func ==(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .int(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -60,7 +60,7 @@ public func ==(lhs: Int, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func ==(lhs: Float, rhs: Filter.FilterPredicate) -> Filter {
+public func ==(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .float(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -70,7 +70,7 @@ public func ==(lhs: Float, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func ==(lhs: Double, rhs: Filter.FilterPredicate) -> Filter {
+public func ==(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .double(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -80,7 +80,7 @@ public func ==(lhs: Double, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func ==(lhs: Parameter, rhs: Filter.FilterPredicate) -> Filter {
+public func ==(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -90,7 +90,7 @@ public func ==(lhs: Parameter, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func ==(lhs: Bool, rhs: Filter.FilterPredicate) -> Filter {
+public func ==(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .bool(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -100,8 +100,8 @@ public func ==(lhs: Bool, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func ==(lhs: AggregateColumnExpression, rhs: Having.HavingPredicate) -> Having {
-    return Having(lhs: .aggregateColumnExpression(lhs), rhs: rhs, condition: .equal)
+public func ==(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
+    return Having(lhs: .columnExpression(lhs), rhs: rhs, condition: .equal)
 }
 
 /// Create a `Having` clause using the operator == for String
@@ -110,7 +110,7 @@ public func ==(lhs: AggregateColumnExpression, rhs: Having.HavingPredicate) -> H
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func ==(lhs: String, rhs: Having.HavingPredicate) -> Having {
+public func ==(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .string(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -120,7 +120,7 @@ public func ==(lhs: String, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func ==(lhs: Column, rhs: Having.HavingPredicate) -> Having {
+public func ==(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .column(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -130,7 +130,7 @@ public func ==(lhs: Column, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func ==(lhs: Int, rhs: Having.HavingPredicate) -> Having {
+public func ==(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .int(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -140,7 +140,7 @@ public func ==(lhs: Int, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func ==(lhs: Float, rhs: Having.HavingPredicate) -> Having {
+public func ==(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .float(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -150,7 +150,7 @@ public func ==(lhs: Float, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func ==(lhs: Double, rhs: Having.HavingPredicate) -> Having {
+public func ==(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .double(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -160,7 +160,7 @@ public func ==(lhs: Double, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func ==(lhs: Parameter, rhs: Having.HavingPredicate) -> Having {
+public func ==(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .parameter(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -170,7 +170,7 @@ public func ==(lhs: Parameter, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func ==(lhs: Bool, rhs: Having.HavingPredicate) -> Having {
+public func ==(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .bool(lhs), rhs: rhs, condition: .equal)
 }
 
@@ -180,8 +180,8 @@ public func ==(lhs: Bool, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >=(lhs: ScalarColumnExpression, rhs: Filter.FilterPredicate) -> Filter {
-    return Filter(lhs: .scalarColumnExpression(lhs), rhs: rhs, condition: .greaterThanOrEqual)
+public func >=(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
+    return Filter(lhs: .columnExpression(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
 /// Create a `Filter` clause using the operator >= for String
@@ -190,7 +190,7 @@ public func >=(lhs: ScalarColumnExpression, rhs: Filter.FilterPredicate) -> Filt
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >=(lhs: String, rhs: Filter.FilterPredicate) -> Filter {
+public func >=(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .string(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -200,7 +200,7 @@ public func >=(lhs: String, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >=(lhs: Column, rhs: Filter.FilterPredicate) -> Filter {
+public func >=(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .column(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -210,7 +210,7 @@ public func >=(lhs: Column, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >=(lhs: Int, rhs: Filter.FilterPredicate) -> Filter {
+public func >=(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .int(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -220,7 +220,7 @@ public func >=(lhs: Int, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >=(lhs: Float, rhs: Filter.FilterPredicate) -> Filter {
+public func >=(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .float(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -230,7 +230,7 @@ public func >=(lhs: Float, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >=(lhs: Double, rhs: Filter.FilterPredicate) -> Filter {
+public func >=(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .double(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -240,7 +240,7 @@ public func >=(lhs: Double, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >=(lhs: Parameter, rhs: Filter.FilterPredicate) -> Filter {
+public func >=(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -250,7 +250,7 @@ public func >=(lhs: Parameter, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >=(lhs: Bool, rhs: Filter.FilterPredicate) -> Filter {
+public func >=(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .bool(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -260,8 +260,8 @@ public func >=(lhs: Bool, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >=(lhs: AggregateColumnExpression, rhs: Having.HavingPredicate) -> Having {
-    return Having(lhs: .aggregateColumnExpression(lhs), rhs: rhs, condition: .greaterThanOrEqual)
+public func >=(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
+    return Having(lhs: .columnExpression(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
 /// Create a `Having` clause using the operator >= for String
@@ -270,7 +270,7 @@ public func >=(lhs: AggregateColumnExpression, rhs: Having.HavingPredicate) -> H
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >=(lhs: String, rhs: Having.HavingPredicate) -> Having {
+public func >=(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .string(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -280,7 +280,7 @@ public func >=(lhs: String, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >=(lhs: Column, rhs: Having.HavingPredicate) -> Having {
+public func >=(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .column(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -290,7 +290,7 @@ public func >=(lhs: Column, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >=(lhs: Int, rhs: Having.HavingPredicate) -> Having {
+public func >=(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .int(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -300,7 +300,7 @@ public func >=(lhs: Int, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >=(lhs: Float, rhs: Having.HavingPredicate) -> Having {
+public func >=(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .float(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -310,7 +310,7 @@ public func >=(lhs: Float, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >=(lhs: Double, rhs: Having.HavingPredicate) -> Having {
+public func >=(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .double(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -320,7 +320,7 @@ public func >=(lhs: Double, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >=(lhs: Parameter, rhs: Having.HavingPredicate) -> Having {
+public func >=(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .parameter(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -330,7 +330,7 @@ public func >=(lhs: Parameter, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >=(lhs: Bool, rhs: Having.HavingPredicate) -> Having {
+public func >=(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .bool(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
 
@@ -340,8 +340,8 @@ public func >=(lhs: Bool, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >(lhs: ScalarColumnExpression, rhs: Filter.FilterPredicate) -> Filter {
-    return Filter(lhs: .scalarColumnExpression(lhs), rhs: rhs, condition: .greaterThan)
+public func >(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
+    return Filter(lhs: .columnExpression(lhs), rhs: rhs, condition: .greaterThan)
 }
 
 /// Create a `Filter` clause using the operator > for String
@@ -350,7 +350,7 @@ public func >(lhs: ScalarColumnExpression, rhs: Filter.FilterPredicate) -> Filte
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >(lhs: String, rhs: Filter.FilterPredicate) -> Filter {
+public func >(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .string(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -360,7 +360,7 @@ public func >(lhs: String, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >(lhs: Column, rhs: Filter.FilterPredicate) -> Filter {
+public func >(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .column(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -370,7 +370,7 @@ public func >(lhs: Column, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >(lhs: Int, rhs: Filter.FilterPredicate) -> Filter {
+public func >(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .int(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -380,7 +380,7 @@ public func >(lhs: Int, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >(lhs: Float, rhs: Filter.FilterPredicate) -> Filter {
+public func >(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .float(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -390,7 +390,7 @@ public func >(lhs: Float, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >(lhs: Double, rhs: Filter.FilterPredicate) -> Filter {
+public func >(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .double(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -400,7 +400,7 @@ public func >(lhs: Double, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >(lhs: Parameter, rhs: Filter.FilterPredicate) -> Filter {
+public func >(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -410,7 +410,7 @@ public func >(lhs: Parameter, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func >(lhs: Bool, rhs: Filter.FilterPredicate) -> Filter {
+public func >(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .bool(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -420,8 +420,8 @@ public func >(lhs: Bool, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >(lhs: AggregateColumnExpression, rhs: Having.HavingPredicate) -> Having {
-    return Having(lhs: .aggregateColumnExpression(lhs), rhs: rhs, condition: .greaterThan)
+public func >(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
+    return Having(lhs: .columnExpression(lhs), rhs: rhs, condition: .greaterThan)
 }
 
 /// Create a `Having` clause using the operator > for String
@@ -430,7 +430,7 @@ public func >(lhs: AggregateColumnExpression, rhs: Having.HavingPredicate) -> Ha
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >(lhs: String, rhs: Having.HavingPredicate) -> Having {
+public func >(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .string(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -440,7 +440,7 @@ public func >(lhs: String, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >(lhs: Column, rhs: Having.HavingPredicate) -> Having {
+public func >(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .column(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -450,7 +450,7 @@ public func >(lhs: Column, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >(lhs: Int, rhs: Having.HavingPredicate) -> Having {
+public func >(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .int(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -460,7 +460,7 @@ public func >(lhs: Int, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >(lhs: Float, rhs: Having.HavingPredicate) -> Having {
+public func >(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .float(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -470,7 +470,7 @@ public func >(lhs: Float, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >(lhs: Double, rhs: Having.HavingPredicate) -> Having {
+public func >(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .double(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -480,7 +480,7 @@ public func >(lhs: Double, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >(lhs: Parameter, rhs: Having.HavingPredicate) -> Having {
+public func >(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .parameter(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -490,7 +490,7 @@ public func >(lhs: Parameter, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func >(lhs: Bool, rhs: Having.HavingPredicate) -> Having {
+public func >(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .bool(lhs), rhs: rhs, condition: .greaterThan)
 }
 
@@ -500,8 +500,8 @@ public func >(lhs: Bool, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <=(lhs: ScalarColumnExpression, rhs: Filter.FilterPredicate) -> Filter {
-    return Filter(lhs: .scalarColumnExpression(lhs), rhs: rhs, condition: .lessThanOrEqual)
+public func <=(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
+    return Filter(lhs: .columnExpression(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
 /// Create a `Filter` clause using the operator <= for String
@@ -510,7 +510,7 @@ public func <=(lhs: ScalarColumnExpression, rhs: Filter.FilterPredicate) -> Filt
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <=(lhs: String, rhs: Filter.FilterPredicate) -> Filter {
+public func <=(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .string(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -520,7 +520,7 @@ public func <=(lhs: String, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <=(lhs: Column, rhs: Filter.FilterPredicate) -> Filter {
+public func <=(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .column(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -530,7 +530,7 @@ public func <=(lhs: Column, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <=(lhs: Int, rhs: Filter.FilterPredicate) -> Filter {
+public func <=(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .int(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -540,7 +540,7 @@ public func <=(lhs: Int, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <=(lhs: Float, rhs: Filter.FilterPredicate) -> Filter {
+public func <=(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .float(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -550,7 +550,7 @@ public func <=(lhs: Float, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <=(lhs: Double, rhs: Filter.FilterPredicate) -> Filter {
+public func <=(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .double(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -560,7 +560,7 @@ public func <=(lhs: Double, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <=(lhs: Parameter, rhs: Filter.FilterPredicate) -> Filter {
+public func <=(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -570,7 +570,7 @@ public func <=(lhs: Parameter, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <=(lhs: Bool, rhs: Filter.FilterPredicate) -> Filter {
+public func <=(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .bool(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -580,8 +580,8 @@ public func <=(lhs: Bool, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <=(lhs: AggregateColumnExpression, rhs: Having.HavingPredicate) -> Having {
-    return Having(lhs: .aggregateColumnExpression(lhs), rhs: rhs, condition: .lessThanOrEqual)
+public func <=(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
+    return Having(lhs: .columnExpression(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
 /// Create a `Having` clause using the operator <= for String
@@ -590,7 +590,7 @@ public func <=(lhs: AggregateColumnExpression, rhs: Having.HavingPredicate) -> H
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <=(lhs: String, rhs: Having.HavingPredicate) -> Having {
+public func <=(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .string(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -600,7 +600,7 @@ public func <=(lhs: String, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <=(lhs: Column, rhs: Having.HavingPredicate) -> Having {
+public func <=(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .column(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -610,7 +610,7 @@ public func <=(lhs: Column, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <=(lhs: Int, rhs: Having.HavingPredicate) -> Having {
+public func <=(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .int(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -620,7 +620,7 @@ public func <=(lhs: Int, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <=(lhs: Float, rhs: Having.HavingPredicate) -> Having {
+public func <=(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .float(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -630,7 +630,7 @@ public func <=(lhs: Float, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <=(lhs: Double, rhs: Having.HavingPredicate) -> Having {
+public func <=(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .double(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -640,7 +640,7 @@ public func <=(lhs: Double, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <=(lhs: Parameter, rhs: Having.HavingPredicate) -> Having {
+public func <=(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .parameter(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -650,7 +650,7 @@ public func <=(lhs: Parameter, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <=(lhs: Bool, rhs: Having.HavingPredicate) -> Having {
+public func <=(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .bool(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
 
@@ -660,8 +660,8 @@ public func <=(lhs: Bool, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <(lhs: ScalarColumnExpression, rhs: Filter.FilterPredicate) -> Filter {
-    return Filter(lhs: .scalarColumnExpression(lhs), rhs: rhs, condition: .lessThan)
+public func <(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
+    return Filter(lhs: .columnExpression(lhs), rhs: rhs, condition: .lessThan)
 }
 
 /// Create a `Filter` clause using the operator < for String
@@ -670,7 +670,7 @@ public func <(lhs: ScalarColumnExpression, rhs: Filter.FilterPredicate) -> Filte
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <(lhs: String, rhs: Filter.FilterPredicate) -> Filter {
+public func <(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .string(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -680,7 +680,7 @@ public func <(lhs: String, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <(lhs: Column, rhs: Filter.FilterPredicate) -> Filter {
+public func <(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .column(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -690,7 +690,7 @@ public func <(lhs: Column, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <(lhs: Int, rhs: Filter.FilterPredicate) -> Filter {
+public func <(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .int(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -700,7 +700,7 @@ public func <(lhs: Int, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <(lhs: Float, rhs: Filter.FilterPredicate) -> Filter {
+public func <(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .float(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -710,7 +710,7 @@ public func <(lhs: Float, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <(lhs: Double, rhs: Filter.FilterPredicate) -> Filter {
+public func <(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .double(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -720,7 +720,7 @@ public func <(lhs: Double, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <(lhs: Parameter, rhs: Filter.FilterPredicate) -> Filter {
+public func <(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -730,7 +730,7 @@ public func <(lhs: Parameter, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func <(lhs: Bool, rhs: Filter.FilterPredicate) -> Filter {
+public func <(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .bool(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -740,8 +740,8 @@ public func <(lhs: Bool, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <(lhs: AggregateColumnExpression, rhs: Having.HavingPredicate) -> Having {
-    return Having(lhs: .aggregateColumnExpression(lhs), rhs: rhs, condition: .lessThan)
+public func <(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
+    return Having(lhs: .columnExpression(lhs), rhs: rhs, condition: .lessThan)
 }
 
 /// Create a `Having` clause using the operator < for String
@@ -750,7 +750,7 @@ public func <(lhs: AggregateColumnExpression, rhs: Having.HavingPredicate) -> Ha
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <(lhs: String, rhs: Having.HavingPredicate) -> Having {
+public func <(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .string(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -760,7 +760,7 @@ public func <(lhs: String, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <(lhs: Column, rhs: Having.HavingPredicate) -> Having {
+public func <(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .column(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -770,7 +770,7 @@ public func <(lhs: Column, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <(lhs: Int, rhs: Having.HavingPredicate) -> Having {
+public func <(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .int(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -780,7 +780,7 @@ public func <(lhs: Int, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <(lhs: Float, rhs: Having.HavingPredicate) -> Having {
+public func <(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .float(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -790,7 +790,7 @@ public func <(lhs: Float, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <(lhs: Double, rhs: Having.HavingPredicate) -> Having {
+public func <(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .double(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -800,7 +800,7 @@ public func <(lhs: Double, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <(lhs: Parameter, rhs: Having.HavingPredicate) -> Having {
+public func <(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .parameter(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -810,7 +810,7 @@ public func <(lhs: Parameter, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func <(lhs: Bool, rhs: Having.HavingPredicate) -> Having {
+public func <(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .bool(lhs), rhs: rhs, condition: .lessThan)
 }
 
@@ -820,8 +820,8 @@ public func <(lhs: Bool, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func !=(lhs: ScalarColumnExpression, rhs: Filter.FilterPredicate) -> Filter {
-    return Filter(lhs: .scalarColumnExpression(lhs), rhs: rhs, condition: .notEqual)
+public func !=(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
+    return Filter(lhs: .columnExpression(lhs), rhs: rhs, condition: .notEqual)
 }
 
 /// Create a `Filter` clause using the operator != for String
@@ -830,7 +830,7 @@ public func !=(lhs: ScalarColumnExpression, rhs: Filter.FilterPredicate) -> Filt
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func !=(lhs: String, rhs: Filter.FilterPredicate) -> Filter {
+public func !=(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .string(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -840,7 +840,7 @@ public func !=(lhs: String, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func !=(lhs: Column, rhs: Filter.FilterPredicate) -> Filter {
+public func !=(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .column(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -850,7 +850,7 @@ public func !=(lhs: Column, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func !=(lhs: Int, rhs: Filter.FilterPredicate) -> Filter {
+public func !=(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .int(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -860,7 +860,7 @@ public func !=(lhs: Int, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func !=(lhs: Float, rhs: Filter.FilterPredicate) -> Filter {
+public func !=(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .float(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -870,7 +870,7 @@ public func !=(lhs: Float, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func !=(lhs: Double, rhs: Filter.FilterPredicate) -> Filter {
+public func !=(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .double(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -880,7 +880,7 @@ public func !=(lhs: Double, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func !=(lhs: Parameter, rhs: Filter.FilterPredicate) -> Filter {
+public func !=(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -890,7 +890,7 @@ public func !=(lhs: Parameter, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
-public func !=(lhs: Bool, rhs: Filter.FilterPredicate) -> Filter {
+public func !=(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .bool(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -900,8 +900,8 @@ public func !=(lhs: Bool, rhs: Filter.FilterPredicate) -> Filter {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func !=(lhs: AggregateColumnExpression, rhs: Having.HavingPredicate) -> Having {
-    return Having(lhs: .aggregateColumnExpression(lhs), rhs: rhs, condition: .notEqual)
+public func !=(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
+    return Having(lhs: .columnExpression(lhs), rhs: rhs, condition: .notEqual)
 }
 
 /// Create a `Having` clause using the operator != for String
@@ -910,7 +910,7 @@ public func !=(lhs: AggregateColumnExpression, rhs: Having.HavingPredicate) -> H
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func !=(lhs: String, rhs: Having.HavingPredicate) -> Having {
+public func !=(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .string(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -920,7 +920,7 @@ public func !=(lhs: String, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func !=(lhs: Column, rhs: Having.HavingPredicate) -> Having {
+public func !=(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .column(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -930,7 +930,7 @@ public func !=(lhs: Column, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func !=(lhs: Int, rhs: Having.HavingPredicate) -> Having {
+public func !=(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .int(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -940,7 +940,7 @@ public func !=(lhs: Int, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func !=(lhs: Float, rhs: Having.HavingPredicate) -> Having {
+public func !=(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .float(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -950,7 +950,7 @@ public func !=(lhs: Float, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func !=(lhs: Double, rhs: Having.HavingPredicate) -> Having {
+public func !=(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .double(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -960,7 +960,7 @@ public func !=(lhs: Double, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func !=(lhs: Parameter, rhs: Having.HavingPredicate) -> Having {
+public func !=(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .parameter(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -970,7 +970,7 @@ public func !=(lhs: Parameter, rhs: Having.HavingPredicate) -> Having {
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
-public func !=(lhs: Bool, rhs: Having.HavingPredicate) -> Having {
+public func !=(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .bool(lhs), rhs: rhs, condition: .notEqual)
 }
 
@@ -981,7 +981,7 @@ public extension ScalarColumnExpression {
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ query: Select) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .select(query), condition: .in)
+        return Filter(lhs: .columnExpression(self), rhs: .select(query), condition: .in)
     }
 
     /// Create a `Filter` clause using the NOT IN operator for subquery.
@@ -989,7 +989,7 @@ public extension ScalarColumnExpression {
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ query: Select) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .select(query), condition: .notIn)
+        return Filter(lhs: .columnExpression(self), rhs: .select(query), condition: .notIn)
     }
 }
 public extension String {
@@ -1125,7 +1125,7 @@ public extension AggregateColumnExpression {
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ query: Select) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .select(query), condition: .in)
+        return Having(lhs: .columnExpression(self), rhs: .select(query), condition: .in)
     }
 
     /// Create a `Having` clause using the NOT IN operator for subquery.
@@ -1133,7 +1133,7 @@ public extension AggregateColumnExpression {
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ query: Select) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .select(query), condition: .notIn)
+        return Having(lhs: .columnExpression(self), rhs: .select(query), condition: .notIn)
     }
 }
 public extension String {

@@ -65,7 +65,10 @@ while read -r LINE; do
     CLAUSE_TYPE=${stringarray[0]}
     TYPE=${stringarray[1]}
     TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${TYPE:0:1})${TYPE:1}"
-
+    if [[ $TYPE_LOWER == *"ColumnExpression" ]]
+    then
+        TYPE_LOWER="columnExpression"
+    fi
 
 cat <<EOF >> ${OUTPUT_FILE}
 public extension $TYPE {

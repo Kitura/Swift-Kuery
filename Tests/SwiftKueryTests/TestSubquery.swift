@@ -46,7 +46,7 @@ class TestSubquery: XCTestCase {
             .group(by: t.a)
             .having(sum(t.b) == any(Select(t.b, from: t).where(t.b == 2)))
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT tableSubquery.a FROM tableSubquery GROUP BY tableSubquery.a HAVING (SUM(tableSubquery.b)) = ANY (SELECT tableSubquery.b FROM tableSubquery WHERE tableSubquery.b = 2)"
+        query = "SELECT tableSubquery.a FROM tableSubquery GROUP BY tableSubquery.a HAVING SUM(tableSubquery.b) = ANY (SELECT tableSubquery.b FROM tableSubquery WHERE tableSubquery.b = 2)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: t)

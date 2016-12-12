@@ -73,6 +73,10 @@ while read -r LINE; do
         LHS_TYPE=${stringarray[1]}
         RHS_TYPE=${stringarray[2]}
         LHS_TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${LHS_TYPE:0:1})${LHS_TYPE:1}"
+        if [[ $LHS_TYPE_LOWER == *"ColumnExpression" ]]
+        then
+            LHS_TYPE_LOWER="columnExpression"
+        fi
 
 cat <<EOF >> ${OUTPUT_FILE}
 /// Create a \`$TYPE\` clause using the operator $OPERATOR for $LHS_TYPE
@@ -99,6 +103,10 @@ while read -r LINE; do
     CLAUSE=${stringarray[0]}
     TYPE=${stringarray[1]}
     TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${TYPE:0:1})${TYPE:1}"
+    if [[ $TYPE_LOWER == *"ColumnExpression" ]]
+    then
+        TYPE_LOWER="columnExpression"
+    fi
 
 echo "public extension $TYPE {" >> ${OUTPUT_FILE}
 

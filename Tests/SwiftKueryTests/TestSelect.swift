@@ -75,7 +75,7 @@ class TestSelect: XCTestCase {
             .order(by: .DESC(t.a))
             .having(sum(t.b) > 3)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT tableSelect.a FROM tableSelect WHERE tableSelect.b >= 0.76 GROUP BY tableSelect.a HAVING (SUM(tableSelect.b)) > 3 ORDER BY tableSelect.a DESC"
+        query = "SELECT tableSelect.a FROM tableSelect WHERE tableSelect.b >= 0.76 GROUP BY tableSelect.a HAVING SUM(tableSelect.b) > 3 ORDER BY tableSelect.a DESC"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(RawField("left(a, 2) as raw"), from: t)

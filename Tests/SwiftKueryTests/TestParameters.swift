@@ -64,7 +64,7 @@ class TestParameters: XCTestCase {
             .order(by: .DESC(t.a))
             .having(sum(t.b) < Parameter())
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT tableParameters.a FROM tableParameters WHERE tableParameters.b NOT BETWEEN ?1 AND ?2 GROUP BY tableParameters.a HAVING (SUM(tableParameters.b)) < ?3 ORDER BY tableParameters.a DESC"
+        query = "SELECT tableParameters.a FROM tableParameters WHERE tableParameters.b NOT BETWEEN ?1 AND ?2 GROUP BY tableParameters.a HAVING SUM(tableParameters.b) < ?3 ORDER BY tableParameters.a DESC"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(t.a, from: t)

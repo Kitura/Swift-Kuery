@@ -74,6 +74,14 @@ while read -r LINE; do
         RHS_TYPE=${stringarray[2]}
         LHS_TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${LHS_TYPE:0:1})${LHS_TYPE:1}"
         RHS_TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${RHS_TYPE:0:1})${RHS_TYPE:1}"
+        if [[ $LHS_TYPE_LOWER == *"ColumnExpression" ]]
+        then
+            LHS_TYPE_LOWER="columnExpression"
+        fi
+        if [[ $RHS_TYPE_LOWER == *"ColumnExpression" ]]
+        then
+            RHS_TYPE_LOWER="columnExpression"
+        fi
 
 cat <<EOF >> ${OUTPUT_FILE}
 /// Create a \`$TYPE\` clause using the operator $OPERATOR for $LHS_TYPE
@@ -103,6 +111,14 @@ while read -r LINE; do
     RHS_TYPE=${stringarray[4]}
     LHS_TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${LHS_TYPE:0:1})${LHS_TYPE:1}"
     RHS_TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${RHS_TYPE:0:1})${RHS_TYPE:1}"
+    if [[ $LHS_TYPE_LOWER == *"ColumnExpression" ]]
+    then
+        LHS_TYPE_LOWER="columnExpression"
+    fi
+    if [[ $RHS_TYPE_LOWER == *"ColumnExpression" ]]
+    then
+        RHS_TYPE_LOWER="columnExpression"
+    fi
 
 cat <<EOF >> ${OUTPUT_FILE}
 /// Create a \`$TYPE\` clause using the operator $OPERATOR for $LHS_TYPE

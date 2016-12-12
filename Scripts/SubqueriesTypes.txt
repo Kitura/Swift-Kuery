@@ -18,19 +18,19 @@
 # This file contains the list of all the types for the operators: (the result type (Filter or Having), LHS, RHS (the subquery type)).
 # The generated code is in Sources/Subqueries_GlobalFunctionsAndExtensions.swift.
 
-Filter ScalarColumnExpression Filter.FilterPredicate
-Filter String Filter.FilterPredicate
-Filter Column Filter.FilterPredicate
-Filter Int Filter.FilterPredicate
-Filter Float Filter.FilterPredicate
-Filter Double Filter.FilterPredicate
-Filter Parameter Filter.FilterPredicate
-Filter Bool Filter.FilterPredicate
-Having AggregateColumnExpression Having.HavingPredicate
-Having String Having.HavingPredicate
-Having Column Having.HavingPredicate
-Having Int Having.HavingPredicate
-Having Float Having.HavingPredicate
-Having Double Having.HavingPredicate
-Having Parameter Having.HavingPredicate
-Having Bool Having.HavingPredicate
+Filter ScalarColumnExpression Predicate<Filter,ScalarColumnExpression>
+Filter String Predicate<Filter,ScalarColumnExpression>
+Filter Column Predicate<Filter,ScalarColumnExpression>
+Filter Int Predicate<Filter,ScalarColumnExpression>
+Filter Float Predicate<Filter,ScalarColumnExpression>
+Filter Double Predicate<Filter,ScalarColumnExpression>
+Filter Parameter Predicate<Filter,ScalarColumnExpression>
+Filter Bool Predicate<Filter,ScalarColumnExpression>
+Having AggregateColumnExpression Predicate<Having,AggregateColumnExpression>
+Having String Predicate<Having,AggregateColumnExpression>
+Having Column Predicate<Having,AggregateColumnExpression>
+Having Int Predicate<Having,AggregateColumnExpression>
+Having Float Predicate<Having,AggregateColumnExpression>
+Having Double Predicate<Having,AggregateColumnExpression>
+Having Parameter Predicate<Having,AggregateColumnExpression>
+Having Bool Predicate<Having,AggregateColumnExpression>

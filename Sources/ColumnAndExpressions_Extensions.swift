@@ -20,7 +20,7 @@ public extension ScalarColumnExpression {
     /// - Parameter pattern: The pattern to use in the like expression.
     /// - Returns: A `Filter` containing the clause.
     public func like(_ pattern: String) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .string(pattern), condition: .like)
+        return Filter(lhs: .columnExpression(self), rhs: .string(pattern), condition: .like)
     }
 
     /// Create a `Filter` clause using the like operator with `Parameter`.
@@ -28,7 +28,7 @@ public extension ScalarColumnExpression {
     /// - Parameter pattern: The pattern to use in the like expression as `Parameter`.
     /// - Returns: A `Filter` containing the clause.
     public func like(_ pattern: Parameter) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .parameter(pattern), condition: .like)
+        return Filter(lhs: .columnExpression(self), rhs: .parameter(pattern), condition: .like)
     }
 
     /// Create a `Filter` clause using the notLike operator.
@@ -36,7 +36,7 @@ public extension ScalarColumnExpression {
     /// - Parameter pattern: The pattern to use in the notLike expression.
     /// - Returns: A `Filter` containing the clause.
     public func notLike(_ pattern: String) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .string(pattern), condition: .notLike)
+        return Filter(lhs: .columnExpression(self), rhs: .string(pattern), condition: .notLike)
     }
 
     /// Create a `Filter` clause using the notLike operator with `Parameter`.
@@ -44,7 +44,7 @@ public extension ScalarColumnExpression {
     /// - Parameter pattern: The pattern to use in the notLike expression as `Parameter`.
     /// - Returns: A `Filter` containing the clause.
     public func notLike(_ pattern: Parameter) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .parameter(pattern), condition: .notLike)
+        return Filter(lhs: .columnExpression(self), rhs: .parameter(pattern), condition: .notLike)
     }
 
     /// Create a `Filter` clause using the between operator for Bool.
@@ -56,7 +56,7 @@ public extension ScalarColumnExpression {
         var array = [Bool]()
         array.append(value1)
         array.append(value2)
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfBool(array), condition: .between)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfBool(array), condition: .between)
     }
     /// Create a `Filter` clause using the notBetween operator for Bool.
     ///
@@ -67,7 +67,7 @@ public extension ScalarColumnExpression {
         var array = [Bool]()
         array.append(value1)
         array.append(value2)
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfBool(array), condition: .notBetween)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfBool(array), condition: .notBetween)
     }
 
     /// Create a `Filter` clause using the `in` operator for Bool.
@@ -75,7 +75,7 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Bool...) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfBool(values), condition: .`in`)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfBool(values), condition: .`in`)
     }
 
     /// Create a `Filter` clause using the notIn operator for Bool.
@@ -83,7 +83,7 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Bool...) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfBool(values), condition: .notIn)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfBool(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for String.
     ///
@@ -94,7 +94,7 @@ public extension ScalarColumnExpression {
         var array = [String]()
         array.append(value1)
         array.append(value2)
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfString(array), condition: .between)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfString(array), condition: .between)
     }
     /// Create a `Filter` clause using the notBetween operator for String.
     ///
@@ -105,7 +105,7 @@ public extension ScalarColumnExpression {
         var array = [String]()
         array.append(value1)
         array.append(value2)
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfString(array), condition: .notBetween)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfString(array), condition: .notBetween)
     }
 
     /// Create a `Filter` clause using the `in` operator for String.
@@ -113,7 +113,7 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: String...) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfString(values), condition: .`in`)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfString(values), condition: .`in`)
     }
 
     /// Create a `Filter` clause using the notIn operator for String.
@@ -121,7 +121,7 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: String...) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfString(values), condition: .notIn)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfString(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for Int.
     ///
@@ -132,7 +132,7 @@ public extension ScalarColumnExpression {
         var array = [Int]()
         array.append(value1)
         array.append(value2)
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfInt(array), condition: .between)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfInt(array), condition: .between)
     }
     /// Create a `Filter` clause using the notBetween operator for Int.
     ///
@@ -143,7 +143,7 @@ public extension ScalarColumnExpression {
         var array = [Int]()
         array.append(value1)
         array.append(value2)
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfInt(array), condition: .notBetween)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfInt(array), condition: .notBetween)
     }
 
     /// Create a `Filter` clause using the `in` operator for Int.
@@ -151,7 +151,7 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Int...) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfInt(values), condition: .`in`)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfInt(values), condition: .`in`)
     }
 
     /// Create a `Filter` clause using the notIn operator for Int.
@@ -159,7 +159,7 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Int...) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfInt(values), condition: .notIn)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfInt(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for Float.
     ///
@@ -170,7 +170,7 @@ public extension ScalarColumnExpression {
         var array = [Float]()
         array.append(value1)
         array.append(value2)
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfFloat(array), condition: .between)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfFloat(array), condition: .between)
     }
     /// Create a `Filter` clause using the notBetween operator for Float.
     ///
@@ -181,7 +181,7 @@ public extension ScalarColumnExpression {
         var array = [Float]()
         array.append(value1)
         array.append(value2)
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfFloat(array), condition: .notBetween)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfFloat(array), condition: .notBetween)
     }
 
     /// Create a `Filter` clause using the `in` operator for Float.
@@ -189,7 +189,7 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Float...) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfFloat(values), condition: .`in`)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfFloat(values), condition: .`in`)
     }
 
     /// Create a `Filter` clause using the notIn operator for Float.
@@ -197,7 +197,7 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Float...) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfFloat(values), condition: .notIn)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfFloat(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for Double.
     ///
@@ -208,7 +208,7 @@ public extension ScalarColumnExpression {
         var array = [Double]()
         array.append(value1)
         array.append(value2)
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfDouble(array), condition: .between)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfDouble(array), condition: .between)
     }
     /// Create a `Filter` clause using the notBetween operator for Double.
     ///
@@ -219,7 +219,7 @@ public extension ScalarColumnExpression {
         var array = [Double]()
         array.append(value1)
         array.append(value2)
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfDouble(array), condition: .notBetween)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfDouble(array), condition: .notBetween)
     }
 
     /// Create a `Filter` clause using the `in` operator for Double.
@@ -227,7 +227,7 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Double...) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfDouble(values), condition: .`in`)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfDouble(values), condition: .`in`)
     }
 
     /// Create a `Filter` clause using the notIn operator for Double.
@@ -235,7 +235,7 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Double...) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfDouble(values), condition: .notIn)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfDouble(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for Parameter.
     ///
@@ -246,7 +246,7 @@ public extension ScalarColumnExpression {
         var array = [Parameter]()
         array.append(value1)
         array.append(value2)
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfParameter(array), condition: .between)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfParameter(array), condition: .between)
     }
     /// Create a `Filter` clause using the notBetween operator for Parameter.
     ///
@@ -257,7 +257,7 @@ public extension ScalarColumnExpression {
         var array = [Parameter]()
         array.append(value1)
         array.append(value2)
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfParameter(array), condition: .notBetween)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfParameter(array), condition: .notBetween)
     }
 
     /// Create a `Filter` clause using the `in` operator for Parameter.
@@ -265,7 +265,7 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Parameter...) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfParameter(values), condition: .`in`)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfParameter(values), condition: .`in`)
     }
 
     /// Create a `Filter` clause using the notIn operator for Parameter.
@@ -273,7 +273,7 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Parameter...) -> Filter {
-        return Filter(lhs: .scalarColumnExpression(self), rhs: .arrayOfParameter(values), condition: .notIn)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfParameter(values), condition: .notIn)
     }
 }
 public extension Column {
@@ -544,7 +544,7 @@ public extension AggregateColumnExpression {
     /// - Parameter pattern: The pattern to use in the like expression.
     /// - Returns: A `Having` containing the clause.
     public func like(_ pattern: String) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .string(pattern), condition: .like)
+        return Having(lhs: .columnExpression(self), rhs: .string(pattern), condition: .like)
     }
 
     /// Create a `Having` clause using the like operator with `Parameter`.
@@ -552,7 +552,7 @@ public extension AggregateColumnExpression {
     /// - Parameter pattern: The pattern to use in the like expression as `Parameter`.
     /// - Returns: A `Having` containing the clause.
     public func like(_ pattern: Parameter) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .parameter(pattern), condition: .like)
+        return Having(lhs: .columnExpression(self), rhs: .parameter(pattern), condition: .like)
     }
 
     /// Create a `Having` clause using the notLike operator.
@@ -560,7 +560,7 @@ public extension AggregateColumnExpression {
     /// - Parameter pattern: The pattern to use in the notLike expression.
     /// - Returns: A `Having` containing the clause.
     public func notLike(_ pattern: String) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .string(pattern), condition: .notLike)
+        return Having(lhs: .columnExpression(self), rhs: .string(pattern), condition: .notLike)
     }
 
     /// Create a `Having` clause using the notLike operator with `Parameter`.
@@ -568,7 +568,7 @@ public extension AggregateColumnExpression {
     /// - Parameter pattern: The pattern to use in the notLike expression as `Parameter`.
     /// - Returns: A `Having` containing the clause.
     public func notLike(_ pattern: Parameter) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .parameter(pattern), condition: .notLike)
+        return Having(lhs: .columnExpression(self), rhs: .parameter(pattern), condition: .notLike)
     }
 
     /// Create a `Having` clause using the between operator for Bool.
@@ -580,7 +580,7 @@ public extension AggregateColumnExpression {
         var array = [Bool]()
         array.append(value1)
         array.append(value2)
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfBool(array), condition: .between)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfBool(array), condition: .between)
     }
     /// Create a `Having` clause using the notBetween operator for Bool.
     ///
@@ -591,7 +591,7 @@ public extension AggregateColumnExpression {
         var array = [Bool]()
         array.append(value1)
         array.append(value2)
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfBool(array), condition: .notBetween)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfBool(array), condition: .notBetween)
     }
 
     /// Create a `Having` clause using the `in` operator for Bool.
@@ -599,7 +599,7 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Bool...) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfBool(values), condition: .`in`)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfBool(values), condition: .`in`)
     }
 
     /// Create a `Having` clause using the notIn operator for Bool.
@@ -607,7 +607,7 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Bool...) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfBool(values), condition: .notIn)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfBool(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for String.
     ///
@@ -618,7 +618,7 @@ public extension AggregateColumnExpression {
         var array = [String]()
         array.append(value1)
         array.append(value2)
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfString(array), condition: .between)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfString(array), condition: .between)
     }
     /// Create a `Having` clause using the notBetween operator for String.
     ///
@@ -629,7 +629,7 @@ public extension AggregateColumnExpression {
         var array = [String]()
         array.append(value1)
         array.append(value2)
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfString(array), condition: .notBetween)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfString(array), condition: .notBetween)
     }
 
     /// Create a `Having` clause using the `in` operator for String.
@@ -637,7 +637,7 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: String...) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfString(values), condition: .`in`)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfString(values), condition: .`in`)
     }
 
     /// Create a `Having` clause using the notIn operator for String.
@@ -645,7 +645,7 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: String...) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfString(values), condition: .notIn)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfString(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for Int.
     ///
@@ -656,7 +656,7 @@ public extension AggregateColumnExpression {
         var array = [Int]()
         array.append(value1)
         array.append(value2)
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfInt(array), condition: .between)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfInt(array), condition: .between)
     }
     /// Create a `Having` clause using the notBetween operator for Int.
     ///
@@ -667,7 +667,7 @@ public extension AggregateColumnExpression {
         var array = [Int]()
         array.append(value1)
         array.append(value2)
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfInt(array), condition: .notBetween)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfInt(array), condition: .notBetween)
     }
 
     /// Create a `Having` clause using the `in` operator for Int.
@@ -675,7 +675,7 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Int...) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfInt(values), condition: .`in`)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfInt(values), condition: .`in`)
     }
 
     /// Create a `Having` clause using the notIn operator for Int.
@@ -683,7 +683,7 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Int...) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfInt(values), condition: .notIn)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfInt(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for Float.
     ///
@@ -694,7 +694,7 @@ public extension AggregateColumnExpression {
         var array = [Float]()
         array.append(value1)
         array.append(value2)
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfFloat(array), condition: .between)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfFloat(array), condition: .between)
     }
     /// Create a `Having` clause using the notBetween operator for Float.
     ///
@@ -705,7 +705,7 @@ public extension AggregateColumnExpression {
         var array = [Float]()
         array.append(value1)
         array.append(value2)
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfFloat(array), condition: .notBetween)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfFloat(array), condition: .notBetween)
     }
 
     /// Create a `Having` clause using the `in` operator for Float.
@@ -713,7 +713,7 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Float...) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfFloat(values), condition: .`in`)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfFloat(values), condition: .`in`)
     }
 
     /// Create a `Having` clause using the notIn operator for Float.
@@ -721,7 +721,7 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Float...) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfFloat(values), condition: .notIn)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfFloat(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for Double.
     ///
@@ -732,7 +732,7 @@ public extension AggregateColumnExpression {
         var array = [Double]()
         array.append(value1)
         array.append(value2)
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfDouble(array), condition: .between)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfDouble(array), condition: .between)
     }
     /// Create a `Having` clause using the notBetween operator for Double.
     ///
@@ -743,7 +743,7 @@ public extension AggregateColumnExpression {
         var array = [Double]()
         array.append(value1)
         array.append(value2)
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfDouble(array), condition: .notBetween)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfDouble(array), condition: .notBetween)
     }
 
     /// Create a `Having` clause using the `in` operator for Double.
@@ -751,7 +751,7 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Double...) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfDouble(values), condition: .`in`)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfDouble(values), condition: .`in`)
     }
 
     /// Create a `Having` clause using the notIn operator for Double.
@@ -759,7 +759,7 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Double...) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfDouble(values), condition: .notIn)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfDouble(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for Parameter.
     ///
@@ -770,7 +770,7 @@ public extension AggregateColumnExpression {
         var array = [Parameter]()
         array.append(value1)
         array.append(value2)
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfParameter(array), condition: .between)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfParameter(array), condition: .between)
     }
     /// Create a `Having` clause using the notBetween operator for Parameter.
     ///
@@ -781,7 +781,7 @@ public extension AggregateColumnExpression {
         var array = [Parameter]()
         array.append(value1)
         array.append(value2)
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfParameter(array), condition: .notBetween)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfParameter(array), condition: .notBetween)
     }
 
     /// Create a `Having` clause using the `in` operator for Parameter.
@@ -789,7 +789,7 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Parameter...) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfParameter(values), condition: .`in`)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfParameter(values), condition: .`in`)
     }
 
     /// Create a `Having` clause using the notIn operator for Parameter.
@@ -797,7 +797,7 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Parameter...) -> Having {
-        return Having(lhs: .aggregateColumnExpression(self), rhs: .arrayOfParameter(values), condition: .notIn)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfParameter(values), condition: .notIn)
     }
 }
 public extension Column {
