@@ -23,11 +23,11 @@ public struct Filter: ConditionalClause, QueryFilterProtocol {
     /// The left hand side of the conditional clause.
     public let lhs: Predicate<Filter, ScalarColumnExpression>?
     /// The right hand side of the conditional clause.
-    public let rhs: Predicate<Filter, ScalarColumnExpression>
+    public let rhs: Predicate<Filter, ScalarColumnExpression>?
     /// The operator of the conditional clause.
     public let condition: Condition
     
-    init(lhs: Predicate<Filter, ScalarColumnExpression>?=nil, rhs: Predicate<Filter, ScalarColumnExpression>, condition: Condition) {
+    init(lhs: Predicate<Filter, ScalarColumnExpression>?=nil, rhs: Predicate<Filter, ScalarColumnExpression>?=nil, condition: Condition) {
         self.lhs = lhs
         self.rhs = rhs
         self.condition = condition

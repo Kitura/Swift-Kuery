@@ -25,7 +25,7 @@ public struct Select: Query {
     public let tables: [Table]
 
     /// The SQL WHERE clause containing the filter for rows to retrieve.
-    /// Could be represented with the `Filter` clause or a `String` containing raw SQL.
+    /// Could be represented with a `Filter` clause or a `String` containing raw SQL.
     public private (set) var whereClause: QueryFilterProtocol?
     
     /// A boolean indicating whether the selected values have to be distinct.
@@ -49,7 +49,7 @@ public struct Select: Query {
     public private (set) var groupBy: [Column]?
 
     /// The SQL HAVING clause containing the filter for the rows to select when aggregate functions are used.
-    /// Could be represented with the `Having` clause or a `String` containing raw SQL.
+    /// Could be represented with a `Having` clause or a `String` containing raw SQL.
     public private (set) var havingClause: QueryHavingProtocol?
     
     /// The SQL UNION clauses.

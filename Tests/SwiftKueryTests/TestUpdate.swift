@@ -62,9 +62,9 @@ class TestUpdate: XCTestCase {
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         var d = Delete(from: t)
-            .where(t.b == "2")
+            .where(t.b == "2" && t.a.isNull())
         kuery = connection.descriptionOf(query: d)
-        query = "DELETE FROM tableUpdate WHERE tableUpdate.b = '2'"
+        query = "DELETE FROM tableUpdate WHERE (tableUpdate.b = '2') AND (tableUpdate.a IS NULL)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         d = Delete(from: t)

@@ -25,7 +25,7 @@ public protocol ConditionalClause: Buildable {
     /// The left hand side of the conditional clause.
     var lhs: Predicate<ClauseType, ColumnExpressionType>? { get }
     /// The right hand side of the conditional clause.
-    var rhs: Predicate<ClauseType, ColumnExpressionType>  { get }
+    var rhs: Predicate<ClauseType, ColumnExpressionType>?  { get }
     /// The operator of the conditional clause.
     var condition: Condition  { get }
     
@@ -45,17 +45,28 @@ public extension ConditionalClause {
     /// - Returns: A String representation of the clause.
     /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
-        if condition == .exists || condition == .notExists {
-            return try condition.build(queryBuilder: queryBuilder) + " " + rhs.build(queryBuilder: queryBuilder)
-        }
         guard lhs != nil else {
-            throw QueryError.syntaxError("No left hand side operand in filter.")
+            if condition == .exists || condition == .notExists {
+                guard rhs != nil else {
+                    throw QueryError.syntaxError("No right hand side operand in conditional clause.")
+                }
+                return try condition.build(queryBuilder: queryBuilder) + " " + rhs!.build(queryBuilder: queryBuilder)
+            }
+            throw QueryError.syntaxError("No left hand side operand in conditional clause.")
         }
+        
+        guard rhs != nil else {
+            if condition == .isNull || condition == .isNotNull {
+                return try lhs!.build(queryBuilder: queryBuilder) + " " + condition.build(queryBuilder: queryBuilder)
+            }
+            throw QueryError.syntaxError("No right hand side operand in conditional clause.")
+        }        
+        
         let lhsBuilt = try lhs!.build(queryBuilder: queryBuilder)
         let conditionBuilt = condition.build(queryBuilder: queryBuilder)
         var rhsBuilt = ""
         if condition == .between || condition == .notBetween {
-            switch rhs {
+            switch rhs! {
             case .arrayOfString(let array):
                 rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
             case .arrayOfInt(let array):
@@ -73,7 +84,7 @@ public extension ConditionalClause {
             }
         }
         else if condition == .in || condition == .notIn {
-            switch rhs {
+            switch rhs! {
             case .arrayOfString(let array):
                 rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
             case .arrayOfInt(let array):
@@ -93,7 +104,7 @@ public extension ConditionalClause {
             }
         }
         else {
-            rhsBuilt = try rhs.build(queryBuilder: queryBuilder)
+            rhsBuilt = try rhs!.build(queryBuilder: queryBuilder)
         }
         return lhsBuilt + " " + conditionBuilt + " " + rhsBuilt
     }

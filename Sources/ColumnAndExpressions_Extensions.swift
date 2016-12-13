@@ -275,6 +275,20 @@ public extension ScalarColumnExpression {
     public func notIn(_ values: Parameter...) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfParameter(values), condition: .notIn)
     }
+
+    /// Create a `Filter` clause using the isNull operator.
+    ///
+    /// - Returns: A `Filter` containing the clause.
+    public func isNull() -> Filter {
+        return Filter(lhs: .columnExpression(self), condition: .isNull)
+    }
+
+    /// Create a `Filter` clause using the isNotNull operator.
+    ///
+    /// - Returns: A `Filter` containing the clause.
+    public func isNotNull() -> Filter {
+        return Filter(lhs: .columnExpression(self), condition: .isNotNull)
+    }
 }
 public extension Column {
     /// Create a `Filter` clause using the like operator.
@@ -536,6 +550,20 @@ public extension Column {
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Parameter...) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfParameter(values), condition: .notIn)
+    }
+
+    /// Create a `Filter` clause using the isNull operator.
+    ///
+    /// - Returns: A `Filter` containing the clause.
+    public func isNull() -> Filter {
+        return Filter(lhs: .column(self), condition: .isNull)
+    }
+
+    /// Create a `Filter` clause using the isNotNull operator.
+    ///
+    /// - Returns: A `Filter` containing the clause.
+    public func isNotNull() -> Filter {
+        return Filter(lhs: .column(self), condition: .isNotNull)
     }
 }
 public extension AggregateColumnExpression {
@@ -799,6 +827,20 @@ public extension AggregateColumnExpression {
     public func notIn(_ values: Parameter...) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfParameter(values), condition: .notIn)
     }
+
+    /// Create a `Having` clause using the isNull operator.
+    ///
+    /// - Returns: A `Having` containing the clause.
+    public func isNull() -> Having {
+        return Having(lhs: .columnExpression(self), condition: .isNull)
+    }
+
+    /// Create a `Having` clause using the isNotNull operator.
+    ///
+    /// - Returns: A `Having` containing the clause.
+    public func isNotNull() -> Having {
+        return Having(lhs: .columnExpression(self), condition: .isNotNull)
+    }
 }
 public extension Column {
     /// Create a `Having` clause using the like operator.
@@ -1060,5 +1102,19 @@ public extension Column {
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Parameter...) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfParameter(values), condition: .notIn)
+    }
+
+    /// Create a `Having` clause using the isNull operator.
+    ///
+    /// - Returns: A `Having` containing the clause.
+    public func isNull() -> Having {
+        return Having(lhs: .column(self), condition: .isNull)
+    }
+
+    /// Create a `Having` clause using the isNotNull operator.
+    ///
+    /// - Returns: A `Having` containing the clause.
+    public func isNotNull() -> Having {
+        return Having(lhs: .column(self), condition: .isNotNull)
     }
 }

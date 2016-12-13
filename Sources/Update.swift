@@ -22,7 +22,7 @@ public struct Update: Query {
     public let table: Table
 
     /// The SQL WHERE clause containing the filter for the rows to update.
-    /// Could be represented with the `Filter` clause or a `String` containing raw SQL.
+    /// Could be represented with a `Filter` clause or a `String` containing raw SQL.
     public private (set) var whereClause: QueryFilterProtocol?
     
     /// A `Returning` enum value corresponding to the SQL RETURNING clause.

@@ -22,12 +22,12 @@ public struct Having: ConditionalClause, QueryHavingProtocol {
     public typealias ColumnExpressionType = AggregateColumnExpression
     /// The left hand side of the conditional clause.
     public let lhs: Predicate<Having, AggregateColumnExpression>?
-    /// The left hand side of the conditional clause.
-    public let rhs: Predicate<Having, AggregateColumnExpression>
+    /// The right hand side of the conditional clause.
+    public let rhs: Predicate<Having, AggregateColumnExpression>?
     /// The operator of the conditional clause.
     public let condition: Condition
     
-    init(lhs: Predicate<Having, AggregateColumnExpression>?=nil, rhs: Predicate<Having, AggregateColumnExpression>, condition: Condition) {
+    init(lhs: Predicate<Having, AggregateColumnExpression>?=nil, rhs: Predicate<Having, AggregateColumnExpression>?=nil, condition: Condition) {
         self.lhs = lhs
         self.rhs = rhs
         self.condition = condition
