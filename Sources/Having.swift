@@ -17,7 +17,7 @@
 // MARK: Having
 
 /// An SQL HAVING clause.
-public struct Having: ConditionalClause {
+public struct Having: ConditionalClause, QueryHavingProtocol {
     public typealias ClauseType = Having
     public typealias ColumnExpressionType = AggregateColumnExpression
     /// The left hand side of the conditional clause.

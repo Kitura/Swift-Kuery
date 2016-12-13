@@ -72,7 +72,7 @@ public struct Update: Query {
     ///
     /// - Parameter conditions: The `Filter` clause or a `String` containing the SQL WHERE to apply.
     /// - Returns: A new instance of Update.
-    public func `where`(_ conditions: Filter) -> Update {
+    public func `where`(_ conditions: QueryFilterProtocol) -> Update {
         var new = self
         if whereClause != nil {
             new.syntaxError += "Multiple where clauses. "
