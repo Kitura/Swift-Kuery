@@ -131,13 +131,8 @@ public struct Select: Query {
         for item in joins {
             result += try item.join.build(queryBuilder: queryBuilder)
 
-            switch item.on {
-            case let on as Filter:
+            if let on = item.on {
                 result += try " ON " + on.build(queryBuilder: queryBuilder)
-            case let on as String:
-                result += " ON \(on)"
-            default:
-                break
             }
             
             if let using = item.using {
