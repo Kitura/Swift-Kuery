@@ -36,6 +36,8 @@ public struct Having: ConditionalClause, QueryHavingProtocol {
 
 // MARK: QueryHavingProtocol
 
+/// Defines the protocol which should be used for all HAVING clauses.
+/// Represents a HAVING clause as String value.
 public protocol QueryHavingProtocol: Buildable {
     
 }

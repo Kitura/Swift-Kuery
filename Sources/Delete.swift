@@ -22,10 +22,8 @@ public struct Delete: Query {
     public let table: Table
 
     /// The SQL WHERE clause containing the filter for rows to delete.
-    public private (set) var whereClause: Filter?
-
-    /// A String containg the raw SQL WHERE clause to filter the rows to delete.
-    public private (set) var rawWhereClause: String?
+    /// Could be represented with the `Filter` clause or a `String` containing raw SQL.
+    public private (set) var whereClause: QueryFilterProtocol?
 
     private var syntaxError = ""
 
@@ -33,7 +31,7 @@ public struct Delete: Query {
     ///
     /// - Parameter from: The table to delete rows from.
     /// - Parameter conditions: An optional where clause to apply.
-    public init(from table: Table, where conditions: Filter?=nil) {
+    public init(from table: Table, where conditions: QueryFilterProtocol?=nil) {
         self.table = table
         self.whereClause = conditions
     }
@@ -51,39 +49,21 @@ public struct Delete: Query {
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
-        else if let rawWhereClause = rawWhereClause {
-            result += " WHERE " + rawWhereClause
-        }
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
     
     /// Add an SQL WHERE clause to the delete statement.
     ///
-    /// - Parameter conditions: The SQL WHERE clause to apply.
+    /// - Parameter conditions: The `Filter` clause or a `String` containing SQL WHERE clause to apply.
     /// - Returns: A new instance of Delete.
-    public func `where`(_ conditions: Filter) -> Delete {
+    public func `where`(_ conditions: QueryFilterProtocol) -> Delete {
         var new = self
-        if whereClause != nil || rawWhereClause != nil {
+        if whereClause != nil {
             new.syntaxError += "Multiple where clauses. "
         }
         else {
             new.whereClause = conditions
-        }
-        return new
-    }
-
-    /// Add a raw SQL WHERE clause to the delete statement.
-    ///
-    /// - Parameter conditions: A String containing the SQL WHERE clause to apply.
-    /// - Returns: A new instance of Delete.
-    public func `where`(_ raw: String) -> Delete {
-        var new = self
-        if whereClause != nil || rawWhereClause != nil {
-            new.syntaxError += "Multiple where clauses. "
-        }
-        else {
-            new.rawWhereClause = raw
         }
         return new
     }

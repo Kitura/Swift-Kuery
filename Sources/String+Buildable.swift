@@ -14,8 +14,17 @@
  limitations under the License.
  */
 
+// MARK: String extensions
+
+/// The String extension with `QueryFilterProtocol` and `QueryHavingProtocol`.
+/// Enables the use if `String` in query as filtering clauses.
 extension String: QueryFilterProtocol, QueryHavingProtocol {
     
+    /// Process `String` as raw SQL using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the query.
+    /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
         return self
     }

@@ -36,6 +36,8 @@ public struct Filter: ConditionalClause, QueryFilterProtocol {
 
 // MARK: QueryFilterProtocol
 
+/// Defines the protocol which should be used for all filtering clauses.
+/// Represents a filter as String value.
 public protocol QueryFilterProtocol: Buildable {
     
 }

@@ -25,6 +25,7 @@ public struct Select: Query {
     public let tables: [Table]
 
     /// The SQL WHERE clause containing the filter for rows to retrieve.
+    /// Could be represented with the `Filter` clause or a `String` containing raw SQL.
     public private (set) var whereClause: QueryFilterProtocol?
     
     /// A boolean indicating whether the selected values have to be distinct.
@@ -48,6 +49,7 @@ public struct Select: Query {
     public private (set) var groupBy: [Column]?
 
     /// The SQL HAVING clause containing the filter for the rows to select when aggregate functions are used.
+    /// Could be represented with the `Having` clause or a `String` containing raw SQL.
     public private (set) var havingClause: QueryHavingProtocol?
     
     /// The SQL UNION clauses.
@@ -55,9 +57,8 @@ public struct Select: Query {
     
     /// The SQL JOIN, ON and USING clauses.
     /// ON clause can be represented as `Filter` or a `String` containing raw SQL.
+    /// USING clause: an array of `Column` elements that have to match in a JOIN query.
     public private (set) var joins = [(join: Join, on: QueryFilterProtocol?, using: [Column]?)]()
-
-    /// The SQL USING clause: an array of `Column` elements that have to match in a JOIN query.
 
     private var syntaxError = ""
 
@@ -105,7 +106,7 @@ public struct Select: Query {
     public func build(queryBuilder: QueryBuilder) throws -> String {
         var syntaxError = self.syntaxError
         
-        if groupBy == nil && (self.havingClause != nil) {
+        if groupBy == nil && havingClause != nil {
             syntaxError += "Having clause is not allowed without a group by clause. "
         }
         
@@ -148,7 +149,7 @@ public struct Select: Query {
             result += try " GROUP BY " + groupClause.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }
         
-        if let havingClause = self.havingClause {
+        if let havingClause = havingClause {
             result += try " HAVING " + havingClause.build(queryBuilder: queryBuilder)
         }
         
@@ -224,7 +225,7 @@ public struct Select: Query {
     /// - Returns: A new instance of Select with the `Having` clause.
     public func having(_ clause: QueryHavingProtocol) -> Select {
         var new = self
-        if self.havingClause != nil {
+        if havingClause != nil {
             new.syntaxError += "Multiple having clauses. "
         } else {
             new.havingClause = clause
@@ -300,7 +301,7 @@ public struct Select: Query {
     /// - Returns: A new instance of Select with the WHERE clause.
     public func `where`(_ conditions: QueryFilterProtocol) -> Select {
         var new = self
-        if self.whereClause != nil {
+        if whereClause != nil {
             new.syntaxError += "Multiple where clauses. "
         } else {
             new.whereClause = conditions
