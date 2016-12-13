@@ -57,7 +57,7 @@ cat <<'EOF' > ${OUTPUT_FILE}
 
 EOF
 
-# Generate extensions for Scalar/AggregateColumnExpression and Column for (NOT)LIKE, (NOT)BETWEEN, and (NOT)IN operators
+# Generate extensions for Scalar/AggregateColumnExpression and Column for (NOT)LIKE, (NOT)BETWEEN, (NOT)IN, and IS (NOT) NULL operators
 while read -r LINE; do
     [ -z "$LINE" ] && continue
     [[ "$LINE" =~ ^#.*$ ]] && continue
@@ -127,5 +127,19 @@ cat <<EOF >> ${OUTPUT_FILE}
 EOF
         done
 done < $INPUT_OPERANDS_FILE
+
+    for OPERATOR in isNull isNotNull; do
+
+cat <<EOF >> ${OUTPUT_FILE}
+
+    /// Create a \`$CLAUSE_TYPE\` clause using the $OPERATOR operator.
+    ///
+    /// - Returns: A \`$CLAUSE_TYPE\` containing the clause.
+    public func $OPERATOR() -> $CLAUSE_TYPE {
+        return $CLAUSE_TYPE(lhs: .$TYPE_LOWER(self), condition: .$OPERATOR)
+    }
+EOF
+done
+
 echo "}" >> ${OUTPUT_FILE}
 done < $INPUT_CLAUSES_FILE

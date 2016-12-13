@@ -56,10 +56,10 @@ class TestSelect: XCTestCase {
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select.distinct(t.a, from: t)
-            .where(t.a.notLike("b%"))
+            .where(t.a.notLike("b%").isNotNull())
             .offset(2)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT DISTINCT tableSelect.a FROM tableSelect WHERE tableSelect.a NOT LIKE 'b%' OFFSET 2"
+        query = "SELECT DISTINCT tableSelect.a FROM tableSelect WHERE (tableSelect.a NOT LIKE 'b%') IS NOT NULL OFFSET 2"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(t.b, t.a, from: t)
@@ -70,12 +70,12 @@ class TestSelect: XCTestCase {
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(t.a, from: t)
-            .where(t.b >= 0.76)
+            .where((t.b >= 0.76).isNotNull())
             .group(by: t.a)
             .order(by: .DESC(t.a))
-            .having(sum(t.b) > 3)
+            .having(sum(t.b) > 3 || t.b.isNull())
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT tableSelect.a FROM tableSelect WHERE tableSelect.b >= 0.76 GROUP BY tableSelect.a HAVING SUM(tableSelect.b) > 3 ORDER BY tableSelect.a DESC"
+        query = "SELECT tableSelect.a FROM tableSelect WHERE (tableSelect.b >= 0.76) IS NOT NULL GROUP BY tableSelect.a HAVING (SUM(tableSelect.b) > 3) OR (tableSelect.b IS NULL) ORDER BY tableSelect.a DESC"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(RawField("left(a, 2) as raw"), from: t)

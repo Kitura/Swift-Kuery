@@ -46,6 +46,10 @@ public enum Condition: Buildable {
     case exists
     /// The SQL NOT EXISTS operator.
     case notExists
+    /// The SQL IS NULL operator.
+    case isNull
+    /// The SQL IS NOT NULL operator.
+    case isNotNull
     /// The SQL AND operator.
     case and
     /// The SQL OR operator.
@@ -85,6 +89,10 @@ public enum Condition: Buildable {
             return "EXISTS"
         case .notExists:
             return "NOT EXISTS"
+        case .isNull:
+            return "IS NULL"
+        case .isNotNull:
+            return "IS NOT NULL"
         case .and:
             return "AND"
         case .or:

@@ -21,3 +21,4 @@ cd "$SCRIPT_DIR"
 ./simpleOperators.sh
 ./specialOperators.sh
 ./subqueries.sh
+./filterAndHavingExtensions.sh
