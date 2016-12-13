@@ -34,6 +34,12 @@ public struct Having: ConditionalClause {
     }
 }
 
+// MARK: QueryHavingProtocol
+
+public protocol QueryHavingProtocol: Buildable {
+    
+}
+
 // MARK Global functions
 
 /// Create a `Having` clause using the OR operator.
