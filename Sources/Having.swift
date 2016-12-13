@@ -17,7 +17,7 @@
 // MARK: Having
 
 /// An SQL HAVING clause.
-public struct Having: ConditionalClause {
+public struct Having: ConditionalClause, QueryHavingProtocol {
     public typealias ClauseType = Having
     public typealias ColumnExpressionType = AggregateColumnExpression
     /// The left hand side of the conditional clause.
@@ -32,6 +32,14 @@ public struct Having: ConditionalClause {
         self.rhs = rhs
         self.condition = condition
     }
+}
+
+// MARK: QueryHavingProtocol
+
+/// Defines the protocol which should be used for all HAVING clauses.
+/// Represents a HAVING clause as String value.
+public protocol QueryHavingProtocol: Buildable {
+    
 }
 
 // MARK Global functions

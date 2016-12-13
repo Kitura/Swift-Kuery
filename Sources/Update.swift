@@ -22,10 +22,8 @@ public struct Update: Query {
     public let table: Table
 
     /// The SQL WHERE clause containing the filter for the rows to update.
-    public private (set) var whereClause: Filter?
-    
-    /// A String containg the raw SQL WHERE clause to filter the rows to update.
-    public private (set) var rawWhereClause: String?
+    /// Could be represented with the `Filter` clause or a `String` containing raw SQL.
+    public private (set) var whereClause: QueryFilterProtocol?
     
     /// A `Returning` enum value corresponding to the SQL RETURNING clause.
     public private (set) var returningClause: Returning?
@@ -39,7 +37,7 @@ public struct Update: Query {
     /// - Parameter table: The table to update.
     /// - Parameter set: An array of (column, value) tuples to set.
     /// - Parameter conditions: An optional where clause to apply.
-    public init(_ table: Table, set: [(Column, Any)], where conditions: Filter?=nil) {
+    public init(_ table: Table, set: [(Column, Any)], where conditions: QueryFilterProtocol?=nil) {
         self.table = table
         self.valueTuples = set
         self.whereClause = conditions
@@ -61,11 +59,8 @@ public struct Update: Query {
         result += try " SET " + valueTuples.map {
             column, value in "\(column.name) = \(try packType(value, queryBuilder: queryBuilder))"
             }.joined(separator: ", ")
-       if let whereClause = whereClause {
+        if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
-        }
-        else if let rawWhereClause = rawWhereClause {
-            result += " WHERE " + rawWhereClause
         }
         if let returning = returningClause {
             result += try " RETURNING " + returning.build(queryBuilder: queryBuilder)
@@ -76,30 +71,15 @@ public struct Update: Query {
     
     /// Add an SQL WHERE clause to the update statement.
     ///
-    /// - Parameter conditions: The SQL WHERE clause to apply.
+    /// - Parameter conditions: The `Filter` clause or a `String` containing the SQL WHERE to apply.
     /// - Returns: A new instance of Update.
-    public func `where`(_ conditions: Filter) -> Update {
+    public func `where`(_ conditions: QueryFilterProtocol) -> Update {
         var new = self
-        if whereClause != nil || rawWhereClause != nil {
+        if whereClause != nil {
             new.syntaxError += "Multiple where clauses. "
         }
         else {
             new.whereClause = conditions
-        }
-        return new
-    }
-
-    /// Add a raw SQL WHERE clause to the update statement.
-    ///
-    /// - Parameter conditions: A String containing the SQL WHERE clause to apply.
-    /// - Returns: A new instance of Update.
-    public func `where`(_ raw: String) -> Update {
-        var new = self
-        if whereClause != nil || rawWhereClause != nil {
-            new.syntaxError += "Multiple where clauses. "
-        }
-        else {
-            new.rawWhereClause = raw
         }
         return new
     }

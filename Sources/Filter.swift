@@ -17,7 +17,7 @@
 // MARK: Filter
 
 /// A condition used in an SQL WHERE or ON clause.
-public struct Filter: ConditionalClause {
+public struct Filter: ConditionalClause, QueryFilterProtocol {
     public typealias ClauseType = Filter
     public typealias ColumnExpressionType = ScalarColumnExpression
     /// The left hand side of the conditional clause.
@@ -32,6 +32,14 @@ public struct Filter: ConditionalClause {
         self.rhs = rhs
         self.condition = condition
     }
+}
+
+// MARK: QueryFilterProtocol
+
+/// Defines the protocol which should be used for all filtering clauses.
+/// Represents a filter as String value.
+public protocol QueryFilterProtocol: Buildable {
+    
 }
 
 // MARK Global functions

@@ -25,10 +25,8 @@ public struct Select: Query {
     public let tables: [Table]
 
     /// The SQL WHERE clause containing the filter for rows to retrieve.
-    public private (set) var whereClause: Filter?
-    
-    /// A String containg the raw SQL WHERE clause to filter the rows to retrieve.
-    public private (set) var rawWhereClause: String?
+    /// Could be represented with the `Filter` clause or a `String` containing raw SQL.
+    public private (set) var whereClause: QueryFilterProtocol?
     
     /// A boolean indicating whether the selected values have to be distinct.
     /// If true, corresponds to the SQL SELECT DISTINCT statement.
@@ -51,19 +49,16 @@ public struct Select: Query {
     public private (set) var groupBy: [Column]?
 
     /// The SQL HAVING clause containing the filter for the rows to select when aggregate functions are used.
-    public private (set) var havingClause: Having?
-   
-    /// A String with the raw SQL HAVING clause containing the filter for the rows to select when aggregate functions are used.
-    public private (set) var rawHavingClause: String?
+    /// Could be represented with the `Having` clause or a `String` containing raw SQL.
+    public private (set) var havingClause: QueryHavingProtocol?
     
     /// The SQL UNION clauses.
     public private (set) var unions: [Union]?
     
     /// The SQL JOIN, ON and USING clauses.
-    /// ON clause can be represented as `Filter` or raw SQL.
-    public private (set) var joins = [(join: Join, on: Any?, using: [Column]?)]()
-
-    /// The SQL USING clause: an array of `Column` elements that have to match in a JOIN query.
+    /// ON clause can be represented as `Filter` or a `String` containing raw SQL.
+    /// USING clause: an array of `Column` elements that have to match in a JOIN query.
+    public private (set) var joins = [(join: Join, on: QueryFilterProtocol?, using: [Column]?)]()
 
     private var syntaxError = ""
 
@@ -111,7 +106,7 @@ public struct Select: Query {
     public func build(queryBuilder: QueryBuilder) throws -> String {
         var syntaxError = self.syntaxError
         
-        if groupBy == nil && (havingClause != nil || rawHavingClause != nil) {
+        if groupBy == nil && havingClause != nil {
             syntaxError += "Having clause is not allowed without a group by clause. "
         }
         
@@ -137,13 +132,8 @@ public struct Select: Query {
         for item in joins {
             result += try item.join.build(queryBuilder: queryBuilder)
 
-            switch item.on {
-            case let on as Filter:
+            if let on = item.on {
                 result += try " ON " + on.build(queryBuilder: queryBuilder)
-            case let on as String:
-                result += " ON \(on)"
-            default:
-                break
             }
             
             if let using = item.using {
@@ -154,9 +144,6 @@ public struct Select: Query {
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
-        else if let rawWhereClause = rawWhereClause {
-            result += " WHERE " + rawWhereClause
-        }
         
         if let groupClause = groupBy {
             result += try " GROUP BY " + groupClause.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
@@ -164,9 +151,6 @@ public struct Select: Query {
         
         if let havingClause = havingClause {
             result += try " HAVING " + havingClause.build(queryBuilder: queryBuilder)
-        }
-        else if let rawHavingClause = rawHavingClause {
-            result += " HAVING " + rawHavingClause
         }
         
         if let orderClause = orderBy {
@@ -237,33 +221,18 @@ public struct Select: Query {
 
     /// Add the HAVING clause to the query.
     ///
-    /// - Parameter clause: The `Having` clause to apply.
+    /// - Parameter clause: The `Having` clause or a `String` containing SQL HAVING clause to apply.
     /// - Returns: A new instance of Select with the `Having` clause.
-    public func having(_ clause: Having) -> Select {
+    public func having(_ clause: QueryHavingProtocol) -> Select {
         var new = self
-        if havingClause != nil || rawHavingClause != nil {
+        if havingClause != nil {
             new.syntaxError += "Multiple having clauses. "
-        }
-        else {
+        } else {
             new.havingClause = clause
         }
         return new
     }
     
-    /// Add the raw HAVING clause to the query.
-    ///
-    /// - Parameter raw: A String containing the clause to apply.
-    /// - Returns: A new instance of Select with the clause.
-    public func having(_ raw: String) -> Select {
-        var new = self
-        if havingClause != nil || rawHavingClause != nil {
-            new.syntaxError += "Multiple having clauses. "
-        }
-        else {
-            new.rawHavingClause = raw
-        }
-        return new
-    }
     
     /// Add the ORDER BY keyword to the query.
     ///
@@ -328,51 +297,23 @@ public struct Select: Query {
     
     /// Add an SQL WHERE clause to the select statement.
     ///
-    /// - Parameter conditions: The SQL WHERE clause to apply.
+    /// - Parameter conditions: The `Filter` clause or a `String` containing SQL WHERE clause to apply.
     /// - Returns: A new instance of Select with the WHERE clause.
-    public func `where`(_ conditions: Filter) -> Select {
+    public func `where`(_ conditions: QueryFilterProtocol) -> Select {
         var new = self
-        if whereClause != nil || rawWhereClause != nil {
+        if whereClause != nil {
             new.syntaxError += "Multiple where clauses. "
-        }
-        else {
+        } else {
             new.whereClause = conditions
-        }
-        return new
-    }
-    
-    /// Add a raw SQL WHERE clause to the select statement.
-    ///
-    /// - Parameter conditions: A String containing the SQL WHERE clause to apply.
-    /// - Returns: A new instance of Select with the WHERE clause.
-    public func `where`(_ raw: String) -> Select {
-        var new = self
-        if whereClause != nil || rawWhereClause != nil {
-            new.syntaxError += "Multiple where clauses. "
-        }
-        else {
-            new.rawWhereClause = raw
         }
         return new
     }
     
     /// Add an SQL ON clause to the JOIN statement.
     ///
-    /// - Parameter conditions: The `Filter` to apply.
+    /// - Parameter conditions: The `Filter` clause or a `String` containing SQL ON clause to apply.
     /// - Returns: A new instance of Select with the ON clause.
-    public func on(_ conditions: Filter) -> Select {
-        return self.on(clause: conditions)
-    }
-    
-    /// Add a raw SQL ON clause to the JOIN statement.
-    ///
-    /// - Parameter conditions: A String containing the SQL ON clause to apply.
-    /// - Returns: A new instance of Select with the ON clause.
-    public func on(_ raw: String) -> Select {
-        return self.on(clause: raw)
-    }
-    
-    private func on(clause: Any) -> Select {
+    public func on(_ conditions: QueryFilterProtocol) -> Select {
         var new = self
         
         guard new.joins.count > 0 else {
@@ -386,7 +327,7 @@ public struct Select: Query {
             new.syntaxError += "An on clause is not allowed with a using clause for a single join."
         }
         else {
-            new.joins[new.joins.count - 1].on = clause
+            new.joins[new.joins.count - 1].on = conditions
         }
         return new
     }
@@ -531,4 +472,3 @@ public struct Select: Query {
         return new
     }
 }
-
