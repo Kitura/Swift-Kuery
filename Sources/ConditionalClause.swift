@@ -48,7 +48,7 @@ public extension ConditionalClause {
         guard lhs != nil else {
             if condition == .exists || condition == .notExists {
                 guard rhs != nil else {
-                    throw QueryError.syntaxError("No left hand side operand in conditional clause.")
+                    throw QueryError.syntaxError("No right hand side operand in conditional clause.")
                 }
                 return try condition.build(queryBuilder: queryBuilder) + " " + rhs!.build(queryBuilder: queryBuilder)
             }
