@@ -60,13 +60,32 @@ class TestJoin: XCTestCase {
         var query = "SELECT * FROM table1Join JOIN table2Join ON table1Join.b = table2Join.b"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
+        s = Select(from: myTable1)
+            .join(myTable2)
+            .on(myTable1.b == myTable2.b)
+            .join(myTable3)
+            .on(myTable1.b == myTable3.b)
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT * FROM table1Join JOIN table2Join ON table1Join.b = table2Join.b JOIN table3Join ON table1Join.b = table3Join.b"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        
         let t1 = myTable1.as("t1")
         let t2 = myTable2.as("t2")
+        let t3 = myTable3.as("t3")
         s = Select(from: t1)
             .join(t2)
             .on(t1.b == t2.b)
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM table1Join AS t1 JOIN table2Join AS t2 ON t1.b = t2.b"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        
+        s = Select(from: t1)
+            .join(t2)
+            .on(t1.b == t2.b)
+            .join(t3)
+            .on(t1.b == t3.b)
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT * FROM table1Join AS t1 JOIN table2Join AS t2 ON t1.b = t2.b JOIN table3Join AS t3 ON t1.b = t3.b"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(from: myTable1)

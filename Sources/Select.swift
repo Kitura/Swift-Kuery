@@ -79,18 +79,12 @@ public struct Select: Query {
     
     /// The SQL UNION clauses.
     public private (set) var unions: [Union]?
-
-    /// The SQL JOIN clause.
-    public private (set) var join: Join?
-
-    /// The SQL ON clause containing the filter for the rows to select in a JOIN query.
-    public private (set) var onClause: Filter?
-
-    /// A String containg the raw SQL ON clause to filter the rows to select in a JOIN query.
-    public private (set) var rawOnClause: String?
+    
+    /// The SQL JOIN, ON and USING clauses.
+    /// ON clause can be represented as `Filter` or raw SQL.
+    public private (set) var joins = [(join: Join, on: Any?, using: [Column]?)]()
 
     /// The SQL USING clause: an array of `Column` elements that have to match in a JOIN query.
-    public private (set) var using: [Column]?
 
     private var syntaxError = ""
 
@@ -137,14 +131,6 @@ public struct Select: Query {
     /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
         var syntaxError = self.syntaxError
-        if join == nil {
-            if onClause != nil || rawOnClause != nil {
-                syntaxError += "On clause set for statement that is not join. "
-            }
-            if using != nil {
-                syntaxError += "On clause set for statement that is not join. "
-            }
-        }
         
         if groupBy == nil && (self.havingClause != nil) {
             syntaxError += "Having clause is not allowed without a group by clause. "
@@ -169,15 +155,21 @@ public struct Select: Query {
         result += " FROM "
         result += try "\(tables.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", "))"
         
-        if let join = join {
-            result += try join.build(queryBuilder: queryBuilder)
-        }
-        
-        if let onClause = onClause {
-            result += try " ON " + onClause.build(queryBuilder: queryBuilder)
-        }
-        else if let using = using {
-            result += " USING (" + using.map { $0.name }.joined(separator: ", ") + ")"
+        for item in joins {
+            result += try item.join.build(queryBuilder: queryBuilder)
+
+            switch item.on {
+            case let on as Filter:
+                result += try " ON " + on.build(queryBuilder: queryBuilder)
+            case let on as String:
+                result += " ON \(on)"
+            default:
+                break
+            }
+            
+            if let using = item.using {
+                result += " USING (" + using.map { $0.name }.joined(separator: ", ") + ")"
+            }
         }
         
         if let whereClause = whereClause {
@@ -353,17 +345,7 @@ public struct Select: Query {
     /// - Parameter conditions: The `Filter` to apply.
     /// - Returns: A new instance of Select with the ON clause.
     public func on(_ conditions: Filter) -> Select {
-        var new = self
-        if onClause != nil || rawOnClause != nil {
-            new.syntaxError += "Multiple on clauses. "
-        }
-        else if using != nil {
-            new.syntaxError += "An on clause is not allowed with a using clause. "
-        }
-        else {
-            new.onClause = conditions
-        }
-        return new
+        return self.on(clause: conditions)
     }
     
     /// Add a raw SQL ON clause to the JOIN statement.
@@ -371,15 +353,24 @@ public struct Select: Query {
     /// - Parameter conditions: A String containing the SQL ON clause to apply.
     /// - Returns: A new instance of Select with the ON clause.
     public func on(_ raw: String) -> Select {
+        return self.on(clause: raw)
+    }
+    
+    private func on(clause: Any) -> Select {
         var new = self
-        if onClause != nil || rawOnClause != nil {
-            new.syntaxError += "Multiple on clauses. "
+        
+        guard new.joins.count > 0 else {
+            new.syntaxError += "On clause set for statement that is not join. "
+            return new
         }
-        else if using != nil {
-            new.syntaxError += "An on clause is not allowed with a using clause. "
+        
+        if new.joins.last?.on != nil {
+            new.syntaxError += "Multiple on clauses for a single join."
+        } else if new.joins.last?.using != nil {
+            new.syntaxError += "An on clause is not allowed with a using clause for a single join."
         }
         else {
-            new.rawOnClause = raw
+            new.joins[new.joins.count - 1].on = clause
         }
         return new
     }
@@ -391,14 +382,19 @@ public struct Select: Query {
     /// - Returns: A new instance of Select with the USING clause.
     public func using(_ columns: Column...) -> Select {
         var new = self
-        if using != nil {
-            new.syntaxError += "Multiple using clauses. "
+        
+        guard new.joins.count > 0 else {
+            new.syntaxError += "Using clause set for statement that is not join. "
+            return new
         }
-        else if onClause != nil || rawOnClause != nil {
-            new.syntaxError += "A using clause is not allowed with an on clause. "
+        
+        if new.joins.last?.using != nil {
+            new.syntaxError += "Multiple using clauses for a single join."
+        } else if new.joins.last?.on != nil {
+            new.syntaxError += "A using clause is not allowed with an on clause for single join."
         }
         else {
-            new.using = columns
+            new.joins[new.joins.count - 1].using = columns
         }
         return new
     }
@@ -435,12 +431,7 @@ public struct Select: Query {
     /// - Returns: A new instance of Select corresponding to the SELECT INNER JOIN.
     public func join(_ table: Table) -> Select {
         var new = self
-        if join != nil {
-            new.syntaxError += "Multiple joins. "
-        }
-        else {
-            new.join = .join(table)
-        }
+        new.joins.append((.join(table), nil, nil))
         return new
     }
     
@@ -450,12 +441,7 @@ public struct Select: Query {
     /// - Returns: A new instance of Select corresponding to the SELECT LEFT JOIN.
     public func leftJoin(_ table: Table) -> Select {
         var new = self
-        if join != nil {
-            new.syntaxError += "Multiple joins. "
-        }
-        else {
-            new.join = .left(table)
-        }
+        new.joins.append((.left(table), nil, nil))
         return new
     }
     
@@ -465,12 +451,7 @@ public struct Select: Query {
     /// - Returns: A new instance of Select corresponding to the SELECT RIGHT JOIN.
     public func rightJoin(_ table: Table) -> Select {
         var new = self
-        if join != nil {
-            new.syntaxError += "Multiple joins. "
-        }
-        else {
-            new.join = .right(table)
-        }
+        new.joins.append((.right(table), nil, nil))
         return new
     }
     
@@ -480,12 +461,7 @@ public struct Select: Query {
     /// - Returns: A new instance of Select corresponding to the SELECT FULL JOIN.
     public func fullJoin(_ table: Table) -> Select {
         var new = self
-        if join != nil {
-            new.syntaxError += "Multiple joins. "
-        }
-        else {
-            new.join = .full(table)
-        }
+        new.joins.append((.full(table), nil, nil))
         return new
     }
     
@@ -495,12 +471,7 @@ public struct Select: Query {
     /// - Returns: A new instance of Select corresponding to the SELECT CROSS JOIN.
     public func crossJoin(_ table: Table) -> Select {
         var new = self
-        if join != nil {
-            new.syntaxError += "Multiple joins. "
-        }
-        else {
-            new.join = .cross(table)
-        }
+        new.joins.append((.cross(table), nil, nil))
         return new
     }
     
@@ -510,12 +481,7 @@ public struct Select: Query {
     /// - Returns: A new instance of Select corresponding to the SELECT NATURAL JOIN.
     public func naturalJoin(_ table: Table) -> Select {
         var new = self
-        if join != nil {
-            new.syntaxError += "Multiple joins. "
-        }
-        else {
-            new.join = .natural(table)
-        }
+        new.joins.append((.natural(table), nil, nil))
         return new
     }
 
@@ -525,12 +491,7 @@ public struct Select: Query {
     /// - Returns: A new instance of Select corresponding to the SELECT NATURAL LEFT JOIN.
     public func naturalLeftJoin(_ table: Table) -> Select {
         var new = self
-        if join != nil {
-            new.syntaxError += "Multiple joins. "
-        }
-        else {
-            new.join = .naturalLeft(table)
-        }
+        new.joins.append((.naturalLeft(table), nil, nil))
         return new
     }
 
@@ -540,12 +501,7 @@ public struct Select: Query {
     /// - Returns: A new instance of Select corresponding to the SELECT NATURAL RIGHT JOIN.
     public func naturalRightJoin(_ table: Table) -> Select {
         var new = self
-        if join != nil {
-            new.syntaxError += "Multiple joins. "
-        }
-        else {
-            new.join = .naturalRight(table)
-        }
+        new.joins.append((.naturalRight(table), nil, nil))
         return new
     }
 
@@ -555,12 +511,7 @@ public struct Select: Query {
     /// - Returns: A new instance of Select corresponding to the SELECT NATURAL FULL JOIN.
     public func naturalFullJoin(_ table: Table) -> Select {
         var new = self
-        if join != nil {
-            new.syntaxError += "Multiple joins. "
-        }
-        else {
-            new.join = .naturalFull(table)
-        }
+        new.joins.append((.naturalFull(table), nil, nil))
         return new
     }
 }

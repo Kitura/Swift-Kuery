@@ -148,7 +148,7 @@ class TestSyntaxError: XCTestCase {
             XCTFail("No syntax error.")
         }
         catch QueryError.syntaxError(let error) {
-            XCTAssertEqual(error, "Multiple where clauses. Multiple limits. A using clause is not allowed with an on clause. On clause set for statement that is not join. ")
+            XCTAssertEqual(error, "Multiple where clauses. Multiple limits. On clause set for statement that is not join. Using clause set for statement that is not join. ")
         }
         catch {
             XCTFail("Other than syntax error.")
