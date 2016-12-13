@@ -317,7 +317,7 @@ public struct Select: Query {
     ///
     /// - Parameter conditions: The `Filter` clause or a `String` containing SQL ON clause to apply.
     /// - Returns: A new instance of Select with the ON clause.
-    private func on(_ conditions: SelectionFilter) -> Select {
+    public func on(_ conditions: SelectionFilter) -> Select {
         var new = self
         
         guard new.joins.count > 0 else {
