@@ -16,41 +16,14 @@
 
 // Mark: Select
 
-public protocol SelectionFilter: Buildable {
-    
-}
-
-extension Filter: SelectionFilter {
-    
-}
-
-
-public protocol SelectionHaving: Buildable {
-    
-}
-
-extension Having: SelectionHaving {
-    
-}
-
-extension String: SelectionFilter, SelectionHaving {
-    
-    public func build(queryBuilder: QueryBuilder) throws -> String {
-        return self
-    }
-}
-
-
-
 /// The SQL SELECT statement.
 public struct Select: Query {
-    
     /// An array of `Field` elements to select.
     public let fields: [Field]?
     
     /// The table to select rows from.
     public let tables: [Table]
-    
+
     /// The SQL WHERE clause containing the filter for rows to retrieve.
     public private (set) var whereClause: SelectionFilter?
     
@@ -82,7 +55,7 @@ public struct Select: Query {
     
     /// The SQL JOIN, ON and USING clauses.
     /// ON clause can be represented as `Filter` or raw SQL.
-    public private (set) var joins = [(join: Join, on: Any?, using: [Column]?)]()
+    public private (set) var joins = [(join: Join, on: SelectionFilter?, using: [Column]?)]()
 
     /// The SQL USING clause: an array of `Column` elements that have to match in a JOIN query.
 
@@ -252,7 +225,7 @@ public struct Select: Query {
 
     /// Add the HAVING clause to the query.
     ///
-    /// - Parameter clause: The `Having` clause to apply.
+    /// - Parameter clause: The `Having` clause or a `String` containing SQL HAVING clause to apply.
     /// - Returns: A new instance of Select with the `Having` clause.
     public func having(_ clause: SelectionHaving) -> Select {
         var new = self
@@ -328,7 +301,7 @@ public struct Select: Query {
     
     /// Add an SQL WHERE clause to the select statement.
     ///
-    /// - Parameter conditions: The SQL WHERE clause to apply.
+    /// - Parameter conditions: The `Filter` clause or a `String` containing SQL WHERE clause to apply.
     /// - Returns: A new instance of Select with the WHERE clause.
     public func `where`(_ conditions: SelectionFilter) -> Select {
         var new = self
@@ -342,21 +315,9 @@ public struct Select: Query {
     
     /// Add an SQL ON clause to the JOIN statement.
     ///
-    /// - Parameter conditions: The `Filter` to apply.
+    /// - Parameter conditions: The `Filter` clause or a `String` containing SQL ON clause to apply.
     /// - Returns: A new instance of Select with the ON clause.
-    public func on(_ conditions: Filter) -> Select {
-        return self.on(clause: conditions)
-    }
-    
-    /// Add a raw SQL ON clause to the JOIN statement.
-    ///
-    /// - Parameter conditions: A String containing the SQL ON clause to apply.
-    /// - Returns: A new instance of Select with the ON clause.
-    public func on(_ raw: String) -> Select {
-        return self.on(clause: raw)
-    }
-    
-    private func on(clause: Any) -> Select {
+    private func on(_ conditions: SelectionFilter) -> Select {
         var new = self
         
         guard new.joins.count > 0 else {
@@ -370,7 +331,7 @@ public struct Select: Query {
             new.syntaxError += "An on clause is not allowed with a using clause for a single join."
         }
         else {
-            new.joins[new.joins.count - 1].on = clause
+            new.joins[new.joins.count - 1].on = conditions
         }
         return new
     }
@@ -516,3 +477,27 @@ public struct Select: Query {
     }
 }
 
+
+public protocol SelectionFilter: Buildable {
+    
+}
+
+extension Filter: SelectionFilter {
+    
+}
+
+
+public protocol SelectionHaving: Buildable {
+    
+}
+
+extension Having: SelectionHaving {
+    
+}
+
+extension String: SelectionFilter, SelectionHaving {
+    
+    public func build(queryBuilder: QueryBuilder) throws -> String {
+        return self
+    }
+}
