@@ -10,4 +10,7 @@ XCTMain([
      testCase(TestJoin.allTests),
      testCase(TestSyntaxError.allTests),
      testCase(TestSubquery.allTests),
+     testCase(TestAggregateFunctions.allTests),
+     testCase(TestColumnExtensions.allTests),
+
 ])
