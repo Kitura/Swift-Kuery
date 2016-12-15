@@ -45,7 +45,6 @@ public enum QueryResult {
         default:
             return nil
         }
-        
     }
     
     /// The error that occurred during query execution.
@@ -66,5 +65,36 @@ public enum QueryResult {
         default:
             return nil
         }
-    }    
+    }
+    
+    /// Data received from the query execution represented as an array of dictionaries.
+    /// Each entry in the array repersents a row in the result with column titles as the keys.
+    /// In case there are columns with the same title, we add indices to the keys: for example if
+    /// the result contains three columns named 'a', the dictionary will contain the keys: a, a.1 and a.2.
+    public var asRows: [[String:Any?]]? {
+        switch self {
+        case .resultSet(let resultSet):
+            let z = resultSet.rows.map { zip(resultSet.titles, $0) }
+            let arrayOfDictionaries = z.map { row -> [String:Any?] in
+                var dictionary = [String:Any?]()
+                row.forEach { (title, value) in
+                    if dictionary[title] == nil {
+                        dictionary[title] = value
+                    }
+                    else {
+                        // In case we have a collision on key names.
+                        var i = 1
+                        while (dictionary[title + ".\(i)"] != nil) {
+                            i = i + 1
+                        }
+                        dictionary[title + ".\(i)"] = value
+                    }
+                }
+                return dictionary
+            }
+            return arrayOfDictionaries
+        default:
+            return nil
+        }
+    }
 }
