@@ -77,7 +77,7 @@ public enum QueryResult {
             let z = resultSet.rows.map { zip(resultSet.titles, $0) }
             let arrayOfDictionaries = z.map { row -> [String:Any?] in
                 var dictionary = [String:Any?]()
-                row.forEach { (title, value) in
+                for (title, value) in row {
                     if dictionary[title] == nil {
                         dictionary[title] = value
                     }
