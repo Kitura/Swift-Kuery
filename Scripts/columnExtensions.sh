@@ -94,7 +94,7 @@ cat <<EOF >> ${OUTPUT_FILE}
 
 EOF
         done
-    for PARAM_TYPE in `sed '/^$/d' ${INPUT_BETWEEN_FILE} | sed '/^#/d'`; do
+    for PARAM_TYPE in `sed '/^$/d' ${INPUT_OPERANDS_FILE} | sed '/^#/d'`; do
         PARAM_TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${PARAM_TYPE:0:1})${PARAM_TYPE:1}"
 
         for OPERATOR in between notBetween; do
@@ -126,7 +126,7 @@ cat <<EOF >> ${OUTPUT_FILE}
     }
 EOF
         done
-done < $INPUT_OPERANDS_FILE
+done
 
     for OPERATOR in isNull isNotNull; do
 

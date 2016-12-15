@@ -18,7 +18,7 @@ limitations under the License.
 // MARK: Field protocol
 
 /// Defines the protocol for columns, and aggregate and scalar functions on columns.
-public protocol Field : Buildable {
+public protocol Field: Buildable {
     
     /// The alias of the field.
     var alias: String? { get set }

@@ -56,8 +56,6 @@ public struct ScalarColumnExpression: Field {
         case mid(field: Field, start: Int, length: Int)
         /// The SQL LEN function.
         case len(field: Field)
-        /// The SQL FORMAT function.
-        case format(field: Field, format: String)
 
         /// Build the query component using `QueryBuilder`.
         ///
@@ -78,8 +76,6 @@ public struct ScalarColumnExpression: Field {
                 return try "MID(" + field.build(queryBuilder: queryBuilder) + ", \(start), \(length))"
             case .len(let field):
                 return try "LEN(" + field.build(queryBuilder: queryBuilder) + ")"
-            case .format(let field, let format):
-                return try "FORMAT(" + field.build(queryBuilder: queryBuilder) + ", \(format))"
             }
         }
     }    
