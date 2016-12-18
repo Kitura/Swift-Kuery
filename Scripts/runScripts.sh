@@ -22,3 +22,7 @@ cd "$SCRIPT_DIR"
 ./specialOperators.sh
 ./subqueries.sh
 ./filterAndHavingExtensions.sh
+
+./testSimpleOperators.sh
+./testAggregate.sh
+./testColumnExtensions.sh

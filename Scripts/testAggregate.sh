@@ -135,7 +135,7 @@ done < $INPUT_SCALAR_FILE
 cat <<EOF >> ${OUTPUT_FILE}
         s = Select(t.a, from: t)
             .group(by: t.a)
-.having(round(sum(t.b), to: 2) >= 9.08)
+            .having(round(sum(t.b), to: 2) >= 9.08)
         kuery = connection.descriptionOf(query: s)
         query = "SELECT table.a FROM table GROUP BY table.a HAVING ROUND(SUM(table.b), 2) >= 9.08"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")

@@ -18,9 +18,9 @@
 # This file contains the operators.
 # The generated code is in Sources/FilterAndHaving_GlobalFunctions.swift.
 
-== equal
->= greaterThanOrEqual
-> greaterThan
-<= lessThanOrEqual
-< lessThan
-!= notEqual
+== equal =
+>= greaterThanOrEqual >=
+> greaterThan >
+<= lessThanOrEqual <=
+< lessThan <
+!= notEqual <>

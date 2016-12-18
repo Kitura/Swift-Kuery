@@ -16,21 +16,11 @@
 
 # An input file for simpleOperators.sh that generates global operators for simple conditions that return Filter and Having clauses.
 # This file contains both the operators and the types for conditions with Bool as a type of one of the operands.
+# The last entry is ignored.
 # The generated code is in Sources/FilterAndHaving_GlobalFunctions.swift.
 
-== equal Filter ScalarColumnExpression Bool
-== equal Filter Bool ScalarColumnExpression
-== equal Filter Column Bool
-== equal Filter Bool Column
-!= notEqual Filter ScalarColumnExpression Bool
-!= notEqual Filter Bool ScalarColumnExpression
-!= notEqual Filter Column Bool
-!= notEqual Filter Bool Column
-== equal Having AggregateColumnExpression Bool
-== equal Having Bool AggregateColumnExpression
-== equal Having Column Bool
-== equal Having Bool Column
-!= notEqual Having AggregateColumnExpression Bool
-!= notEqual Having Bool AggregateColumnExpression
-!= notEqual Having Column Bool
-!= notEqual Having Bool Column
+# This is also an input file for testSimpleOperators.sh that generates the tests for the code created by simpleOperators.sh.
+# The format is (operator in query creation, Condition case (ignored), SQL operator).
+# The generated tests are in TestFilterAndHaving.swift
+== equal =
+!= notEqual <>

@@ -33,7 +33,8 @@ fi
 
 INPUT_OPERATORS_FILE="${PKG_DIR}/Scripts/SimpleOperators.txt"
 INPUT_TYPES_FILE="${PKG_DIR}/Scripts/FilterAndHavingTypes.txt"
-INPUT_BOOL_FILE="${PKG_DIR}/Scripts/FilterAndHavingBool.txt"
+INPUT_BOOL_TYPES_FILE="${PKG_DIR}/Scripts/FilterAndHavingBoolTypes.txt"
+INPUT_BOOL_OPERATORS_FILE="${PKG_DIR}/Scripts/FilterAndHavingBoolOperators.txt"
 
 OUTPUT_FILE="${PKG_DIR}/Sources/FilterAndHaving_GlobalFunctions.swift"
 
@@ -59,6 +60,14 @@ cat <<'EOF' > ${OUTPUT_FILE}
 EOF
 
 # Generate operators for simple conditions that return Filter and Having
+for INPUT_TYPES in $INPUT_TYPES_FILE $INPUT_BOOL_TYPES_FILE; do
+    if [[ $INPUT_TYPES == *"Bool"* ]]
+    then
+        INPUT_OPERATORS=$INPUT_BOOL_OPERATORS_FILE
+    else
+        INPUT_OPERATORS=$INPUT_OPERATORS_FILE
+    fi
+
 while read -r LINE; do
     [ -z "$LINE" ] && continue
     [[ "$LINE" =~ ^#.*$ ]] && continue
@@ -96,41 +105,6 @@ public func $OPERATOR(lhs: $LHS_TYPE, rhs: $RHS_TYPE) -> $TYPE {
 
 EOF
 
-    done < $INPUT_TYPES_FILE
-done < $INPUT_OPERATORS_FILE
-
-# Generate operators for Bool for simple conditions that return Filter and Having
-while read -r LINE; do
-    [ -z "$LINE" ] && continue
-    [[ "$LINE" =~ ^#.*$ ]] && continue
-    stringarray=($LINE)
-    OPERATOR=${stringarray[0]}
-    CASE=${stringarray[1]}
-    TYPE=${stringarray[2]}
-    LHS_TYPE=${stringarray[3]}
-    RHS_TYPE=${stringarray[4]}
-    LHS_TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${LHS_TYPE:0:1})${LHS_TYPE:1}"
-    RHS_TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${RHS_TYPE:0:1})${RHS_TYPE:1}"
-    if [[ $LHS_TYPE_LOWER == *"ColumnExpression" ]]
-    then
-        LHS_TYPE_LOWER="columnExpression"
-    fi
-    if [[ $RHS_TYPE_LOWER == *"ColumnExpression" ]]
-    then
-        RHS_TYPE_LOWER="columnExpression"
-    fi
-
-cat <<EOF >> ${OUTPUT_FILE}
-/// Create a \`$TYPE\` clause using the operator $OPERATOR for $LHS_TYPE
-/// and $RHS_TYPE.
-///
-/// - Parameter lhs: The left hand side of the clause.
-/// - Parameter rhs: The right hand side of the clause.
-/// - Returns: A \`$TYPE\` containing the clause.
-public func $OPERATOR(lhs: $LHS_TYPE, rhs: $RHS_TYPE) -> $TYPE {
-    return $TYPE(lhs: .$LHS_TYPE_LOWER(lhs), rhs: .$RHS_TYPE_LOWER(rhs), condition: .$CASE)
-}
-
-EOF
-
-done < $INPUT_BOOL_FILE
+    done < $INPUT_TYPES
+done < $INPUT_OPERATORS
+done

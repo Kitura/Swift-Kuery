@@ -15,68 +15,75 @@
 #**/
 
 # An input file for simpleOperators.sh that generates global operators for simple conditions that return Filter and Having clauses.
-# This file contains the list of all the types: each line is (Filter/Having, LHS type, RHS type)
+# This file contains the list of all the types: each line is (Filter/Having, LHS type, RHS type) - the rest is ignored.
 # The generated code is in Sources/FilterAndHaving_GlobalFunctions.swift.
 
-Filter ScalarColumnExpression String
-Filter String ScalarColumnExpression
-Filter Column String
-Filter String Column
-Filter ScalarColumnExpression ScalarColumnExpression
-Filter Column Column
-Filter Column ScalarColumnExpression
-Filter ScalarColumnExpression Column
-Filter ScalarColumnExpression Int
-Filter Int ScalarColumnExpression
-Filter Column Int
-Filter Int Column
-Filter ScalarColumnExpression Float
-Filter Float ScalarColumnExpression
-Filter Column Float
-Filter Float Column
-Filter ScalarColumnExpression Double
-Filter Double ScalarColumnExpression
-Filter Column Double
-Filter Double Column
-Filter ScalarColumnExpression Parameter
-Filter Parameter ScalarColumnExpression
-Filter Column Parameter
-Filter Parameter Column
-Filter ScalarColumnExpression Select
-Filter String Select
-Filter Column Select
-Filter Int Select
-Filter Float Select
-Filter Double Select
-Filter Parameter Select
-Having AggregateColumnExpression String
-Having String AggregateColumnExpression
-Having Column String
-Having String Column
-Having AggregateColumnExpression AggregateColumnExpression
-Having Column Column
-Having Column AggregateColumnExpression
-Having AggregateColumnExpression Column
-Having AggregateColumnExpression Int
-Having Int AggregateColumnExpression
-Having Column Int
-Having Int Column
-Having AggregateColumnExpression Float
-Having Float AggregateColumnExpression
-Having Column Float
-Having Float Column
-Having AggregateColumnExpression Double
-Having Double AggregateColumnExpression
-Having Column Double
-Having Double Column
-Having AggregateColumnExpression Parameter
-Having Parameter AggregateColumnExpression
-Having Column Parameter
-Having Parameter Column
-Having AggregateColumnExpression Select
-Having String Select
-Having Column Select
-Having Int Select
-Having Float Select
-Having Double Select
-Having Parameter Select
+# This is also an input file for testSimpleOperators.sh that generates the tests for the code created by simpleOperators.sh.
+# The first three entries in each line are ignored. The format of the rest of the line is
+# (where/having, first operand in Swift, second operand in Swift, first operand in SQL, second operand in SQL).
+# The generated tests are in TestFilterAndHaving.swift
+
+# The operators are in SimpleOperators.txt
+
+Filter ScalarColumnExpression String where lcase(t.a) "banana" LCASE(table.a) 'banana'
+Filter String ScalarColumnExpression where "banana" lcase(t.a) 'banana' LCASE(table.a)
+Filter Column String where t.a "banana" table.a 'banana'
+Filter String Column where "banana" t.a 'banana' table.a
+Filter ScalarColumnExpression ScalarColumnExpression where len(t.a) round(t.b,_to:_2) LEN(table.a) ROUND(table.b,_2)
+Filter Column Column where t.a t.b table.a table.b
+Filter Column ScalarColumnExpression where t.a now() table.a NOW()
+Filter ScalarColumnExpression Column where mid(t.b,_start:_3,_length:_2) t.a MID(table.b,_3,_2) table.a
+Filter ScalarColumnExpression Int where len(t.a) 5 LEN(table.a) 5
+Filter Int ScalarColumnExpression where 5 len(t.a) 5 LEN(table.a)
+Filter Column Int where t.b 178 table.b 178
+Filter Int Column where -18 t.b -18 table.b
+Filter ScalarColumnExpression Float where len(t.a) 5.8 LEN(table.a) 5.8
+Filter Float ScalarColumnExpression where 5.8 len(t.a) 5.8 LEN(table.a)
+Filter Column Float where t.b 178.9 table.b 178.9
+Filter Float Column where -18.789 t.b -18.789 table.b
+Filter ScalarColumnExpression Double where len(t.a) 5.8 LEN(table.a) 5.8
+Filter Double ScalarColumnExpression where 5.8 len(t.a) 5.8 LEN(table.a)
+Filter Column Double where t.b 178.9 table.b 178.9
+Filter Double Column where -18.789 t.b -18.789 table.b
+Filter ScalarColumnExpression Parameter where len(t.a) Parameter("param") LEN(table.a) @param
+Filter Parameter ScalarColumnExpression where Parameter() len(t.a) \?1 LEN(table.a)
+Filter Column Parameter where t.a Parameter("param") table.a @param
+Filter Parameter Column where Parameter() t.a \?1 table.a
+Filter ScalarColumnExpression Select where ucase(t.a) Select(t2.c,_from:_t2) UCASE(table.a) (SELECT_table2.c_FROM_table2)
+Filter String Select where "banana" Select(t2.c,_from:_t2) 'banana' (SELECT_table2.c_FROM_table2)
+Filter Column Select where t.a Select(t2.c,_from:_t2) table.a (SELECT_table2.c_FROM_table2)
+Filter Int Select where 7 Select(t2.c,_from:_t2) 7 (SELECT_table2.c_FROM_table2)
+Filter Float Select where 7.2 Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
+Filter Double Select where 7.2 Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
+Filter Parameter Select where Parameter() Select(t2.c,_from:_t2) \?1 (SELECT_table2.c_FROM_table2)
+Having AggregateColumnExpression String having last(t.a) "banana" LAST(table.a) 'banana'
+Having String AggregateColumnExpression having "banana" last(t.a) 'banana' LAST(table.a)
+Having Column String having t.a "banana" table.a 'banana'
+Having String Column having "banana" t.a 'banana' table.a
+Having AggregateColumnExpression AggregateColumnExpression having first(t.a) last(t.b) FIRST(table.a) LAST(table.b)
+Having Column Column having t.a t.b table.a table.b
+Having Column AggregateColumnExpression having t.a last(t.b) table.a LAST(table.b)
+Having AggregateColumnExpression Column having last(t.b) t.a LAST(table.b) table.a
+Having AggregateColumnExpression Int having sum(t.a) 5 SUM(table.a) 5
+Having Int AggregateColumnExpression having 5 sum(t.a) 5 SUM(table.a)
+Having Column Int having t.b 178 table.b 178
+Having Int Column having -18 t.b -18 table.b
+Having AggregateColumnExpression Float having max(t.a) 5.8 MAX(table.a) 5.8
+Having Float AggregateColumnExpression having 5.8 max(t.a) 5.8 MAX(table.a)
+Having Column Float having t.b 178.9 table.b 178.9
+Having Float Column having -18.789 t.b -18.789 table.b
+Having AggregateColumnExpression Double having max(t.a) 5.8 MAX(table.a) 5.8
+Having Double AggregateColumnExpression having 5.8 max(t.a) 5.8 MAX(table.a)
+Having Column Double having t.b 178.9 table.b 178.9
+Having Double Column having -18.789 t.b -18.789 table.b
+Having AggregateColumnExpression Parameter having min(t.a) Parameter("param") MIN(table.a) @param
+Having Parameter AggregateColumnExpression having Parameter() min(t.a) \?1 MIN(table.a)
+Having Column Parameter having t.a Parameter("param") table.a @param
+Having Parameter Column having Parameter() t.a \?1 table.a
+Having AggregateColumnExpression Select having avg(t.a) Select(t2.c,_from:_t2) AVG(table.a) (SELECT_table2.c_FROM_table2)
+Having String Select having "banana" Select(t2.c,_from:_t2) 'banana' (SELECT_table2.c_FROM_table2)
+Having Column Select having t.a Select(t2.c,_from:_t2) table.a (SELECT_table2.c_FROM_table2)
+Having Int Select having 7 Select(t2.c,_from:_t2) 7 (SELECT_table2.c_FROM_table2)
+Having Float Select having 7.2 Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
+Having Double Select having 7.2 Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
+Having Parameter Select having Parameter() Select(t2.c,_from:_t2) \?1 (SELECT_table2.c_FROM_table2)

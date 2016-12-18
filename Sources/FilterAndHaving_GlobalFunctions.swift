@@ -3774,46 +3774,6 @@ public func ==(lhs: Bool, rhs: Column) -> Filter {
     return Filter(lhs: .bool(lhs), rhs: .column(rhs), condition: .equal)
 }
 
-/// Create a `Filter` clause using the operator != for ScalarColumnExpression
-/// and Bool.
-///
-/// - Parameter lhs: The left hand side of the clause.
-/// - Parameter rhs: The right hand side of the clause.
-/// - Returns: A `Filter` containing the clause.
-public func !=(lhs: ScalarColumnExpression, rhs: Bool) -> Filter {
-    return Filter(lhs: .columnExpression(lhs), rhs: .bool(rhs), condition: .notEqual)
-}
-
-/// Create a `Filter` clause using the operator != for Bool
-/// and ScalarColumnExpression.
-///
-/// - Parameter lhs: The left hand side of the clause.
-/// - Parameter rhs: The right hand side of the clause.
-/// - Returns: A `Filter` containing the clause.
-public func !=(lhs: Bool, rhs: ScalarColumnExpression) -> Filter {
-    return Filter(lhs: .bool(lhs), rhs: .columnExpression(rhs), condition: .notEqual)
-}
-
-/// Create a `Filter` clause using the operator != for Column
-/// and Bool.
-///
-/// - Parameter lhs: The left hand side of the clause.
-/// - Parameter rhs: The right hand side of the clause.
-/// - Returns: A `Filter` containing the clause.
-public func !=(lhs: Column, rhs: Bool) -> Filter {
-    return Filter(lhs: .column(lhs), rhs: .bool(rhs), condition: .notEqual)
-}
-
-/// Create a `Filter` clause using the operator != for Bool
-/// and Column.
-///
-/// - Parameter lhs: The left hand side of the clause.
-/// - Parameter rhs: The right hand side of the clause.
-/// - Returns: A `Filter` containing the clause.
-public func !=(lhs: Bool, rhs: Column) -> Filter {
-    return Filter(lhs: .bool(lhs), rhs: .column(rhs), condition: .notEqual)
-}
-
 /// Create a `Having` clause using the operator == for AggregateColumnExpression
 /// and Bool.
 ///
@@ -3852,6 +3812,46 @@ public func ==(lhs: Column, rhs: Bool) -> Having {
 /// - Returns: A `Having` containing the clause.
 public func ==(lhs: Bool, rhs: Column) -> Having {
     return Having(lhs: .bool(lhs), rhs: .column(rhs), condition: .equal)
+}
+
+/// Create a `Filter` clause using the operator != for ScalarColumnExpression
+/// and Bool.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func !=(lhs: ScalarColumnExpression, rhs: Bool) -> Filter {
+    return Filter(lhs: .columnExpression(lhs), rhs: .bool(rhs), condition: .notEqual)
+}
+
+/// Create a `Filter` clause using the operator != for Bool
+/// and ScalarColumnExpression.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func !=(lhs: Bool, rhs: ScalarColumnExpression) -> Filter {
+    return Filter(lhs: .bool(lhs), rhs: .columnExpression(rhs), condition: .notEqual)
+}
+
+/// Create a `Filter` clause using the operator != for Column
+/// and Bool.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func !=(lhs: Column, rhs: Bool) -> Filter {
+    return Filter(lhs: .column(lhs), rhs: .bool(rhs), condition: .notEqual)
+}
+
+/// Create a `Filter` clause using the operator != for Bool
+/// and Column.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func !=(lhs: Bool, rhs: Column) -> Filter {
+    return Filter(lhs: .bool(lhs), rhs: .column(rhs), condition: .notEqual)
 }
 
 /// Create a `Having` clause using the operator != for AggregateColumnExpression
