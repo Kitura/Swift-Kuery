@@ -18,6 +18,15 @@
 # This file contains the operators.
 # The generated code is in Sources/FilterAndHaving_GlobalFunctions.swift.
 
+# An input file for subqueries.sh that generates global operators with subqueries (i.e. 'expression operator ANY/ALL(subquery)').
+# The generated code is in Sources/Subqueries_GlobalFunctionsAndExtensions.swift.
+
+# This is also an input file for testSimpleOperators.sh that generates the tests for the code created by simpleOperators.sh.
+# The generated tests are in TestFilterAndHaving.swift
+
+# This is also an input file for testSubquries.sh that generates the tests for the code created by subqueries.sh.
+# The generated tests are in TestSubqueries.swift
+
 == equal =
 >= greaterThanOrEqual >=
 > greaterThan >

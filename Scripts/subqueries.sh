@@ -31,7 +31,7 @@ echo "Failed to find ${PKG_DIR}/Sources"
 exit 1
 fi
 
-INPUT_SUBQUERIES_OPERATORS_FILE="${PKG_DIR}/Scripts/SubqueriesOperators.txt"
+INPUT_SUBQUERIES_OPERATORS_FILE="${PKG_DIR}/Scripts/SimpleOperators.txt"
 INPUT_SUBQUERIES_TYPES_FILE="${PKG_DIR}/Scripts/SubqueriesTypes.txt"
 INPUT_IN_SUBQUERY_TYPES_FILE="${PKG_DIR}/Scripts/InSelectTypes.txt"
 
@@ -110,24 +110,19 @@ while read -r LINE; do
 
 echo "public extension $TYPE {" >> ${OUTPUT_FILE}
 
+    for OPERATOR in \`in\` notIn; do
+
 cat <<EOF >> ${OUTPUT_FILE}
 
-    /// Create a \`$CLAUSE\` clause using the IN operator for subquery.
+    /// Create a \`$CLAUSE\` clause using the $OPERATOR operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A \`$CLAUSE\` containing the clause.
-    public func \`in\`(_ query: Select) -> $CLAUSE {
-        return $CLAUSE(lhs: .$TYPE_LOWER(self), rhs: .select(query), condition: .in)
-    }
-
-    /// Create a \`$CLAUSE\` clause using the NOT IN operator for subquery.
-    ///
-    /// - Parameter query: The subquery.
-    /// - Returns: A \`$CLAUSE\` containing the clause.
-    public func notIn(_ query: Select) -> $CLAUSE {
-        return $CLAUSE(lhs: .$TYPE_LOWER(self), rhs: .select(query), condition: .notIn)
+    public func $OPERATOR(_ query: Select) -> $CLAUSE {
+        return $CLAUSE(lhs: .$TYPE_LOWER(self), rhs: .select(query), condition: .$OPERATOR)
     }
 EOF
+    done
 echo "}" >> ${OUTPUT_FILE}
 done < $INPUT_IN_SUBQUERY_TYPES_FILE
 

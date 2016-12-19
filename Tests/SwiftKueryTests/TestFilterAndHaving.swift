@@ -159,7 +159,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(len(t.a) == 5.8)
+            .where(len(t.a) == Float(5.8))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE LEN(table.a) = 5.8 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE LEN(table.a) = 5.8"
@@ -168,7 +168,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(5.8 == len(t.a))
+            .where(Float(5.8) == len(t.a))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE 5.8 = LEN(table.a) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 5.8 = LEN(table.a)"
@@ -177,7 +177,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(t.b == 178.9)
+            .where(t.b == Float(178.9))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE table.b = 178.9 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.b = 178.9"
@@ -186,7 +186,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(-18.789 == t.b)
+            .where(Float(-18.789) == t.b)
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE -18.789 = table.b GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -18.789 = table.b"
@@ -303,7 +303,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(7.2 == Select(t2.c, from: t2))
+            .where(Float(7.2) == Select(t2.c, from: t2))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE 7.2 = (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 7.2 = (SELECT table2.c FROM table2)"
@@ -438,7 +438,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(max(t.a) == 5.8)
+            .having(max(t.a) == Float(5.8))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING MAX(table.a) = 5.8 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING MAX(table.a) = 5.8"
@@ -447,7 +447,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(5.8 == max(t.a))
+            .having(Float(5.8) == max(t.a))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING 5.8 = MAX(table.a) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 5.8 = MAX(table.a)"
@@ -456,7 +456,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(t.b == 178.9)
+            .having(t.b == Float(178.9))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING table.b = 178.9 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.b = 178.9"
@@ -465,7 +465,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(-18.789 == t.b)
+            .having(Float(-18.789) == t.b)
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING -18.789 = table.b GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -18.789 = table.b"
@@ -582,7 +582,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(7.2 == Select(t2.c, from: t2))
+            .having(Float(7.2) == Select(t2.c, from: t2))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING 7.2 = (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 7.2 = (SELECT table2.c FROM table2)"
@@ -717,7 +717,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(len(t.a) >= 5.8)
+            .where(len(t.a) >= Float(5.8))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE LEN(table.a) >= 5.8 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE LEN(table.a) >= 5.8"
@@ -726,7 +726,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(5.8 >= len(t.a))
+            .where(Float(5.8) >= len(t.a))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE 5.8 >= LEN(table.a) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 5.8 >= LEN(table.a)"
@@ -735,7 +735,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(t.b >= 178.9)
+            .where(t.b >= Float(178.9))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE table.b >= 178.9 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.b >= 178.9"
@@ -744,7 +744,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(-18.789 >= t.b)
+            .where(Float(-18.789) >= t.b)
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE -18.789 >= table.b GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -18.789 >= table.b"
@@ -861,7 +861,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(7.2 >= Select(t2.c, from: t2))
+            .where(Float(7.2) >= Select(t2.c, from: t2))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE 7.2 >= (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 7.2 >= (SELECT table2.c FROM table2)"
@@ -996,7 +996,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(max(t.a) >= 5.8)
+            .having(max(t.a) >= Float(5.8))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING MAX(table.a) >= 5.8 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING MAX(table.a) >= 5.8"
@@ -1005,7 +1005,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(5.8 >= max(t.a))
+            .having(Float(5.8) >= max(t.a))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING 5.8 >= MAX(table.a) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 5.8 >= MAX(table.a)"
@@ -1014,7 +1014,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(t.b >= 178.9)
+            .having(t.b >= Float(178.9))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING table.b >= 178.9 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.b >= 178.9"
@@ -1023,7 +1023,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(-18.789 >= t.b)
+            .having(Float(-18.789) >= t.b)
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING -18.789 >= table.b GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -18.789 >= table.b"
@@ -1140,7 +1140,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(7.2 >= Select(t2.c, from: t2))
+            .having(Float(7.2) >= Select(t2.c, from: t2))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING 7.2 >= (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 7.2 >= (SELECT table2.c FROM table2)"
@@ -1275,7 +1275,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(len(t.a) > 5.8)
+            .where(len(t.a) > Float(5.8))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE LEN(table.a) > 5.8 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE LEN(table.a) > 5.8"
@@ -1284,7 +1284,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(5.8 > len(t.a))
+            .where(Float(5.8) > len(t.a))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE 5.8 > LEN(table.a) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 5.8 > LEN(table.a)"
@@ -1293,7 +1293,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(t.b > 178.9)
+            .where(t.b > Float(178.9))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE table.b > 178.9 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.b > 178.9"
@@ -1302,7 +1302,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(-18.789 > t.b)
+            .where(Float(-18.789) > t.b)
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE -18.789 > table.b GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -18.789 > table.b"
@@ -1419,7 +1419,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(7.2 > Select(t2.c, from: t2))
+            .where(Float(7.2) > Select(t2.c, from: t2))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE 7.2 > (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 7.2 > (SELECT table2.c FROM table2)"
@@ -1554,7 +1554,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(max(t.a) > 5.8)
+            .having(max(t.a) > Float(5.8))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING MAX(table.a) > 5.8 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING MAX(table.a) > 5.8"
@@ -1563,7 +1563,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(5.8 > max(t.a))
+            .having(Float(5.8) > max(t.a))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING 5.8 > MAX(table.a) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 5.8 > MAX(table.a)"
@@ -1572,7 +1572,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(t.b > 178.9)
+            .having(t.b > Float(178.9))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING table.b > 178.9 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.b > 178.9"
@@ -1581,7 +1581,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(-18.789 > t.b)
+            .having(Float(-18.789) > t.b)
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING -18.789 > table.b GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -18.789 > table.b"
@@ -1698,7 +1698,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(7.2 > Select(t2.c, from: t2))
+            .having(Float(7.2) > Select(t2.c, from: t2))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING 7.2 > (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 7.2 > (SELECT table2.c FROM table2)"
@@ -1833,7 +1833,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(len(t.a) <= 5.8)
+            .where(len(t.a) <= Float(5.8))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE LEN(table.a) <= 5.8 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE LEN(table.a) <= 5.8"
@@ -1842,7 +1842,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(5.8 <= len(t.a))
+            .where(Float(5.8) <= len(t.a))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE 5.8 <= LEN(table.a) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 5.8 <= LEN(table.a)"
@@ -1851,7 +1851,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(t.b <= 178.9)
+            .where(t.b <= Float(178.9))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE table.b <= 178.9 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.b <= 178.9"
@@ -1860,7 +1860,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(-18.789 <= t.b)
+            .where(Float(-18.789) <= t.b)
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE -18.789 <= table.b GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -18.789 <= table.b"
@@ -1977,7 +1977,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(7.2 <= Select(t2.c, from: t2))
+            .where(Float(7.2) <= Select(t2.c, from: t2))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE 7.2 <= (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 7.2 <= (SELECT table2.c FROM table2)"
@@ -2112,7 +2112,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(max(t.a) <= 5.8)
+            .having(max(t.a) <= Float(5.8))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING MAX(table.a) <= 5.8 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING MAX(table.a) <= 5.8"
@@ -2121,7 +2121,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(5.8 <= max(t.a))
+            .having(Float(5.8) <= max(t.a))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING 5.8 <= MAX(table.a) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 5.8 <= MAX(table.a)"
@@ -2130,7 +2130,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(t.b <= 178.9)
+            .having(t.b <= Float(178.9))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING table.b <= 178.9 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.b <= 178.9"
@@ -2139,7 +2139,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(-18.789 <= t.b)
+            .having(Float(-18.789) <= t.b)
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING -18.789 <= table.b GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -18.789 <= table.b"
@@ -2256,7 +2256,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(7.2 <= Select(t2.c, from: t2))
+            .having(Float(7.2) <= Select(t2.c, from: t2))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING 7.2 <= (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 7.2 <= (SELECT table2.c FROM table2)"
@@ -2391,7 +2391,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(len(t.a) < 5.8)
+            .where(len(t.a) < Float(5.8))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE LEN(table.a) < 5.8 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE LEN(table.a) < 5.8"
@@ -2400,7 +2400,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(5.8 < len(t.a))
+            .where(Float(5.8) < len(t.a))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE 5.8 < LEN(table.a) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 5.8 < LEN(table.a)"
@@ -2409,7 +2409,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(t.b < 178.9)
+            .where(t.b < Float(178.9))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE table.b < 178.9 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.b < 178.9"
@@ -2418,7 +2418,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(-18.789 < t.b)
+            .where(Float(-18.789) < t.b)
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE -18.789 < table.b GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -18.789 < table.b"
@@ -2535,7 +2535,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(7.2 < Select(t2.c, from: t2))
+            .where(Float(7.2) < Select(t2.c, from: t2))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE 7.2 < (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 7.2 < (SELECT table2.c FROM table2)"
@@ -2670,7 +2670,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(max(t.a) < 5.8)
+            .having(max(t.a) < Float(5.8))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING MAX(table.a) < 5.8 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING MAX(table.a) < 5.8"
@@ -2679,7 +2679,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(5.8 < max(t.a))
+            .having(Float(5.8) < max(t.a))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING 5.8 < MAX(table.a) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 5.8 < MAX(table.a)"
@@ -2688,7 +2688,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(t.b < 178.9)
+            .having(t.b < Float(178.9))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING table.b < 178.9 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.b < 178.9"
@@ -2697,7 +2697,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(-18.789 < t.b)
+            .having(Float(-18.789) < t.b)
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING -18.789 < table.b GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -18.789 < table.b"
@@ -2814,7 +2814,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(7.2 < Select(t2.c, from: t2))
+            .having(Float(7.2) < Select(t2.c, from: t2))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING 7.2 < (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 7.2 < (SELECT table2.c FROM table2)"
@@ -2949,7 +2949,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(len(t.a) != 5.8)
+            .where(len(t.a) != Float(5.8))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE LEN(table.a) <> 5.8 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE LEN(table.a) <> 5.8"
@@ -2958,7 +2958,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(5.8 != len(t.a))
+            .where(Float(5.8) != len(t.a))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE 5.8 <> LEN(table.a) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 5.8 <> LEN(table.a)"
@@ -2967,7 +2967,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(t.b != 178.9)
+            .where(t.b != Float(178.9))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE table.b <> 178.9 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.b <> 178.9"
@@ -2976,7 +2976,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(-18.789 != t.b)
+            .where(Float(-18.789) != t.b)
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE -18.789 <> table.b GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -18.789 <> table.b"
@@ -3093,7 +3093,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .where(7.2 != Select(t2.c, from: t2))
+            .where(Float(7.2) != Select(t2.c, from: t2))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE 7.2 <> (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 7.2 <> (SELECT table2.c FROM table2)"
@@ -3228,7 +3228,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(max(t.a) != 5.8)
+            .having(max(t.a) != Float(5.8))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING MAX(table.a) <> 5.8 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING MAX(table.a) <> 5.8"
@@ -3237,7 +3237,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(5.8 != max(t.a))
+            .having(Float(5.8) != max(t.a))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING 5.8 <> MAX(table.a) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 5.8 <> MAX(table.a)"
@@ -3246,7 +3246,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(t.b != 178.9)
+            .having(t.b != Float(178.9))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING table.b <> 178.9 GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.b <> 178.9"
@@ -3255,7 +3255,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(-18.789 != t.b)
+            .having(Float(-18.789) != t.b)
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING -18.789 <> table.b GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -18.789 <> table.b"
@@ -3372,7 +3372,7 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
-            .having(7.2 != Select(t2.c, from: t2))
+            .having(Float(7.2) != Select(t2.c, from: t2))
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING 7.2 <> (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 7.2 <> (SELECT table2.c FROM table2)"

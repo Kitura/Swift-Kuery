@@ -13,4 +13,5 @@ XCTMain([
      testCase(TestAggregateFunctions.allTests),
      testCase(TestColumnExtensions.allTests),
      testCase(TestFilterAndHaving.allTests),
+     testCase(TestSubqueries.allTests),
 ])

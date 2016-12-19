@@ -26,3 +26,4 @@ cd "$SCRIPT_DIR"
 ./testSimpleOperators.sh
 ./testAggregate.sh
 ./testColumnExtensions.sh
+./testSubqueries.sh

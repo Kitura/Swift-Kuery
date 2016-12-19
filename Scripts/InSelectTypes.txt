@@ -15,22 +15,27 @@
 #**/
 
 # An input file for subqueries.sh that generates extensions for (NOT)IN operator with a subquery.
-# This file contains the list of all the types for IN and NOT IN operators.
+# This file contains the list of all the types for IN and NOT IN operators (the last three entries are ignored).
 # The generated code is in Sources/Subqueries_GlobalFunctionsAndExtensions.swift.
 
-Filter ScalarColumnExpression
-Filter String
-Filter Column
-Filter Int
-Filter Float
-Filter Double
-Filter Parameter
-Filter Bool
-Having AggregateColumnExpression
-Having String
-Having Column
-Having Int
-Having Float
-Having Double
-Having Parameter
-Having Bool
+# This is also an input file for testSubqueries.sh that generates the tests for the code created by subqueries.sh.
+# The first two entries in each line are ignored. The format of the rest of the line is
+# (where/having, first operand in Swift, first operand in SQL).
+# The generated tests are in TestSubqueries.swift
+
+Filter ScalarColumnExpression where lcase(t.a) LCASE(table.a)
+Filter String where "plum" 'plum'
+Filter Column where t.a table.a
+Filter Int where 7 7
+Filter Float where Float(7.8) 7.8
+Filter Double where (-0.9) -0.9
+Filter Parameter where Parameter() \?1
+Filter Bool where true true
+Having AggregateColumnExpression having min(t.a) MIN(table.a)
+Having String having "plum" 'plum'
+Having Column having t.a table.a
+Having Int having 7 7
+Having Float having Float(7.8) 7.8
+Having Double having (-0.9) -0.9
+Having Parameter having Parameter() \?1
+Having Bool having false false

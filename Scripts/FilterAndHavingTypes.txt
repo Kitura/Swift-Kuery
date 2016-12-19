@@ -37,10 +37,10 @@ Filter ScalarColumnExpression Int where len(t.a) 5 LEN(table.a) 5
 Filter Int ScalarColumnExpression where 5 len(t.a) 5 LEN(table.a)
 Filter Column Int where t.b 178 table.b 178
 Filter Int Column where -18 t.b -18 table.b
-Filter ScalarColumnExpression Float where len(t.a) 5.8 LEN(table.a) 5.8
-Filter Float ScalarColumnExpression where 5.8 len(t.a) 5.8 LEN(table.a)
-Filter Column Float where t.b 178.9 table.b 178.9
-Filter Float Column where -18.789 t.b -18.789 table.b
+Filter ScalarColumnExpression Float where len(t.a) Float(5.8) LEN(table.a) 5.8
+Filter Float ScalarColumnExpression where Float(5.8) len(t.a) 5.8 LEN(table.a)
+Filter Column Float where t.b Float(178.9) table.b 178.9
+Filter Float Column where Float(-18.789) t.b -18.789 table.b
 Filter ScalarColumnExpression Double where len(t.a) 5.8 LEN(table.a) 5.8
 Filter Double ScalarColumnExpression where 5.8 len(t.a) 5.8 LEN(table.a)
 Filter Column Double where t.b 178.9 table.b 178.9
@@ -53,7 +53,7 @@ Filter ScalarColumnExpression Select where ucase(t.a) Select(t2.c,_from:_t2) UCA
 Filter String Select where "banana" Select(t2.c,_from:_t2) 'banana' (SELECT_table2.c_FROM_table2)
 Filter Column Select where t.a Select(t2.c,_from:_t2) table.a (SELECT_table2.c_FROM_table2)
 Filter Int Select where 7 Select(t2.c,_from:_t2) 7 (SELECT_table2.c_FROM_table2)
-Filter Float Select where 7.2 Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
+Filter Float Select where Float(7.2) Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
 Filter Double Select where 7.2 Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
 Filter Parameter Select where Parameter() Select(t2.c,_from:_t2) \?1 (SELECT_table2.c_FROM_table2)
 Having AggregateColumnExpression String having last(t.a) "banana" LAST(table.a) 'banana'
@@ -68,10 +68,10 @@ Having AggregateColumnExpression Int having sum(t.a) 5 SUM(table.a) 5
 Having Int AggregateColumnExpression having 5 sum(t.a) 5 SUM(table.a)
 Having Column Int having t.b 178 table.b 178
 Having Int Column having -18 t.b -18 table.b
-Having AggregateColumnExpression Float having max(t.a) 5.8 MAX(table.a) 5.8
-Having Float AggregateColumnExpression having 5.8 max(t.a) 5.8 MAX(table.a)
-Having Column Float having t.b 178.9 table.b 178.9
-Having Float Column having -18.789 t.b -18.789 table.b
+Having AggregateColumnExpression Float having max(t.a) Float(5.8) MAX(table.a) 5.8
+Having Float AggregateColumnExpression having Float(5.8) max(t.a) 5.8 MAX(table.a)
+Having Column Float having t.b Float(178.9) table.b 178.9
+Having Float Column having Float(-18.789) t.b -18.789 table.b
 Having AggregateColumnExpression Double having max(t.a) 5.8 MAX(table.a) 5.8
 Having Double AggregateColumnExpression having 5.8 max(t.a) 5.8 MAX(table.a)
 Having Column Double having t.b 178.9 table.b 178.9
@@ -84,6 +84,6 @@ Having AggregateColumnExpression Select having avg(t.a) Select(t2.c,_from:_t2) A
 Having String Select having "banana" Select(t2.c,_from:_t2) 'banana' (SELECT_table2.c_FROM_table2)
 Having Column Select having t.a Select(t2.c,_from:_t2) table.a (SELECT_table2.c_FROM_table2)
 Having Int Select having 7 Select(t2.c,_from:_t2) 7 (SELECT_table2.c_FROM_table2)
-Having Float Select having 7.2 Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
+Having Float Select having Float(7.2) Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
 Having Double Select having 7.2 Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
 Having Parameter Select having Parameter() Select(t2.c,_from:_t2) \?1 (SELECT_table2.c_FROM_table2)

@@ -976,15 +976,15 @@ public func !=(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> H
 
 public extension ScalarColumnExpression {
 
-    /// Create a `Filter` clause using the IN operator for subquery.
+    /// Create a `Filter` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ query: Select) -> Filter {
-        return Filter(lhs: .columnExpression(self), rhs: .select(query), condition: .in)
+        return Filter(lhs: .columnExpression(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Filter` clause using the NOT IN operator for subquery.
+    /// Create a `Filter` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
@@ -994,15 +994,15 @@ public extension ScalarColumnExpression {
 }
 public extension String {
 
-    /// Create a `Filter` clause using the IN operator for subquery.
+    /// Create a `Filter` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ query: Select) -> Filter {
-        return Filter(lhs: .string(self), rhs: .select(query), condition: .in)
+        return Filter(lhs: .string(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Filter` clause using the NOT IN operator for subquery.
+    /// Create a `Filter` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
@@ -1012,15 +1012,15 @@ public extension String {
 }
 public extension Column {
 
-    /// Create a `Filter` clause using the IN operator for subquery.
+    /// Create a `Filter` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ query: Select) -> Filter {
-        return Filter(lhs: .column(self), rhs: .select(query), condition: .in)
+        return Filter(lhs: .column(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Filter` clause using the NOT IN operator for subquery.
+    /// Create a `Filter` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
@@ -1030,15 +1030,15 @@ public extension Column {
 }
 public extension Int {
 
-    /// Create a `Filter` clause using the IN operator for subquery.
+    /// Create a `Filter` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ query: Select) -> Filter {
-        return Filter(lhs: .int(self), rhs: .select(query), condition: .in)
+        return Filter(lhs: .int(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Filter` clause using the NOT IN operator for subquery.
+    /// Create a `Filter` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
@@ -1048,15 +1048,15 @@ public extension Int {
 }
 public extension Float {
 
-    /// Create a `Filter` clause using the IN operator for subquery.
+    /// Create a `Filter` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ query: Select) -> Filter {
-        return Filter(lhs: .float(self), rhs: .select(query), condition: .in)
+        return Filter(lhs: .float(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Filter` clause using the NOT IN operator for subquery.
+    /// Create a `Filter` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
@@ -1066,15 +1066,15 @@ public extension Float {
 }
 public extension Double {
 
-    /// Create a `Filter` clause using the IN operator for subquery.
+    /// Create a `Filter` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ query: Select) -> Filter {
-        return Filter(lhs: .double(self), rhs: .select(query), condition: .in)
+        return Filter(lhs: .double(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Filter` clause using the NOT IN operator for subquery.
+    /// Create a `Filter` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
@@ -1084,15 +1084,15 @@ public extension Double {
 }
 public extension Parameter {
 
-    /// Create a `Filter` clause using the IN operator for subquery.
+    /// Create a `Filter` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ query: Select) -> Filter {
-        return Filter(lhs: .parameter(self), rhs: .select(query), condition: .in)
+        return Filter(lhs: .parameter(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Filter` clause using the NOT IN operator for subquery.
+    /// Create a `Filter` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
@@ -1102,15 +1102,15 @@ public extension Parameter {
 }
 public extension Bool {
 
-    /// Create a `Filter` clause using the IN operator for subquery.
+    /// Create a `Filter` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ query: Select) -> Filter {
-        return Filter(lhs: .bool(self), rhs: .select(query), condition: .in)
+        return Filter(lhs: .bool(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Filter` clause using the NOT IN operator for subquery.
+    /// Create a `Filter` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Filter` containing the clause.
@@ -1120,15 +1120,15 @@ public extension Bool {
 }
 public extension AggregateColumnExpression {
 
-    /// Create a `Having` clause using the IN operator for subquery.
+    /// Create a `Having` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ query: Select) -> Having {
-        return Having(lhs: .columnExpression(self), rhs: .select(query), condition: .in)
+        return Having(lhs: .columnExpression(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Having` clause using the NOT IN operator for subquery.
+    /// Create a `Having` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
@@ -1138,15 +1138,15 @@ public extension AggregateColumnExpression {
 }
 public extension String {
 
-    /// Create a `Having` clause using the IN operator for subquery.
+    /// Create a `Having` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ query: Select) -> Having {
-        return Having(lhs: .string(self), rhs: .select(query), condition: .in)
+        return Having(lhs: .string(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Having` clause using the NOT IN operator for subquery.
+    /// Create a `Having` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
@@ -1156,15 +1156,15 @@ public extension String {
 }
 public extension Column {
 
-    /// Create a `Having` clause using the IN operator for subquery.
+    /// Create a `Having` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ query: Select) -> Having {
-        return Having(lhs: .column(self), rhs: .select(query), condition: .in)
+        return Having(lhs: .column(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Having` clause using the NOT IN operator for subquery.
+    /// Create a `Having` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
@@ -1174,15 +1174,15 @@ public extension Column {
 }
 public extension Int {
 
-    /// Create a `Having` clause using the IN operator for subquery.
+    /// Create a `Having` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ query: Select) -> Having {
-        return Having(lhs: .int(self), rhs: .select(query), condition: .in)
+        return Having(lhs: .int(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Having` clause using the NOT IN operator for subquery.
+    /// Create a `Having` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
@@ -1192,15 +1192,15 @@ public extension Int {
 }
 public extension Float {
 
-    /// Create a `Having` clause using the IN operator for subquery.
+    /// Create a `Having` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ query: Select) -> Having {
-        return Having(lhs: .float(self), rhs: .select(query), condition: .in)
+        return Having(lhs: .float(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Having` clause using the NOT IN operator for subquery.
+    /// Create a `Having` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
@@ -1210,15 +1210,15 @@ public extension Float {
 }
 public extension Double {
 
-    /// Create a `Having` clause using the IN operator for subquery.
+    /// Create a `Having` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ query: Select) -> Having {
-        return Having(lhs: .double(self), rhs: .select(query), condition: .in)
+        return Having(lhs: .double(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Having` clause using the NOT IN operator for subquery.
+    /// Create a `Having` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
@@ -1228,15 +1228,15 @@ public extension Double {
 }
 public extension Parameter {
 
-    /// Create a `Having` clause using the IN operator for subquery.
+    /// Create a `Having` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ query: Select) -> Having {
-        return Having(lhs: .parameter(self), rhs: .select(query), condition: .in)
+        return Having(lhs: .parameter(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Having` clause using the NOT IN operator for subquery.
+    /// Create a `Having` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
@@ -1246,15 +1246,15 @@ public extension Parameter {
 }
 public extension Bool {
 
-    /// Create a `Having` clause using the IN operator for subquery.
+    /// Create a `Having` clause using the `in` operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ query: Select) -> Having {
-        return Having(lhs: .bool(self), rhs: .select(query), condition: .in)
+        return Having(lhs: .bool(self), rhs: .select(query), condition: .`in`)
     }
 
-    /// Create a `Having` clause using the NOT IN operator for subquery.
+    /// Create a `Having` clause using the notIn operator for subquery.
     ///
     /// - Parameter query: The subquery.
     /// - Returns: A `Having` containing the clause.
