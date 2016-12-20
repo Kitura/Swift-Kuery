@@ -25,30 +25,51 @@ import Foundation
 
 import SwiftKuery
 
-public class TestConnection : Connection {
-    public var queryBuilder: QueryBuilder
-    
-    public required init() {
+class TestConnection: Connection {
+    let queryBuilder: QueryBuilder
+    let result: Result
+
+    enum Result {
+        case returnEmpty
+        case returnOneRow
+        case returnThreeRows
+        case returnError
+    }
+
+    init(result: Result) {
         self.queryBuilder = QueryBuilder()
+        self.result = result
     }
     
-    public func connect(onCompletion: (QueryError?) -> ()) {}
+    func connect(onCompletion: (QueryError?) -> ()) {}
     
-    public func closeConnection() {}
+    func closeConnection() {}
     
-    public func execute(query: Query, onCompletion: @escaping ((QueryResult) -> ())) {}
+    func execute(query: Query, onCompletion: @escaping ((QueryResult) -> ())) {
+        returnResult(onCompletion)
+    }
     
-    public func execute(_ raw: String, onCompletion: @escaping ((QueryResult) -> ())) {}
+    func execute(_ raw: String, onCompletion: @escaping ((QueryResult) -> ())) {
+        returnResult(onCompletion)
+    }
     
-    public func execute(query: Query, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ())) {}
+    func execute(query: Query, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ())) {
+        returnResult(onCompletion)
+    }
     
-    public func execute(_ raw: String, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ())) {}
+    func execute(_ raw: String, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ())) {
+        returnResult(onCompletion)
+    }
     
-    public func execute(query: Query, parameters: [String:Any], onCompletion: @escaping ((QueryResult) -> ())) {}
+    func execute(query: Query, parameters: [String:Any], onCompletion: @escaping ((QueryResult) -> ())) {
+        returnResult(onCompletion)
+    }
     
-    public func execute(_ raw: String, parameters: [String:Any], onCompletion: @escaping ((QueryResult) -> ())) {}
+    func execute(_ raw: String, parameters: [String:Any], onCompletion: @escaping ((QueryResult) -> ()))  {
+        returnResult(onCompletion)
+    }
 
-    public func descriptionOf(query: Query) -> String {
+    func descriptionOf(query: Query) -> String {
         do {
             let kuery = try query.build(queryBuilder: queryBuilder)
             return kuery
@@ -58,11 +79,54 @@ public class TestConnection : Connection {
             return ""
         }
     }
+    
+    private func returnResult(_ onCompletion: @escaping ((QueryResult) -> ())) {
+        switch result {
+        case .returnEmpty:
+            onCompletion(.successNoData)
+        case .returnOneRow:
+            onCompletion(.resultSet(ResultSet(TestResultFetcher(numberOfRows: 1))))
+        case .returnThreeRows:
+            onCompletion(.resultSet(ResultSet(TestResultFetcher(numberOfRows: 3))))
+        case .returnError:
+            onCompletion(.error(QueryError.noResult("Error in query execution.")))
+        }
+    }
 }
 
+class TestResultFetcher: ResultFetcher {
+    let numberOfRows: Int
+    let rows = [["banana", 38], ["apple", -8], ["plum", 7]]
+    let titles = ["fruit", "number"]
+    var fetched = 0
+    
+    init(numberOfRows: Int) {
+        self.numberOfRows = numberOfRows
+    }
+    
+    func fetchNext() -> [Any?]? {
+        if fetched < numberOfRows {
+            fetched += 1
+            return rows[fetched - 1]
+        }
+        return nil
+    }
+    
+    func fetchNext(callback: ([Any?]?) ->()) {
+        callback(fetchNext())
+    }
+    
+    func fetchTitles() -> [String] {
+        return titles
+    }
+}
+
+func createConnection(_ result: TestConnection.Result) -> TestConnection {
+    return TestConnection(result: result)
+}
 
 func createConnection() -> TestConnection {
-    return TestConnection()
+    return TestConnection(result: .returnEmpty)
 }
 
 // Dummy class for test framework
