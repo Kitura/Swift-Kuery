@@ -11,7 +11,7 @@ XCTMain([
      testCase(TestSyntaxError.allTests),
      testCase(TestSubquery.allTests),
      testCase(TestAggregateFunctions.allTests),
-     testCase(TestColumnExtensions.allTests),
+     testCase(TestSpecialOperators.allTests),
      testCase(TestFilterAndHaving.allTests),
      testCase(TestSubqueries.allTests),
 ])

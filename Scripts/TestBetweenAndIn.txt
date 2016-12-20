@@ -1,0 +1,66 @@
+#/**
+#* Copyright IBM Corporation 2016
+#*
+#* Licensed under the Apache License, Version 2.0 (the "License");
+#* you may not use this file except in compliance with the License.
+#* You may obtain a copy of the License at
+#*
+#* http://www.apache.org/licenses/LICENSE-2.0
+#*
+#* Unless required by applicable law or agreed to in writing, software
+#* distributed under the License is distributed on an "AS IS" BASIS,
+#* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#* See the License for the specific language governing permissions and
+#* limitations under the License.
+#**/
+
+# Arguments of the BETWEEN and IN operators: operand.in/between(arguments)
+# The line format is (where/having, operand in Swift, operand in SQL, argument1 in Swift, argument2 in Swift, argument1 in SQL, argument2 in SQL)
+# Used in testSpecialOperators.sh. The resulting test file is TestSpecialOperators.swift.
+
+where t.a table.a true false true false
+having t.a table.a true false true false
+where t.a table.a "apple" "peach" 'apple' 'peach'
+having t.a table.a "apple" "peach" 'apple' 'peach'
+where t.a table.a 3 6 3 6
+having t.a table.a 3 6 3 6
+where t.a table.a 2.71828 3.14159 2.71828 3.14159
+having t.a table.a 2.71828 3.14159 2.71828 3.14159
+where t.a table.a Float(2.71828) Float(3.14159) 2.71828 3.14159
+having t.a table.a 2.71828 3.14159 2.71828 3.14159
+where t.a table.a Parameter() Parameter() \?1 \?2
+having t.a table.a Parameter() Parameter() \?1 \?2
+where ucase(t.a) UCASE(table.a) true false true false
+having last(t.a) LAST(table.a) true false true false
+where ucase(t.a) UCASE(table.a) "apple" "peach" 'apple' 'peach'
+having last(t.a) LAST(table.a) "apple" "peach" 'apple' 'peach'
+where ucase(t.a) UCASE(table.a) 3 6 3 6
+having last(t.a) LAST(table.a) 3 6 3 6
+where ucase(t.a) UCASE(table.a) 2.71828 3.14159 2.71828 3.14159
+having last(t.a) LAST(table.a) 2.71828 3.14159 2.71828 3.14159
+where ucase(t.a) UCASE(table.a) Float(2.71828) Float(3.14159) 2.71828 3.14159
+having last(t.a) LAST(table.a) Float(2.71828) Float(3.14159) 2.71828 3.14159
+where ucase(t.a) UCASE(table.a) Parameter() Parameter() \?1 \?2
+having last(t.a) LAST(table.a) Parameter() Parameter() \?1 \?2
+where true true true false true false
+having true true true false true false
+where true true Parameter() Parameter() \?1 \?2
+having true true Parameter() Parameter() \?1 \?2
+where "banana" 'banana' "apple" "peach" 'apple' 'peach'
+having "banana" 'banana' "apple" "peach" 'apple' 'peach'
+where "banana" 'banana' Parameter("first") Parameter("second") @first @second
+having "banana" 'banana' Parameter("first") Parameter("second") @first @second
+where 4 4 3 6 3 6
+having 4 4 3 6 3 6
+where 4 4 Parameter() Parameter() \?1 \?2
+having 4 4 Parameter("first") Parameter("second") @first @second
+where Float(2.71828) 2.71828 Float(2.71828) Float(3.14159) 2.71828 3.14159
+having Float(2.71828) 2.71828 Float(2.71828) Float(3.14159) 2.71828 3.14159
+where 3.001 3.001 3.14159 2.71828 3.14159 2.71828
+having 3.008 3.008 3.14159 2.71828 3.14159 2.71828
+where Float(2.71828) 2.71828 Parameter() Parameter() \?1 \?2
+having Float(2.71828) 2.71828 Parameter("first") Parameter("second") @first @second
+where 3.001 3.001 Parameter("first") Parameter("second") @first @second
+having 3.008 3.008 Parameter() Parameter() \?1 \?2
+where Parameter("first") @first Parameter("second") Parameter("third") @second @third
+

@@ -14,8 +14,9 @@
 #* limitations under the License.
 #**/
 
-# Arguments of the LIKE operator.
-# Used in testColumnExtensions.sh. The resulting test file is TestColumnExtensions.swift.
+# Arguments of the LIKE operator: operand.like(argument).
+# The format of each line is (where/having, operand in Swift, operand in SQL, argument in Sift, argument in SQL).
+# Used in testSpecialOperators.sh. The resulting test file is TestSpecialOperators.swift.
 
 where t.a table.a "%kuery%" '%kuery%'
 having t.a table.a "%kuery%" '%kuery%'
@@ -25,3 +26,11 @@ where ucase(t.a) UCASE(table.a) "%kuery%" '%kuery%'
 having first(t.a) FIRST(table.a) "%kuery%" '%kuery%'
 where ucase(t.a) UCASE(table.a) Parameter() \?1
 having first(t.a) FIRST(table.a) Parameter() \?1
+where "swift-kuery" 'swift-kuery' "%kuery%" '%kuery%'
+having "swift-kuery" 'swift-kuery' "%kuery%" '%kuery%'
+where "swift-kuery" 'swift-kuery' Parameter() \?1
+having "swift-kuery" 'swift-kuery' Parameter() \?1
+where Parameter() \?1 "%kuery%" '%kuery%'
+having Parameter("first") @first "%kuery%" '%kuery%'
+where Parameter("first") @first Parameter() \?1
+having Parameter() \?1 Parameter() \?2
