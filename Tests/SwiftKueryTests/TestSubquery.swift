@@ -82,6 +82,13 @@ class TestSubquery: XCTestCase {
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(from: t)
+            .group(by: t.a)
+            .having(notExists(Select(t.b, from: t).where(t.b == 8)) && sum(t.b) > 0)
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT * FROM tableSubquery GROUP BY tableSubquery.a HAVING (NOT EXISTS (SELECT tableSubquery.b FROM tableSubquery WHERE tableSubquery.b = 8)) AND (SUM(tableSubquery.b) > 0)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        s = Select(from: t)
             .where(notExists(Select(t.b, from: t).where(t.b == 8)))
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM tableSubquery WHERE NOT EXISTS (SELECT tableSubquery.b FROM tableSubquery WHERE tableSubquery.b = 8)"

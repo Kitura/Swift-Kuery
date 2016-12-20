@@ -15,4 +15,5 @@ XCTMain([
      testCase(TestFilterAndHaving.allTests),
      testCase(TestSubqueries.allTests),
      testCase(TestQueryResult.allTests),
+     testCase(TestRaw.allTests),
 ])

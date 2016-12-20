@@ -62,6 +62,13 @@ class TestSelect: XCTestCase {
         query = "SELECT DISTINCT tableSelect.a FROM tableSelect WHERE (tableSelect.a NOT LIKE 'b%') IS NOT NULL OFFSET 2"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
+        s = Select.distinct(t.a, from: t)
+            .where(t.a.notLike("b%").isNull())
+            .offset(2)
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT DISTINCT tableSelect.a FROM tableSelect WHERE (tableSelect.a NOT LIKE 'b%') IS NULL OFFSET 2"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+ 
         s = Select(t.b, t.a, from: t)
             .where(((t.a == "banana") || (ucase(t.a) == "APPLE")) && (t.b == 27 || t.b == -7 || t.b == 17))
             .order(by: .ASC(t.b), .DESC(t.a))
@@ -77,7 +84,21 @@ class TestSelect: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         query = "SELECT tableSelect.a FROM tableSelect WHERE (tableSelect.b >= 0.76) IS NOT NULL GROUP BY tableSelect.a HAVING (SUM(tableSelect.b) > 3) OR (tableSelect.b IS NULL) ORDER BY tableSelect.a DESC"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
-        
+ 
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(last(t.b).isNull())
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT tableSelect.a FROM tableSelect GROUP BY tableSelect.a HAVING LAST(tableSelect.b) IS NULL"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(last(t.b).isNotNull())
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT tableSelect.a FROM tableSelect GROUP BY tableSelect.a HAVING LAST(tableSelect.b) IS NOT NULL"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
         s = Select(RawField("left(a, 2) as raw"), from: t)
             .where("b >= 0")
             .group(by: t.a)
@@ -87,11 +108,11 @@ class TestSelect: XCTestCase {
         query = "SELECT left(a, 2) as raw FROM tableSelect WHERE b >= 0 GROUP BY tableSelect.a HAVING sum(b) > 3 ORDER BY tableSelect.a DESC"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
-        s = Select(t.a, t.b, from: t)
+        s = Select(t.a, RawField("b").as("bb"), from: t)
             .limit(to: 2)
             .order(by: .DESC(t.a))
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT tableSelect.a, tableSelect.b FROM tableSelect ORDER BY tableSelect.a DESC LIMIT 2"
+        query = "SELECT tableSelect.a, b AS bb FROM tableSelect ORDER BY tableSelect.a DESC LIMIT 2"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(ucase(t.a).as("case"), t.b, from: t)
@@ -119,6 +140,18 @@ class TestSelect: XCTestCase {
             .where((t2.b == t3.b) && (t2.b == t.b))
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM tableSelect2, tableSelect3, tableSelect WHERE (tableSelect2.b = tableSelect3.b) AND (tableSelect2.b = tableSelect.b)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        
+        s = Select(t.a, from: t)
+            .where(len(ucase(t.a)) == 5 || ucase(lcase(t.a)) == "BANANA" || lcase(ucase(t.a)) == "banana")
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT tableSelect.a FROM tableSelect WHERE ((LEN(UCASE(tableSelect.a)) = 5) OR (UCASE(LCASE(tableSelect.a)) = 'BANANA')) OR (LCASE(UCASE(tableSelect.a)) = 'banana')"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        s = Select(t.a, from: t)
+            .where(len(t.a) >= round(len(t.b), to: 2) && mid(ucase(t.b), start: 3, length: 2) == t.a)
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT tableSelect.a FROM tableSelect WHERE (LEN(tableSelect.a) >= ROUND(LEN(tableSelect.b), 2)) AND (MID(UCASE(tableSelect.b), 3, 2) = tableSelect.a)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
 }

@@ -54,29 +54,29 @@ class TestJoin: XCTestCase {
         let connection = createConnection()
         
         var s = Select(from: myTable1)
-            .join(myTable2)
+            .rightJoin(myTable2)
             .on(myTable1.b == myTable2.b)
         var kuery = connection.descriptionOf(query: s)
-        var query = "SELECT * FROM table1Join JOIN table2Join ON table1Join.b = table2Join.b"
+        var query = "SELECT * FROM table1Join RIGHT JOIN table2Join ON table1Join.b = table2Join.b"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: myTable1)
-            .join(myTable2)
+            .naturalJoin(myTable2)
             .on(myTable1.b == myTable2.b)
-            .join(myTable3)
+            .naturalLeftJoin(myTable3)
             .on(myTable1.b == myTable3.b)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM table1Join JOIN table2Join ON table1Join.b = table2Join.b JOIN table3Join ON table1Join.b = table3Join.b"
+        query = "SELECT * FROM table1Join NATURAL JOIN table2Join ON table1Join.b = table2Join.b NATURAL LEFT JOIN table3Join ON table1Join.b = table3Join.b"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         let t1 = myTable1.as("t1")
         let t2 = myTable2.as("t2")
         let t3 = myTable3.as("t3")
         s = Select(from: t1)
-            .join(t2)
+            .crossJoin(t2)
             .on(t1.b == t2.b)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM table1Join AS t1 JOIN table2Join AS t2 ON t1.b = t2.b"
+        query = "SELECT * FROM table1Join AS t1 CROSS JOIN table2Join AS t2 ON t1.b = t2.b"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: t1)
@@ -86,6 +86,15 @@ class TestJoin: XCTestCase {
             .on(t1.b == t3.b)
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM table1Join AS t1 JOIN table2Join AS t2 ON t1.b = t2.b JOIN table3Join AS t3 ON t1.b = t3.b"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        s = Select(from: t1)
+            .naturalRightJoin(t2)
+            .on(t1.b == t2.b)
+            .naturalFullJoin(t3)
+            .on(t1.b == t3.b)
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT * FROM table1Join AS t1 NATURAL RIGHT JOIN table2Join AS t2 ON t1.b = t2.b NATURAL FULL JOIN table3Join AS t3 ON t1.b = t3.b"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(from: myTable1)

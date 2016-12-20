@@ -107,6 +107,15 @@ class TestQueryResult: XCTestCase {
             XCTAssertNil(queryResult.asValue, "Query result should be one row")
         }
         connection.execute(query: query) { queryResult in
+            XCTAssertNotNil(queryResult.asResultSet, "Query result should be three rows")
+            let resultSet = queryResult.asResultSet!
+            resultSet.nextRow { row in
+                XCTAssertNotNil(row, "Failed to fetch next row")
+                XCTAssertEqual(row![0]! as! String, "banana", "Query returned wrong data")
+                XCTAssertEqual(row![1]! as! Int, 38, "Query returned wrong data")
+            }
+        }
+        connection.execute(query: query) { queryResult in
             let rows = queryResult.asRows
             XCTAssertNotNil(rows, "Query result should be three rows")
             XCTAssertEqual(rows?.count, 3, "Wrong number of rows")
