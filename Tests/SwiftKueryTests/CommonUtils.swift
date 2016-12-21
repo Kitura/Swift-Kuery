@@ -34,6 +34,7 @@ class TestConnection: Connection {
         case returnOneRow
         case returnThreeRows
         case returnError
+        case returnValue
     }
 
     init(result: Result) {
@@ -90,14 +91,16 @@ class TestConnection: Connection {
             onCompletion(.resultSet(ResultSet(TestResultFetcher(numberOfRows: 3))))
         case .returnError:
             onCompletion(.error(QueryError.noResult("Error in query execution.")))
+        case .returnValue:
+            onCompletion(.success(5))
         }
     }
 }
 
 class TestResultFetcher: ResultFetcher {
     let numberOfRows: Int
-    let rows = [["banana", 38], ["apple", -8], ["plum", 7]]
-    let titles = ["fruit", "number"]
+    let rows = [["banana", 38, "apple"], ["apple", -8, "peach"], ["plum", 7, "plum"]]
+    let titles = ["fruit", "number", "fruit"]
     var fetched = 0
     
     init(numberOfRows: Int) {

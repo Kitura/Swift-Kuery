@@ -87,6 +87,20 @@ class TestSelect: XCTestCase {
  
         s = Select(t.a, from: t)
             .group(by: t.a)
+            .having((last(t.b) > 0).isNull())
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT tableSelect.a FROM tableSelect GROUP BY tableSelect.a HAVING (LAST(tableSelect.b) > 0) IS NULL"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having((last(t.b) > 0).isNotNull())
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT tableSelect.a FROM tableSelect GROUP BY tableSelect.a HAVING (LAST(tableSelect.b) > 0) IS NOT NULL"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
             .having(last(t.b).isNull())
         kuery = connection.descriptionOf(query: s)
         query = "SELECT tableSelect.a FROM tableSelect GROUP BY tableSelect.a HAVING LAST(tableSelect.b) IS NULL"
