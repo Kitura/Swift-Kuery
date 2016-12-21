@@ -26,7 +26,7 @@ public struct Update: Query {
     public private (set) var whereClause: QueryFilterProtocol?
     
     /// A String with a clause to be appended to the end of the query.
-    public private (set) var rawPostfix: String?
+    public private (set) var rawSuffix: String?
     
     private let valueTuples: [(Column, Any)]
     
@@ -62,8 +62,8 @@ public struct Update: Query {
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
-        if let rawPostfix = rawPostfix {
-            result += " " + rawPostfix
+        if let rawSuffix = rawSuffix {
+            result += " " + rawSuffix
         }
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
@@ -84,17 +84,17 @@ public struct Update: Query {
         return new
     }
     
-    /// Add a raw postfix to the update statement.
+    /// Add a raw suffix to the update statement.
     ///
     /// - Parameter raw: A String with a clause to be appended to the end of the query.
     /// - Returns: A new instance of Update.
-    public func raw(_ raw: String) -> Update {
+    public func rawSuffix(_ raw: String) -> Update {
         var new = self
-        if rawPostfix != nil {
-            new.syntaxError += "Multiple raw postfixes. "
+        if rawSuffix != nil {
+            new.syntaxError += "Multiple raw suffixes. "
         }
         else {
-            new.rawPostfix = raw
+            new.rawSuffix = raw
         }
         return new
     }

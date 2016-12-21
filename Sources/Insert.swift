@@ -28,7 +28,7 @@ public struct Insert: Query {
     public private (set) var values: [[Any]]?
     
     /// A String with a clause to be appended to the end of the query.
-    public private (set) var rawPostfix: String?
+    public private (set) var rawSuffix: String?
     
     /// The select query that retrieves the rows to insert (for INSERT INTO SELECT).
     public private (set) var query: Select?
@@ -138,24 +138,24 @@ public struct Insert: Query {
         else {
             throw QueryError.syntaxError("Insert query doesn't have any values to insert.")
         }
-        if let rawPostfix = rawPostfix {
-            result += " " + rawPostfix
+        if let rawSuffix = rawSuffix {
+            result += " " + rawSuffix
         }
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
     
-    /// Add a raw postfix to the insert statement.
+    /// Add a raw suffix to the insert statement.
     ///
     /// - Parameter raw: A String with a clause to be appended to the end of the query.
     /// - Returns: A new instance of Insert.
-    public func raw(_ raw: String) -> Insert {
+    public func rawSuffix(_ raw: String) -> Insert {
         var new = self
-        if rawPostfix != nil {
-            new.syntaxError += "Multiple raw postfixes. "
+        if rawSuffix != nil {
+            new.syntaxError += "Multiple raw suffixes. "
         }
         else {
-            new.rawPostfix = raw
+            new.rawSuffix = raw
         }
         return new
     }

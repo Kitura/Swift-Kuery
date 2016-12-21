@@ -34,7 +34,7 @@ public struct Select: Query {
     
     /// The number of rows to select.
     /// If specified, corresponds to the SQL SELECT TOP/LIMIT clause.
-    public private (set) var top: Int?
+    public private (set) var rowsToReturn: Int?
 
     /// The number of rows to skip.
     /// If specified, corresponds to the SQL SELECT OFFSET clause.
@@ -157,12 +157,12 @@ public struct Select: Query {
             result += try " ORDER BY " + orderClause.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }
         
-        if let top = top {
-            result += " LIMIT \(top)"
+        if let rowsToReturn = rowsToReturn {
+            result += " LIMIT \(rowsToReturn)"
         }
         
         if let offset = offset {
-            if top == nil {
+            if rowsToReturn == nil {
                 throw QueryError.syntaxError("Offset requires a limit to be set. ")
             }
             
@@ -274,11 +274,11 @@ public struct Select: Query {
     /// - Returns: A new instance of Select with the LIMIT clause.
     public func limit(to newLimit: Int) -> Select {
         var new = self
-        if top != nil {
+        if rowsToReturn != nil {
             new.syntaxError += "Multiple limits. "
         }
         else {
-            new.top = newLimit
+            new.rowsToReturn = newLimit
         }
         return new
     }

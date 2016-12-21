@@ -44,19 +44,19 @@ class TestUpdate: XCTestCase {
  
         u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
             .where(t.a == "banana")
-            .raw("RETURNING *")
+            .rawSuffix("RETURNING *")
         kuery = connection.descriptionOf(query: u)
         query = "UPDATE tableUpdate SET a = 'peach', b = 2 WHERE tableUpdate.a = 'banana' RETURNING *"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
  
         u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
-            .raw("RETURNING b,a")
+            .rawSuffix("RETURNING b,a")
         kuery = connection.descriptionOf(query: u)
         query = "UPDATE tableUpdate SET a = 'peach', b = 2 RETURNING b,a"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
-            .raw("RETURNING tableUpdate.b")
+            .rawSuffix("RETURNING tableUpdate.b")
         kuery = connection.descriptionOf(query: u)
         query = "UPDATE tableUpdate SET a = 'peach', b = 2 RETURNING tableUpdate.b"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
