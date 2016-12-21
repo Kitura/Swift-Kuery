@@ -37,10 +37,12 @@ public class QueryBuilder {
         case numberedParameter
         /// The marker for the query named parameters.
         case namedParameter
-        /// The boolean true
+        /// The boolean true.
         case booleanTrue
-        /// The boolean false
+        /// The boolean false.
         case booleanFalse
+        /// The ALL function for subqueries.
+        case all
         /// Last case, add new values before it.
         case namesCount
     }
@@ -50,12 +52,15 @@ public class QueryBuilder {
     public var addNumbersToParameters = true
     /// The starting index for numbered parameters.
     public var firstParameterIndex = 1
+    /// An indication whether ANY on subqueries is supported.
+    public var anyOnSubquerySupported = true
     
     /// Initialize an instance of QueryBuilder.
     ///
     /// - Parameter addNumbersToParameters: An indication whether query parameters should be numbered.
     /// - Parameter firstParameterIndex: The starting index for numbered parameters.
-    public init(addNumbersToParameters: Bool?=nil, firstParameterIndex: Int?=nil) {
+    /// - Parameter anyOnSubquerySupported: An indication whether ANY on subqueries is supported.
+    public init(addNumbersToParameters: Bool?=nil, firstParameterIndex: Int?=nil, anyOnSubquerySupported: Bool?=nil) {
         substitutions = Array(repeating: "", count: QuerySubstitutionNames.namesCount.rawValue)
         substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"
         substitutions[QuerySubstitutionNames.lcase.rawValue] = "LCASE"
@@ -64,6 +69,7 @@ public class QueryBuilder {
         substitutions[QuerySubstitutionNames.namedParameter.rawValue] = "@"
         substitutions[QuerySubstitutionNames.booleanTrue.rawValue] = "true"
         substitutions[QuerySubstitutionNames.booleanFalse.rawValue] = "false"
+        substitutions[QuerySubstitutionNames.all.rawValue] = "ALL"
         
         if let addNumbersToParameters = addNumbersToParameters {
             self.addNumbersToParameters = addNumbersToParameters

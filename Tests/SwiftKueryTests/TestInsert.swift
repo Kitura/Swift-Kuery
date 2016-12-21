@@ -55,7 +55,7 @@ class TestInsert: XCTestCase {
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         i = Insert(into: t, columns: [t.a, t.b], values: ["banana", 17])
-            .returning()
+            .rawSuffix("RETURNING *")
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO tableInsert (a, b) VALUES ('banana', 17) RETURNING *"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
@@ -67,9 +67,9 @@ class TestInsert: XCTestCase {
         
         let t2 = MyTable2()
         i = Insert(into: t, columns: [t.a], Select(t2.a, from: t2))
-            .returning(t.a)
+            .rawSuffix("RETURNING a")
         kuery = connection.descriptionOf(query: i)
-        query = "INSERT INTO tableInsert (a) SELECT tableInsert2.a FROM tableInsert2 RETURNING tableInsert.a"
+        query = "INSERT INTO tableInsert (a) SELECT tableInsert2.a FROM tableInsert2 RETURNING a"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
 }

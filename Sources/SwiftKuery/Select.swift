@@ -34,7 +34,7 @@ public struct Select: Query {
     
     /// The number of rows to select.
     /// If specified, corresponds to the SQL SELECT TOP/LIMIT clause.
-    public private (set) var top: Int?
+    public private (set) var rowsToReturn: Int?
 
     /// The number of rows to skip.
     /// If specified, corresponds to the SQL SELECT OFFSET clause.
@@ -157,11 +157,15 @@ public struct Select: Query {
             result += try " ORDER BY " + orderClause.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }
         
-        if let top = top {
-            result += " LIMIT \(top)"
+        if let rowsToReturn = rowsToReturn {
+            result += " LIMIT \(rowsToReturn)"
         }
         
         if let offset = offset {
+            if rowsToReturn == nil {
+                throw QueryError.syntaxError("Offset requires a limit to be set. ")
+            }
+            
             result += " OFFSET \(offset)"
         }
         
@@ -270,11 +274,11 @@ public struct Select: Query {
     /// - Returns: A new instance of Select with the LIMIT clause.
     public func limit(to newLimit: Int) -> Select {
         var new = self
-        if top != nil {
+        if rowsToReturn != nil {
             new.syntaxError += "Multiple limits. "
         }
         else {
-            new.top = newLimit
+            new.rowsToReturn = newLimit
         }
         return new
     }
@@ -402,26 +406,6 @@ public struct Select: Query {
         return new
     }
     
-    /// Create an SQL SELECT RIGHT JOIN statement.
-    ///
-    /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to the SELECT RIGHT JOIN.
-    public func rightJoin(_ table: Table) -> Select {
-        var new = self
-        new.joins.append((.right(table), nil, nil))
-        return new
-    }
-    
-    /// Create an SQL SELECT FULL JOIN statement.
-    ///
-    /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to the SELECT FULL JOIN.
-    public func fullJoin(_ table: Table) -> Select {
-        var new = self
-        new.joins.append((.full(table), nil, nil))
-        return new
-    }
-    
     /// Create an SQL SELECT CROSS JOIN statement.
     ///
     /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
@@ -442,33 +426,14 @@ public struct Select: Query {
         return new
     }
 
-    /// Create an SQL SELECT NATURAL LEFT JOIN statement.
+    /// Create a join statement with the type of join specified in the String.
     ///
+    /// - Parameter raw: A String containg a join to apply.
     /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to the SELECT NATURAL LEFT JOIN.
-    public func naturalLeftJoin(_ table: Table) -> Select {
+    /// - Returns: A new instance of Select corresponding to the join.
+    public func rawJoin(_ raw: String, _ table: Table) -> Select {
         var new = self
-        new.joins.append((.naturalLeft(table), nil, nil))
-        return new
-    }
-
-    /// Create an SQL SELECT NATURAL RIGHT JOIN statement.
-    ///
-    /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to the SELECT NATURAL RIGHT JOIN.
-    public func naturalRightJoin(_ table: Table) -> Select {
-        var new = self
-        new.joins.append((.naturalRight(table), nil, nil))
-        return new
-    }
-
-    /// Create an SQL SELECT NATURAL FULL JOIN statement.
-    ///
-    /// - Parameter table: The right table used in performing the join. The left table is the table field of this `Select` instance.
-    /// - Returns: A new instance of Select corresponding to the SELECT NATURAL FULL JOIN.
-    public func naturalFullJoin(_ table: Table) -> Select {
-        var new = self
-        new.joins.append((.naturalFull(table), nil, nil))
+        new.joins.append((.raw(raw, table), nil, nil))
         return new
     }
 }

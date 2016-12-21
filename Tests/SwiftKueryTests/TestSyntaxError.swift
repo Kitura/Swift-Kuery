@@ -74,12 +74,14 @@ class TestSyntaxError: XCTestCase {
         u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
             .where(t.a == "banana")
             .where(t.b == 7)
+            .rawSuffix("RETURNING *")
+            .rawSuffix("RETURNING a")
         do {
             let _ = try u.build(queryBuilder: connection.queryBuilder)
             XCTFail("No syntax error.")
         }
         catch QueryError.syntaxError(let error) {
-            XCTAssertEqual(error, "Multiple where clauses. ")
+            XCTAssertEqual(error, "Multiple where clauses. Multiple raw suffixes. ")
         }
         catch {
             XCTFail("Other than syntax error.")
@@ -124,13 +126,15 @@ class TestSyntaxError: XCTestCase {
             XCTFail("Other than syntax error.")
         }
 
-        let i3 = Insert(into: t, columns: [t.a], Select(t.a, t.b, from: t))
+        let i3 = Insert(into: t, values: "apple", 10)
+            .rawSuffix("RETURNING *")
+            .rawSuffix("RETURNING *")
         do {
             let _ = try i3.build(queryBuilder: connection.queryBuilder)
             XCTFail("No syntax error.")
         }
         catch QueryError.syntaxError(let error) {
-            XCTAssertEqual(error, "Number of columns in Select doesn't match column count. ")
+            XCTAssertEqual(error, "Multiple raw suffixes. ")
         }
         catch {
             XCTFail("Other than syntax error.")
@@ -149,6 +153,19 @@ class TestSyntaxError: XCTestCase {
         }
         catch QueryError.syntaxError(let error) {
             XCTAssertEqual(error, "Multiple where clauses. Multiple limits. On clause set for statement that is not join. Using clause set for statement that is not join. ")
+        }
+        catch {
+            XCTFail("Other than syntax error.")
+        }
+        
+        s = Select.distinct(t.a, from: t)
+            .offset(2)
+        do {
+            let _ = try s.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        }
+        catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "Offset requires a limit to be set. ")
         }
         catch {
             XCTFail("Other than syntax error.")

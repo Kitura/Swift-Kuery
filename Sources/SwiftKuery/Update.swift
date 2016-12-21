@@ -25,8 +25,8 @@ public struct Update: Query {
     /// Could be represented with a `Filter` clause or a `String` containing raw SQL.
     public private (set) var whereClause: QueryFilterProtocol?
     
-    /// A `Returning` enum value corresponding to the SQL RETURNING clause.
-    public private (set) var returningClause: Returning?
+    /// A String with a clause to be appended to the end of the query.
+    public private (set) var rawSuffix: String?
     
     private let valueTuples: [(Column, Any)]
     
@@ -62,8 +62,8 @@ public struct Update: Query {
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
-        if let returning = returningClause {
-            result += try " RETURNING " + returning.build(queryBuilder: queryBuilder)
+        if let rawSuffix = rawSuffix {
+            result += " " + rawSuffix
         }
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
@@ -84,39 +84,18 @@ public struct Update: Query {
         return new
     }
     
-    /// Add an SQL RETURNING clause to the update statement.
+    /// Add a raw suffix to the update statement.
     ///
-    /// - Parameter columns: An optionl array of `Column`s to be returned. If not specified, all columns are returned.
+    /// - Parameter raw: A String with a clause to be appended to the end of the query.
     /// - Returns: A new instance of Update.
-    public func returning(_ columns: [Column]?=nil) -> Update {
+    public func rawSuffix(_ raw: String) -> Update {
         var new = self
-        if returningClause != nil {
-            new.syntaxError += "Multiple returning clauses. "
+        if rawSuffix != nil {
+            new.syntaxError += "Multiple raw suffixes. "
         }
         else {
-            if let columns = columns {
-                new.returningClause = Returning.columns(columns)
-            }
-            else {
-                new.returningClause = Returning.all
-            }
+            new.rawSuffix = raw
         }
         return new
     }
-    
-    /// Add an SQL RETURNING clause to the update statement.
-    ///
-    /// - Parameter columns: A list of `Column`s to be returned.
-    /// - Returns: A new instance of Update.
-    public func returning(_ columns: Column...) -> Update {
-        var new = self
-        if returningClause != nil {
-            new.syntaxError += "Multiple returning clauses. "
-        }
-        else {
-            new.returningClause = Returning.columns(columns)
-        }
-        return new
-    }
-
 }
