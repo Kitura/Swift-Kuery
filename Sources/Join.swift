@@ -22,20 +22,12 @@ public enum Join: Buildable {
     case join(Table)
     /// The SQL LEFT OUTER JOIN statement.
     case left(Table)
-    /// The SQL RIGHT OUTER JOIN statement.
-    case right(Table)
-    /// The SQL FULL OUTER JOIN statement.
-    case full(Table)
     /// The SQL CROSS JOIN statement.
     case cross(Table)
     /// The SQL NATURAL INNER JOIN statement.
     case natural(Table)
-    /// The SQL NATURAL LEFT OUTER JOIN statement.
-    case naturalLeft(Table)
-    /// The SQL NATURAL RIGHT OUTER JOIN statement.
-    case naturalRight(Table)
-    /// The SQL NATURAL FULL OUTER JOIN statement.
-    case naturalFull(Table)
+    /// A String with a join statement.
+    case raw(String, Table)
 
     /// Build the query component using `QueryBuilder`.
     ///
@@ -48,20 +40,12 @@ public enum Join: Buildable {
             return try " JOIN " + table.build(queryBuilder: queryBuilder)
         case .left(let table):
             return try " LEFT JOIN " + table.build(queryBuilder: queryBuilder)
-        case .right(let table):
-            return try " RIGHT JOIN " + table.build(queryBuilder: queryBuilder)
-        case .full(let table):
-            return try " FULL JOIN " + table.build(queryBuilder: queryBuilder)
         case .cross(let table):
             return try " CROSS JOIN " + table.build(queryBuilder: queryBuilder)
         case .natural(let table):
             return try " NATURAL JOIN " + table.build(queryBuilder: queryBuilder)
-        case .naturalLeft(let table):
-            return try " NATURAL LEFT JOIN " + table.build(queryBuilder: queryBuilder)
-        case .naturalRight(let table):
-            return try " NATURAL RIGHT JOIN " + table.build(queryBuilder: queryBuilder)
-        case .naturalFull(let table):
-            return try " NATURAL FULL JOIN " + table.build(queryBuilder: queryBuilder)
+        case .raw(let raw, let table):
+            return try " " + raw + " " + table.build(queryBuilder: queryBuilder)
         }
     }
 }

@@ -54,16 +54,16 @@ class TestJoin: XCTestCase {
         let connection = createConnection()
         
         var s = Select(from: myTable1)
-            .rightJoin(myTable2)
+            .join(myTable2)
             .on(myTable1.b == myTable2.b)
         var kuery = connection.descriptionOf(query: s)
-        var query = "SELECT * FROM table1Join RIGHT JOIN table2Join ON table1Join.b = table2Join.b"
+        var query = "SELECT * FROM table1Join JOIN table2Join ON table1Join.b = table2Join.b"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: myTable1)
             .naturalJoin(myTable2)
             .on(myTable1.b == myTable2.b)
-            .naturalLeftJoin(myTable3)
+            .rawJoin("NATURAL LEFT JOIN", myTable3)
             .on(myTable1.b == myTable3.b)
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM table1Join NATURAL JOIN table2Join ON table1Join.b = table2Join.b NATURAL LEFT JOIN table3Join ON table1Join.b = table3Join.b"
@@ -89,12 +89,12 @@ class TestJoin: XCTestCase {
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(from: t1)
-            .naturalRightJoin(t2)
+            .join(t2)
             .on(t1.b == t2.b)
-            .naturalFullJoin(t3)
+            .rawJoin("NATURAL FULL JOIN", t3)
             .on(t1.b == t3.b)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM table1Join AS t1 NATURAL RIGHT JOIN table2Join AS t2 ON t1.b = t2.b NATURAL FULL JOIN table3Join AS t3 ON t1.b = t3.b"
+        query = "SELECT * FROM table1Join AS t1 JOIN table2Join AS t2 ON t1.b = t2.b NATURAL FULL JOIN table3Join AS t3 ON t1.b = t3.b"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(from: myTable1)
@@ -105,7 +105,7 @@ class TestJoin: XCTestCase {
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: t1)
-            .fullJoin(t2)
+            .rawJoin("FULL JOIN", t2)
             .using(t1.b)
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM table1Join AS t1 FULL JOIN table2Join AS t2 USING (b)"
