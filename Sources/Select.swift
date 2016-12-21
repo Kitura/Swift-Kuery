@@ -162,6 +162,10 @@ public struct Select: Query {
         }
         
         if let offset = offset {
+            if top == nil {
+                throw QueryError.syntaxError("Offset requires a limit to be set. ")
+            }
+            
             result += " OFFSET \(offset)"
         }
         
