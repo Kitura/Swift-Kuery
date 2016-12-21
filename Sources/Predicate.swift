@@ -83,9 +83,12 @@ public indirect enum Predicate<ClauseType: Buildable, ColumnExpressionType: Fiel
         case .select(let subquery):
             return try "(" + subquery.build(queryBuilder: queryBuilder) + ")"
         case .anySubquery(let subquery):
-            return try "ANY (" + subquery.build(queryBuilder: queryBuilder) + ")"
+            if queryBuilder.anyOnSubquerySupported {
+                return try "ANY (" + subquery.build(queryBuilder: queryBuilder) + ")"
+            }
+            throw QueryError.syntaxError("ANY on subquery is not supported. ")
         case .allSubquery(let subquery):
-            return try "ALL (" + subquery.build(queryBuilder: queryBuilder) + ")"
+            return try queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.all.rawValue] + " (" + subquery.build(queryBuilder: queryBuilder) + ")"
         default:
             return ""
         }
