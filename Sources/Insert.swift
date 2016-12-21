@@ -27,8 +27,8 @@ public struct Insert: Query {
     /// An array of rows (values to insert in each row).
     public private (set) var values: [[Any]]?
     
-    /// A `Returning` enum value corresponding to the SQL RETURNING clause.
-    public private (set) var returningClause: Returning?
+    /// A String with a clause to be appended to the end of the query.
+    public private (set) var rawPostfix: String?
     
     /// The select query that retrieves the rows to insert (for INSERT INTO SELECT).
     public private (set) var query: Select?
@@ -138,44 +138,24 @@ public struct Insert: Query {
         else {
             throw QueryError.syntaxError("Insert query doesn't have any values to insert.")
         }
-        if let returning = returningClause {
-            result += try " RETURNING " + returning.build(queryBuilder: queryBuilder)
+        if let rawPostfix = rawPostfix {
+            result += " " + rawPostfix
         }
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
     
-    /// Add an SQL RETURNING clause to the Insert statement.
+    /// Add a raw postfix to the insert statement.
     ///
-    /// - Parameter columns: An optional array of `Column`s to be returned. If not specified, all columns are returned.
+    /// - Parameter raw: A String with a clause to be appended to the end of the query.
     /// - Returns: A new instance of Insert.
-    public func returning(_ columns: [Column]?=nil) -> Insert {
+    public func raw(_ raw: String) -> Insert {
         var new = self
-        if returningClause != nil {
-            new.syntaxError += "Multiple returning clauses. "
+        if rawPostfix != nil {
+            new.syntaxError += "Multiple raw postfixes. "
         }
         else {
-            if let columns = columns {
-                new.returningClause = Returning.columns(columns)
-            }
-            else {
-                new.returningClause = Returning.all
-            }
-        }
-        return new
-    }
-    
-    /// Add an SQL RETURNING clause to the Insert statement.
-    ///
-    /// - Parameter columns: A list of `Column`s to be returned.
-    /// - Returns: A new instance of Insert.
-    public func returning(_ columns: Column...) -> Insert {
-        var new = self
-        if returningClause != nil {
-            new.syntaxError += "Multiple returning clauses. "
-        }
-        else {
-            new.returningClause = Returning.columns(columns)
+            new.rawPostfix = raw
         }
         return new
     }
