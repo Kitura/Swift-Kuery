@@ -77,9 +77,6 @@
                 <a class="nav-group-task-link" href="../Enums/QueryResult.html">QueryResult</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/Returning.html">Returning</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/Union.html">Union</a>
               </li>
             </ul>
@@ -1041,18 +1038,6 @@
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTSbCS_6Column_VS_6Filter">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterCS_6Column_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnVS_9Parameter_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterVS_22ScalarColumnExpression_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_22ScalarColumnExpressionVS_9Parameter_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_25AggregateColumnExpressionSb_VS_6Having">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
@@ -1063,6 +1048,18 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTSbCS_6Column_VS_6Having">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterCS_6Column_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnVS_9Parameter_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterVS_22ScalarColumnExpression_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_22ScalarColumnExpressionVS_9Parameter_VS_6Filter">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTSdCS_6Column_VS_6Filter">==(_:_:)</a>
@@ -1688,6 +1685,12 @@
                 <a class="nav-group-task-link" href="../Protocols/Query.html">Query</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:P10SwiftKuery19QueryHavingProtocol">QueryHavingProtocol</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ResultFetcher.html">ResultFetcher</a>
               </li>
             </ul>
@@ -1821,9 +1824,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV10SwiftKuery6Select11whereClauseGSqVS_6Filter_"></a>
+                    <a name="/s:vV10SwiftKuery6Select11whereClauseGSqPS_19QueryFilterProtocol__"></a>
                     <a name="//apple_ref/swift/Property/whereClause" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Select11whereClauseGSqVS_6Filter_">whereClause</a>
+                    <a class="token" href="#/s:vV10SwiftKuery6Select11whereClauseGSqPS_19QueryFilterProtocol__">whereClause</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1831,41 +1834,15 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The SQL WHERE clause containing the filter for rows to retrieve.</p>
+                        <p>The SQL WHERE clause containing the filter for rows to retrieve.
+Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></code> clause or a <code>String</code> containing raw SQL.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">whereClause</span><span class="p">:</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vV10SwiftKuery6Select14rawWhereClauseGSqSS_"></a>
-                    <a name="//apple_ref/swift/Property/rawWhereClause" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Select14rawWhereClauseGSqSS_">rawWhereClause</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A String containg the raw SQL WHERE clause to filter the rows to retrieve.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">rawWhereClause</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">whereClause</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -1903,9 +1880,9 @@ If true, corresponds to the SQL SELECT DISTINCT statement.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV10SwiftKuery6Select3topGSqSi_"></a>
-                    <a name="//apple_ref/swift/Property/top" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Select3topGSqSi_">top</a>
+                    <a name="/s:vV10SwiftKuery6Select12rowsToReturnGSqSi_"></a>
+                    <a name="//apple_ref/swift/Property/rowsToReturn" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vV10SwiftKuery6Select12rowsToReturnGSqSi_">rowsToReturn</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1921,7 +1898,7 @@ If specified, corresponds to the SQL SELECT TOP/LIMIT clause.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">top</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">rowsToReturn</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -2015,9 +1992,9 @@ The SQL GROUP BY statement.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV10SwiftKuery6Select12havingClauseGSqVS_6Having_"></a>
+                    <a name="/s:vV10SwiftKuery6Select12havingClauseGSqPS_19QueryHavingProtocol__"></a>
                     <a name="//apple_ref/swift/Property/havingClause" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Select12havingClauseGSqVS_6Having_">havingClause</a>
+                    <a class="token" href="#/s:vV10SwiftKuery6Select12havingClauseGSqPS_19QueryHavingProtocol__">havingClause</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2025,41 +2002,15 @@ The SQL GROUP BY statement.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The SQL HAVING clause containing the filter for the rows to select when aggregate functions are used.</p>
+                        <p>The SQL HAVING clause containing the filter for the rows to select when aggregate functions are used.
+Could be represented with a <code><a href="../Structs/Having.html">Having</a></code> clause or a <code>String</code> containing raw SQL.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">havingClause</span><span class="p">:</span> <span class="kt"><a href="../Structs/Having.html">Having</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vV10SwiftKuery6Select15rawHavingClauseGSqSS_"></a>
-                    <a name="//apple_ref/swift/Property/rawHavingClause" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Select15rawHavingClauseGSqSS_">rawHavingClause</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A String with the raw SQL HAVING clause containing the filter for the rows to select when aggregate functions are used.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">rawHavingClause</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">havingClause</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryHavingProtocol">QueryHavingProtocol</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -2096,9 +2047,9 @@ The SQL GROUP BY statement.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV10SwiftKuery6Select4joinGSqOS_4Join_"></a>
-                    <a name="//apple_ref/swift/Property/join" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Select4joinGSqOS_4Join_">join</a>
+                    <a name="/s:vV10SwiftKuery6Select5joinsGSaT4joinOS_4Join2onGSqPS_19QueryFilterProtocol__5usingGSqGSaCS_6Column____"></a>
+                    <a name="//apple_ref/swift/Property/joins" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vV10SwiftKuery6Select5joinsGSaT4joinOS_4Join2onGSqPS_19QueryFilterProtocol__5usingGSqGSaCS_6Column____">joins</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2106,95 +2057,16 @@ The SQL GROUP BY statement.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The SQL JOIN clause.</p>
+                        <p>The SQL JOIN, ON and USING clauses.
+ON clause can be represented as <code><a href="../Structs/Filter.html">Filter</a></code> or a <code>String</code> containing raw SQL.
+USING clause: an array of <code><a href="../Classes/Column.html">Column</a></code> elements that have to match in a JOIN query.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">join</span><span class="p">:</span> <span class="kt"><a href="../Enums/Join.html">Join</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vV10SwiftKuery6Select8onClauseGSqVS_6Filter_"></a>
-                    <a name="//apple_ref/swift/Property/onClause" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Select8onClauseGSqVS_6Filter_">onClause</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The SQL ON clause containing the filter for the rows to select in a JOIN query.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">onClause</span><span class="p">:</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vV10SwiftKuery6Select11rawOnClauseGSqSS_"></a>
-                    <a name="//apple_ref/swift/Property/rawOnClause" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Select11rawOnClauseGSqSS_">rawOnClause</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A String containg the raw SQL ON clause to filter the rows to select in a JOIN query.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">rawOnClause</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vV10SwiftKuery6Select5usingGSqGSaCS_6Column__"></a>
-                    <a name="//apple_ref/swift/Property/using" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Select5usingGSqGSaCS_6Column__">using</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The SQL USING clause: an array of <code><a href="../Classes/Column.html">Column</a></code> elements that have to match in a JOIN query.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">using</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">]?</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">joins</span> <span class="o">=</span> <span class="p">[(</span><span class="nv">join</span><span class="p">:</span> <span class="kt"><a href="../Enums/Join.html">Join</a></span><span class="p">,</span> <span class="nv">on</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a></span><span class="p">?,</span> <span class="nv">using</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">]?)]()</span></code></pre>
 
                         </div>
                       </div>
@@ -2894,9 +2766,9 @@ The SQL GROUP BY statement.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV10SwiftKuery6Select6havingFVS_6HavingS0_"></a>
+                    <a name="/s:FV10SwiftKuery6Select6havingFPS_19QueryHavingProtocol_S0_"></a>
                     <a name="//apple_ref/swift/Method/having(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Select6havingFVS_6HavingS0_">having(_:)</a>
+                    <a class="token" href="#/s:FV10SwiftKuery6Select6havingFPS_19QueryHavingProtocol_S0_">having(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2908,7 +2780,7 @@ The SQL GROUP BY statement.</p>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter clause: The <code><a href="../Structs/Having.html">Having</a></code> clause to apply.
+    Parameter clause: The <code><a href="../Structs/Having.html">Having</a></code> clause or a <code>String</code> containing SQL HAVING clause to apply.
 
 </div>
 
@@ -2923,7 +2795,7 @@ The SQL GROUP BY statement.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">having</span><span class="p">(</span><span class="n">_</span> <span class="nv">clause</span><span class="p">:</span> <span class="kt"><a href="../Structs/Having.html">Having</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">having</span><span class="p">(</span><span class="n">_</span> <span class="nv">clause</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryHavingProtocol">QueryHavingProtocol</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
 
                         </div>
                       </div>
@@ -2939,7 +2811,7 @@ The SQL GROUP BY statement.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The <code>Having</code> clause to apply.</p>
+                                  <p>The <code>Having</code> clause or a <code>String</code> containing SQL HAVING clause to apply.</p>
 
                                 </div>
                               </td>
@@ -2950,70 +2822,6 @@ The SQL GROUP BY statement.</p>
                       <div>
                         <h4>Return Value</h4>
                         <p>A new instance of Select with the <code><a href="../Structs/Having.html">Having</a></code> clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV10SwiftKuery6Select6havingFSSS0_"></a>
-                    <a name="//apple_ref/swift/Method/having(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Select6havingFSSS0_">having(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Add the raw HAVING clause to the query.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter raw: A String containing the clause to apply.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A new instance of Select with the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">having</span><span class="p">(</span><span class="n">_</span> <span class="nv">raw</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>raw</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A String containing the clause to apply.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of Select with the clause.</p>
 
                       </div>
                     </section>
@@ -3278,9 +3086,9 @@ The SQL GROUP BY statement.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV10SwiftKuery6Select5whereFVS_6FilterS0_"></a>
+                    <a name="/s:FV10SwiftKuery6Select5whereFPS_19QueryFilterProtocol_S0_"></a>
                     <a name="//apple_ref/swift/Method/where(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Select5whereFVS_6FilterS0_">where(_:)</a>
+                    <a class="token" href="#/s:FV10SwiftKuery6Select5whereFPS_19QueryFilterProtocol_S0_">where(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3292,7 +3100,7 @@ The SQL GROUP BY statement.</p>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter conditions: The SQL WHERE clause to apply.
+    Parameter conditions: The <code><a href="../Structs/Filter.html">Filter</a></code> clause or a <code>String</code> containing SQL WHERE clause to apply.
 
 </div>
 
@@ -3307,7 +3115,7 @@ The SQL GROUP BY statement.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">conditions</span><span class="p">:</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">conditions</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
 
                         </div>
                       </div>
@@ -3323,7 +3131,7 @@ The SQL GROUP BY statement.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The SQL WHERE clause to apply.</p>
+                                  <p>The <code>Filter</code> clause or a <code>String</code> containing SQL WHERE clause to apply.</p>
 
                                 </div>
                               </td>
@@ -3342,73 +3150,9 @@ The SQL GROUP BY statement.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV10SwiftKuery6Select5whereFSSS0_"></a>
-                    <a name="//apple_ref/swift/Method/where(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Select5whereFSSS0_">where(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Add a raw SQL WHERE clause to the select statement.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter conditions: A String containing the SQL WHERE clause to apply.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A new instance of Select with the WHERE clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">raw</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>conditions</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A String containing the SQL WHERE clause to apply.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of Select with the WHERE clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV10SwiftKuery6Select2onFVS_6FilterS0_"></a>
+                    <a name="/s:FV10SwiftKuery6Select2onFPS_19QueryFilterProtocol_S0_"></a>
                     <a name="//apple_ref/swift/Method/on(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Select2onFVS_6FilterS0_">on(_:)</a>
+                    <a class="token" href="#/s:FV10SwiftKuery6Select2onFPS_19QueryFilterProtocol_S0_">on(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3420,7 +3164,7 @@ The SQL GROUP BY statement.</p>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter conditions: The <code><a href="../Structs/Filter.html">Filter</a></code> to apply.
+    Parameter conditions: The <code><a href="../Structs/Filter.html">Filter</a></code> clause or a <code>String</code> containing SQL ON clause to apply.
 
 </div>
 
@@ -3435,7 +3179,7 @@ The SQL GROUP BY statement.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">on</span><span class="p">(</span><span class="n">_</span> <span class="nv">conditions</span><span class="p">:</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">on</span><span class="p">(</span><span class="n">_</span> <span class="nv">conditions</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
 
                         </div>
                       </div>
@@ -3451,71 +3195,7 @@ The SQL GROUP BY statement.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The <code>Filter</code> to apply.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of Select with the ON clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV10SwiftKuery6Select2onFSSS0_"></a>
-                    <a name="//apple_ref/swift/Method/on(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Select2onFSSS0_">on(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Add a raw SQL ON clause to the JOIN statement.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter conditions: A String containing the SQL ON clause to apply.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A new instance of Select with the ON clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">on</span><span class="p">(</span><span class="n">_</span> <span class="nv">raw</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>conditions</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A String containing the SQL ON clause to apply.</p>
+                                  <p>The <code>Filter</code> clause or a <code>String</code> containing SQL ON clause to apply.</p>
 
                                 </div>
                               </td>
@@ -3854,134 +3534,6 @@ The SQL GROUP BY statement.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV10SwiftKuery6Select9rightJoinFCS_5TableS0_"></a>
-                    <a name="//apple_ref/swift/Method/rightJoin(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Select9rightJoinFCS_5TableS0_">rightJoin(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create an SQL SELECT RIGHT JOIN statement.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter table: The right table used in performing the join. The left table is the table field of this <code>Select</code> instance.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A new instance of Select corresponding to the SELECT RIGHT JOIN.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">rightJoin</span><span class="p">(</span><span class="n">_</span> <span class="nv">table</span><span class="p">:</span> <span class="kt">Table</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>table</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right table used in performing the join. The left table is the table field of this <code>Select</code> instance.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of Select corresponding to the SELECT RIGHT JOIN.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV10SwiftKuery6Select8fullJoinFCS_5TableS0_"></a>
-                    <a name="//apple_ref/swift/Method/fullJoin(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Select8fullJoinFCS_5TableS0_">fullJoin(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create an SQL SELECT FULL JOIN statement.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter table: The right table used in performing the join. The left table is the table field of this <code>Select</code> instance.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A new instance of Select corresponding to the SELECT FULL JOIN.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fullJoin</span><span class="p">(</span><span class="n">_</span> <span class="nv">table</span><span class="p">:</span> <span class="kt">Table</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>table</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right table used in performing the join. The left table is the table field of this <code>Select</code> instance.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of Select corresponding to the SELECT FULL JOIN.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:FV10SwiftKuery6Select9crossJoinFCS_5TableS0_"></a>
                     <a name="//apple_ref/swift/Method/crossJoin(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:FV10SwiftKuery6Select9crossJoinFCS_5TableS0_">crossJoin(_:)</a>
@@ -4110,9 +3662,9 @@ The SQL GROUP BY statement.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV10SwiftKuery6Select15naturalLeftJoinFCS_5TableS0_"></a>
-                    <a name="//apple_ref/swift/Method/naturalLeftJoin(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Select15naturalLeftJoinFCS_5TableS0_">naturalLeftJoin(_:)</a>
+                    <a name="/s:FV10SwiftKuery6Select7rawJoinFTSSCS_5Table_S0_"></a>
+                    <a name="//apple_ref/swift/Method/rawJoin(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery6Select7rawJoinFTSSCS_5Table_S0_">rawJoin(_:_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -4120,7 +3672,13 @@ The SQL GROUP BY statement.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Create an SQL SELECT NATURAL LEFT JOIN statement.</p>
+                        <p>Create a join statement with the type of join specified in the String.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter raw: A String containg a join to apply.
+
+</div>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
@@ -4130,7 +3688,7 @@ The SQL GROUP BY statement.</p>
 
 <div class="aside aside-returns">
     <p class="aside-title">Returns</p>
-    A new instance of Select corresponding to the SELECT NATURAL LEFT JOIN.
+    A new instance of Select corresponding to the join.
 
 </div>
 
@@ -4139,7 +3697,7 @@ The SQL GROUP BY statement.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">naturalLeftJoin</span><span class="p">(</span><span class="n">_</span> <span class="nv">table</span><span class="p">:</span> <span class="kt">Table</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">rawJoin</span><span class="p">(</span><span class="n">_</span> <span class="nv">raw</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">table</span><span class="p">:</span> <span class="kt">Table</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
 
                         </div>
                       </div>
@@ -4147,6 +3705,19 @@ The SQL GROUP BY statement.</p>
                         <h4>Parameters</h4>
                         <table class="graybox">
                           <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>raw</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A String containg a join to apply.</p>
+
+                                </div>
+                              </td>
+                            </tr>
                             <tr>
                               <td>
                                 <code>
@@ -4165,135 +3736,7 @@ The SQL GROUP BY statement.</p>
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>A new instance of Select corresponding to the SELECT NATURAL LEFT JOIN.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV10SwiftKuery6Select16naturalRightJoinFCS_5TableS0_"></a>
-                    <a name="//apple_ref/swift/Method/naturalRightJoin(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Select16naturalRightJoinFCS_5TableS0_">naturalRightJoin(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create an SQL SELECT NATURAL RIGHT JOIN statement.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter table: The right table used in performing the join. The left table is the table field of this <code>Select</code> instance.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A new instance of Select corresponding to the SELECT NATURAL RIGHT JOIN.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">naturalRightJoin</span><span class="p">(</span><span class="n">_</span> <span class="nv">table</span><span class="p">:</span> <span class="kt">Table</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>table</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right table used in performing the join. The left table is the table field of this <code>Select</code> instance.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of Select corresponding to the SELECT NATURAL RIGHT JOIN.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV10SwiftKuery6Select15naturalFullJoinFCS_5TableS0_"></a>
-                    <a name="//apple_ref/swift/Method/naturalFullJoin(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Select15naturalFullJoinFCS_5TableS0_">naturalFullJoin(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create an SQL SELECT NATURAL FULL JOIN statement.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter table: The right table used in performing the join. The left table is the table field of this <code>Select</code> instance.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A new instance of Select corresponding to the SELECT NATURAL FULL JOIN.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">naturalFullJoin</span><span class="p">(</span><span class="n">_</span> <span class="nv">table</span><span class="p">:</span> <span class="kt">Table</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Select</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>table</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right table used in performing the join. The left table is the table field of this <code>Select</code> instance.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of Select corresponding to the SELECT NATURAL FULL JOIN.</p>
+                        <p>A new instance of Select corresponding to the join.</p>
 
                       </div>
                     </section>
@@ -4307,7 +3750,7 @@ The SQL GROUP BY statement.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-12-11)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-12-21)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

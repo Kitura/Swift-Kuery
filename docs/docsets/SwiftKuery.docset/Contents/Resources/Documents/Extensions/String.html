@@ -77,9 +77,6 @@
                 <a class="nav-group-task-link" href="../Enums/QueryResult.html">QueryResult</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/Returning.html">Returning</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/Union.html">Union</a>
               </li>
             </ul>
@@ -1041,18 +1038,6 @@
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTSbCS_6Column_VS_6Filter">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterCS_6Column_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnVS_9Parameter_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterVS_22ScalarColumnExpression_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_22ScalarColumnExpressionVS_9Parameter_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_25AggregateColumnExpressionSb_VS_6Having">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
@@ -1063,6 +1048,18 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTSbCS_6Column_VS_6Having">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterCS_6Column_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnVS_9Parameter_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterVS_22ScalarColumnExpression_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_22ScalarColumnExpressionVS_9Parameter_VS_6Filter">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTSdCS_6Column_VS_6Filter">==(_:_:)</a>
@@ -1686,6 +1683,12 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/Query.html">Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:P10SwiftKuery19QueryHavingProtocol">QueryHavingProtocol</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ResultFetcher.html">ResultFetcher</a>
@@ -3462,6 +3465,80 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:FE10SwiftKuerySS5buildFzT12queryBuilderCS_12QueryBuilder_SS"></a>
+                    <a name="//apple_ref/swift/Method/build(queryBuilder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE10SwiftKuerySS5buildFzT12queryBuilderCS_12QueryBuilder_SS">build(queryBuilder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Process <code>String</code> as raw SQL using <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code>.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter queryBuilder: The QueryBuilder to use.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A String representation of the query.
+
+</div>
+
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    QueryError.syntaxError if query build fails.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">build</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="kt"><a href="../Classes/QueryBuilder.html">QueryBuilder</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queryBuilder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The QueryBuilder to use.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A String representation of the query.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:FE10SwiftKuerySS2inFVS_6SelectVS_6Filter"></a>
                     <a name="//apple_ref/swift/Method/in(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:FE10SwiftKuerySS2inFVS_6SelectVS_6Filter">in(_:)</a>
@@ -3472,7 +3549,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the IN operator for subquery.</p>
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the <code>in</code> operator for subquery.</p>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
@@ -3536,7 +3613,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the NOT IN operator for subquery.</p>
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the notIn operator for subquery.</p>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
@@ -3604,7 +3681,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the IN operator for subquery.</p>
+                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the <code>in</code> operator for subquery.</p>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
@@ -3668,7 +3745,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the NOT IN operator for subquery.</p>
+                        <p>Create a <code><a href="../Structs/Having.html">Having</a></code> clause using the notIn operator for subquery.</p>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
@@ -3727,7 +3804,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-12-11)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-12-21)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

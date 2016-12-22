@@ -76,9 +76,6 @@
                 <a class="nav-group-task-link" href="Enums/QueryResult.html">QueryResult</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/Returning.html">Returning</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/Union.html">Union</a>
               </li>
             </ul>
@@ -1040,18 +1037,6 @@
                 <a class="nav-group-task-link" href="Functions.html#/s:F10SwiftKueryoi2eeFTSbCS_6Column_VS_6Filter">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterCS_6Column_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnVS_9Parameter_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterVS_22ScalarColumnExpression_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Functions.html#/s:F10SwiftKueryoi2eeFTVS_22ScalarColumnExpressionVS_9Parameter_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Functions.html#/s:F10SwiftKueryoi2eeFTVS_25AggregateColumnExpressionSb_VS_6Having">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
@@ -1062,6 +1047,18 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Functions.html#/s:F10SwiftKueryoi2eeFTSbCS_6Column_VS_6Having">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterCS_6Column_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnVS_9Parameter_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterVS_22ScalarColumnExpression_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Functions.html#/s:F10SwiftKueryoi2eeFTVS_22ScalarColumnExpressionVS_9Parameter_VS_6Filter">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Functions.html#/s:F10SwiftKueryoi2eeFTSdCS_6Column_VS_6Filter">==(_:_:)</a>
@@ -1685,6 +1682,12 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/Query.html">Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols.html#/s:P10SwiftKuery19QueryHavingProtocol">QueryHavingProtocol</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/ResultFetcher.html">ResultFetcher</a>
@@ -2657,10 +2660,10 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Filter"></a>
-                <a name="//apple_ref/swift/Section/Filter" class="dashAnchor"></a>
-                <a href="#/Filter">
-                  <h3 class="section-name">Filter</h3>
+                <a name="/QueryFilterProtocol"></a>
+                <a name="//apple_ref/swift/Section/QueryFilterProtocol" class="dashAnchor"></a>
+                <a href="#/QueryFilterProtocol">
+                  <h3 class="section-name">QueryFilterProtocol</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -34670,342 +34673,6 @@ and Column.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:F10SwiftKueryoi2neFTVS_22ScalarColumnExpressionSb_VS_6Filter"></a>
-                    <a name="//apple_ref/swift/Function/!=(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:F10SwiftKueryoi2neFTVS_22ScalarColumnExpressionSb_VS_6Filter">!=(_:_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="Structs/Filter.html">Filter</a></code> clause using the operator != for ScalarColumnExpression
-and Bool.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter lhs: The left hand side of the clause.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter rhs: The right hand side of the clause.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">!=</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt"><a href="Structs/ScalarColumnExpression.html">ScalarColumnExpression</a></span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="Structs/Filter.html">Filter</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>lhs</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The left hand side of the clause.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>rhs</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right hand side of the clause.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:F10SwiftKueryoi2neFTSbVS_22ScalarColumnExpression_VS_6Filter"></a>
-                    <a name="//apple_ref/swift/Function/!=(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:F10SwiftKueryoi2neFTSbVS_22ScalarColumnExpression_VS_6Filter">!=(_:_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="Structs/Filter.html">Filter</a></code> clause using the operator != for Bool
-and ScalarColumnExpression.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter lhs: The left hand side of the clause.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter rhs: The right hand side of the clause.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">!=</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt"><a href="Structs/ScalarColumnExpression.html">ScalarColumnExpression</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="Structs/Filter.html">Filter</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>lhs</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The left hand side of the clause.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>rhs</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right hand side of the clause.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:F10SwiftKueryoi2neFTCS_6ColumnSb_VS_6Filter"></a>
-                    <a name="//apple_ref/swift/Function/!=(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:F10SwiftKueryoi2neFTCS_6ColumnSb_VS_6Filter">!=(_:_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="Structs/Filter.html">Filter</a></code> clause using the operator != for Column
-and Bool.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter lhs: The left hand side of the clause.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter rhs: The right hand side of the clause.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">!=</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt"><a href="Classes/Column.html">Column</a></span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="Structs/Filter.html">Filter</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>lhs</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The left hand side of the clause.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>rhs</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right hand side of the clause.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:F10SwiftKueryoi2neFTSbCS_6Column_VS_6Filter"></a>
-                    <a name="//apple_ref/swift/Function/!=(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:F10SwiftKueryoi2neFTSbCS_6Column_VS_6Filter">!=(_:_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a <code><a href="Structs/Filter.html">Filter</a></code> clause using the operator != for Bool
-and Column.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter lhs: The left hand side of the clause.
-
-</div>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter rhs: The right hand side of the clause.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">!=</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt"><a href="Classes/Column.html">Column</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="Structs/Filter.html">Filter</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>lhs</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The left hand side of the clause.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>rhs</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The right hand side of the clause.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:F10SwiftKueryoi2eeFTVS_25AggregateColumnExpressionSb_VS_6Having"></a>
                     <a name="//apple_ref/swift/Function/==(_:_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:F10SwiftKueryoi2eeFTVS_25AggregateColumnExpressionSb_VS_6Having">==(_:_:)</a>
@@ -35334,6 +35001,342 @@ and Column.</p>
                       <div>
                         <h4>Return Value</h4>
                         <p>A <code><a href="Structs/Having.html">Having</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:F10SwiftKueryoi2neFTVS_22ScalarColumnExpressionSb_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Function/!=(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:F10SwiftKueryoi2neFTVS_22ScalarColumnExpressionSb_VS_6Filter">!=(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="Structs/Filter.html">Filter</a></code> clause using the operator != for ScalarColumnExpression
+and Bool.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter lhs: The left hand side of the clause.
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter rhs: The right hand side of the clause.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">!=</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt"><a href="Structs/ScalarColumnExpression.html">ScalarColumnExpression</a></span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The left hand side of the clause.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The right hand side of the clause.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:F10SwiftKueryoi2neFTSbVS_22ScalarColumnExpression_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Function/!=(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:F10SwiftKueryoi2neFTSbVS_22ScalarColumnExpression_VS_6Filter">!=(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="Structs/Filter.html">Filter</a></code> clause using the operator != for Bool
+and ScalarColumnExpression.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter lhs: The left hand side of the clause.
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter rhs: The right hand side of the clause.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">!=</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt"><a href="Structs/ScalarColumnExpression.html">ScalarColumnExpression</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The left hand side of the clause.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The right hand side of the clause.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:F10SwiftKueryoi2neFTCS_6ColumnSb_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Function/!=(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:F10SwiftKueryoi2neFTCS_6ColumnSb_VS_6Filter">!=(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="Structs/Filter.html">Filter</a></code> clause using the operator != for Column
+and Bool.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter lhs: The left hand side of the clause.
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter rhs: The right hand side of the clause.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">!=</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt"><a href="Classes/Column.html">Column</a></span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The left hand side of the clause.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The right hand side of the clause.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:F10SwiftKueryoi2neFTSbCS_6Column_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Function/!=(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:F10SwiftKueryoi2neFTSbCS_6Column_VS_6Filter">!=(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="Structs/Filter.html">Filter</a></code> clause using the operator != for Bool
+and Column.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter lhs: The left hand side of the clause.
+
+</div>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter rhs: The right hand side of the clause.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="o">!=</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt"><a href="Classes/Column.html">Column</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The left hand side of the clause.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The right hand side of the clause.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="Structs/Filter.html">Filter</a></code> containing the clause.</p>
 
                       </div>
                     </section>
@@ -35679,10 +35682,10 @@ and Column.</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Having"></a>
-                <a name="//apple_ref/swift/Section/Having" class="dashAnchor"></a>
-                <a href="#/Having">
-                  <h3 class="section-name">Having</h3>
+                <a name="/QueryHavingProtocol"></a>
+                <a name="//apple_ref/swift/Section/QueryHavingProtocol" class="dashAnchor"></a>
+                <a href="#/QueryHavingProtocol">
+                  <h3 class="section-name">QueryHavingProtocol</h3>
                 </a>
               </div>
               <ul class="item-container">
@@ -44980,7 +44983,7 @@ and subquery.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-12-11)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-12-21)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

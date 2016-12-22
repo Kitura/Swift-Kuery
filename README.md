@@ -244,14 +244,12 @@ let i = Insert(into: t1, columns: [t1.a, t1.b], values: ["apricot", 3])
 ```
 <br>
 __UPDATE t1 SET a = 'peach', b = 2            
-WHERE a = 'banana'        
-RETURNING b;__
+WHERE a = 'banana';__
 
 ```swift
 ...
 let u = Update(t1, set: [(t1.a, "peach"), (t1.b, 2)])
   .where(t1.a == "banana")
-  .returning(t1.b)
 ...
 ```
 

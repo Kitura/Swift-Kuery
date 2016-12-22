@@ -77,9 +77,6 @@
                 <a class="nav-group-task-link" href="../Enums/QueryResult.html">QueryResult</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/Returning.html">Returning</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/Union.html">Union</a>
               </li>
             </ul>
@@ -1041,18 +1038,6 @@
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTSbCS_6Column_VS_6Filter">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterCS_6Column_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnVS_9Parameter_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterVS_22ScalarColumnExpression_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_22ScalarColumnExpressionVS_9Parameter_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_25AggregateColumnExpressionSb_VS_6Having">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
@@ -1063,6 +1048,18 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTSbCS_6Column_VS_6Having">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterCS_6Column_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnVS_9Parameter_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterVS_22ScalarColumnExpression_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_22ScalarColumnExpressionVS_9Parameter_VS_6Filter">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTSdCS_6Column_VS_6Filter">==(_:_:)</a>
@@ -1688,6 +1685,12 @@
                 <a class="nav-group-task-link" href="../Protocols/Query.html">Query</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:P10SwiftKuery19QueryHavingProtocol">QueryHavingProtocol</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ResultFetcher.html">ResultFetcher</a>
               </li>
             </ul>
@@ -1751,7 +1754,7 @@
             <h1>Filter</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Filter</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ConditionalClause.html">ConditionalClause</a></span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Filter</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ConditionalClause.html">ConditionalClause</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a></span></code></pre>
 
                 </div>
               </div>
@@ -1794,9 +1797,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV10SwiftKuery6Filter3rhsGOS_9PredicateS0_VS_22ScalarColumnExpression_"></a>
+                    <a name="/s:vV10SwiftKuery6Filter3rhsGSqGOS_9PredicateS0_VS_22ScalarColumnExpression__"></a>
                     <a name="//apple_ref/swift/Property/rhs" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Filter3rhsGOS_9PredicateS0_VS_22ScalarColumnExpression_">rhs</a>
+                    <a class="token" href="#/s:vV10SwiftKuery6Filter3rhsGSqGOS_9PredicateS0_VS_22ScalarColumnExpression__">rhs</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1811,7 +1814,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt"><a href="../Enums/Predicate.html">Predicate</a></span><span class="o">&lt;</span><span class="kt">Filter</span><span class="p">,</span> <span class="kt"><a href="../Structs/ScalarColumnExpression.html">ScalarColumnExpression</a></span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt"><a href="../Enums/Predicate.html">Predicate</a></span><span class="o">&lt;</span><span class="kt">Filter</span><span class="p">,</span> <span class="kt"><a href="../Structs/ScalarColumnExpression.html">ScalarColumnExpression</a></span><span class="o">&gt;</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -1847,13 +1850,93 @@
                 </li>
               </ul>
             </div>
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FV10SwiftKuery6Filter6isNullFT_S0_"></a>
+                    <a name="//apple_ref/swift/Method/isNull()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery6Filter6isNullFT_S0_">isNull()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code>Filter</code> clause using the isNull operator.</p>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code>Filter</code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isNull</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Filter</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code>Filter</code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FV10SwiftKuery6Filter9isNotNullFT_S0_"></a>
+                    <a name="//apple_ref/swift/Method/isNotNull()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery6Filter9isNotNullFT_S0_">isNotNull()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code>Filter</code> clause using the isNotNull operator.</p>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code>Filter</code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isNotNull</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Filter</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code>Filter</code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </section>
 
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-12-11)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-12-21)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

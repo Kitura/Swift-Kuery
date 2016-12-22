@@ -77,9 +77,6 @@
                 <a class="nav-group-task-link" href="../Enums/QueryResult.html">QueryResult</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/Returning.html">Returning</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/Union.html">Union</a>
               </li>
             </ul>
@@ -1041,18 +1038,6 @@
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTSbCS_6Column_VS_6Filter">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterCS_6Column_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnVS_9Parameter_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterVS_22ScalarColumnExpression_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_22ScalarColumnExpressionVS_9Parameter_VS_6Filter">==(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_25AggregateColumnExpressionSb_VS_6Having">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
@@ -1063,6 +1048,18 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTSbCS_6Column_VS_6Having">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterCS_6Column_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTCS_6ColumnVS_9Parameter_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_9ParameterVS_22ScalarColumnExpression_VS_6Filter">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTVS_22ScalarColumnExpressionVS_9Parameter_VS_6Filter">==(_:_:)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:F10SwiftKueryoi2eeFTSdCS_6Column_VS_6Filter">==(_:_:)</a>
@@ -1688,6 +1685,12 @@
                 <a class="nav-group-task-link" href="../Protocols/Query.html">Query</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:P10SwiftKuery19QueryHavingProtocol">QueryHavingProtocol</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ResultFetcher.html">ResultFetcher</a>
               </li>
             </ul>
@@ -1794,9 +1797,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV10SwiftKuery6Delete11whereClauseGSqVS_6Filter_"></a>
+                    <a name="/s:vV10SwiftKuery6Delete11whereClauseGSqPS_19QueryFilterProtocol__"></a>
                     <a name="//apple_ref/swift/Property/whereClause" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Delete11whereClauseGSqVS_6Filter_">whereClause</a>
+                    <a class="token" href="#/s:vV10SwiftKuery6Delete11whereClauseGSqPS_19QueryFilterProtocol__">whereClause</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1804,14 +1807,15 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The SQL WHERE clause containing the filter for rows to delete.</p>
+                        <p>The SQL WHERE clause containing the filter for rows to delete.
+Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></code> clause or a <code>String</code> containing raw SQL.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">whereClause</span><span class="p">:</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">whereClause</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -1821,36 +1825,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV10SwiftKuery6Delete14rawWhereClauseGSqSS_"></a>
-                    <a name="//apple_ref/swift/Property/rawWhereClause" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Delete14rawWhereClauseGSqSS_">rawWhereClause</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A String containg the raw SQL WHERE clause to filter the rows to delete.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">rawWhereClause</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV10SwiftKuery6DeletecFT4fromCS_5Table5whereGSqVS_6Filter__S0_"></a>
+                    <a name="/s:FV10SwiftKuery6DeletecFT4fromCS_5Table5whereGSqPS_19QueryFilterProtocol___S0_"></a>
                     <a name="//apple_ref/swift/Method/init(from:where:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6DeletecFT4fromCS_5Table5whereGSqVS_6Filter__S0_">init(from:where:)</a>
+                    <a class="token" href="#/s:FV10SwiftKuery6DeletecFT4fromCS_5Table5whereGSqPS_19QueryFilterProtocol___S0_">init(from:where:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1877,7 +1854,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">from</span> <span class="nv">table</span><span class="p">:</span> <span class="kt">Table</span><span class="p">,</span> <span class="k">where</span> <span class="nv">conditions</span><span class="p">:</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span><span class="p">?</span><span class="o">=</span><span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">from</span> <span class="nv">table</span><span class="p">:</span> <span class="kt">Table</span><span class="p">,</span> <span class="k">where</span> <span class="nv">conditions</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a></span><span class="p">?</span><span class="o">=</span><span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1990,9 +1967,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV10SwiftKuery6Delete5whereFVS_6FilterS0_"></a>
+                    <a name="/s:FV10SwiftKuery6Delete5whereFPS_19QueryFilterProtocol_S0_"></a>
                     <a name="//apple_ref/swift/Method/where(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Delete5whereFVS_6FilterS0_">where(_:)</a>
+                    <a class="token" href="#/s:FV10SwiftKuery6Delete5whereFPS_19QueryFilterProtocol_S0_">where(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2004,7 +1981,7 @@
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter conditions: The SQL WHERE clause to apply.
+    Parameter conditions: The <code><a href="../Structs/Filter.html">Filter</a></code> clause or a <code>String</code> containing SQL WHERE clause to apply.
 
 </div>
 
@@ -2019,7 +1996,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">conditions</span><span class="p">:</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Delete</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">conditions</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Delete</span></code></pre>
 
                         </div>
                       </div>
@@ -2035,71 +2012,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The SQL WHERE clause to apply.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of Delete.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV10SwiftKuery6Delete5whereFSSS0_"></a>
-                    <a name="//apple_ref/swift/Method/where(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Delete5whereFSSS0_">where(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Add a raw SQL WHERE clause to the delete statement.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter conditions: A String containing the SQL WHERE clause to apply.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A new instance of Delete.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">raw</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Delete</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>conditions</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A String containing the SQL WHERE clause to apply.</p>
+                                  <p>The <code>Filter</code> clause or a <code>String</code> containing SQL WHERE clause to apply.</p>
 
                                 </div>
                               </td>
@@ -2123,7 +2036,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-12-11)</p>
+      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-12-21)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
