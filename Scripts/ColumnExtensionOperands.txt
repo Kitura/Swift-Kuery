@@ -1,5 +1,5 @@
 #/**
-#* Copyright IBM Corporation 2016
+#* Copyright IBM Corporation 2016, 2017
 #*
 #* Licensed under the Apache License, Version 2.0 (the "License");
 #* you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
 # An input file for columnExtension.sh that generates extensions for Column, ScalarColumnExpression,
 # and AggregateColumnExpression for (NOT)LIKE, (NOT)BETWEEN, and (NOT)IN operators.
 # This file contains the types of the operands.
-# The generated code is in Sources/ColumnAndExpressions_Extensions.swift.
+# The generated code is in Sources/SwiftKuery/ColumnAndExpressions_Extensions.swift.
 
 # It is also an input for specialOperators.sh that generates extensions for the types listed in this file for the same operators.
-# The generated code is in Sources/SpecialOperators_Extensions.swift.
+# The generated code is in Sources/SwiftKuery/SpecialOperators_Extensions.swift.
 
 Bool
 String

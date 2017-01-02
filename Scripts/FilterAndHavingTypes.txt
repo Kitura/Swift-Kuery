@@ -1,5 +1,5 @@
 #/**
-#* Copyright IBM Corporation 2016
+#* Copyright IBM Corporation 2016, 2017
 #*
 #* Licensed under the Apache License, Version 2.0 (the "License");
 #* you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 # An input file for simpleOperators.sh that generates global operators for simple conditions that return Filter and Having clauses.
 # This file contains the list of all the types: each line is (Filter/Having, LHS type, RHS type) - the rest is ignored.
-# The generated code is in Sources/FilterAndHaving_GlobalFunctions.swift.
+# The generated code is in Sources/SwiftKuery/FilterAndHaving_GlobalFunctions.swift.
 
 # This is also an input file for testSimpleOperators.sh that generates the tests for the code created by simpleOperators.sh.
 # The first three entries in each line are ignored. The format of the rest of the line is

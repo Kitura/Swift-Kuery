@@ -1,5 +1,5 @@
 /**
-* Copyright IBM Corporation 2016
+* Copyright IBM Corporation 2016, 2017
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -75,6 +75,14 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Bool...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Bool.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [Bool]) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfBool(values), condition: .`in`)
     }
 
@@ -83,6 +91,14 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Bool...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Bool.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [Bool]) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfBool(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for String.
@@ -113,6 +129,14 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: String...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for String.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [String]) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfString(values), condition: .`in`)
     }
 
@@ -121,6 +145,14 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: String...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for String.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [String]) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfString(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for Int.
@@ -151,6 +183,14 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Int...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Int.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [Int]) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfInt(values), condition: .`in`)
     }
 
@@ -159,6 +199,14 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Int...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Int.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [Int]) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfInt(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for Float.
@@ -189,6 +237,14 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Float...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Float.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [Float]) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfFloat(values), condition: .`in`)
     }
 
@@ -197,6 +253,14 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Float...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Float.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [Float]) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfFloat(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for Double.
@@ -227,6 +291,14 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Double...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Double.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [Double]) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfDouble(values), condition: .`in`)
     }
 
@@ -235,6 +307,14 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Double...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Double.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [Double]) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfDouble(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for Parameter.
@@ -265,6 +345,14 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Parameter...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Parameter.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [Parameter]) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfParameter(values), condition: .`in`)
     }
 
@@ -273,6 +361,14 @@ public extension ScalarColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Parameter...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Parameter.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [Parameter]) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfParameter(values), condition: .notIn)
     }
 
@@ -351,6 +447,14 @@ public extension Column {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Bool...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Bool.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [Bool]) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfBool(values), condition: .`in`)
     }
 
@@ -359,6 +463,14 @@ public extension Column {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Bool...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Bool.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [Bool]) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfBool(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for String.
@@ -389,6 +501,14 @@ public extension Column {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: String...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for String.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [String]) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfString(values), condition: .`in`)
     }
 
@@ -397,6 +517,14 @@ public extension Column {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: String...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for String.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [String]) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfString(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for Int.
@@ -427,6 +555,14 @@ public extension Column {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Int...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Int.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [Int]) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfInt(values), condition: .`in`)
     }
 
@@ -435,6 +571,14 @@ public extension Column {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Int...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Int.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [Int]) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfInt(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for Float.
@@ -465,6 +609,14 @@ public extension Column {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Float...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Float.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [Float]) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfFloat(values), condition: .`in`)
     }
 
@@ -473,6 +625,14 @@ public extension Column {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Float...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Float.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [Float]) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfFloat(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for Double.
@@ -503,6 +663,14 @@ public extension Column {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Double...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Double.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [Double]) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfDouble(values), condition: .`in`)
     }
 
@@ -511,6 +679,14 @@ public extension Column {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Double...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Double.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [Double]) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfDouble(values), condition: .notIn)
     }
     /// Create a `Filter` clause using the between operator for Parameter.
@@ -541,6 +717,14 @@ public extension Column {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Filter` containing the clause.
     public func `in`(_ values: Parameter...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Parameter.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [Parameter]) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfParameter(values), condition: .`in`)
     }
 
@@ -549,6 +733,14 @@ public extension Column {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Filter` containing the clause.
     public func notIn(_ values: Parameter...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Parameter.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [Parameter]) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfParameter(values), condition: .notIn)
     }
 
@@ -627,6 +819,14 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Bool...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Bool.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [Bool]) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfBool(values), condition: .`in`)
     }
 
@@ -635,6 +835,14 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Bool...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Bool.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [Bool]) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfBool(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for String.
@@ -665,6 +873,14 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: String...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for String.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [String]) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfString(values), condition: .`in`)
     }
 
@@ -673,6 +889,14 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: String...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for String.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [String]) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfString(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for Int.
@@ -703,6 +927,14 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Int...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Int.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [Int]) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfInt(values), condition: .`in`)
     }
 
@@ -711,6 +943,14 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Int...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Int.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [Int]) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfInt(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for Float.
@@ -741,6 +981,14 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Float...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Float.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [Float]) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfFloat(values), condition: .`in`)
     }
 
@@ -749,6 +997,14 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Float...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Float.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [Float]) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfFloat(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for Double.
@@ -779,6 +1035,14 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Double...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Double.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [Double]) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfDouble(values), condition: .`in`)
     }
 
@@ -787,6 +1051,14 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Double...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Double.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [Double]) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfDouble(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for Parameter.
@@ -817,6 +1089,14 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Parameter...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Parameter.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [Parameter]) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfParameter(values), condition: .`in`)
     }
 
@@ -825,6 +1105,14 @@ public extension AggregateColumnExpression {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Parameter...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Parameter.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [Parameter]) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfParameter(values), condition: .notIn)
     }
 
@@ -903,6 +1191,14 @@ public extension Column {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Bool...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Bool.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [Bool]) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfBool(values), condition: .`in`)
     }
 
@@ -911,6 +1207,14 @@ public extension Column {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Bool...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Bool.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [Bool]) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfBool(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for String.
@@ -941,6 +1245,14 @@ public extension Column {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: String...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for String.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [String]) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfString(values), condition: .`in`)
     }
 
@@ -949,6 +1261,14 @@ public extension Column {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: String...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for String.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [String]) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfString(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for Int.
@@ -979,6 +1299,14 @@ public extension Column {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Int...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Int.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [Int]) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfInt(values), condition: .`in`)
     }
 
@@ -987,6 +1315,14 @@ public extension Column {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Int...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Int.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [Int]) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfInt(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for Float.
@@ -1017,6 +1353,14 @@ public extension Column {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Float...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Float.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [Float]) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfFloat(values), condition: .`in`)
     }
 
@@ -1025,6 +1369,14 @@ public extension Column {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Float...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Float.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [Float]) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfFloat(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for Double.
@@ -1055,6 +1407,14 @@ public extension Column {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Double...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Double.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [Double]) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfDouble(values), condition: .`in`)
     }
 
@@ -1063,6 +1423,14 @@ public extension Column {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Double...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Double.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [Double]) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfDouble(values), condition: .notIn)
     }
     /// Create a `Having` clause using the between operator for Parameter.
@@ -1093,6 +1461,14 @@ public extension Column {
     /// - Parameter values: The list of values for the `in` expression.
     /// - Returns: A `Having` containing the clause.
     public func `in`(_ values: Parameter...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Parameter.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [Parameter]) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfParameter(values), condition: .`in`)
     }
 
@@ -1101,6 +1477,14 @@ public extension Column {
     /// - Parameter values: The list of values for the notIn expression.
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ values: Parameter...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Parameter.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [Parameter]) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfParameter(values), condition: .notIn)
     }
 
