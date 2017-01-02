@@ -110,7 +110,14 @@ class TestJoin: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM table1Join AS t1 FULL JOIN table2Join AS t2 USING (b)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
-        
+
+        s = Select(from: t1)
+            .rawJoin("FULL JOIN", t2)
+            .using([t1.b])
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT * FROM table1Join AS t1 FULL JOIN table2Join AS t2 USING (b)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
         s = Select(myTable1.a, from: myTable1)
             .union(Select(myTable2.c, from: myTable2))
             .unionAll(Select(myTable3.d, from: myTable3))

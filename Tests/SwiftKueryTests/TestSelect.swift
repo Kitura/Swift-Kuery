@@ -73,7 +73,7 @@ class TestSelect: XCTestCase {
  
         s = Select(t.b, t.a, from: t)
             .where(((t.a == "banana") || (ucase(t.a) == "APPLE")) && (t.b == 27 || t.b == -7 || t.b == 17))
-            .order(by: .ASC(t.b), .DESC(t.a))
+            .order(by: [.ASC(t.b), .DESC(t.a)])
         kuery = connection.descriptionOf(query: s)
         query = "SELECT tableSelect.b, tableSelect.a FROM tableSelect WHERE ((tableSelect.a = 'banana') OR (UCASE(tableSelect.a) = 'APPLE')) AND (((tableSelect.b = 27) OR (tableSelect.b = -7)) OR (tableSelect.b = 17)) ORDER BY tableSelect.b ASC, tableSelect.a DESC"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
@@ -102,7 +102,7 @@ class TestSelect: XCTestCase {
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(t.a, from: t)
-            .group(by: t.a)
+            .group(by: [t.a])
             .having(last(t.b).isNull())
         kuery = connection.descriptionOf(query: s)
         query = "SELECT tableSelect.a FROM tableSelect GROUP BY tableSelect.a HAVING LAST(tableSelect.b) IS NULL"

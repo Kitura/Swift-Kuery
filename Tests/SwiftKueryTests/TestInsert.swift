@@ -49,6 +49,11 @@ class TestInsert: XCTestCase {
         var query = "INSERT INTO tableInsert VALUES ('apple', 10)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
+        i = Insert(into: t, values: ["apple", 10])
+        kuery = connection.descriptionOf(query: i)
+        query = "INSERT INTO tableInsert VALUES ('apple', 10)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
         i = Insert(into: t, valueTuples: (t.a, "apricot"), (t.b, "3"))
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO tableInsert (a, b) VALUES ('apricot', '3')"
