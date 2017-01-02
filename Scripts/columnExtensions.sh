@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #/**
-#* Copyright IBM Corporation 2016
+#* Copyright IBM Corporation 2016, 2017
 #*
 #* Licensed under the Apache License, Version 2.0 (the "License");
 #* you may not use this file except in compliance with the License.
@@ -26,21 +26,21 @@ PKG_DIR=$(dirname "${CUR_DIR}")
 
 shopt -s nullglob
 
-if ! [ -d "${PKG_DIR}/Sources" ]; then
-echo "Failed to find ${PKG_DIR}/Sources"
+if ! [ -d "${PKG_DIR}/Sources/SwiftKuery" ]; then
+echo "Failed to find ${PKG_DIR}/Sources/SwiftKuery"
 exit 1
 fi
 
 INPUT_CLAUSES_FILE="${PKG_DIR}/Scripts/ColumnExtensionClauses.txt"
 INPUT_OPERANDS_FILE="${PKG_DIR}/Scripts/ColumnExtensionOperands.txt"
 
-OUTPUT_FILE="${PKG_DIR}/Sources/ColumnAndExpressions_Extensions.swift"
+OUTPUT_FILE="${PKG_DIR}/Sources/SwiftKuery/ColumnAndExpressions_Extensions.swift"
 
 echo "--- Generating ${OUTPUT_FILE}"
 
 cat <<'EOF' > ${OUTPUT_FILE}
 /**
-* Copyright IBM Corporation 2016
+* Copyright IBM Corporation 2016, 2017
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -122,6 +122,14 @@ cat <<EOF >> ${OUTPUT_FILE}
     /// - Parameter values: The list of values for the $OPERATOR expression.
     /// - Returns: A \`$CLAUSE_TYPE\` containing the clause.
     public func $OPERATOR(_ values: $PARAM_TYPE...) -> $CLAUSE_TYPE {
+        return $OPERATOR(values)
+    }
+
+    /// Create a \`$CLAUSE_TYPE\` clause using the $OPERATOR operator for $PARAM_TYPE.
+    ///
+    /// - Parameter values: An array of values for the $OPERATOR expression.
+    /// - Returns: A \`$CLAUSE_TYPE\` containing the clause.
+    public func $OPERATOR(_ values: [$PARAM_TYPE]) -> $CLAUSE_TYPE {
         return $CLAUSE_TYPE(lhs: .$TYPE_LOWER(self), rhs: .arrayOf$PARAM_TYPE(values), condition: .$OPERATOR)
     }
 EOF

@@ -1,5 +1,5 @@
 #/**
-#* Copyright IBM Corporation 2016
+#* Copyright IBM Corporation 2016, 2017
 #*
 #* Licensed under the Apache License, Version 2.0 (the "License");
 #* you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 # An input file for subqueries.sh that generates global operators with subqueries (i.e. 'expression operator ANY/ALL(subquery)').
 # This file contains the list of all the types for the operators: (the result type (Filter or Having), LHS, RHS (the subquery type)).
-# The generated code is in Sources/Subqueries_GlobalFunctionsAndExtensions.swift.
+# The generated code is in Sources/SwiftKuery/Subqueries_GlobalFunctionsAndExtensions.swift.
 
 # This is also an input file for testSubqueries.sh that generates the tests for the code created by subqueries.sh.
 # The first three entries in each line are ignored. The format of the rest of the line is

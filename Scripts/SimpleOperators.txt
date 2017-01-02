@@ -1,5 +1,5 @@
 #/**
-#* Copyright IBM Corporation 2016
+#* Copyright IBM Corporation 2016, 2017
 #*
 #* Licensed under the Apache License, Version 2.0 (the "License");
 #* you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
 
 # An input file for simpleOperators.sh that generates global operators for simple conditions that return Filter and Having clauses.
 # This file contains the operators.
-# The generated code is in Sources/FilterAndHaving_GlobalFunctions.swift.
+# The generated code is in Sources/SwiftKuery/FilterAndHaving_GlobalFunctions.swift.
 
 # An input file for subqueries.sh that generates global operators with subqueries (i.e. 'expression operator ANY/ALL(subquery)').
-# The generated code is in Sources/Subqueries_GlobalFunctionsAndExtensions.swift.
+# The generated code is in Sources/SwiftKuery/Subqueries_GlobalFunctionsAndExtensions.swift.
 
 # This is also an input file for testSimpleOperators.sh that generates the tests for the code created by simpleOperators.sh.
 # The generated tests are in TestFilterAndHaving.swift

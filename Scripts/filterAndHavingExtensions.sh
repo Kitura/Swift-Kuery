@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #/**
-#* Copyright IBM Corporation 2016
+#* Copyright IBM Corporation 2016, 2017
 #*
 #* Licensed under the Apache License, Version 2.0 (the "License");
 #* you may not use this file except in compliance with the License.
@@ -26,18 +26,18 @@ PKG_DIR=$(dirname "${CUR_DIR}")
 
 shopt -s nullglob
 
-if ! [ -d "${PKG_DIR}/Sources" ]; then
-echo "Failed to find ${PKG_DIR}/Sources"
+if ! [ -d "${PKG_DIR}/Sources/SwiftKuery" ]; then
+echo "Failed to find ${PKG_DIR}/Sources/SwiftKuery"
 exit 1
 fi
 
-OUTPUT_FILE="${PKG_DIR}/Sources/FilterAndHaving_Extensions.swift"
+OUTPUT_FILE="${PKG_DIR}/Sources/SwiftKuery/FilterAndHaving_Extensions.swift"
 
 echo "--- Generating ${OUTPUT_FILE}"
 
 cat <<'EOF' > ${OUTPUT_FILE}
 /**
-* Copyright IBM Corporation 2016
+* Copyright IBM Corporation 2016, 2017
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
