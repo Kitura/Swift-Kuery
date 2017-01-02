@@ -30,8 +30,16 @@ public struct Raw: Query {
     /// - Parameter query: A String containing the query.
     /// - Parameter table: The table(s) to apply the query on.
     public init(query: String, table: Table...) {
+        self.init(query: query, tables: table)
+    }
+
+    /// Initialize an instance of Raw.
+    ///
+    /// - Parameter query: A String containing the query.
+    /// - Parameter tables: An array of tables to apply the query on.
+    public init(query: String, tables: [Table]) {
         self.query = query
-        self.tables = table
+        self.tables = tables
     }
 
     /// Build the query using `QueryBuilder`.

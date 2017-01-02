@@ -75,7 +75,7 @@ public struct Select: Query {
     ///
     /// - Parameter fields: An array of `Field` elements to select.
     /// - Parameter from table: The table(s) to select from.
-    public init(fields: [Field], from table: Table...) {
+    public init(_ fields: [Field], from table: Table...) {
         self.fields = fields
         self.tables = table
     }
@@ -93,7 +93,7 @@ public struct Select: Query {
     ///
     /// - Parameter fields: An array of `Field` elements to select.
     /// - Parameter from table: An array of tables to select from.
-    public init(fields: [Field], from tables: [Table]) {
+    public init(_ fields: [Field], from tables: [Table]) {
         self.fields = fields
         self.tables = tables
     }
@@ -185,7 +185,7 @@ public struct Select: Query {
     /// - Parameter from: The table to select from.
     /// - Returns: A new instance of Select with `distinct` flag set.
     public static func distinct(_ fields: Field..., from table: Table) -> Select {
-        var selectQuery = Select(fields: fields, from: table)
+        var selectQuery = Select(fields, from: table)
         selectQuery.distinct = true
         return selectQuery
     }
@@ -195,8 +195,8 @@ public struct Select: Query {
     /// - Parameter fields: An array of `Field`s to select.
     /// - Parameter from table: The table to select from.
     /// - Returns: A new instance of Select with `distinct` flag set.
-    public static func distinct(fields: [Field], from table: Table...) -> Select {
-        var selectQuery = Select(fields: fields, from: table)
+    public static func distinct(_ fields: [Field], from table: Table...) -> Select {
+        var selectQuery = Select(fields, from: table)
         selectQuery.distinct = true
         return selectQuery
     }
@@ -207,7 +207,7 @@ public struct Select: Query {
     /// - Parameter from: An array of tables to select from.
     /// - Returns: A new instance of Select with `distinct` flag set.
     public static func distinct(_ fields: Field..., from tables: [Table]) -> Select {
-        var selectQuery = Select(fields: fields, from: tables)
+        var selectQuery = Select(fields, from: tables)
         selectQuery.distinct = true
         return selectQuery
     }
@@ -217,8 +217,8 @@ public struct Select: Query {
     /// - Parameter fields: An array of `Field`s to select.
     /// - Parameter from: An array of tables to select from.
     /// - Returns: A new instance of Select with `distinct` flag set.
-    public static func distinct(fields: [Field], from tables: [Table]) -> Select  {
-        var selectQuery = Select(fields: fields, from: tables)
+    public static func distinct(_ fields: [Field], from tables: [Table]) -> Select  {
+        var selectQuery = Select(fields, from: tables)
         selectQuery.distinct = true
         return selectQuery
     }
@@ -237,12 +237,19 @@ public struct Select: Query {
         return new
     }
     
-    
     /// Add the ORDER BY keyword to the query.
     ///
     /// - Parameter by: A list of the `OrderBy` to apply.
     /// - Returns: A new instance of Select with the ORDER BY keyword.
     public func order(by clause: OrderBy...) -> Select {
+        return order(by: clause)
+    }
+    
+    /// Add the ORDER BY keyword to the query.
+    ///
+    /// - Parameter by: An array of the `OrderBy` to apply.
+    /// - Returns: A new instance of Select with the ORDER BY keyword.
+    public func order(by clause: [OrderBy]) -> Select {
         var new = self
         if orderBy != nil {
             new.syntaxError += "Multiple order by clauses. "
@@ -258,6 +265,14 @@ public struct Select: Query {
     /// - Parameter by: A list of `Column`s to group by.
     /// - Returns: A new instance of Select with the GROUP BY clause.
     public func group(by clause: Column...) -> Select {
+        return group(by: clause)
+    }
+    
+    /// Add the GROUP BY clause to the query.
+    ///
+    /// - Parameter by: A list of `Column`s to group by.
+    /// - Returns: A new instance of Select with the GROUP BY clause.
+    public func group(by clause: [Column]) -> Select {
         var new = self
         if groupBy != nil {
             new.syntaxError += "Multiple group by clauses. "
@@ -342,6 +357,14 @@ public struct Select: Query {
     /// - Parameter columns: A list of `Column`s to match in the JOIN statement.
     /// - Returns: A new instance of Select with the USING clause.
     public func using(_ columns: Column...) -> Select {
+        return using(columns)
+    }
+    
+    /// Add an SQL USING clause to the JOIN statement.
+    ///
+    /// - Parameter columns: An array of `Column`s to match in the JOIN statement.
+    /// - Returns: A new instance of Select with the USING clause.
+    public func using(_ columns: [Column]) -> Select {
         var new = self
         
         guard new.joins.count > 0 else {
