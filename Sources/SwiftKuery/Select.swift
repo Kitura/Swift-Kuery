@@ -195,7 +195,7 @@ public struct Select: Query {
     /// - Parameter fields: An array of `Field`s to select.
     /// - Parameter from table: The table to select from.
     /// - Returns: A new instance of Select with `distinct` flag set.
-    public static func distinct(_ fields: [Field], from table: Table...) -> Select {
+    public static func distinct(fields: [Field], from table: Table...) -> Select {
         var selectQuery = Select(fields: fields, from: table)
         selectQuery.distinct = true
         return selectQuery
