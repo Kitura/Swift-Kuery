@@ -71,12 +71,12 @@ class TestSelect: XCTestCase {
         query = "SELECT DISTINCT tableSelect.a FROM tableSelect WHERE (tableSelect.a NOT LIKE 'b%') IS NULL LIMIT 3 OFFSET 2"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
  
-//        s = Select(t.b, t.a, from: t)
-//            .where(((t.a == "banana") || (ucase(t.a) == "APPLE")) && (t.b == 27 || t.b == -7 || t.b == 17))
-//            .order(by: [.ASC(t.b), .DESC(t.a)])
-//        kuery = connection.descriptionOf(query: s)
-//        query = "SELECT tableSelect.b, tableSelect.a FROM tableSelect WHERE ((tableSelect.a = 'banana') OR (UCASE(tableSelect.a) = 'APPLE')) AND (((tableSelect.b = 27) OR (tableSelect.b = -7)) OR (tableSelect.b = 17)) ORDER BY tableSelect.b ASC, tableSelect.a DESC"
-//        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        s = Select(t.b, t.a, from: t)
+            .where(((t.a == "banana") || (ucase(t.a) == "APPLE")) && (t.b == 27 || t.b == -7 || t.b == 17))
+            .order(by: [.ASC(t.b), .DESC(t.a)])
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT tableSelect.b, tableSelect.a FROM tableSelect WHERE ((tableSelect.a = 'banana') OR (UCASE(tableSelect.a) = 'APPLE')) AND (((tableSelect.b = 27) OR (tableSelect.b = -7)) OR (tableSelect.b = 17)) ORDER BY tableSelect.b ASC, tableSelect.a DESC"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(t.a, from: t)
             .where((t.b >= 0.76).isNotNull())
@@ -101,12 +101,12 @@ class TestSelect: XCTestCase {
         query = "SELECT tableSelect.a FROM tableSelect GROUP BY tableSelect.a HAVING (LAST(tableSelect.b) > 0) IS NOT NULL"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
-//        s = Select(t.a, from: t)
-//            .group(by: [t.a])
-//            .having(last(t.b).isNull())
-//        kuery = connection.descriptionOf(query: s)
-//        query = "SELECT tableSelect.a FROM tableSelect GROUP BY tableSelect.a HAVING LAST(tableSelect.b) IS NULL"
-//        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        s = Select(t.a, from: t)
+            .group(by: [t.a])
+            .having(last(t.b).isNull())
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT tableSelect.a FROM tableSelect GROUP BY tableSelect.a HAVING LAST(tableSelect.b) IS NULL"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(t.a, from: t)
             .group(by: t.a)
