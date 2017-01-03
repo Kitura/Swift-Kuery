@@ -59,6 +59,8 @@ public struct Select: Query {
     /// ON clause can be represented as `Filter` or a `String` containing raw SQL.
     /// USING clause: an array of `Column` elements that have to match in a JOIN query.
     public private (set) var joins = [(join: Join, on: QueryFilterProtocol?, using: [Column]?)]()
+    
+    public internal (set) var with: [WithTable]?
 
     private var syntaxError = ""
 
@@ -114,7 +116,16 @@ public struct Select: Query {
             throw QueryError.syntaxError(syntaxError)
         }
 
-        var result = "SELECT "
+        var result = ""
+        
+        if let with = with {
+            result += "WITH "
+                + "\(try with.map { try $0.buildWith(queryBuilder: queryBuilder) }.joined(separator: ", "))"
+                + " "
+        }
+        
+        result += "SELECT "
+        
         if distinct {
             result += "DISTINCT "
         }
