@@ -20,14 +20,14 @@
 ///
 /// - Parameter table: A table for WITH clause.
 /// - Parameter query: A SELECT query that will use table from WITH clause.
-public func With(_ table: WithTable, _ query: Select) -> Select {
-    return With([table], query)
+public func with(_ table: WithTable, _ query: Select) -> Select {
+    return with([table], query)
 }
 
 /// Create a query with WITH clause.
 ///
 /// - Parameter tables: An array of tables for WITH clause.
 /// - Parameter query: A SELECT query that will use table from WITH clause.
-public func With(_ tables: [WithTable], _ query: Select) -> Select {
+public func with(_ tables: [WithTable], _ query: Select) -> Select {
     return query.with(tables)
 }
