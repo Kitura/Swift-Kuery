@@ -218,5 +218,23 @@ class TestSyntaxError: XCTestCase {
         catch {
             XCTFail("Other than syntax error.")
         }
+        
+        class aux: WithTable {
+            let tableName = "a"
+        }
+        let auxTable = aux(as: Select(t.a, from: t))
+        
+        let wq1 = with(auxTable, Select(t.a, from: t))
+        let wq2 = with(auxTable, wq1)
+        do {
+            let _ = try wq2.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        }
+        catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "Multiple with clauses. ")
+        }
+        catch {
+            XCTFail("Other than syntax error.")
+        }
     }
 }
