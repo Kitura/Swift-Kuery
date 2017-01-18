@@ -74,14 +74,14 @@ class TestSyntaxError: XCTestCase {
         u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
             .where(t.a == "banana")
             .where(t.b == 7)
-            .rawSuffix("RETURNING *")
-            .rawSuffix("RETURNING a")
+            .suffix("RETURNING *")
+            .suffix("RETURNING a")
         do {
             let _ = try u.build(queryBuilder: connection.queryBuilder)
             XCTFail("No syntax error.")
         }
         catch QueryError.syntaxError(let error) {
-            XCTAssertEqual(error, "Multiple where clauses. Multiple raw suffixes. ")
+            XCTAssertEqual(error, "Multiple where clauses. Multiple suffixes. ")
         }
         catch {
             XCTFail("Other than syntax error.")
@@ -91,14 +91,14 @@ class TestSyntaxError: XCTestCase {
             .where("a == \"apple\"")
             .where(t.b == "2")
             .where(t.b == 7)
-            .rawSuffix("RETURNING *")
-            .rawSuffix("RETURNING a")
+            .suffix("RETURNING *")
+            .suffix("RETURNING a")
         do {
             let _ = try d.build(queryBuilder: connection.queryBuilder)
             XCTFail("No syntax error.")
         }
         catch QueryError.syntaxError(let error) {
-            XCTAssertEqual(error, "Multiple where clauses. Multiple where clauses. Multiple raw suffixes. ")
+            XCTAssertEqual(error, "Multiple where clauses. Multiple where clauses. Multiple suffixes. ")
         }
         catch {
             XCTFail("Other than syntax error.")
@@ -129,14 +129,14 @@ class TestSyntaxError: XCTestCase {
         }
 
         let i3 = Insert(into: t, values: "apple", 10)
-            .rawSuffix("RETURNING *")
-            .rawSuffix("RETURNING *")
+            .suffix("RETURNING *")
+            .suffix("RETURNING *")
         do {
             let _ = try i3.build(queryBuilder: connection.queryBuilder)
             XCTFail("No syntax error.")
         }
         catch QueryError.syntaxError(let error) {
-            XCTAssertEqual(error, "Multiple raw suffixes. ")
+            XCTAssertEqual(error, "Multiple suffixes. ")
         }
         catch {
             XCTFail("Other than syntax error.")
