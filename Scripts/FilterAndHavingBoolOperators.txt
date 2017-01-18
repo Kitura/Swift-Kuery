@@ -1,5 +1,5 @@
 #/**
-#* Copyright IBM Corporation 2016
+#* Copyright IBM Corporation 2016, 2017
 #*
 #* Licensed under the Apache License, Version 2.0 (the "License");
 #* you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 # An input file for simpleOperators.sh that generates global operators for simple conditions that return Filter and Having clauses.
 # This file contains both the operators and the types for conditions with Bool as a type of one of the operands.
 # The last entry is ignored.
-# The generated code is in Sources/FilterAndHaving_GlobalFunctions.swift.
+# The generated code is in Sources/SwiftKuery/FilterAndHaving_GlobalFunctions.swift.
 
 # This is also an input file for testSimpleOperators.sh that generates the tests for the code created by simpleOperators.sh.
 # The format is (operator in query creation, Condition case (ignored), SQL operator).

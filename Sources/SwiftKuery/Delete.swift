@@ -25,6 +25,9 @@ public struct Delete: Query {
     /// Could be represented with a `Filter` clause or a `String` containing raw SQL.
     public private (set) var whereClause: QueryFilterProtocol?
 
+    /// A String with a clause to be appended to the end of the query.
+    public private (set) var rawSuffix: String?
+    
     private var syntaxError = ""
 
     /// Initialize an instance of Delete.
@@ -49,6 +52,9 @@ public struct Delete: Query {
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
+        if let rawSuffix = rawSuffix {
+            result += " " + rawSuffix
+        }
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
@@ -67,4 +73,20 @@ public struct Delete: Query {
         }
         return new
     }
+    
+    /// Add a raw suffix to the delete statement.
+    ///
+    /// - Parameter raw: A String with a clause to be appended to the end of the query.
+    /// - Returns: A new instance of Delete.
+    public func rawSuffix(_ raw: String) -> Delete {
+        var new = self
+        if rawSuffix != nil {
+            new.syntaxError += "Multiple raw suffixes. "
+        }
+        else {
+            new.rawSuffix = raw
+        }
+        return new
+    }
+
 }

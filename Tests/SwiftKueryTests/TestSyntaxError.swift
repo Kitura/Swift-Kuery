@@ -91,12 +91,14 @@ class TestSyntaxError: XCTestCase {
             .where("a == \"apple\"")
             .where(t.b == "2")
             .where(t.b == 7)
+            .rawSuffix("RETURNING *")
+            .rawSuffix("RETURNING a")
         do {
             let _ = try d.build(queryBuilder: connection.queryBuilder)
             XCTFail("No syntax error.")
         }
         catch QueryError.syntaxError(let error) {
-            XCTAssertEqual(error, "Multiple where clauses. Multiple where clauses. ")
+            XCTAssertEqual(error, "Multiple where clauses. Multiple where clauses. Multiple raw suffixes. ")
         }
         catch {
             XCTFail("Other than syntax error.")

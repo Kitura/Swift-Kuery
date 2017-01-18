@@ -80,6 +80,14 @@ public struct Insert: Query {
     /// Initialize an instance of Insert.
     ///
     /// - Parameter into: The table to insert rows.
+    /// - Parameter values: An array of values (the row) to insert.
+    public init(into table: Table, values: [Any]) {
+        self.init(into: table, columns: nil, values: values)
+    }
+
+    /// Initialize an instance of Insert.
+    ///
+    /// - Parameter into: The table to insert rows.
     /// - Parameter valueTuples: An array of (column, value) pairs to insert.
     public init(into table: Table, valueTuples: [(Column, Any)]) {
         var columnsArray = Array<Column>()
@@ -98,7 +106,7 @@ public struct Insert: Query {
     public init(into table: Table, valueTuples: (Column, Any)...) {
         self.init(into: table, valueTuples: valueTuples)
     }
-    
+
     /// Initialize an instance of Insert.
     ///
     /// - Parameter into: The table to insert rows.
