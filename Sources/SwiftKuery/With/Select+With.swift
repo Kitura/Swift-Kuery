@@ -14,11 +14,23 @@
  limitations under the License.
  */
 
+// MARK: Select
+
+/// Select query extension to enable with clauses.
 extension Select {
     
+    /// Set tables to be used for WITH clause.
+    ///
+    /// - Parameter tables: A list of the `OrderBy` to apply.
+    /// - Returns: A new instance of Select with tables for WITH clause.
     internal func with(_ tables: [WithTable]) -> Select {
         var new = self
-        new.with = tables
+        if new.with != nil {
+            new.syntaxError += "Multiple with clauses. "
+        }
+        else {
+            new.with = tables
+        }
         return new
     }
 }

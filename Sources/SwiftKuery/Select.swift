@@ -62,7 +62,7 @@ public struct Select: Query {
     
     public internal (set) var with: [WithTable]?
 
-    private var syntaxError = ""
+    internal var syntaxError = ""
 
     /// Initialize an instance of Select.
     ///
