@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,25 +14,6 @@
  limitations under the License.
  */
 
-public class WithTable: Table {
-    
-    private var query: Query
-    
-    public required init(as query: Query) {
-        self.query = query
-        super.init()
-    }
-    
-    public required init() {
-        fatalError()
-    }
-    
-    public func buildWith(queryBuilder: QueryBuilder) throws -> String {
-        return self.nameInQuery + " AS " + "(" + (try self.query.build(queryBuilder: queryBuilder)) + ")"
-    }
-
-}
-
 extension Select {
     
     internal func with(_ tables: [WithTable]) -> Select {
@@ -40,12 +21,4 @@ extension Select {
         new.with = tables
         return new
     }
-}
-
-public func With(_ table: WithTable, _ query: Select) -> Select {
-    return With([table], query)
-}
-
-public func With(_ tables: [WithTable], _ query: Select) -> Select {
-    return query.with(tables)
 }
