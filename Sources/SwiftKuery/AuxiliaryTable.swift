@@ -14,18 +14,18 @@
  limitations under the License.
  */
 
-// MARK: WithTable
+// MARK: AuxiliaryTable
 
-/// Subclasses of the WithTable class are describing a table that is used in WITH clauses.
+/// Subclasses of the `AuxiliaryTable` class are describing a table that is used in WITH clauses.
 open class AuxiliaryTable: Table {
     
     /// A query used to build table in WITH clause
     private var query: Query?
     
-    /// Initialize an instance of WithTable.
+    /// Initialize an instance of `AuxiliaryTable`.
     ///
     /// - Parameter query: A query that will be used in WITH clause.
-    public convenience required init(as query: Query) {
+    public convenience init(as query: Query) {
         self.init()
         self.query = query
     }

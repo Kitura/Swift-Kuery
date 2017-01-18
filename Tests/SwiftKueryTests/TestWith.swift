@@ -44,7 +44,7 @@ class TestWith: XCTestCase {
         let t1 = MyTable1()
         let connection = createConnection()
         
-        class AuxTable: WithTable {
+        class AuxTable: AuxiliaryTable {
             let tableName = "aux_table"
             
             let d = Column("d")

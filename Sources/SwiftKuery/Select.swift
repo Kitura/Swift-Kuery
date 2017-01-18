@@ -474,7 +474,7 @@ public struct Select: Query {
     
     /// Set tables to be used for WITH clause.
     ///
-    /// - Parameter tables: A list of the `WithTable` to apply.
+    /// - Parameter tables: A list of the `AuxiliaryTable` to apply.
     /// - Returns: A new instance of Select with tables for WITH clause.
     func with(_ tables: [AuxiliaryTable]) -> Select {
         var new = self

@@ -219,7 +219,7 @@ class TestSyntaxError: XCTestCase {
             XCTFail("Other than syntax error.")
         }
         
-        class aux: WithTable {
+        class aux: AuxiliaryTable {
             let tableName = "a"
         }
         let auxTable = aux(as: Select(t.a, from: t))
