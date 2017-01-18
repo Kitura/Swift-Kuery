@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016, 2017
+ Copyright IBM Corporation 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -18,16 +18,16 @@
 
 /// Create a query with WITH clause.
 ///
-/// - Parameter table: A table for WITH clause.
-/// - Parameter query: A SELECT query that will use table from WITH clause.
-public func with(_ table: WithTable, _ query: Select) -> Select {
+/// - Parameter table: A table for a WITH clause.
+/// - Parameter query: A SELECT query that will use the table from the WITH clause.
+public func with(_ table: AuxiliaryTable, _ query: Select) -> Select {
     return with([table], query)
 }
 
 /// Create a query with WITH clause.
 ///
 /// - Parameter tables: An array of tables for WITH clause.
-/// - Parameter query: A SELECT query that will use table from WITH clause.
-public func with(_ tables: [WithTable], _ query: Select) -> Select {
+/// - Parameter query: A SELECT query that will use the table from the WITH clause.
+public func with(_ tables: [AuxiliaryTable], _ query: Select) -> Select {
     return query.with(tables)
 }

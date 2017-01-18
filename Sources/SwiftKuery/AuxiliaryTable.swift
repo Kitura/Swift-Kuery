@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016, 2017
+ Copyright IBM Corporation 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 // MARK: WithTable
 
 /// Subclasses of the WithTable class are describing a table that is used in WITH clauses.
-open class WithTable: Table {
+open class AuxiliaryTable: Table {
     
     /// A query used to build table in WITH clause
     private var query: Query?
@@ -25,13 +25,9 @@ open class WithTable: Table {
     /// Initialize an instance of WithTable.
     ///
     /// - Parameter query: A query that will be used in WITH clause.
-    public required init(as query: Query) {
-        super.init()
+    public convenience required init(as query: Query) {
+        self.init()
         self.query = query
-    }
-    
-    /// Initialize an instance of WithTable.
-    public required init() {
     }
     
     /// Build the WITH clause using `QueryBuilder`.

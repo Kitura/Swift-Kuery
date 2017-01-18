@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -60,9 +60,9 @@ public struct Select: Query {
     /// USING clause: an array of `Column` elements that have to match in a JOIN query.
     public private (set) var joins = [(join: Join, on: QueryFilterProtocol?, using: [Column]?)]()
     
-    public internal (set) var with: [WithTable]?
+    public private (set) var with: [AuxiliaryTable]?
 
-    internal var syntaxError = ""
+    private var syntaxError = ""
 
     /// Initialize an instance of Select.
     ///
@@ -469,6 +469,21 @@ public struct Select: Query {
     public func rawJoin(_ raw: String, _ table: Table) -> Select {
         var new = self
         new.joins.append((.raw(raw, table), nil, nil))
+        return new
+    }
+    
+    /// Set tables to be used for WITH clause.
+    ///
+    /// - Parameter tables: A list of the `WithTable` to apply.
+    /// - Returns: A new instance of Select with tables for WITH clause.
+    func with(_ tables: [AuxiliaryTable]) -> Select {
+        var new = self
+        if new.with != nil {
+            new.syntaxError += "Multiple with clauses. "
+        }
+        else {
+            new.with = tables
+        }
         return new
     }
 }
