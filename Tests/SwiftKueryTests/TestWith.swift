@@ -53,13 +53,13 @@ class TestWith: XCTestCase {
         
         var withTable = AuxTable(as: Select(t1.c.as("d"), t1.b.as("f"), from: t1))
         
-        var s = with(withTable, Select(withTable.d, t.a, from: t).join(withTable))
+        var s = with(withTable, Select(withTable.d, t.a, from: t).join(withTable).on(t.b == withTable.f))
         let kuery = connection.descriptionOf(query: s)
-        let query = "WITH aux_table AS (SELECT tableSelect1.c AS d, tableSelect1.b AS f FROM tableSelect1) SELECT aux_table.d, tableSelect.a FROM tableSelect JOIN aux_table"
+        let query = "WITH aux_table AS (SELECT tableSelect1.c AS d, tableSelect1.b AS f FROM tableSelect1) SELECT aux_table.d, tableSelect.a FROM tableSelect JOIN aux_table ON t.b = aux_table.f"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         withTable = AuxTable()
-        s = with(withTable, Select(withTable.d, t.a, from: t).join(withTable))
+        s = with(withTable, Select(withTable.d, t.a, from: t).join(withTable).on(t.b == withTable.f))
         do {
             let _ = try s.build(queryBuilder: connection.queryBuilder)
             XCTFail("No syntax error.")
