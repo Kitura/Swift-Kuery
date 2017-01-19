@@ -16,7 +16,7 @@
 
 // MARK: With
 
-/// Create a query with WITH clause.
+/// Create a query with a WITH clause.
 ///
 /// - Parameter table: A table for a WITH clause.
 /// - Parameter query: A SELECT query that will use the table from the WITH clause.
@@ -24,9 +24,9 @@ public func with(_ table: AuxiliaryTable, _ query: Select) -> Select {
     return with([table], query)
 }
 
-/// Create a query with WITH clause.
+/// Create a query with a WITH clause.
 ///
-/// - Parameter tables: An array of tables for WITH clause.
+/// - Parameter tables: An array of tables for a WITH clause.
 /// - Parameter query: A SELECT query that will use the table from the WITH clause.
 public func with(_ tables: [AuxiliaryTable], _ query: Select) -> Select {
     return query.with(tables)
