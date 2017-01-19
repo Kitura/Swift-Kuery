@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ class TestSelect: XCTestCase {
     static var allTests: [(String, (TestSelect) -> () throws -> Void)] {
         return [
             ("testSelect", testSelect),
+            ("testSelectWith", testSelectWith),
         ]
     }
     
@@ -169,5 +170,46 @@ class TestSelect: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         query = "SELECT tableSelect.a FROM tableSelect WHERE (LEN(tableSelect.a) >= ROUND(LEN(tableSelect.b), 2)) AND (MID(UCASE(tableSelect.b), 3, 2) = tableSelect.a)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+    }
+    
+    func testSelectWith() {
+        let t = MyTable()
+        let t2 = MyTable2()
+        let connection = createConnection()
+        
+        class AuxTable: AuxiliaryTable {
+            let tableName = "aux_table"
+            
+            let d = Column("d")
+            let f = Column("f")
+        }
+        
+        var withTable = AuxTable(as: Select(t2.c.as("d"), t2.b.as("f"), from: t2))
+        
+        var s = with(withTable, Select(withTable.d, t.a, from: t).join(withTable).on(t.b == withTable.f))
+        let kuery = connection.descriptionOf(query: s)
+        let query = "WITH aux_table AS (SELECT tableSelect2.c AS d, tableSelect2.b AS f FROM tableSelect2) SELECT aux_table.d, tableSelect.a FROM tableSelect JOIN aux_table ON tableSelect.b = aux_table.f"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        
+        withTable = AuxTable()
+        s = with(withTable, Select(withTable.d, t.a, from: t).join(withTable).on(t.b == withTable.f))
+        do {
+            let _ = try s.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        } catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "With query was not specified. ")
+        } catch {
+            XCTFail("Other than syntax error.")
+        }
+        
+        s = with(withTable, s)
+        do {
+            let _ = try s.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        } catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "Multiple with clauses. ")
+        } catch {
+            XCTFail("Other than syntax error.")
+        }
     }
 }

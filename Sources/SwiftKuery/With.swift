@@ -16,6 +16,7 @@
 
 // MARK: With
 
+
 /// Create a query with a WITH clause.
 ///
 /// - Parameter table: A table for a WITH clause.
@@ -31,3 +32,55 @@ public func with(_ table: AuxiliaryTable, _ query: Select) -> Select {
 public func with(_ tables: [AuxiliaryTable], _ query: Select) -> Select {
     return query.with(tables)
 }
+
+
+/// Create a query with a WITH clause.
+///
+/// - Parameter table: A table for a WITH clause.
+/// - Parameter query: An INSERT query that will use the table from the WITH clause.
+public func with(_ table: AuxiliaryTable, _ query: Insert) -> Insert {
+    return with([table], query)
+}
+
+/// Create a query with a WITH clause.
+///
+/// - Parameter tables: An array of tables for a WITH clause.
+/// - Parameter query: An INSERT query that will use the table from the WITH clause.
+public func with(_ tables: [AuxiliaryTable], _ query: Insert) -> Insert {
+    return query.with(tables)
+}
+
+
+/// Create a query with a WITH clause.
+///
+/// - Parameter table: A table for a WITH clause.
+/// - Parameter query: An UPDATE query that will use the table from the WITH clause.
+public func with(_ table: AuxiliaryTable, _ query: Update) -> Update {
+    return with([table], query)
+}
+
+/// Create a query with a WITH clause.
+///
+/// - Parameter tables: An array of tables for a WITH clause.
+/// - Parameter query: An UPDATE query that will use the table from the WITH clause.
+public func with(_ tables: [AuxiliaryTable], _ query: Update) -> Update {
+    return query.with(tables)
+}
+
+
+/// Create a query with a WITH clause.
+///
+/// - Parameter table: A table for a WITH clause.
+/// - Parameter query: A DELETE query that will use the table from the WITH clause.
+public func with(_ table: AuxiliaryTable, _ query: Delete) -> Delete {
+    return with([table], query)
+}
+
+/// Create a query with a WITH clause.
+///
+/// - Parameter tables: An array of tables for a WITH clause.
+/// - Parameter query: A DELETE query that will use the table from the WITH clause.
+public func with(_ tables: [AuxiliaryTable], _ query: Delete) -> Delete {
+    return query.with(tables)
+}
+

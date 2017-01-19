@@ -23,6 +23,7 @@ class TestInsert: XCTestCase {
     static var allTests: [(String, (TestInsert) -> () throws -> Void)] {
         return [
             ("testInsert", testInsert),
+            ("testInsertWith", testInsertWith),
         ]
     }
         
@@ -76,5 +77,48 @@ class TestInsert: XCTestCase {
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO tableInsert (a) SELECT tableInsert2.a FROM tableInsert2 RETURNING a"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+    }
+    
+    func testInsertWith() {
+        let t = MyTable()
+        let t2 = MyTable2()
+        let connection = createConnection()
+        
+        class AuxTable: AuxiliaryTable {
+            let tableName = "aux_table"
+            
+            let c = Column("c")
+        }
+        
+        var withTable = AuxTable(as: Select(t2.a.as("c"), from: t2))
+        var insertSelect = Select(withTable.c, from: withTable)
+        var i = with(withTable,
+                     Insert(into: t, columns: [t.a], insertSelect))
+        let kuery = connection.descriptionOf(query: i)
+        let query = "WITH aux_table AS (SELECT tableInsert2.a AS c FROM tableInsert2) INSERT INTO tableInsert (a) SELECT aux_table.c FROM aux_table"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        
+        withTable = AuxTable()
+        insertSelect = Select(withTable.c, from: withTable)
+        i = with(withTable,
+                     Insert(into: t, columns: [t.a], insertSelect))
+        do {
+            let _ = try i.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        } catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "With query was not specified. ")
+        } catch {
+            XCTFail("Other than syntax error.")
+        }
+        
+        i = with(withTable, i)
+        do {
+            let _ = try i.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        } catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "Multiple with clauses. ")
+        } catch {
+            XCTFail("Other than syntax error.")
+        }
     }
 }
