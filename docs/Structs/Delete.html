@@ -1691,6 +1691,9 @@
                 <a class="nav-group-task-link" href="../Protocols.html#/s:P10SwiftKuery19QueryHavingProtocol">QueryHavingProtocol</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:P10SwiftKuery19QuerySuffixProtocol">QuerySuffixProtocol</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ResultFetcher.html">ResultFetcher</a>
               </li>
             </ul>
@@ -1816,6 +1819,33 @@ Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></c
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">whereClause</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vV10SwiftKuery6Delete6suffixGSqPS_19QuerySuffixProtocol__"></a>
+                    <a name="//apple_ref/swift/Property/suffix" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vV10SwiftKuery6Delete6suffixGSqPS_19QuerySuffixProtocol__">suffix</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A String with a clause to be appended to the end of the query.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">suffix</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QuerySuffixProtocol">QuerySuffixProtocol</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -2028,6 +2058,70 @@ Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></c
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FV10SwiftKuery6Delete6suffixFSSS0_"></a>
+                    <a name="//apple_ref/swift/Method/suffix(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery6Delete6suffixFSSS0_">suffix(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a raw suffix to the delete statement.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter raw: A String with a clause to be appended to the end of the query.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A new instance of Delete.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">suffix</span><span class="p">(</span><span class="n">_</span> <span class="nv">raw</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Delete</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>raw</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A String with a clause to be appended to the end of the query.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new instance of Delete.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -2036,7 +2130,7 @@ Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></c
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-12-21)</p>
+      <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2017-01-19)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

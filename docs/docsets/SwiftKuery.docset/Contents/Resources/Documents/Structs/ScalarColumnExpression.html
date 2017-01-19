@@ -1691,6 +1691,9 @@
                 <a class="nav-group-task-link" href="../Protocols.html#/s:P10SwiftKuery19QueryHavingProtocol">QueryHavingProtocol</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:P10SwiftKuery19QuerySuffixProtocol">QuerySuffixProtocol</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ResultFetcher.html">ResultFetcher</a>
               </li>
             </ul>
@@ -2412,6 +2415,70 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:FV10SwiftKuery22ScalarColumnExpression2inFGSaSb_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Method/in(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression2inFGSaSb_VS_6Filter">in(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the <code>in</code> operator for Bool.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter values: An array of values for the <code>in</code> expression.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">in</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="kt">Bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>values</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of values for the <code>in</code> expression.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:FV10SwiftKuery22ScalarColumnExpression5notInFtGSaSb__VS_6Filter"></a>
                     <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression5notInFtGSaSb__VS_6Filter">notIn(_:)</a>
@@ -2458,6 +2525,70 @@
                               <td>
                                 <div>
                                   <p>The list of values for the notIn expression.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FV10SwiftKuery22ScalarColumnExpression5notInFGSaSb_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression5notInFGSaSb_VS_6Filter">notIn(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the notIn operator for Bool.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter values: An array of values for the notIn expression.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notIn</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="kt">Bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>values</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of values for the notIn expression.</p>
 
                                 </div>
                               </td>
@@ -2706,6 +2837,70 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:FV10SwiftKuery22ScalarColumnExpression2inFGSaSS_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Method/in(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression2inFGSaSS_VS_6Filter">in(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the <code>in</code> operator for String.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter values: An array of values for the <code>in</code> expression.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">in</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>values</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of values for the <code>in</code> expression.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:FV10SwiftKuery22ScalarColumnExpression5notInFtGSaSS__VS_6Filter"></a>
                     <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression5notInFtGSaSS__VS_6Filter">notIn(_:)</a>
@@ -2752,6 +2947,70 @@
                               <td>
                                 <div>
                                   <p>The list of values for the notIn expression.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FV10SwiftKuery22ScalarColumnExpression5notInFGSaSS_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression5notInFGSaSS_VS_6Filter">notIn(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the notIn operator for String.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter values: An array of values for the notIn expression.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notIn</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>values</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of values for the notIn expression.</p>
 
                                 </div>
                               </td>
@@ -3000,6 +3259,70 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:FV10SwiftKuery22ScalarColumnExpression2inFGSaSi_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Method/in(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression2inFGSaSi_VS_6Filter">in(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the <code>in</code> operator for Int.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter values: An array of values for the <code>in</code> expression.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">in</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>values</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of values for the <code>in</code> expression.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:FV10SwiftKuery22ScalarColumnExpression5notInFtGSaSi__VS_6Filter"></a>
                     <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression5notInFtGSaSi__VS_6Filter">notIn(_:)</a>
@@ -3046,6 +3369,70 @@
                               <td>
                                 <div>
                                   <p>The list of values for the notIn expression.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FV10SwiftKuery22ScalarColumnExpression5notInFGSaSi_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression5notInFGSaSi_VS_6Filter">notIn(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the notIn operator for Int.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter values: An array of values for the notIn expression.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notIn</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>values</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of values for the notIn expression.</p>
 
                                 </div>
                               </td>
@@ -3294,6 +3681,70 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:FV10SwiftKuery22ScalarColumnExpression2inFGSaSf_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Method/in(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression2inFGSaSf_VS_6Filter">in(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the <code>in</code> operator for Float.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter values: An array of values for the <code>in</code> expression.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">in</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="kt">Float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>values</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of values for the <code>in</code> expression.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:FV10SwiftKuery22ScalarColumnExpression5notInFtGSaSf__VS_6Filter"></a>
                     <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression5notInFtGSaSf__VS_6Filter">notIn(_:)</a>
@@ -3340,6 +3791,70 @@
                               <td>
                                 <div>
                                   <p>The list of values for the notIn expression.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FV10SwiftKuery22ScalarColumnExpression5notInFGSaSf_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression5notInFGSaSf_VS_6Filter">notIn(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the notIn operator for Float.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter values: An array of values for the notIn expression.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notIn</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="kt">Float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>values</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of values for the notIn expression.</p>
 
                                 </div>
                               </td>
@@ -3588,6 +4103,70 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:FV10SwiftKuery22ScalarColumnExpression2inFGSaSd_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Method/in(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression2inFGSaSd_VS_6Filter">in(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the <code>in</code> operator for Double.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter values: An array of values for the <code>in</code> expression.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">in</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="kt">Double</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>values</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of values for the <code>in</code> expression.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:FV10SwiftKuery22ScalarColumnExpression5notInFtGSaSd__VS_6Filter"></a>
                     <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression5notInFtGSaSd__VS_6Filter">notIn(_:)</a>
@@ -3634,6 +4213,70 @@
                               <td>
                                 <div>
                                   <p>The list of values for the notIn expression.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FV10SwiftKuery22ScalarColumnExpression5notInFGSaSd_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression5notInFGSaSd_VS_6Filter">notIn(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the notIn operator for Double.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter values: An array of values for the notIn expression.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notIn</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="kt">Double</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>values</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of values for the notIn expression.</p>
 
                                 </div>
                               </td>
@@ -3882,6 +4525,70 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:FV10SwiftKuery22ScalarColumnExpression2inFGSaVS_9Parameter_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Method/in(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression2inFGSaVS_9Parameter_VS_6Filter">in(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the <code>in</code> operator for Parameter.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter values: An array of values for the <code>in</code> expression.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">in</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>values</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of values for the <code>in</code> expression.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:FV10SwiftKuery22ScalarColumnExpression5notInFtGSaVS_9Parameter__VS_6Filter"></a>
                     <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression5notInFtGSaVS_9Parameter__VS_6Filter">notIn(_:)</a>
@@ -3928,6 +4635,70 @@
                               <td>
                                 <div>
                                   <p>The list of values for the notIn expression.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FV10SwiftKuery22ScalarColumnExpression5notInFGSaVS_9Parameter_VS_6Filter"></a>
+                    <a name="//apple_ref/swift/Method/notIn(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV10SwiftKuery22ScalarColumnExpression5notInFGSaVS_9Parameter_VS_6Filter">notIn(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code><a href="../Structs/Filter.html">Filter</a></code> clause using the notIn operator for Parameter.</p>
+
+<div class="aside aside-parameter">
+    <p class="aside-title">Parameter</p>
+    Parameter values: An array of values for the notIn expression.
+
+</div>
+
+<div class="aside aside-returns">
+    <p class="aside-title">Returns</p>
+    A <code><a href="../Structs/Filter.html">Filter</a></code> containing the clause.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">notIn</span><span class="p">(</span><span class="n">_</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Parameter.html">Parameter</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Filter.html">Filter</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>values</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An array of values for the notIn expression.</p>
 
                                 </div>
                               </td>
@@ -4159,7 +4930,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2016-12-21)</p>
+      <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2017-01-19)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
