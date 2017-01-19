@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 
 /// The String extension with `QueryFilterProtocol` and `QueryHavingProtocol`.
 /// Enables the use if `String` in query as filtering clauses.
-extension String: QueryFilterProtocol, QueryHavingProtocol {
+extension String: QueryFilterProtocol, QueryHavingProtocol, QuerySuffixProtocol {
     
     /// Process `String` as raw SQL using `QueryBuilder`.
     ///

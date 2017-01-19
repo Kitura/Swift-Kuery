@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ class TestInsert: XCTestCase {
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         i = Insert(into: t, columns: [t.a, t.b], values: ["banana", 17])
-            .rawSuffix("RETURNING *")
+            .suffix("RETURNING *")
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO tableInsert (a, b) VALUES ('banana', 17) RETURNING *"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
@@ -72,7 +72,7 @@ class TestInsert: XCTestCase {
         
         let t2 = MyTable2()
         i = Insert(into: t, columns: [t.a], Select(t2.a, from: t2))
-            .rawSuffix("RETURNING a")
+            .suffix("RETURNING a")
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO tableInsert (a) SELECT tableInsert2.a FROM tableInsert2 RETURNING a"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")

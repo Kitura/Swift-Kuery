@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -44,19 +44,19 @@ class TestUpdate: XCTestCase {
  
         u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
             .where(t.a == "banana")
-            .rawSuffix("RETURNING *")
+            .suffix("RETURNING *")
         kuery = connection.descriptionOf(query: u)
         query = "UPDATE tableUpdate SET a = 'peach', b = 2 WHERE tableUpdate.a = 'banana' RETURNING *"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
  
         u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
-            .rawSuffix("RETURNING b,a")
+            .suffix("RETURNING b,a")
         kuery = connection.descriptionOf(query: u)
         query = "UPDATE tableUpdate SET a = 'peach', b = 2 RETURNING b,a"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
-            .rawSuffix("RETURNING tableUpdate.b")
+            .suffix("RETURNING tableUpdate.b")
         kuery = connection.descriptionOf(query: u)
         query = "UPDATE tableUpdate SET a = 'peach', b = 2 RETURNING tableUpdate.b"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")

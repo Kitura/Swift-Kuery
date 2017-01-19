@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ public struct Update: Query {
     public private (set) var whereClause: QueryFilterProtocol?
     
     /// A String with a clause to be appended to the end of the query.
-    public private (set) var rawSuffix: String?
+    public private (set) var suffix: QuerySuffixProtocol?
     
     private let valueTuples: [(Column, Any)]
     
@@ -62,8 +62,8 @@ public struct Update: Query {
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
-        if let rawSuffix = rawSuffix {
-            result += " " + rawSuffix
+        if let suffix = suffix {
+            result += try " " + suffix.build(queryBuilder: queryBuilder)
         }
         result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
@@ -88,13 +88,13 @@ public struct Update: Query {
     ///
     /// - Parameter raw: A String with a clause to be appended to the end of the query.
     /// - Returns: A new instance of Update.
-    public func rawSuffix(_ raw: String) -> Update {
+    public func suffix(_ raw: String) -> Update {
         var new = self
-        if rawSuffix != nil {
-            new.syntaxError += "Multiple raw suffixes. "
+        if suffix != nil {
+            new.syntaxError += "Multiple suffixes. "
         }
         else {
-            new.rawSuffix = raw
+            new.suffix = raw
         }
         return new
     }
