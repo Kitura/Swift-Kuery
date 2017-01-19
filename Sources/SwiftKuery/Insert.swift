@@ -33,6 +33,9 @@ public struct Insert: Query {
     /// The select query that retrieves the rows to insert (for INSERT INTO SELECT).
     public private (set) var query: Select?
     
+    /// An array of `AuxiliaryTable` which will be used in WITH clause.
+    public private (set) var with: [AuxiliaryTable]?
+    
     private var syntaxError = ""
     
     /// Initialize an instance of Insert.
@@ -131,7 +134,18 @@ public struct Insert: Query {
         if syntaxError != "" {
             throw QueryError.syntaxError(syntaxError)
         }
-        var result = try "INSERT INTO " + table.build(queryBuilder: queryBuilder) + " "
+        
+        var result = ""
+        
+        if let with = with {
+            result += "WITH "
+                + "\(try with.map { try $0.buildWith(queryBuilder: queryBuilder) }.joined(separator: ", "))"
+                + " "
+        }
+        
+        result += "INSERT INTO "
+        
+        result += try table.build(queryBuilder: queryBuilder) + " "
         if let columns = columns, columns.count != 0 {
             result += "(\(columns.map { $0.name }.joined(separator: ", "))) "
         }
@@ -164,6 +178,21 @@ public struct Insert: Query {
         }
         else {
             new.suffix = raw
+        }
+        return new
+    }
+    
+    /// Set tables to be used for WITH clause.
+    ///
+    /// - Parameter tables: A list of the `AuxiliaryTable` to apply.
+    /// - Returns: A new instance of Insert with tables for WITH clause.
+    func with(_ tables: [AuxiliaryTable]) -> Insert {
+        var new = self
+        if new.with != nil {
+            new.syntaxError += "Multiple with clauses. "
+        }
+        else {
+            new.with = tables
         }
         return new
     }
