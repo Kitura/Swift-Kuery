@@ -60,7 +60,7 @@ public struct Select: Query {
     /// USING clause: an array of `Column` elements that have to match in a JOIN query.
     public private (set) var joins = [(join: Join, on: QueryFilterProtocol?, using: [Column]?)]()
     
-    /// An array of `AuxiliaryTable` which will be used in WITH clause.
+    /// An array of `AuxiliaryTable` which will be used in a query with a WITH clause.
     public private (set) var with: [AuxiliaryTable]?
 
     private var syntaxError = ""

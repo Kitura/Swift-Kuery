@@ -110,5 +110,15 @@ class TestInsert: XCTestCase {
         } catch {
             XCTFail("Other than syntax error.")
         }
+        
+        i = with(withTable, i)
+        do {
+            let _ = try i.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        } catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "Multiple with clauses. ")
+        } catch {
+            XCTFail("Other than syntax error.")
+        }
     }
 }

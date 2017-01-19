@@ -33,7 +33,7 @@ public struct Insert: Query {
     /// The select query that retrieves the rows to insert (for INSERT INTO SELECT).
     public private (set) var query: Select?
     
-    /// An array of `AuxiliaryTable` which will be used in WITH clause.
+    /// An array of `AuxiliaryTable` which will be used in a query with a WITH clause.
     public private (set) var with: [AuxiliaryTable]?
     
     private var syntaxError = ""

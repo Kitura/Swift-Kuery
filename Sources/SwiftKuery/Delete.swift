@@ -28,7 +28,7 @@ public struct Delete: Query {
     /// A String with a clause to be appended to the end of the query.
     public private (set) var suffix: QuerySuffixProtocol?
     
-    /// An array of `AuxiliaryTable` which will be used in WITH clause.
+    /// An array of `AuxiliaryTable` which will be used in a query with a WITH clause.
     public private (set) var with: [AuxiliaryTable]?
     
     private var syntaxError = ""

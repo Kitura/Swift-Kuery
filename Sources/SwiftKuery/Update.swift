@@ -30,7 +30,7 @@ public struct Update: Query {
     
     private let valueTuples: [(Column, Any)]
     
-    /// An array of `AuxiliaryTable` which will be used in WITH clause.
+    /// An array of `AuxiliaryTable` which will be used in a query with a WITH clause.
     public private (set) var with: [AuxiliaryTable]?
     
     private var syntaxError = ""

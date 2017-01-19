@@ -201,5 +201,15 @@ class TestSelect: XCTestCase {
         } catch {
             XCTFail("Other than syntax error.")
         }
+        
+        s = with(withTable, s)
+        do {
+            let _ = try s.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        } catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "Multiple with clauses. ")
+        } catch {
+            XCTFail("Other than syntax error.")
+        }
     }
 }
