@@ -28,9 +28,6 @@ public struct Delete: Query {
     /// A String with a clause to be appended to the end of the query.
     public private (set) var suffix: QuerySuffixProtocol?
     
-    /// An array of `AuxiliaryTable` which will be used in a query with a WITH clause.
-    public private (set) var with: [AuxiliaryTable]?
-    
     private var syntaxError = ""
 
     /// Initialize an instance of Delete.
@@ -51,18 +48,7 @@ public struct Delete: Query {
         if syntaxError != "" {
             throw QueryError.syntaxError(syntaxError)
         }
-        
-        var result = ""
-        
-        if let with = with {
-            result += "WITH "
-                + "\(try with.map { try $0.buildWith(queryBuilder: queryBuilder) }.joined(separator: ", "))"
-                + " "
-        }
-        
-        result += "DELETE FROM "
-        
-        result += try table.build(queryBuilder: queryBuilder)
+        var result = try "DELETE FROM " + table.build(queryBuilder: queryBuilder)
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
@@ -103,18 +89,4 @@ public struct Delete: Query {
         return new
     }
 
-    /// Set tables to be used for WITH clause.
-    ///
-    /// - Parameter tables: A list of the `AuxiliaryTable` to apply.
-    /// - Returns: A new instance of Delete with tables for WITH clause.
-    func with(_ tables: [AuxiliaryTable]) -> Delete {
-        var new = self
-        if new.with != nil {
-            new.syntaxError += "Multiple with clauses. "
-        }
-        else {
-            new.with = tables
-        }
-        return new
-    }
 }
