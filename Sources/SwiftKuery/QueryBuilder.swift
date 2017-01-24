@@ -54,7 +54,7 @@ public class QueryBuilder {
     public var firstParameterIndex = 1
     /// An indication whether ANY on subqueries is supported.
     public var anyOnSubquerySupported = true
-    /// An indication whether an `DELETE` query should use `USING` clause for tables in `WITH` clause.
+    /// An indication whether a `DELETE` query should use `USING` clause for tables in `WITH` clause.
     public var withDeleteRequiresUsing = false
     /// An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause.
     public var withUpdateRequiresFrom = false

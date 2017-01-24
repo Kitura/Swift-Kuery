@@ -64,8 +64,8 @@ public struct Delete: Query {
         
         result += try table.build(queryBuilder: queryBuilder)
         
-        if queryBuilder.withDeleteRequiresUsing,
-            let with = with {
+        if let with = with,
+            queryBuilder.withDeleteRequiresUsing {
             result += try " USING " + with.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }
         

@@ -85,7 +85,7 @@ class TestUpdate: XCTestCase {
         let t = MyTable()
         let t2 = MyTable2()
         let connection = createConnection()
-        let psqlConnection = createConnection(withDeleteRequiresUsing: true, withUpdateRequiresFrom: true)
+        let connection2 = createConnection(withDeleteRequiresUsing: true, withUpdateRequiresFrom: true)
 
         class AuxTable: AuxiliaryTable {
             let tableName = "aux_table"
@@ -100,7 +100,7 @@ class TestUpdate: XCTestCase {
         var kuery = connection.descriptionOf(query: u)
         var query = "WITH aux_table AS (SELECT tableUpdate2.a AS c FROM tableUpdate2) UPDATE tableUpdate SET a = 'peach', b = 2 WHERE tableUpdate.a IN (SELECT aux_table.c FROM aux_table)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
-        kuery = psqlConnection.descriptionOf(query: u)
+        kuery = connection2.descriptionOf(query: u)
         query = "WITH aux_table AS (SELECT tableUpdate2.a AS c FROM tableUpdate2) UPDATE tableUpdate SET a = 'peach', b = 2 FROM aux_table WHERE tableUpdate.a IN (SELECT aux_table.c FROM aux_table)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
@@ -111,7 +111,7 @@ class TestUpdate: XCTestCase {
         kuery = connection.descriptionOf(query: d)
         query = "WITH aux_table AS (SELECT tableUpdate2.a AS c FROM tableUpdate2) DELETE FROM tableUpdate WHERE tableUpdate.b IN (SELECT aux_table.c FROM aux_table)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
-        kuery = psqlConnection.descriptionOf(query: d)
+        kuery = connection2.descriptionOf(query: d)
         query = "WITH aux_table AS (SELECT tableUpdate2.a AS c FROM tableUpdate2) DELETE FROM tableUpdate USING aux_table WHERE tableUpdate.b IN (SELECT aux_table.c FROM aux_table)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
