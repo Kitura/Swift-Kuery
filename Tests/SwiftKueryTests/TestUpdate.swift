@@ -22,6 +22,7 @@ class TestUpdate: XCTestCase {
     static var allTests: [(String, (TestUpdate) -> () throws -> Void)] {
         return [
             ("testUpdateAndDelete", testUpdateAndDelete),
+            ("testUpdateAndDeleteWith", testUpdateAndDeleteWith),
         ]
     }
     
@@ -78,5 +79,85 @@ class TestUpdate: XCTestCase {
         kuery = connection.descriptionOf(query: d)
         query = "DELETE FROM tableUpdate"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+    }
+    
+    func testUpdateAndDeleteWith() {
+        let t = MyTable()
+        let t2 = MyTable2()
+        let connection = createConnection()
+        let connection2 = createConnection(withDeleteRequiresUsing: true, withUpdateRequiresFrom: true)
+
+        class AuxTable: AuxiliaryTable {
+            let tableName = "aux_table"
+            
+            let c = Column("c")
+        }
+
+        var withTable = AuxTable(as: Select(t2.a.as("c"), from: t2))
+        var u = with(withTable,
+                     Update(t, set: [(t.a, "peach"), (t.b, 2)])
+                        .where(t.a.in(Select(withTable.c, from: withTable))))
+        var kuery = connection.descriptionOf(query: u)
+        var query = "WITH aux_table AS (SELECT tableUpdate2.a AS c FROM tableUpdate2) UPDATE tableUpdate SET a = 'peach', b = 2 WHERE tableUpdate.a IN (SELECT aux_table.c FROM aux_table)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        kuery = connection2.descriptionOf(query: u)
+        query = "WITH aux_table AS (SELECT tableUpdate2.a AS c FROM tableUpdate2) UPDATE tableUpdate SET a = 'peach', b = 2 FROM aux_table WHERE tableUpdate.a IN (SELECT aux_table.c FROM aux_table)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        
+        var d = with(withTable,
+                     Delete(from: t)
+                        .where(t.b.in(Select(withTable.c, from: withTable))))
+        kuery = connection.descriptionOf(query: d)
+        query = "WITH aux_table AS (SELECT tableUpdate2.a AS c FROM tableUpdate2) DELETE FROM tableUpdate WHERE tableUpdate.b IN (SELECT aux_table.c FROM aux_table)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        kuery = connection2.descriptionOf(query: d)
+        query = "WITH aux_table AS (SELECT tableUpdate2.a AS c FROM tableUpdate2) DELETE FROM tableUpdate USING aux_table WHERE tableUpdate.b IN (SELECT aux_table.c FROM aux_table)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        
+        withTable = AuxTable()
+        u = with(withTable,
+                     Update(t, set: [(t.a, "peach"), (t.b, 2)])
+                        .where(t.a == withTable.c))
+        do {
+            let _ = try u.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        } catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "With query was not specified. ")
+        } catch {
+            XCTFail("Other than syntax error.")
+        }
+        
+        d = with(withTable,
+                 Delete(from: t)
+                    .where(t.b == withTable.c))
+        do {
+            let _ = try u.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        } catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "With query was not specified. ")
+        } catch {
+            XCTFail("Other than syntax error.")
+        }
+        
+        u = with(withTable, u)
+        do {
+            let _ = try u.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        } catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "Multiple with clauses. ")
+        } catch {
+            XCTFail("Other than syntax error.")
+        }
+        
+        d = with(withTable, d)
+        do {
+            let _ = try d.build(queryBuilder: connection.queryBuilder)
+            XCTFail("No syntax error.")
+        } catch QueryError.syntaxError(let error) {
+            XCTAssertEqual(error, "Multiple with clauses. ")
+        } catch {
+            XCTFail("Other than syntax error.")
+        }
     }
 }

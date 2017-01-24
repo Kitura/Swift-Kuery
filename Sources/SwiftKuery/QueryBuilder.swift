@@ -54,13 +54,18 @@ public class QueryBuilder {
     public var firstParameterIndex = 1
     /// An indication whether ANY on subqueries is supported.
     public var anyOnSubquerySupported = true
+    /// An indication whether a `DELETE` query should use `USING` clause for tables in `WITH` clause.
+    public var withDeleteRequiresUsing = false
+    /// An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause.
+    public var withUpdateRequiresFrom = false
+    
     
     /// Initialize an instance of QueryBuilder.
     ///
     /// - Parameter addNumbersToParameters: An indication whether query parameters should be numbered.
     /// - Parameter firstParameterIndex: The starting index for numbered parameters.
     /// - Parameter anyOnSubquerySupported: An indication whether ANY on subqueries is supported.
-    public init(addNumbersToParameters: Bool?=nil, firstParameterIndex: Int?=nil, anyOnSubquerySupported: Bool?=nil) {
+    public init(addNumbersToParameters: Bool?=nil, firstParameterIndex: Int?=nil, anyOnSubquerySupported: Bool?=nil, withDeleteRequiresUsing: Bool? = nil, withUpdateRequiresFrom: Bool? = nil) {
         substitutions = Array(repeating: "", count: QuerySubstitutionNames.namesCount.rawValue)
         substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"
         substitutions[QuerySubstitutionNames.lcase.rawValue] = "LCASE"
@@ -76,6 +81,13 @@ public class QueryBuilder {
         }
         if let firstParameterIndex = firstParameterIndex {
             self.firstParameterIndex = firstParameterIndex
+        }
+        
+        if let withDeleteRequiresUsing = withDeleteRequiresUsing {
+            self.withDeleteRequiresUsing = withDeleteRequiresUsing
+        }
+        if let withUpdateRequiresFrom = withUpdateRequiresFrom {
+            self.withUpdateRequiresFrom = withUpdateRequiresFrom
         }
     }
     

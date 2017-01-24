@@ -37,8 +37,8 @@ class TestConnection: Connection {
         case returnValue
     }
 
-    init(result: Result) {
-        self.queryBuilder = QueryBuilder()
+    init(result: Result, withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false) {
+        self.queryBuilder = QueryBuilder(withDeleteRequiresUsing: withDeleteRequiresUsing, withUpdateRequiresFrom: withUpdateRequiresFrom)
         self.result = result
     }
     
@@ -128,8 +128,8 @@ func createConnection(_ result: TestConnection.Result) -> TestConnection {
     return TestConnection(result: result)
 }
 
-func createConnection() -> TestConnection {
-    return TestConnection(result: .returnEmpty)
+func createConnection(withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false) -> TestConnection {
+    return TestConnection(result: .returnEmpty, withDeleteRequiresUsing: withDeleteRequiresUsing, withUpdateRequiresFrom: withUpdateRequiresFrom)
 }
 
 // Dummy class for test framework

@@ -30,6 +30,9 @@ public struct Update: Query {
     
     private let valueTuples: [(Column, Any)]
     
+    /// An array of `AuxiliaryTable` which will be used in a query with a WITH clause.
+    public private (set) var with: [AuxiliaryTable]?
+    
     private var syntaxError = ""
     
     /// Initialize an instance of Update.
@@ -55,10 +58,27 @@ public struct Update: Query {
         if syntaxError != "" {
             throw QueryError.syntaxError(syntaxError)
         }
-        var result = try "UPDATE " + table.build(queryBuilder: queryBuilder)
+        
+        var result = ""
+        
+        if let with = with {
+            result += "WITH "
+                + "\(try with.map { try $0.buildWith(queryBuilder: queryBuilder) }.joined(separator: ", "))"
+                + " "
+        }
+        
+        result += "UPDATE "
+        
+        result += try table.build(queryBuilder: queryBuilder)
         result += try " SET " + valueTuples.map {
             column, value in "\(column.name) = \(try packType(value, queryBuilder: queryBuilder))"
             }.joined(separator: ", ")
+        
+        if let with = with,
+            queryBuilder.withDeleteRequiresUsing {
+            result += try " FROM " + with.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
+        }
+        
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
@@ -95,6 +115,21 @@ public struct Update: Query {
         }
         else {
             new.suffix = raw
+        }
+        return new
+    }
+    
+    /// Set tables to be used for WITH clause.
+    ///
+    /// - Parameter tables: A list of the `AuxiliaryTable` to apply.
+    /// - Returns: A new instance of Update with tables for WITH clause.
+    func with(_ tables: [AuxiliaryTable]) -> Update {
+        var new = self
+        if new.with != nil {
+            new.syntaxError += "Multiple with clauses. "
+        }
+        else {
+            new.with = tables
         }
         return new
     }
