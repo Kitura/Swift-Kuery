@@ -37,8 +37,8 @@ class TestConnection: Connection {
         case returnValue
     }
 
-    init(result: Result) {
-        self.queryBuilder = QueryBuilder()
+    init(result: Result, type: QueryBuilder.Database = .unknown) {
+        self.queryBuilder = QueryBuilder(database: type)
         self.result = result
     }
     
@@ -128,8 +128,8 @@ func createConnection(_ result: TestConnection.Result) -> TestConnection {
     return TestConnection(result: result)
 }
 
-func createConnection() -> TestConnection {
-    return TestConnection(result: .returnEmpty)
+func createConnection(type: QueryBuilder.Database = .unknown) -> TestConnection {
+    return TestConnection(result: .returnEmpty, type: type)
 }
 
 // Dummy class for test framework

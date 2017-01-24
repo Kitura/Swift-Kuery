@@ -47,6 +47,14 @@ public class QueryBuilder {
         case namesCount
     }
     
+    /// Database types that could be used for building a query 
+    /// and supported by `Swift-Kuery`
+    public enum Database: String {
+        case unknown
+        case postgreSQL
+        case sqLite
+    }
+    
     /// An indication whether the parameters should be numbered (e.g., '$1, $2'), or just marked
     /// with the numbered parameter marker (e.g., '?').
     public var addNumbersToParameters = true
@@ -54,13 +62,15 @@ public class QueryBuilder {
     public var firstParameterIndex = 1
     /// An indication whether ANY on subqueries is supported.
     public var anyOnSubquerySupported = true
+    /// A database type used for building a query
+    public var database: Database = .unknown
     
     /// Initialize an instance of QueryBuilder.
     ///
     /// - Parameter addNumbersToParameters: An indication whether query parameters should be numbered.
     /// - Parameter firstParameterIndex: The starting index for numbered parameters.
     /// - Parameter anyOnSubquerySupported: An indication whether ANY on subqueries is supported.
-    public init(addNumbersToParameters: Bool?=nil, firstParameterIndex: Int?=nil, anyOnSubquerySupported: Bool?=nil) {
+    public init(addNumbersToParameters: Bool?=nil, firstParameterIndex: Int?=nil, anyOnSubquerySupported: Bool?=nil, database: Database = .unknown) {
         substitutions = Array(repeating: "", count: QuerySubstitutionNames.namesCount.rawValue)
         substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"
         substitutions[QuerySubstitutionNames.lcase.rawValue] = "LCASE"
@@ -77,6 +87,8 @@ public class QueryBuilder {
         if let firstParameterIndex = firstParameterIndex {
             self.firstParameterIndex = firstParameterIndex
         }
+        
+        self.database = database
     }
     
     /// Update substitutions array.

@@ -85,6 +85,7 @@ class TestUpdate: XCTestCase {
         let t = MyTable()
         let t2 = MyTable2()
         let connection = createConnection()
+        let psqlConnection = createConnection(type: .postgreSQL)
 
         class AuxTable: AuxiliaryTable {
             let tableName = "aux_table"
@@ -99,12 +100,19 @@ class TestUpdate: XCTestCase {
         var kuery = connection.descriptionOf(query: u)
         var query = "WITH aux_table AS (SELECT tableUpdate2.a AS c FROM tableUpdate2) UPDATE tableUpdate SET a = 'peach', b = 2 WHERE tableUpdate.a = aux_table.c"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        kuery = psqlConnection.descriptionOf(query: u)
+        query = "WITH aux_table AS (SELECT tableUpdate2.a AS c FROM tableUpdate2) UPDATE tableUpdate SET a = 'peach', b = 2 FROM aux_table WHERE tableUpdate.a = aux_table.c"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
         
         var d = with(withTable,
                      Delete(from: t)
                         .where(t.b == withTable.c))
         kuery = connection.descriptionOf(query: d)
         query = "WITH aux_table AS (SELECT tableUpdate2.a AS c FROM tableUpdate2) DELETE FROM tableUpdate WHERE tableUpdate.b = aux_table.c"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        kuery = psqlConnection.descriptionOf(query: d)
+        query = "WITH aux_table AS (SELECT tableUpdate2.a AS c FROM tableUpdate2) DELETE FROM tableUpdate USING aux_table WHERE tableUpdate.b = aux_table.c"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         withTable = AuxTable()
