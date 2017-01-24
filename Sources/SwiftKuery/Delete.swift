@@ -63,6 +63,12 @@ public struct Delete: Query {
         result += "DELETE FROM "
         
         result += try table.build(queryBuilder: queryBuilder)
+        
+        if queryBuilder.database == .postgreSQL,
+            let with = with {
+            result += try " USING " + with.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
+        }
+        
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }

@@ -73,6 +73,12 @@ public struct Update: Query {
         result += try " SET " + valueTuples.map {
             column, value in "\(column.name) = \(try packType(value, queryBuilder: queryBuilder))"
             }.joined(separator: ", ")
+        
+        if queryBuilder.database == .postgreSQL,
+            let with = with {
+            result += try " FROM " + with.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
+        }
+        
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
