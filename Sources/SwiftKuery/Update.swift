@@ -74,7 +74,7 @@ public struct Update: Query {
             column, value in "\(column.name) = \(try packType(value, queryBuilder: queryBuilder))"
             }.joined(separator: ", ")
         
-        if queryBuilder.database == .postgreSQL,
+        if queryBuilder.withDeleteRequiresUsing,
             let with = with {
             result += try " FROM " + with.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }

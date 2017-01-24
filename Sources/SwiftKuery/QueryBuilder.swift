@@ -47,14 +47,6 @@ public class QueryBuilder {
         case namesCount
     }
     
-    /// Database types that could be used for building a query 
-    /// and supported by `Swift-Kuery`
-    public enum Database: String {
-        case unknown
-        case postgreSQL
-        case sqLite
-    }
-    
     /// An indication whether the parameters should be numbered (e.g., '$1, $2'), or just marked
     /// with the numbered parameter marker (e.g., '?').
     public var addNumbersToParameters = true
@@ -62,15 +54,18 @@ public class QueryBuilder {
     public var firstParameterIndex = 1
     /// An indication whether ANY on subqueries is supported.
     public var anyOnSubquerySupported = true
-    /// A database type used for building a query
-    public var database: Database = .unknown
+    /// An indication whether an `DELETE` query should use `USING` clause for tables in `WITH` clause.
+    public var withDeleteRequiresUsing = false
+    /// An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause.
+    public var withUpdateRequiresFrom = false
+    
     
     /// Initialize an instance of QueryBuilder.
     ///
     /// - Parameter addNumbersToParameters: An indication whether query parameters should be numbered.
     /// - Parameter firstParameterIndex: The starting index for numbered parameters.
     /// - Parameter anyOnSubquerySupported: An indication whether ANY on subqueries is supported.
-    public init(addNumbersToParameters: Bool?=nil, firstParameterIndex: Int?=nil, anyOnSubquerySupported: Bool?=nil, database: Database = .unknown) {
+    public init(addNumbersToParameters: Bool?=nil, firstParameterIndex: Int?=nil, anyOnSubquerySupported: Bool?=nil, withDeleteRequiresUsing: Bool? = nil, withUpdateRequiresFrom: Bool? = nil) {
         substitutions = Array(repeating: "", count: QuerySubstitutionNames.namesCount.rawValue)
         substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"
         substitutions[QuerySubstitutionNames.lcase.rawValue] = "LCASE"
@@ -88,7 +83,12 @@ public class QueryBuilder {
             self.firstParameterIndex = firstParameterIndex
         }
         
-        self.database = database
+        if let withDeleteRequiresUsing = withDeleteRequiresUsing {
+            self.withDeleteRequiresUsing = withDeleteRequiresUsing
+        }
+        if let withUpdateRequiresFrom = withUpdateRequiresFrom {
+            self.withUpdateRequiresFrom = withUpdateRequiresFrom
+        }
     }
     
     /// Update substitutions array.
