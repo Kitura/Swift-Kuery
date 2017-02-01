@@ -85,6 +85,11 @@ public class QueryBuilder {
         if let addNumbersToParameters = addNumbersToParameters {
             self.addNumbersToParameters = addNumbersToParameters
         }
+        
+        if let anyOnSubquerySupported = anyOnSubquerySupported {
+            self.anyOnSubquerySupported = anyOnSubquerySupported
+        }
+        
         if let firstParameterIndex = firstParameterIndex {
             self.firstParameterIndex = firstParameterIndex
         }
@@ -92,6 +97,7 @@ public class QueryBuilder {
         if let withDeleteRequiresUsing = withDeleteRequiresUsing {
             self.withDeleteRequiresUsing = withDeleteRequiresUsing
         }
+        
         if let withUpdateRequiresFrom = withUpdateRequiresFrom {
             self.withUpdateRequiresFrom = withUpdateRequiresFrom
         }
