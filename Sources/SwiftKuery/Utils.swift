@@ -48,12 +48,12 @@ func packName(_ name: String) -> String {
 }
 
 func updateParameterNumbers(query: String, queryBuilder: QueryBuilder) -> String {
+    let marker = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.numberedParameter.rawValue]
     if !queryBuilder.addNumbersToParameters {
-        return query
+        return query.replacingOccurrences(of: Parameter.numberedParameterMarker, with: marker)
     }
     var resultQuery = ""
     var inputQuery = query
-    let marker = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.numberedParameter.rawValue]
     var range = inputQuery.range(of: Parameter.numberedParameterMarker)
     var index = 1
     while range != nil {
