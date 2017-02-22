@@ -2,18 +2,18 @@ import XCTest
 @testable import SwiftKueryTests
 
 XCTMain([
-     testCase(TestSelect.allTests),
-     testCase(TestInsert.allTests),
-     testCase(TestUpdate.allTests),
-     testCase(TestAlias.allTests),
-     testCase(TestParameters.allTests),
-     testCase(TestJoin.allTests),
-     testCase(TestSyntaxError.allTests),
-     testCase(TestSubquery.allTests),
      testCase(TestAggregateFunctions.allTests),
-     testCase(TestSpecialOperators.allTests),
+     testCase(TestAlias.allTests),
      testCase(TestFilterAndHaving.allTests),
-     testCase(TestSubqueries.allTests),
+     testCase(TestInsert.allTests),
+     testCase(TestJoin.allTests),
+     testCase(TestParameters.allTests),
      testCase(TestQueryResult.allTests),
      testCase(TestRaw.allTests),
+     testCase(TestSelect.allTests),
+     testCase(TestSpecialOperators.allTests),
+     testCase(TestSubqueries.allTests),
+     testCase(TestSubquery.allTests),
+     testCase(TestSyntaxError.allTests),
+     testCase(TestUpdate.allTests),
 ])
