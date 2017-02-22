@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -72,4 +72,37 @@ public protocol Connection {
     /// - Returns: A String representation of the query.
     /// - Throws: QueryError.syntaxError if query build fails.
     func descriptionOf(query: Query) throws -> String
+    
+    /// Start a transaction.
+    ///
+    /// - Parameter onCompletion: The function to be called when the execution of start transaction command has completed.
+    func startTransaction(onCompletion: @escaping ((QueryResult) -> ()))
+    
+    /// Commit the current transaction.
+    ///
+    /// - Parameter onCompletion: The function to be called when the execution of commit transaction command has completed.
+    func commit(onCompletion: @escaping ((QueryResult) -> ()))
+
+    /// Rollback the current transaction.
+    ///
+    /// - Parameter onCompletion: The function to be called when the execution of rolback transaction command has completed.
+    func rollback(onCompletion: @escaping ((QueryResult) -> ()))
+
+    /// Create a savepoint.
+    ///
+    /// - Parameter savepoint: The name to  be given to the created savepoint.
+    /// - Parameter onCompletion: The function to be called when the execution of create savepoint command has completed.
+    func create(savepoint: String, onCompletion: @escaping ((QueryResult) -> ()))
+
+    /// Rollback the current transaction to the specified savepoint.
+    ///
+    /// - Parameter to savepoint: The name of the savepoint to rollback to.
+    /// - Parameter onCompletion: The function to be called when the execution of rolback transaction command has completed.
+    func rollback(to savepoint: String, onCompletion: @escaping ((QueryResult) -> ()))
+
+    /// Release a savepoint.
+    ///
+    /// - Parameter savepoint: The name of the savepoint to release.
+    /// - Parameter onCompletion: The function to be called when the execution of release savepoint command has completed.
+    func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ()))    
 }

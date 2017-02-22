@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 
 /// An enumeration of errors that may occur during query construction and execution.
 public enum QueryError: Error {
-    /// An error connectining to the database.
+    /// An error connecting to the database.
     case connection(String)
     /// No result was received from the query execution.
     case noResult(String)
@@ -28,6 +28,8 @@ public enum QueryError: Error {
     case syntaxError(String)
     /// The query or its execution is not supported.
     case unsupported(String)
+    /// An error in transaction.
+    case transactionError(String)
 }
 
 extension QueryError: CustomStringConvertible {
@@ -43,6 +45,8 @@ extension QueryError: CustomStringConvertible {
         case .syntaxError(let error):
             return error
         case .unsupported(let error):
+            return error
+        case .transactionError(let error):
             return error
         }
     }

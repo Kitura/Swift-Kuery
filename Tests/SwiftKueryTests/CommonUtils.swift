@@ -95,6 +95,19 @@ class TestConnection: Connection {
             onCompletion(.success(5))
         }
     }
+    
+    func startTransaction(onCompletion: @escaping ((QueryResult) -> ())) {}
+    
+    func commit(onCompletion: @escaping ((QueryResult) -> ())) {}
+    
+    func rollback(onCompletion: @escaping ((QueryResult) -> ())) {}
+    
+    func create(savepoint: String, onCompletion: @escaping ((QueryResult) -> ())) {}
+    
+    func rollback(to savepoint: String, onCompletion: @escaping ((QueryResult) -> ())) {}
+    
+    func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ()))  {}
+
 }
 
 class TestResultFetcher: ResultFetcher {
