@@ -37,7 +37,7 @@ public struct AggregateColumnExpression: Field {
     public func build(queryBuilder: QueryBuilder) throws -> String {
         var result = try function.build(queryBuilder: queryBuilder)
         if let alias = alias {
-            result += " AS " + packName(alias)
+            result += " AS " + packName(alias, queryBuilder: queryBuilder)
         }
         return result
     }

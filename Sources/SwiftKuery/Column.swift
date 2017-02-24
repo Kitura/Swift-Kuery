@@ -40,13 +40,13 @@ public class Column: Field {
     /// - Returns: A String representation of the column.
     /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
-        let tableName = table.nameInQuery
+        let tableName = packName(table.nameInQuery, queryBuilder: queryBuilder)
         if tableName == "" {
             throw QueryError.syntaxError("Table name not set. ")
         }
-        var result = tableName + "." + packName(name)
+        var result = tableName + "." + packName(name, queryBuilder: queryBuilder)
         if let alias = alias {
-            result += " AS " + packName(alias)
+            result += " AS " + packName(alias, queryBuilder: queryBuilder)
         }
         return result
     }

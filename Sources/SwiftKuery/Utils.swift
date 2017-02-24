@@ -39,10 +39,11 @@ func packType(_ item: Any, queryBuilder: QueryBuilder) throws -> String {
     }
 }
 
-func packName(_ name: String) -> String {
+func packName(_ name: String, queryBuilder: QueryBuilder) -> String {
     var result = name
-    if result.contains(" ") && !result.hasPrefix("\"") {
-        result = "\"" + result + "\""
+    let identQuoteChar = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.identifierQuoteCharacter.rawValue]
+    if result.contains(" ") && !result.hasPrefix(identQuoteChar) {
+        result = identQuoteChar + result + identQuoteChar
     }
    return result
 }

@@ -43,6 +43,8 @@ public class QueryBuilder {
         case booleanFalse
         /// The ALL function for subqueries.
         case all
+        /// character used to quote identifiers (table name,column name, etc) with spaces or special characters
+        case identifierQuoteCharacter
         /// Last case, add new values before it.
         case namesCount
     }
@@ -81,7 +83,8 @@ public class QueryBuilder {
         substitutions[QuerySubstitutionNames.booleanTrue.rawValue] = "true"
         substitutions[QuerySubstitutionNames.booleanFalse.rawValue] = "false"
         substitutions[QuerySubstitutionNames.all.rawValue] = "ALL"
-        
+        substitutions[QuerySubstitutionNames.identifierQuoteCharacter.rawValue] = "\""
+
         if let addNumbersToParameters = addNumbersToParameters {
             self.addNumbersToParameters = addNumbersToParameters
         }

@@ -27,10 +27,7 @@ open class Table: Buildable {
     /// The name of the table to be used inside a query, i.e., either its alias (if exists)
     /// or its name.
     public var nameInQuery: String {
-        if let alias = alias {
-            return packName(alias)
-        }
-        return packName(_name)
+        return alias ?? _name
     }
 
     /// Initialize an instance of Table.
@@ -61,9 +58,9 @@ open class Table: Buildable {
         if _name == "" {
             throw QueryError.syntaxError("Table name not set. ")
         }
-        var result = packName(_name)
+        var result = packName(_name, queryBuilder: queryBuilder)
         if let alias = alias {
-            result += " AS " + packName(alias)
+            result += " AS " + packName(alias, queryBuilder: queryBuilder)
         }
         return result
     }
