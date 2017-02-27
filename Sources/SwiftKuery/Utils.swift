@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -41,9 +41,9 @@ func packType(_ item: Any, queryBuilder: QueryBuilder) throws -> String {
 
 func packName(_ name: String, queryBuilder: QueryBuilder) -> String {
     var result = name
-    let identQuoteChar = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.identifierQuoteCharacter.rawValue]
-    if result.contains(" ") && !result.hasPrefix(identQuoteChar) {
-        result = identQuoteChar + result + identQuoteChar
+    let identifierQuoteCharacter = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.identifierQuoteCharacter.rawValue]
+    if result.contains(" ") && !result.hasPrefix(identifierQuoteCharacter) {
+        result = identifierQuoteCharacter + result + identifierQuoteCharacter
     }
    return result
 }

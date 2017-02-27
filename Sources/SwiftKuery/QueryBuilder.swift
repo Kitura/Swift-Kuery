@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ public class QueryBuilder {
         case booleanFalse
         /// The ALL function for subqueries.
         case all
-        /// character used to quote identifiers (table name,column name, etc) with spaces or special characters
+        /// The character used to quote identifiers (table name, column name, etc.) with spaces or special characters.
         case identifierQuoteCharacter
         /// Last case, add new values before it.
         case namesCount
