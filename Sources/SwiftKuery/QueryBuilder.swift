@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -43,6 +43,8 @@ public class QueryBuilder {
         case booleanFalse
         /// The ALL function for subqueries.
         case all
+        /// The character used to quote identifiers (table name, column name, etc.) with spaces or special characters.
+        case identifierQuoteCharacter
         /// Last case, add new values before it.
         case namesCount
     }
@@ -81,7 +83,8 @@ public class QueryBuilder {
         substitutions[QuerySubstitutionNames.booleanTrue.rawValue] = "true"
         substitutions[QuerySubstitutionNames.booleanFalse.rawValue] = "false"
         substitutions[QuerySubstitutionNames.all.rawValue] = "ALL"
-        
+        substitutions[QuerySubstitutionNames.identifierQuoteCharacter.rawValue] = "\""
+
         if let addNumbersToParameters = addNumbersToParameters {
             self.addNumbersToParameters = addNumbersToParameters
         }
