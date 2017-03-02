@@ -43,28 +43,28 @@ public protocol Connection {
     /// - Parameter query: The query to execute.
     /// - Parameter parameters: An array of the parameters.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
-    func execute(query: Query, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ()))
+    func execute(query: Query, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ()))
     
     /// Execute a raw query with parameters.
     ///
     /// - Parameter query: A String with the query to execute.
     /// - Parameter parameters: An array of the parameters.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
-    func execute(_ raw: String, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ()))
+    func execute(_ raw: String, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ()))
     
     /// Execute a query with parameters.
     ///
     /// - Parameter query: The query to execute.
     /// - Parameter parameters: A dictionary of the parameters with parameter names as the keys.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
-    func execute(query: Query, parameters: [String:Any], onCompletion: @escaping ((QueryResult) -> ()))
+    func execute(query: Query, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ()))
     
     /// Execute a raw query with parameters.
     ///
     /// - Parameter query: A String with the query to execute.
     /// - Parameter parameters: A dictionary of the parameters with parameter names as the keys.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
-    func execute(_ raw: String, parameters: [String:Any], onCompletion: @escaping ((QueryResult) -> ()))
+    func execute(_ raw: String, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ()))
     
     /// Return a String representation of the query.
     ///

@@ -54,19 +54,19 @@ class TestConnection: Connection {
         returnResult(onCompletion)
     }
     
-    func execute(query: Query, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ())) {
+    func execute(query: Query, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ())) {
         returnResult(onCompletion)
     }
     
-    func execute(_ raw: String, parameters: [Any], onCompletion: @escaping ((QueryResult) -> ())) {
+    func execute(_ raw: String, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ())) {
         returnResult(onCompletion)
     }
     
-    func execute(query: Query, parameters: [String:Any], onCompletion: @escaping ((QueryResult) -> ())) {
+    func execute(query: Query, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {
         returnResult(onCompletion)
     }
     
-    func execute(_ raw: String, parameters: [String:Any], onCompletion: @escaping ((QueryResult) -> ()))  {
+    func execute(_ raw: String, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ()))  {
         returnResult(onCompletion)
     }
 
