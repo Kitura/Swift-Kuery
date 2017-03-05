@@ -71,7 +71,7 @@ public struct Update: Query {
         
         result += try table.build(queryBuilder: queryBuilder)
         result += try " SET " + valueTuples.map {
-            column, value in "\(column.name) = \(try packType(value, queryBuilder: queryBuilder))"
+            column, value in "\(column.name) = \(try Utils.packType(value, queryBuilder: queryBuilder))"
             }.joined(separator: ", ")
         
         if let with = with,
@@ -85,7 +85,7 @@ public struct Update: Query {
         if let suffix = suffix {
             result += try " " + suffix.build(queryBuilder: queryBuilder)
         }
-        result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
+        result = Utils.updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
     

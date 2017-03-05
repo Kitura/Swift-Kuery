@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2017
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ public struct AggregateColumnExpression: Field {
     public func build(queryBuilder: QueryBuilder) throws -> String {
         var result = try function.build(queryBuilder: queryBuilder)
         if let alias = alias {
-            result += " AS " + packName(alias, queryBuilder: queryBuilder)
+            result += " AS " + Utils.packName(alias, queryBuilder: queryBuilder)
         }
         return result
     }

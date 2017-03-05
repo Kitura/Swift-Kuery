@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -68,17 +68,17 @@ public extension ConditionalClause {
         if condition == .between || condition == .notBetween {
             switch rhs! {
             case .arrayOfString(let array):
-                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+                rhsBuilt = Utils.packType(array[0]) + " AND " + Utils.packType(array[1])
             case .arrayOfInt(let array):
-                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+                rhsBuilt = Utils.packType(array[0]) + " AND " + Utils.packType(array[1])
             case .arrayOfFloat(let array):
-                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+                rhsBuilt = Utils.packType(array[0]) + " AND " + Utils.packType(array[1])
             case .arrayOfDouble(let array):
-                rhsBuilt = packType(array[0]) + " AND " + packType(array[1])
+                rhsBuilt = Utils.packType(array[0]) + " AND " + Utils.packType(array[1])
             case .arrayOfBool(let array):
-                rhsBuilt = try packType(array[0], queryBuilder: queryBuilder) + " AND " + packType(array[1], queryBuilder: queryBuilder)
+                rhsBuilt = try Utils.packType(array[0], queryBuilder: queryBuilder) + " AND " + Utils.packType(array[1], queryBuilder: queryBuilder)
             case .arrayOfParameter(let array):
-                rhsBuilt = try packType(array[0], queryBuilder: queryBuilder) + " AND " + packType(array[1], queryBuilder: queryBuilder)
+                rhsBuilt = try Utils.packType(array[0], queryBuilder: queryBuilder) + " AND " + Utils.packType(array[1], queryBuilder: queryBuilder)
             default:
                 throw QueryError.syntaxError("Wrong type for right hand side operand in \(conditionBuilt) expression.")
             }
@@ -86,17 +86,17 @@ public extension ConditionalClause {
         else if condition == .in || condition == .notIn {
             switch rhs! {
             case .arrayOfString(let array):
-                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+                rhsBuilt = "(\(array.map { Utils.packType($0) }.joined(separator: ", ")))"
             case .arrayOfInt(let array):
-                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+                rhsBuilt = "(\(array.map { Utils.packType($0) }.joined(separator: ", ")))"
             case .arrayOfFloat(let array):
-                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+                rhsBuilt = "(\(array.map { Utils.packType($0) }.joined(separator: ", ")))"
             case .arrayOfDouble(let array):
-                rhsBuilt = "(\(array.map { packType($0) }.joined(separator: ", ")))"
+                rhsBuilt = "(\(array.map { Utils.packType($0) }.joined(separator: ", ")))"
             case .arrayOfBool(let array):
-                rhsBuilt = try "(\(array.map { try packType($0, queryBuilder: queryBuilder) }.joined(separator: ", ")))"
+                rhsBuilt = try "(\(array.map { try Utils.packType($0, queryBuilder: queryBuilder) }.joined(separator: ", ")))"
             case .arrayOfParameter(let array):
-                rhsBuilt = try "(\(array.map { try packType($0, queryBuilder: queryBuilder) }.joined(separator: ", ")))"
+                rhsBuilt = try "(\(array.map { try Utils.packType($0, queryBuilder: queryBuilder) }.joined(separator: ", ")))"
             case .select(let query):
                 rhsBuilt = try "(" + query.build(queryBuilder: queryBuilder) + ")"
             default:

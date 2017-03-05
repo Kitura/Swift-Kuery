@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2017
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -58,9 +58,9 @@ open class Table: Buildable {
         if _name == "" {
             throw QueryError.syntaxError("Table name not set. ")
         }
-        var result = packName(_name, queryBuilder: queryBuilder)
+        var result = Utils.packName(_name, queryBuilder: queryBuilder)
         if let alias = alias {
-            result += " AS " + packName(alias, queryBuilder: queryBuilder)
+            result += " AS " + Utils.packName(alias, queryBuilder: queryBuilder)
         }
         return result
     }

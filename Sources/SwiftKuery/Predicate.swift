@@ -65,15 +65,15 @@ public indirect enum Predicate<ClauseType: Buildable, ColumnExpressionType: Fiel
         case .clause(let clause):
             return try "(" + clause.build(queryBuilder: queryBuilder) + ")"
         case .string(let string):
-            return packType(string)
+            return Utils.packType(string)
         case .int(let value):
-            return packType(value)
+            return Utils.packType(value)
         case .float(let value):
-            return packType(value)
+            return Utils.packType(value)
         case .double(let value):
-            return packType(value)
+            return Utils.packType(value)
         case .bool(let value):
-            return try packType(value, queryBuilder: queryBuilder)
+            return try Utils.packType(value, queryBuilder: queryBuilder)
         case .column(let column):
             return try column.build(queryBuilder: queryBuilder)
         case .columnExpression(let columnExpression):

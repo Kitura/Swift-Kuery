@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2017
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -40,13 +40,13 @@ public class Column: Field {
     /// - Returns: A String representation of the column.
     /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
-        let tableName = packName(table.nameInQuery, queryBuilder: queryBuilder)
+        let tableName = Utils.packName(table.nameInQuery, queryBuilder: queryBuilder)
         if tableName == "" {
             throw QueryError.syntaxError("Table name not set. ")
         }
-        var result = tableName + "." + packName(name, queryBuilder: queryBuilder)
+        var result = tableName + "." + Utils.packName(name, queryBuilder: queryBuilder)
         if let alias = alias {
-            result += " AS " + packName(alias, queryBuilder: queryBuilder)
+            result += " AS " + Utils.packName(alias, queryBuilder: queryBuilder)
         }
         return result
     }

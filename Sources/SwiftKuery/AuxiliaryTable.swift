@@ -39,7 +39,7 @@ open class AuxiliaryTable: Table {
         guard let query = query else {
             throw QueryError.syntaxError("With query was not specified. ")
         }
-        return packName(nameInQuery, queryBuilder: queryBuilder) + " AS " + "(" + (try query.build(queryBuilder: queryBuilder)) + ")"
+        return Utils.packName(nameInQuery, queryBuilder: queryBuilder) + " AS " + "(" + (try query.build(queryBuilder: queryBuilder)) + ")"
     }
     
 }

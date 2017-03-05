@@ -151,7 +151,7 @@ public struct Insert: Query {
         }
         if let values = values {
             result += "VALUES ("
-            result += try "\(values.map { "\(try $0.map { try packType($0, queryBuilder: queryBuilder) }.joined(separator: ", "))" }.joined(separator: "), ("))"
+            result += try "\(values.map { "\(try $0.map { try Utils.packType($0, queryBuilder: queryBuilder) }.joined(separator: ", "))" }.joined(separator: "), ("))"
             result += ")"
         }
         else if let query = query {
@@ -163,7 +163,7 @@ public struct Insert: Query {
         if let suffix = suffix {
             result += try " " + suffix.build(queryBuilder: queryBuilder)
         }
-        result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
+        result = Utils.updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
     

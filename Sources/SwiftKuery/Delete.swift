@@ -75,7 +75,7 @@ public struct Delete: Query {
         if let suffix = suffix {
             result += try " " + suffix.build(queryBuilder: queryBuilder)
         }
-        result = updateParameterNumbers(query: result, queryBuilder: queryBuilder)
+        result = Utils.updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
     
