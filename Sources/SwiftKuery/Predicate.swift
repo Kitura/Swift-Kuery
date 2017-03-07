@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+import Foundation
+
 // MARK Predicate
 
 /// An operand of a `ConditionalClause`.
@@ -30,6 +32,8 @@ public indirect enum Predicate<ClauseType: Buildable, ColumnExpressionType: Fiel
     case double(Double)
     /// A boolean.
     case bool(Bool)
+    /// A date.
+    case date(Date)
     /// An array of String.
     case arrayOfString([String])
     /// An array of Int.
@@ -40,6 +44,8 @@ public indirect enum Predicate<ClauseType: Buildable, ColumnExpressionType: Fiel
     case arrayOfDouble([Double])
     /// An array of Bool.
     case arrayOfBool([Bool])
+    /// An array of Date.
+    case arrayOfDate([Date])
     /// A `Column`.
     case column(Column)
     /// An `AggregateColumnExpression` or a `ScalarColumnExpression`.
@@ -74,6 +80,8 @@ public indirect enum Predicate<ClauseType: Buildable, ColumnExpressionType: Fiel
             return Utils.packType(value)
         case .bool(let value):
             return try Utils.packType(value, queryBuilder: queryBuilder)
+        case .date(let value):
+            return Utils.packType(value)
         case .column(let column):
             return try column.build(queryBuilder: queryBuilder)
         case .columnExpression(let columnExpression):

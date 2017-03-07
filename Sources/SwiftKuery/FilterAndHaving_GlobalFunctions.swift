@@ -14,6 +14,8 @@
 * limitations under the License.
 **/
 
+import Foundation
+
 /// Create a `Filter` clause using the operator == for ScalarColumnExpression
 /// and String.
 ///
@@ -322,6 +324,46 @@ public func ==(lhs: Double, rhs: Select) -> Filter {
 /// - Returns: A `Filter` containing the clause.
 public func ==(lhs: Parameter, rhs: Select) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: .select(rhs), condition: .equal)
+}
+
+/// Create a `Filter` clause using the operator == for ScalarColumnExpression
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func ==(lhs: ScalarColumnExpression, rhs: Date) -> Filter {
+    return Filter(lhs: .columnExpression(lhs), rhs: .date(rhs), condition: .equal)
+}
+
+/// Create a `Filter` clause using the operator == for Date
+/// and ScalarColumnExpression.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func ==(lhs: Date, rhs: ScalarColumnExpression) -> Filter {
+    return Filter(lhs: .date(lhs), rhs: .columnExpression(rhs), condition: .equal)
+}
+
+/// Create a `Filter` clause using the operator == for Column
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func ==(lhs: Column, rhs: Date) -> Filter {
+    return Filter(lhs: .column(lhs), rhs: .date(rhs), condition: .equal)
+}
+
+/// Create a `Filter` clause using the operator == for Date
+/// and Column.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func ==(lhs: Date, rhs: Column) -> Filter {
+    return Filter(lhs: .date(lhs), rhs: .column(rhs), condition: .equal)
 }
 
 /// Create a `Having` clause using the operator == for AggregateColumnExpression
@@ -634,6 +676,46 @@ public func ==(lhs: Parameter, rhs: Select) -> Having {
     return Having(lhs: .parameter(lhs), rhs: .select(rhs), condition: .equal)
 }
 
+/// Create a `Having` clause using the operator == for AggregateColumnExpression
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func ==(lhs: AggregateColumnExpression, rhs: Date) -> Having {
+    return Having(lhs: .columnExpression(lhs), rhs: .date(rhs), condition: .equal)
+}
+
+/// Create a `Having` clause using the operator == for Date
+/// and AggregateColumnExpression.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func ==(lhs: Date, rhs: AggregateColumnExpression) -> Having {
+    return Having(lhs: .date(lhs), rhs: .columnExpression(rhs), condition: .equal)
+}
+
+/// Create a `Having` clause using the operator == for Column
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func ==(lhs: Column, rhs: Date) -> Having {
+    return Having(lhs: .column(lhs), rhs: .date(rhs), condition: .equal)
+}
+
+/// Create a `Having` clause using the operator == for Date
+/// and Column.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func ==(lhs: Date, rhs: Column) -> Having {
+    return Having(lhs: .date(lhs), rhs: .column(rhs), condition: .equal)
+}
+
 /// Create a `Filter` clause using the operator >= for ScalarColumnExpression
 /// and String.
 ///
@@ -942,6 +1024,46 @@ public func >=(lhs: Double, rhs: Select) -> Filter {
 /// - Returns: A `Filter` containing the clause.
 public func >=(lhs: Parameter, rhs: Select) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: .select(rhs), condition: .greaterThanOrEqual)
+}
+
+/// Create a `Filter` clause using the operator >= for ScalarColumnExpression
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func >=(lhs: ScalarColumnExpression, rhs: Date) -> Filter {
+    return Filter(lhs: .columnExpression(lhs), rhs: .date(rhs), condition: .greaterThanOrEqual)
+}
+
+/// Create a `Filter` clause using the operator >= for Date
+/// and ScalarColumnExpression.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func >=(lhs: Date, rhs: ScalarColumnExpression) -> Filter {
+    return Filter(lhs: .date(lhs), rhs: .columnExpression(rhs), condition: .greaterThanOrEqual)
+}
+
+/// Create a `Filter` clause using the operator >= for Column
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func >=(lhs: Column, rhs: Date) -> Filter {
+    return Filter(lhs: .column(lhs), rhs: .date(rhs), condition: .greaterThanOrEqual)
+}
+
+/// Create a `Filter` clause using the operator >= for Date
+/// and Column.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func >=(lhs: Date, rhs: Column) -> Filter {
+    return Filter(lhs: .date(lhs), rhs: .column(rhs), condition: .greaterThanOrEqual)
 }
 
 /// Create a `Having` clause using the operator >= for AggregateColumnExpression
@@ -1254,6 +1376,46 @@ public func >=(lhs: Parameter, rhs: Select) -> Having {
     return Having(lhs: .parameter(lhs), rhs: .select(rhs), condition: .greaterThanOrEqual)
 }
 
+/// Create a `Having` clause using the operator >= for AggregateColumnExpression
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func >=(lhs: AggregateColumnExpression, rhs: Date) -> Having {
+    return Having(lhs: .columnExpression(lhs), rhs: .date(rhs), condition: .greaterThanOrEqual)
+}
+
+/// Create a `Having` clause using the operator >= for Date
+/// and AggregateColumnExpression.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func >=(lhs: Date, rhs: AggregateColumnExpression) -> Having {
+    return Having(lhs: .date(lhs), rhs: .columnExpression(rhs), condition: .greaterThanOrEqual)
+}
+
+/// Create a `Having` clause using the operator >= for Column
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func >=(lhs: Column, rhs: Date) -> Having {
+    return Having(lhs: .column(lhs), rhs: .date(rhs), condition: .greaterThanOrEqual)
+}
+
+/// Create a `Having` clause using the operator >= for Date
+/// and Column.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func >=(lhs: Date, rhs: Column) -> Having {
+    return Having(lhs: .date(lhs), rhs: .column(rhs), condition: .greaterThanOrEqual)
+}
+
 /// Create a `Filter` clause using the operator > for ScalarColumnExpression
 /// and String.
 ///
@@ -1562,6 +1724,46 @@ public func >(lhs: Double, rhs: Select) -> Filter {
 /// - Returns: A `Filter` containing the clause.
 public func >(lhs: Parameter, rhs: Select) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: .select(rhs), condition: .greaterThan)
+}
+
+/// Create a `Filter` clause using the operator > for ScalarColumnExpression
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func >(lhs: ScalarColumnExpression, rhs: Date) -> Filter {
+    return Filter(lhs: .columnExpression(lhs), rhs: .date(rhs), condition: .greaterThan)
+}
+
+/// Create a `Filter` clause using the operator > for Date
+/// and ScalarColumnExpression.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func >(lhs: Date, rhs: ScalarColumnExpression) -> Filter {
+    return Filter(lhs: .date(lhs), rhs: .columnExpression(rhs), condition: .greaterThan)
+}
+
+/// Create a `Filter` clause using the operator > for Column
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func >(lhs: Column, rhs: Date) -> Filter {
+    return Filter(lhs: .column(lhs), rhs: .date(rhs), condition: .greaterThan)
+}
+
+/// Create a `Filter` clause using the operator > for Date
+/// and Column.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func >(lhs: Date, rhs: Column) -> Filter {
+    return Filter(lhs: .date(lhs), rhs: .column(rhs), condition: .greaterThan)
 }
 
 /// Create a `Having` clause using the operator > for AggregateColumnExpression
@@ -1874,6 +2076,46 @@ public func >(lhs: Parameter, rhs: Select) -> Having {
     return Having(lhs: .parameter(lhs), rhs: .select(rhs), condition: .greaterThan)
 }
 
+/// Create a `Having` clause using the operator > for AggregateColumnExpression
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func >(lhs: AggregateColumnExpression, rhs: Date) -> Having {
+    return Having(lhs: .columnExpression(lhs), rhs: .date(rhs), condition: .greaterThan)
+}
+
+/// Create a `Having` clause using the operator > for Date
+/// and AggregateColumnExpression.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func >(lhs: Date, rhs: AggregateColumnExpression) -> Having {
+    return Having(lhs: .date(lhs), rhs: .columnExpression(rhs), condition: .greaterThan)
+}
+
+/// Create a `Having` clause using the operator > for Column
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func >(lhs: Column, rhs: Date) -> Having {
+    return Having(lhs: .column(lhs), rhs: .date(rhs), condition: .greaterThan)
+}
+
+/// Create a `Having` clause using the operator > for Date
+/// and Column.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func >(lhs: Date, rhs: Column) -> Having {
+    return Having(lhs: .date(lhs), rhs: .column(rhs), condition: .greaterThan)
+}
+
 /// Create a `Filter` clause using the operator <= for ScalarColumnExpression
 /// and String.
 ///
@@ -2182,6 +2424,46 @@ public func <=(lhs: Double, rhs: Select) -> Filter {
 /// - Returns: A `Filter` containing the clause.
 public func <=(lhs: Parameter, rhs: Select) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: .select(rhs), condition: .lessThanOrEqual)
+}
+
+/// Create a `Filter` clause using the operator <= for ScalarColumnExpression
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func <=(lhs: ScalarColumnExpression, rhs: Date) -> Filter {
+    return Filter(lhs: .columnExpression(lhs), rhs: .date(rhs), condition: .lessThanOrEqual)
+}
+
+/// Create a `Filter` clause using the operator <= for Date
+/// and ScalarColumnExpression.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func <=(lhs: Date, rhs: ScalarColumnExpression) -> Filter {
+    return Filter(lhs: .date(lhs), rhs: .columnExpression(rhs), condition: .lessThanOrEqual)
+}
+
+/// Create a `Filter` clause using the operator <= for Column
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func <=(lhs: Column, rhs: Date) -> Filter {
+    return Filter(lhs: .column(lhs), rhs: .date(rhs), condition: .lessThanOrEqual)
+}
+
+/// Create a `Filter` clause using the operator <= for Date
+/// and Column.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func <=(lhs: Date, rhs: Column) -> Filter {
+    return Filter(lhs: .date(lhs), rhs: .column(rhs), condition: .lessThanOrEqual)
 }
 
 /// Create a `Having` clause using the operator <= for AggregateColumnExpression
@@ -2494,6 +2776,46 @@ public func <=(lhs: Parameter, rhs: Select) -> Having {
     return Having(lhs: .parameter(lhs), rhs: .select(rhs), condition: .lessThanOrEqual)
 }
 
+/// Create a `Having` clause using the operator <= for AggregateColumnExpression
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func <=(lhs: AggregateColumnExpression, rhs: Date) -> Having {
+    return Having(lhs: .columnExpression(lhs), rhs: .date(rhs), condition: .lessThanOrEqual)
+}
+
+/// Create a `Having` clause using the operator <= for Date
+/// and AggregateColumnExpression.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func <=(lhs: Date, rhs: AggregateColumnExpression) -> Having {
+    return Having(lhs: .date(lhs), rhs: .columnExpression(rhs), condition: .lessThanOrEqual)
+}
+
+/// Create a `Having` clause using the operator <= for Column
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func <=(lhs: Column, rhs: Date) -> Having {
+    return Having(lhs: .column(lhs), rhs: .date(rhs), condition: .lessThanOrEqual)
+}
+
+/// Create a `Having` clause using the operator <= for Date
+/// and Column.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func <=(lhs: Date, rhs: Column) -> Having {
+    return Having(lhs: .date(lhs), rhs: .column(rhs), condition: .lessThanOrEqual)
+}
+
 /// Create a `Filter` clause using the operator < for ScalarColumnExpression
 /// and String.
 ///
@@ -2802,6 +3124,46 @@ public func <(lhs: Double, rhs: Select) -> Filter {
 /// - Returns: A `Filter` containing the clause.
 public func <(lhs: Parameter, rhs: Select) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: .select(rhs), condition: .lessThan)
+}
+
+/// Create a `Filter` clause using the operator < for ScalarColumnExpression
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func <(lhs: ScalarColumnExpression, rhs: Date) -> Filter {
+    return Filter(lhs: .columnExpression(lhs), rhs: .date(rhs), condition: .lessThan)
+}
+
+/// Create a `Filter` clause using the operator < for Date
+/// and ScalarColumnExpression.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func <(lhs: Date, rhs: ScalarColumnExpression) -> Filter {
+    return Filter(lhs: .date(lhs), rhs: .columnExpression(rhs), condition: .lessThan)
+}
+
+/// Create a `Filter` clause using the operator < for Column
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func <(lhs: Column, rhs: Date) -> Filter {
+    return Filter(lhs: .column(lhs), rhs: .date(rhs), condition: .lessThan)
+}
+
+/// Create a `Filter` clause using the operator < for Date
+/// and Column.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func <(lhs: Date, rhs: Column) -> Filter {
+    return Filter(lhs: .date(lhs), rhs: .column(rhs), condition: .lessThan)
 }
 
 /// Create a `Having` clause using the operator < for AggregateColumnExpression
@@ -3114,6 +3476,46 @@ public func <(lhs: Parameter, rhs: Select) -> Having {
     return Having(lhs: .parameter(lhs), rhs: .select(rhs), condition: .lessThan)
 }
 
+/// Create a `Having` clause using the operator < for AggregateColumnExpression
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func <(lhs: AggregateColumnExpression, rhs: Date) -> Having {
+    return Having(lhs: .columnExpression(lhs), rhs: .date(rhs), condition: .lessThan)
+}
+
+/// Create a `Having` clause using the operator < for Date
+/// and AggregateColumnExpression.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func <(lhs: Date, rhs: AggregateColumnExpression) -> Having {
+    return Having(lhs: .date(lhs), rhs: .columnExpression(rhs), condition: .lessThan)
+}
+
+/// Create a `Having` clause using the operator < for Column
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func <(lhs: Column, rhs: Date) -> Having {
+    return Having(lhs: .column(lhs), rhs: .date(rhs), condition: .lessThan)
+}
+
+/// Create a `Having` clause using the operator < for Date
+/// and Column.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func <(lhs: Date, rhs: Column) -> Having {
+    return Having(lhs: .date(lhs), rhs: .column(rhs), condition: .lessThan)
+}
+
 /// Create a `Filter` clause using the operator != for ScalarColumnExpression
 /// and String.
 ///
@@ -3424,6 +3826,46 @@ public func !=(lhs: Parameter, rhs: Select) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: .select(rhs), condition: .notEqual)
 }
 
+/// Create a `Filter` clause using the operator != for ScalarColumnExpression
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func !=(lhs: ScalarColumnExpression, rhs: Date) -> Filter {
+    return Filter(lhs: .columnExpression(lhs), rhs: .date(rhs), condition: .notEqual)
+}
+
+/// Create a `Filter` clause using the operator != for Date
+/// and ScalarColumnExpression.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func !=(lhs: Date, rhs: ScalarColumnExpression) -> Filter {
+    return Filter(lhs: .date(lhs), rhs: .columnExpression(rhs), condition: .notEqual)
+}
+
+/// Create a `Filter` clause using the operator != for Column
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func !=(lhs: Column, rhs: Date) -> Filter {
+    return Filter(lhs: .column(lhs), rhs: .date(rhs), condition: .notEqual)
+}
+
+/// Create a `Filter` clause using the operator != for Date
+/// and Column.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Filter` containing the clause.
+public func !=(lhs: Date, rhs: Column) -> Filter {
+    return Filter(lhs: .date(lhs), rhs: .column(rhs), condition: .notEqual)
+}
+
 /// Create a `Having` clause using the operator != for AggregateColumnExpression
 /// and String.
 ///
@@ -3732,6 +4174,46 @@ public func !=(lhs: Double, rhs: Select) -> Having {
 /// - Returns: A `Having` containing the clause.
 public func !=(lhs: Parameter, rhs: Select) -> Having {
     return Having(lhs: .parameter(lhs), rhs: .select(rhs), condition: .notEqual)
+}
+
+/// Create a `Having` clause using the operator != for AggregateColumnExpression
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func !=(lhs: AggregateColumnExpression, rhs: Date) -> Having {
+    return Having(lhs: .columnExpression(lhs), rhs: .date(rhs), condition: .notEqual)
+}
+
+/// Create a `Having` clause using the operator != for Date
+/// and AggregateColumnExpression.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func !=(lhs: Date, rhs: AggregateColumnExpression) -> Having {
+    return Having(lhs: .date(lhs), rhs: .columnExpression(rhs), condition: .notEqual)
+}
+
+/// Create a `Having` clause using the operator != for Column
+/// and Date.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func !=(lhs: Column, rhs: Date) -> Having {
+    return Having(lhs: .column(lhs), rhs: .date(rhs), condition: .notEqual)
+}
+
+/// Create a `Having` clause using the operator != for Date
+/// and Column.
+///
+/// - Parameter lhs: The left hand side of the clause.
+/// - Parameter rhs: The right hand side of the clause.
+/// - Returns: A `Having` containing the clause.
+public func !=(lhs: Date, rhs: Column) -> Having {
+    return Having(lhs: .date(lhs), rhs: .column(rhs), condition: .notEqual)
 }
 
 /// Create a `Filter` clause using the operator == for ScalarColumnExpression

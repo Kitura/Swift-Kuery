@@ -77,6 +77,8 @@ public extension ConditionalClause {
                 rhsBuilt = Utils.packType(array[0]) + " AND " + Utils.packType(array[1])
             case .arrayOfBool(let array):
                 rhsBuilt = try Utils.packType(array[0], queryBuilder: queryBuilder) + " AND " + Utils.packType(array[1], queryBuilder: queryBuilder)
+            case .arrayOfDate(let array):
+                rhsBuilt = try Utils.packType(array[0], queryBuilder: queryBuilder) + " AND " + Utils.packType(array[1], queryBuilder: queryBuilder)
             case .arrayOfParameter(let array):
                 rhsBuilt = try Utils.packType(array[0], queryBuilder: queryBuilder) + " AND " + Utils.packType(array[1], queryBuilder: queryBuilder)
             default:
@@ -94,6 +96,8 @@ public extension ConditionalClause {
             case .arrayOfDouble(let array):
                 rhsBuilt = "(\(array.map { Utils.packType($0) }.joined(separator: ", ")))"
             case .arrayOfBool(let array):
+                rhsBuilt = try "(\(array.map { try Utils.packType($0, queryBuilder: queryBuilder) }.joined(separator: ", ")))"
+            case .arrayOfDate(let array):
                 rhsBuilt = try "(\(array.map { try Utils.packType($0, queryBuilder: queryBuilder) }.joined(separator: ", ")))"
             case .arrayOfParameter(let array):
                 rhsBuilt = try "(\(array.map { try Utils.packType($0, queryBuilder: queryBuilder) }.joined(separator: ", ")))"

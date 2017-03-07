@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #/**
-#* Copyright IBM Corporation 2016
+#* Copyright IBM Corporation 2016, 2017
 #*
 #* Licensed under the Apache License, Version 2.0 (the "License");
 #* you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ echo "--- Generating ${OUTPUT_FILE}"
 
 cat <<'EOF' > ${OUTPUT_FILE}
 /**
-* Copyright IBM Corporation 2016
+* Copyright IBM Corporation 2016, 2017
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -55,6 +55,8 @@ cat <<'EOF' > ${OUTPUT_FILE}
 * See the License for the specific language governing permissions and
 * limitations under the License.
 **/
+
+import Foundation
 
 import XCTest
 
@@ -97,9 +99,14 @@ while read -r LINE; do
     SQL_ARGUMENT=${stringarray[4]}
     SQL_ARGUMENT=${SQL_ARGUMENT/\\}
     CLAUSE_TYPE_UPPER="$(tr '[:lower:]' '[:upper:]' <<< $CLAUSE_TYPE)"
-    # Remove backslashes.
+    # Remove backslashes and replace underscores with whitespaces.
+    OPERAND=${OPERAND/\\}
     SQL_OPERAND=${SQL_OPERAND/\\}
     SQL_ARGUMENT=${SQL_ARGUMENT/\\}
+    OPERAND=${OPERAND//_/" "}
+    ARGUMENT=${ARGUMENT//_/" "}
+    SQL_OPERAND=${SQL_OPERAND//_/" "}
+    SQL_ARGUMENT=${SQL_ARGUMENT//_/" "}
 
 cat <<EOF >> ${OUTPUT_FILE}
         s = Select(t.a, from: t)
@@ -136,10 +143,16 @@ while read -r LINE; do
     SQL_ARGUMENT2=${stringarray[6]}
     SQL_ARGUMENT2=${SQL_ARGUMENT2/\\}
     CLAUSE_TYPE_UPPER="$(tr '[:lower:]' '[:upper:]' <<< $CLAUSE_TYPE)"
-    # Remove backslashes.
+    # Remove backslashes and replace underscores with whitespaces.
     SQL_OPERAND=${SQL_OPERAND/\\}
     SQL_ARGUMENT1=${SQL_ARGUMENT1/\\}
     SQL_ARGUMENT2=${SQL_ARGUMENT2/\\}
+    SQL_OPERAND=${SQL_OPERAND//_/" "}
+    OPERAND=${OPERAND//_/" "}
+    ARGUMENT1=${ARGUMENT1//_/" "}
+    ARGUMENT2=${ARGUMENT2//_/" "}
+    SQL_ARGUMENT1=${SQL_ARGUMENT1//_/" "}
+    SQL_ARGUMENT2=${SQL_ARGUMENT2//_/" "}
 
 cat <<EOF >> ${OUTPUT_FILE}
 

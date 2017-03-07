@@ -1,5 +1,5 @@
 /**
-* Copyright IBM Corporation 2016
+* Copyright IBM Corporation 2016, 2017
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -13,6 +13,8 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 **/
+
+import Foundation
 
 import XCTest
 
@@ -1932,6 +1934,114 @@ class TestSpecialOperators: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table WHERE @first NOT IN (@second, @third) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE @first NOT IN (@second, @third)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Parameter("first").between(Parameter("second"), and: Parameter("third")))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING @first BETWEEN @second AND @third GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING @first BETWEEN @second AND @third"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Parameter("first").notBetween(Parameter("second"), and: Parameter("third")))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING @first NOT BETWEEN @second AND @third GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING @first NOT BETWEEN @second AND @third"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Parameter("first").in(Parameter("second"), Parameter("third")))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING @first IN (@second, @third) GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING @first IN (@second, @third)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Parameter("first").notIn(Parameter("second"), Parameter("third")))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING @first NOT IN (@second, @third) GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING @first NOT IN (@second, @third)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 50000).between(Date(timeIntervalSince1970: 50000), and: Date(timeIntervalSince1970: 0)))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 13:53:20 +0000' BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 13:53:20 +0000' BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 50000).notBetween(Date(timeIntervalSince1970: 50000), and: Date(timeIntervalSince1970: 0)))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 13:53:20 +0000' NOT BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 13:53:20 +0000' NOT BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 50000).in(Date(timeIntervalSince1970: 50000), Date(timeIntervalSince1970: 0)))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 13:53:20 +0000' IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000') GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 13:53:20 +0000' IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000')"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 50000).notIn(Date(timeIntervalSince1970: 50000), Date(timeIntervalSince1970: 0)))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 13:53:20 +0000' NOT IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000') GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 13:53:20 +0000' NOT IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000')"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 50000).between(Date(timeIntervalSince1970: 50000), and: Date(timeIntervalSince1970: 0)))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 13:53:20 +0000' BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 13:53:20 +0000' BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 50000).notBetween(Date(timeIntervalSince1970: 50000), and: Date(timeIntervalSince1970: 0)))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 13:53:20 +0000' NOT BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 13:53:20 +0000' NOT BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 50000).in(Date(timeIntervalSince1970: 50000), Date(timeIntervalSince1970: 0)))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 13:53:20 +0000' IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000') GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 13:53:20 +0000' IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000')"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 50000).notIn(Date(timeIntervalSince1970: 50000), Date(timeIntervalSince1970: 0)))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 13:53:20 +0000' NOT IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000') GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 13:53:20 +0000' NOT IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
   }

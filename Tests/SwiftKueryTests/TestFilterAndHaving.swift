@@ -1,5 +1,5 @@
 /**
-* Copyright IBM Corporation 2016
+* Copyright IBM Corporation 2016, 2017
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -13,6 +13,8 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 **/
+
+import Foundation
 
 import XCTest
 
@@ -330,6 +332,42 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
+            .where(now() == Date(timeIntervalSince1970: 0))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE NOW() = '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE NOW() = '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 0) == now())
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 00:00:00 +0000' = NOW() GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 00:00:00 +0000' = NOW()"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(t.a == Date(timeIntervalSince1970: 10000))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE table.a = '1970-01-01 02:46:40 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a = '1970-01-01 02:46:40 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 50000) == t.a)
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 13:53:20 +0000' = table.a GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 13:53:20 +0000' = table.a"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
             .having(last(t.a) == "banana")
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING LAST(table.a) = 'banana' GROUP BY table.a"
@@ -604,6 +642,42 @@ class TestFilterAndHaving: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING ?1 = (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 = (SELECT table2.c FROM table2)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(last(t.a) == Date(timeIntervalSince1970: 0))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING LAST(table.a) = '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING LAST(table.a) = '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 0) == last(t.a))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 00:00:00 +0000' = LAST(table.a) GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 00:00:00 +0000' = LAST(table.a)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(t.a == Date(timeIntervalSince1970: 10000))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING table.a = '1970-01-01 02:46:40 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a = '1970-01-01 02:46:40 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 50000) == t.a)
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 13:53:20 +0000' = table.a GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 13:53:20 +0000' = table.a"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -888,6 +962,42 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
+            .where(now() >= Date(timeIntervalSince1970: 0))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE NOW() >= '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE NOW() >= '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 0) >= now())
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 00:00:00 +0000' >= NOW() GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 00:00:00 +0000' >= NOW()"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(t.a >= Date(timeIntervalSince1970: 10000))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE table.a >= '1970-01-01 02:46:40 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a >= '1970-01-01 02:46:40 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 50000) >= t.a)
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 13:53:20 +0000' >= table.a GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 13:53:20 +0000' >= table.a"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
             .having(last(t.a) >= "banana")
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING LAST(table.a) >= 'banana' GROUP BY table.a"
@@ -1162,6 +1272,42 @@ class TestFilterAndHaving: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING ?1 >= (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 >= (SELECT table2.c FROM table2)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(last(t.a) >= Date(timeIntervalSince1970: 0))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING LAST(table.a) >= '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING LAST(table.a) >= '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 0) >= last(t.a))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 00:00:00 +0000' >= LAST(table.a) GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 00:00:00 +0000' >= LAST(table.a)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(t.a >= Date(timeIntervalSince1970: 10000))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING table.a >= '1970-01-01 02:46:40 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a >= '1970-01-01 02:46:40 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 50000) >= t.a)
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 13:53:20 +0000' >= table.a GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 13:53:20 +0000' >= table.a"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1446,6 +1592,42 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
+            .where(now() > Date(timeIntervalSince1970: 0))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE NOW() > '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE NOW() > '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 0) > now())
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 00:00:00 +0000' > NOW() GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 00:00:00 +0000' > NOW()"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(t.a > Date(timeIntervalSince1970: 10000))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE table.a > '1970-01-01 02:46:40 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a > '1970-01-01 02:46:40 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 50000) > t.a)
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 13:53:20 +0000' > table.a GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 13:53:20 +0000' > table.a"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
             .having(last(t.a) > "banana")
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING LAST(table.a) > 'banana' GROUP BY table.a"
@@ -1720,6 +1902,42 @@ class TestFilterAndHaving: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING ?1 > (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 > (SELECT table2.c FROM table2)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(last(t.a) > Date(timeIntervalSince1970: 0))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING LAST(table.a) > '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING LAST(table.a) > '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 0) > last(t.a))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 00:00:00 +0000' > LAST(table.a) GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 00:00:00 +0000' > LAST(table.a)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(t.a > Date(timeIntervalSince1970: 10000))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING table.a > '1970-01-01 02:46:40 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a > '1970-01-01 02:46:40 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 50000) > t.a)
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 13:53:20 +0000' > table.a GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 13:53:20 +0000' > table.a"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -2004,6 +2222,42 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
+            .where(now() <= Date(timeIntervalSince1970: 0))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE NOW() <= '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE NOW() <= '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 0) <= now())
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 00:00:00 +0000' <= NOW() GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 00:00:00 +0000' <= NOW()"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(t.a <= Date(timeIntervalSince1970: 10000))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE table.a <= '1970-01-01 02:46:40 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a <= '1970-01-01 02:46:40 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 50000) <= t.a)
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 13:53:20 +0000' <= table.a GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 13:53:20 +0000' <= table.a"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
             .having(last(t.a) <= "banana")
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING LAST(table.a) <= 'banana' GROUP BY table.a"
@@ -2278,6 +2532,42 @@ class TestFilterAndHaving: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING ?1 <= (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 <= (SELECT table2.c FROM table2)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(last(t.a) <= Date(timeIntervalSince1970: 0))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING LAST(table.a) <= '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING LAST(table.a) <= '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 0) <= last(t.a))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 00:00:00 +0000' <= LAST(table.a) GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 00:00:00 +0000' <= LAST(table.a)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(t.a <= Date(timeIntervalSince1970: 10000))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING table.a <= '1970-01-01 02:46:40 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a <= '1970-01-01 02:46:40 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 50000) <= t.a)
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 13:53:20 +0000' <= table.a GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 13:53:20 +0000' <= table.a"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -2562,6 +2852,42 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
+            .where(now() < Date(timeIntervalSince1970: 0))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE NOW() < '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE NOW() < '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 0) < now())
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 00:00:00 +0000' < NOW() GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 00:00:00 +0000' < NOW()"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(t.a < Date(timeIntervalSince1970: 10000))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE table.a < '1970-01-01 02:46:40 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a < '1970-01-01 02:46:40 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 50000) < t.a)
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 13:53:20 +0000' < table.a GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 13:53:20 +0000' < table.a"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
             .having(last(t.a) < "banana")
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING LAST(table.a) < 'banana' GROUP BY table.a"
@@ -2836,6 +3162,42 @@ class TestFilterAndHaving: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING ?1 < (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 < (SELECT table2.c FROM table2)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(last(t.a) < Date(timeIntervalSince1970: 0))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING LAST(table.a) < '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING LAST(table.a) < '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 0) < last(t.a))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 00:00:00 +0000' < LAST(table.a) GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 00:00:00 +0000' < LAST(table.a)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(t.a < Date(timeIntervalSince1970: 10000))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING table.a < '1970-01-01 02:46:40 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a < '1970-01-01 02:46:40 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 50000) < t.a)
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 13:53:20 +0000' < table.a GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 13:53:20 +0000' < table.a"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -3120,6 +3482,42 @@ class TestFilterAndHaving: XCTestCase {
 
         s = Select(t.a, from: t)
             .group(by: t.a)
+            .where(now() != Date(timeIntervalSince1970: 0))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE NOW() <> '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE NOW() <> '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 0) != now())
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 00:00:00 +0000' <> NOW() GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 00:00:00 +0000' <> NOW()"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(t.a != Date(timeIntervalSince1970: 10000))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE table.a <> '1970-01-01 02:46:40 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a <> '1970-01-01 02:46:40 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .where(Date(timeIntervalSince1970: 50000) != t.a)
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 13:53:20 +0000' <> table.a GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 13:53:20 +0000' <> table.a"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
             .having(last(t.a) != "banana")
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING LAST(table.a) <> 'banana' GROUP BY table.a"
@@ -3394,6 +3792,42 @@ class TestFilterAndHaving: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         queryWhere = "SELECT table.a FROM table HAVING ?1 <> (SELECT table2.c FROM table2) GROUP BY table.a"
         queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 <> (SELECT table2.c FROM table2)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(last(t.a) != Date(timeIntervalSince1970: 0))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING LAST(table.a) <> '1970-01-01 00:00:00 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING LAST(table.a) <> '1970-01-01 00:00:00 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 0) != last(t.a))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 00:00:00 +0000' <> LAST(table.a) GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 00:00:00 +0000' <> LAST(table.a)"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(t.a != Date(timeIntervalSince1970: 10000))
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING table.a <> '1970-01-01 02:46:40 +0000' GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a <> '1970-01-01 02:46:40 +0000'"
+        XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+        s = Select(t.a, from: t)
+            .group(by: t.a)
+            .having(Date(timeIntervalSince1970: 50000) != t.a)
+        kuery = connection.descriptionOf(query: s)
+        queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 13:53:20 +0000' <> table.a GROUP BY table.a"
+        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 13:53:20 +0000' <> table.a"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 

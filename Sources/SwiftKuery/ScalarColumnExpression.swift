@@ -65,7 +65,7 @@ public struct ScalarColumnExpression: Field {
         public func build(queryBuilder: QueryBuilder) throws -> String {
             switch self {
             case .now:
-                return "NOW()"
+                return queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.now.rawValue]
             case .ucase(let field):
                 return try queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.ucase.rawValue] + "(" + field.build(queryBuilder: queryBuilder) + ")"
             case .lcase(let field):

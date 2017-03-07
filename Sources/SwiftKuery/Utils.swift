@@ -22,6 +22,8 @@ struct Utils {
         switch item {
         case let val as String:
             return "'\(val)'"
+        case let value as Date:
+            return "'\(String(describing: value))'"
         default:
             return String(describing: item)
         }
@@ -36,11 +38,13 @@ struct Utils {
                 : queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.booleanFalse.rawValue]
         case let val as Parameter:
             return try val.build(queryBuilder: queryBuilder)
+        case let value as Date:
+            return "'\(String(describing: value))'"
         default:
             return String(describing: item)
         }
     }
-    
+        
     static func packName(_ name: String, queryBuilder: QueryBuilder) -> String {
         var result = name
         let identifierQuoteCharacter = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.identifierQuoteCharacter.rawValue]

@@ -33,6 +33,8 @@ public class QueryBuilder {
         case lcase
         /// The SQL LEN scalar function.
         case len
+        /// The SQL NOW scalar function.
+        case now
         /// The marker for the query numbered parameters.
         case numberedParameter
         /// The marker for the query named parameters.
@@ -78,6 +80,7 @@ public class QueryBuilder {
         substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"
         substitutions[QuerySubstitutionNames.lcase.rawValue] = "LCASE"
         substitutions[QuerySubstitutionNames.len.rawValue] = "LEN"
+        substitutions[QuerySubstitutionNames.now.rawValue] = "NOW()"
         substitutions[QuerySubstitutionNames.numberedParameter.rawValue] = "?"
         substitutions[QuerySubstitutionNames.namedParameter.rawValue] = "@"
         substitutions[QuerySubstitutionNames.booleanTrue.rawValue] = "true"

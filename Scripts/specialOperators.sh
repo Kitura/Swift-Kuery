@@ -54,13 +54,18 @@ cat <<'EOF' > ${OUTPUT_FILE}
 * limitations under the License.
 **/
 
+import Foundation
+
 EOF
 
 # Generate extensions for Int, Double, String, Bool, Float and Parameter IN, NOT IN, BETWEEN and NOT BETWEEN
 for TYPE in `sed '/^$/d' ${INPUT_BETWEEN_FILE} | sed '/^#/d'`; do
 TYPE_LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${TYPE:0:1})${TYPE:1}"
 
-echo "public extension $TYPE {" >> ${OUTPUT_FILE}
+cat <<EOF >> ${OUTPUT_FILE}
+
+public extension $TYPE {
+EOF
 
     for CLAUSE in Filter Having; do
 

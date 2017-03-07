@@ -14,6 +14,9 @@
 * limitations under the License.
 **/
 
+import Foundation
+
+
 public extension ScalarColumnExpression {
     /// Create a `Filter` clause using the like operator.
     ///
@@ -371,6 +374,60 @@ public extension ScalarColumnExpression {
     public func notIn(_ values: [Parameter]) -> Filter {
         return Filter(lhs: .columnExpression(self), rhs: .arrayOfParameter(values), condition: .notIn)
     }
+    /// Create a `Filter` clause using the between operator for Date.
+    ///
+    /// - Parameter value1: The left hand side of the between expression.
+    /// - Parameter and value2: The right hand side of the between expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func between(_ value1: Date, and value2: Date) -> Filter {
+        var array = [Date]()
+        array.append(value1)
+        array.append(value2)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfDate(array), condition: .between)
+    }
+    /// Create a `Filter` clause using the notBetween operator for Date.
+    ///
+    /// - Parameter value1: The left hand side of the notBetween expression.
+    /// - Parameter and value2: The right hand side of the notBetween expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notBetween(_ value1: Date, and value2: Date) -> Filter {
+        var array = [Date]()
+        array.append(value1)
+        array.append(value2)
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfDate(array), condition: .notBetween)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Date.
+    ///
+    /// - Parameter values: The list of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: Date...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Date.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [Date]) -> Filter {
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfDate(values), condition: .`in`)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Date.
+    ///
+    /// - Parameter values: The list of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: Date...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Date.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [Date]) -> Filter {
+        return Filter(lhs: .columnExpression(self), rhs: .arrayOfDate(values), condition: .notIn)
+    }
 
     /// Create a `Filter` clause using the isNull operator.
     ///
@@ -379,13 +436,16 @@ public extension ScalarColumnExpression {
         return Filter(lhs: .columnExpression(self), condition: .isNull)
     }
 
+
     /// Create a `Filter` clause using the isNotNull operator.
     ///
     /// - Returns: A `Filter` containing the clause.
     public func isNotNull() -> Filter {
         return Filter(lhs: .columnExpression(self), condition: .isNotNull)
     }
+
 }
+
 public extension Column {
     /// Create a `Filter` clause using the like operator.
     ///
@@ -743,6 +803,60 @@ public extension Column {
     public func notIn(_ values: [Parameter]) -> Filter {
         return Filter(lhs: .column(self), rhs: .arrayOfParameter(values), condition: .notIn)
     }
+    /// Create a `Filter` clause using the between operator for Date.
+    ///
+    /// - Parameter value1: The left hand side of the between expression.
+    /// - Parameter and value2: The right hand side of the between expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func between(_ value1: Date, and value2: Date) -> Filter {
+        var array = [Date]()
+        array.append(value1)
+        array.append(value2)
+        return Filter(lhs: .column(self), rhs: .arrayOfDate(array), condition: .between)
+    }
+    /// Create a `Filter` clause using the notBetween operator for Date.
+    ///
+    /// - Parameter value1: The left hand side of the notBetween expression.
+    /// - Parameter and value2: The right hand side of the notBetween expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notBetween(_ value1: Date, and value2: Date) -> Filter {
+        var array = [Date]()
+        array.append(value1)
+        array.append(value2)
+        return Filter(lhs: .column(self), rhs: .arrayOfDate(array), condition: .notBetween)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Date.
+    ///
+    /// - Parameter values: The list of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: Date...) -> Filter {
+        return `in`(values)
+    }
+
+    /// Create a `Filter` clause using the `in` operator for Date.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ values: [Date]) -> Filter {
+        return Filter(lhs: .column(self), rhs: .arrayOfDate(values), condition: .`in`)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Date.
+    ///
+    /// - Parameter values: The list of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: Date...) -> Filter {
+        return notIn(values)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for Date.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ values: [Date]) -> Filter {
+        return Filter(lhs: .column(self), rhs: .arrayOfDate(values), condition: .notIn)
+    }
 
     /// Create a `Filter` clause using the isNull operator.
     ///
@@ -751,13 +865,16 @@ public extension Column {
         return Filter(lhs: .column(self), condition: .isNull)
     }
 
+
     /// Create a `Filter` clause using the isNotNull operator.
     ///
     /// - Returns: A `Filter` containing the clause.
     public func isNotNull() -> Filter {
         return Filter(lhs: .column(self), condition: .isNotNull)
     }
+
 }
+
 public extension AggregateColumnExpression {
     /// Create a `Having` clause using the like operator.
     ///
@@ -1115,6 +1232,60 @@ public extension AggregateColumnExpression {
     public func notIn(_ values: [Parameter]) -> Having {
         return Having(lhs: .columnExpression(self), rhs: .arrayOfParameter(values), condition: .notIn)
     }
+    /// Create a `Having` clause using the between operator for Date.
+    ///
+    /// - Parameter value1: The left hand side of the between expression.
+    /// - Parameter and value2: The right hand side of the between expression.
+    /// - Returns: A `Having` containing the clause.
+    public func between(_ value1: Date, and value2: Date) -> Having {
+        var array = [Date]()
+        array.append(value1)
+        array.append(value2)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfDate(array), condition: .between)
+    }
+    /// Create a `Having` clause using the notBetween operator for Date.
+    ///
+    /// - Parameter value1: The left hand side of the notBetween expression.
+    /// - Parameter and value2: The right hand side of the notBetween expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notBetween(_ value1: Date, and value2: Date) -> Having {
+        var array = [Date]()
+        array.append(value1)
+        array.append(value2)
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfDate(array), condition: .notBetween)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Date.
+    ///
+    /// - Parameter values: The list of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: Date...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Date.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [Date]) -> Having {
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfDate(values), condition: .`in`)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Date.
+    ///
+    /// - Parameter values: The list of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: Date...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Date.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [Date]) -> Having {
+        return Having(lhs: .columnExpression(self), rhs: .arrayOfDate(values), condition: .notIn)
+    }
 
     /// Create a `Having` clause using the isNull operator.
     ///
@@ -1123,13 +1294,16 @@ public extension AggregateColumnExpression {
         return Having(lhs: .columnExpression(self), condition: .isNull)
     }
 
+
     /// Create a `Having` clause using the isNotNull operator.
     ///
     /// - Returns: A `Having` containing the clause.
     public func isNotNull() -> Having {
         return Having(lhs: .columnExpression(self), condition: .isNotNull)
     }
+
 }
+
 public extension Column {
     /// Create a `Having` clause using the like operator.
     ///
@@ -1487,6 +1661,60 @@ public extension Column {
     public func notIn(_ values: [Parameter]) -> Having {
         return Having(lhs: .column(self), rhs: .arrayOfParameter(values), condition: .notIn)
     }
+    /// Create a `Having` clause using the between operator for Date.
+    ///
+    /// - Parameter value1: The left hand side of the between expression.
+    /// - Parameter and value2: The right hand side of the between expression.
+    /// - Returns: A `Having` containing the clause.
+    public func between(_ value1: Date, and value2: Date) -> Having {
+        var array = [Date]()
+        array.append(value1)
+        array.append(value2)
+        return Having(lhs: .column(self), rhs: .arrayOfDate(array), condition: .between)
+    }
+    /// Create a `Having` clause using the notBetween operator for Date.
+    ///
+    /// - Parameter value1: The left hand side of the notBetween expression.
+    /// - Parameter and value2: The right hand side of the notBetween expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notBetween(_ value1: Date, and value2: Date) -> Having {
+        var array = [Date]()
+        array.append(value1)
+        array.append(value2)
+        return Having(lhs: .column(self), rhs: .arrayOfDate(array), condition: .notBetween)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Date.
+    ///
+    /// - Parameter values: The list of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: Date...) -> Having {
+        return `in`(values)
+    }
+
+    /// Create a `Having` clause using the `in` operator for Date.
+    ///
+    /// - Parameter values: An array of values for the `in` expression.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ values: [Date]) -> Having {
+        return Having(lhs: .column(self), rhs: .arrayOfDate(values), condition: .`in`)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Date.
+    ///
+    /// - Parameter values: The list of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: Date...) -> Having {
+        return notIn(values)
+    }
+
+    /// Create a `Having` clause using the notIn operator for Date.
+    ///
+    /// - Parameter values: An array of values for the notIn expression.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ values: [Date]) -> Having {
+        return Having(lhs: .column(self), rhs: .arrayOfDate(values), condition: .notIn)
+    }
 
     /// Create a `Having` clause using the isNull operator.
     ///
@@ -1495,10 +1723,12 @@ public extension Column {
         return Having(lhs: .column(self), condition: .isNull)
     }
 
+
     /// Create a `Having` clause using the isNotNull operator.
     ///
     /// - Returns: A `Having` containing the clause.
     public func isNotNull() -> Having {
         return Having(lhs: .column(self), condition: .isNotNull)
     }
+
 }

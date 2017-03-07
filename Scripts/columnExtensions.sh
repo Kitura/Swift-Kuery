@@ -55,6 +55,8 @@ cat <<'EOF' > ${OUTPUT_FILE}
 * limitations under the License.
 **/
 
+import Foundation
+
 EOF
 
 # Generate extensions for Scalar/AggregateColumnExpression and Column for (NOT)LIKE, (NOT)BETWEEN, (NOT)IN, and IS (NOT) NULL operators
@@ -71,6 +73,7 @@ while read -r LINE; do
     fi
 
 cat <<EOF >> ${OUTPUT_FILE}
+
 public extension $TYPE {
 EOF
         for OPERATOR in like notLike; do
@@ -146,6 +149,7 @@ cat <<EOF >> ${OUTPUT_FILE}
     public func $OPERATOR() -> $CLAUSE_TYPE {
         return $CLAUSE_TYPE(lhs: .$TYPE_LOWER(self), condition: .$OPERATOR)
     }
+
 EOF
 done
 

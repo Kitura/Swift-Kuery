@@ -1,5 +1,5 @@
 #/**
-#* Copyright IBM Corporation 2016
+#* Copyright IBM Corporation 2016, 2017
 #*
 #* Licensed under the Apache License, Version 2.0 (the "License");
 #* you may not use this file except in compliance with the License.
@@ -63,4 +63,7 @@ having Float(2.71828) 2.71828 Parameter("first") Parameter("second") @first @sec
 where 3.001 3.001 Parameter("first") Parameter("second") @first @second
 having 3.008 3.008 Parameter() Parameter() \?1 \?2
 where Parameter("first") @first Parameter("second") Parameter("third") @second @third
+having Parameter("first") @first Parameter("second") Parameter("third") @second @third
+where Date(timeIntervalSince1970:_50000) '1970-01-01_13:53:20_+0000' Date(timeIntervalSince1970:_50000) Date(timeIntervalSince1970:_0) '1970-01-01_13:53:20_+0000' '1970-01-01_00:00:00_+0000'
+having Date(timeIntervalSince1970:_50000) '1970-01-01_13:53:20_+0000' Date(timeIntervalSince1970:_50000) Date(timeIntervalSince1970:_0) '1970-01-01_13:53:20_+0000' '1970-01-01_00:00:00_+0000'
 
