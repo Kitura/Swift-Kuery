@@ -14,6 +14,8 @@
 * limitations under the License.
 **/
 
+import Foundation
+
 /// Create a `Filter` clause using the operator == for ScalarColumnExpression
 /// and subquery.
 ///
@@ -1118,6 +1120,24 @@ public extension Bool {
         return Filter(lhs: .bool(self), rhs: .select(query), condition: .notIn)
     }
 }
+public extension Date {
+
+    /// Create a `Filter` clause using the `in` operator for subquery.
+    ///
+    /// - Parameter query: The subquery.
+    /// - Returns: A `Filter` containing the clause.
+    public func `in`(_ query: Select) -> Filter {
+        return Filter(lhs: .date(self), rhs: .select(query), condition: .`in`)
+    }
+
+    /// Create a `Filter` clause using the notIn operator for subquery.
+    ///
+    /// - Parameter query: The subquery.
+    /// - Returns: A `Filter` containing the clause.
+    public func notIn(_ query: Select) -> Filter {
+        return Filter(lhs: .date(self), rhs: .select(query), condition: .notIn)
+    }
+}
 public extension AggregateColumnExpression {
 
     /// Create a `Having` clause using the `in` operator for subquery.
@@ -1260,5 +1280,23 @@ public extension Bool {
     /// - Returns: A `Having` containing the clause.
     public func notIn(_ query: Select) -> Having {
         return Having(lhs: .bool(self), rhs: .select(query), condition: .notIn)
+    }
+}
+public extension Date {
+
+    /// Create a `Having` clause using the `in` operator for subquery.
+    ///
+    /// - Parameter query: The subquery.
+    /// - Returns: A `Having` containing the clause.
+    public func `in`(_ query: Select) -> Having {
+        return Having(lhs: .date(self), rhs: .select(query), condition: .`in`)
+    }
+
+    /// Create a `Having` clause using the notIn operator for subquery.
+    ///
+    /// - Parameter query: The subquery.
+    /// - Returns: A `Having` containing the clause.
+    public func notIn(_ query: Select) -> Having {
+        return Having(lhs: .date(self), rhs: .select(query), condition: .notIn)
     }
 }

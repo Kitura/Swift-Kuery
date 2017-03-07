@@ -1,5 +1,5 @@
 /**
-* Copyright IBM Corporation 2016
+* Copyright IBM Corporation 2016, 2017
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -13,6 +13,8 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 **/
+
+import Foundation
 
 import XCTest
 
@@ -1059,6 +1061,24 @@ class TestSubqueries: XCTestCase {
 
     s = Select(t.a, from: t)
         .group(by: t.a)
+        .where(Date(timeIntervalSince1970: 0).in(Select(t2.c, from: t2)))
+    kuery = connection.descriptionOf(query: s)
+    queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 00:00:00 +0000' IN (SELECT table2.c FROM table2) GROUP BY table.a"
+    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 00:00:00 +0000' IN (SELECT table2.c FROM table2)"
+    XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+    s = Select(t.a, from: t)
+        .group(by: t.a)
+        .where(Date(timeIntervalSince1970: 0).notIn(Select(t2.c, from: t2)))
+    kuery = connection.descriptionOf(query: s)
+    queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 00:00:00 +0000' NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
+    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 00:00:00 +0000' NOT IN (SELECT table2.c FROM table2)"
+    XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+    s = Select(t.a, from: t)
+        .group(by: t.a)
         .having(min(t.a).in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
     queryWhere = "SELECT table.a FROM table HAVING MIN(table.a) IN (SELECT table2.c FROM table2) GROUP BY table.a"
@@ -1198,6 +1218,24 @@ class TestSubqueries: XCTestCase {
     kuery = connection.descriptionOf(query: s)
     queryWhere = "SELECT table.a FROM table HAVING false NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
     queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING false NOT IN (SELECT table2.c FROM table2)"
+    XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                    "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+    s = Select(t.a, from: t)
+        .group(by: t.a)
+        .having(Date(timeIntervalSince1970: 0).in(Select(t2.c, from: t2)))
+    kuery = connection.descriptionOf(query: s)
+    queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 00:00:00 +0000' IN (SELECT table2.c FROM table2) GROUP BY table.a"
+    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 00:00:00 +0000' IN (SELECT table2.c FROM table2)"
+    XCTAssert(kuery == queryWhere || kuery == queryHaving,
+                "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
+
+    s = Select(t.a, from: t)
+        .group(by: t.a)
+        .having(Date(timeIntervalSince1970: 0).notIn(Select(t2.c, from: t2)))
+    kuery = connection.descriptionOf(query: s)
+    queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 00:00:00 +0000' NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
+    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 00:00:00 +0000' NOT IN (SELECT table2.c FROM table2)"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
   }

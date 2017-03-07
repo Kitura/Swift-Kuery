@@ -1,5 +1,5 @@
 #/**
-#* Copyright IBM Corporation 2016
+#* Copyright IBM Corporation 2016, 2017
 #*
 #* Licensed under the Apache License, Version 2.0 (the "License");
 #* you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 #**/
 
 # Arguments of the LIKE operator: operand.like(argument).
-# The format of each line is (where/having, operand in Swift, operand in SQL, argument in Sift, argument in SQL).
+# The format of each line is (where/having, operand in Swift, operand in SQL, argument in Swift, argument in SQL).
 # Used in testSpecialOperators.sh. The resulting test file is TestSpecialOperators.swift.
 
 where t.a table.a "%kuery%" '%kuery%'

@@ -57,6 +57,8 @@ cat <<'EOF' > ${OUTPUT_FILE}
 * limitations under the License.
 **/
 
+import Foundation
+
 EOF
 
 # Generate operators for simple conditions that return Filter and Having

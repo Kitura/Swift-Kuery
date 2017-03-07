@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #/**
-#* Copyright IBM Corporation 2016
+#* Copyright IBM Corporation 2016, 2017
 #*
 #* Licensed under the Apache License, Version 2.0 (the "License");
 #* you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ echo "--- Generating ${OUTPUT_FILE}"
 
 cat <<'EOF' > ${OUTPUT_FILE}
 /**
-* Copyright IBM Corporation 2016
+* Copyright IBM Corporation 2016, 2017
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -55,6 +55,8 @@ cat <<'EOF' > ${OUTPUT_FILE}
 * See the License for the specific language governing permissions and
 * limitations under the License.
 **/
+
+import Foundation
 
 import XCTest
 
@@ -146,8 +148,10 @@ while read -r LINE; do
     SQL_OPERAND1=${stringarray[4]}
 
     CLAUSE_UPPER="$(tr '[:lower:]' '[:upper:]' <<< $CLAUSE)"
-    # Remove backslashes.
+    # Remove backslashes and whitespaces.
     SQL_OPERAND1=${SQL_OPERAND1/\\}
+    OPERAND1=${OPERAND1//_/" "}
+    SQL_OPERAND1=${SQL_OPERAND1//_/" "}
 
 cat <<EOF >> ${OUTPUT_FILE}
 

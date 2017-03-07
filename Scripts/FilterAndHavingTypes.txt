@@ -56,6 +56,10 @@ Filter Int Select where 7 Select(t2.c,_from:_t2) 7 (SELECT_table2.c_FROM_table2)
 Filter Float Select where Float(7.2) Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
 Filter Double Select where 7.2 Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
 Filter Parameter Select where Parameter() Select(t2.c,_from:_t2) \?1 (SELECT_table2.c_FROM_table2)
+Filter ScalarColumnExpression Date where now() Date(timeIntervalSince1970:_0) NOW() '1970-01-01_00:00:00_+0000'
+Filter Date ScalarColumnExpression where Date(timeIntervalSince1970:_0) now() '1970-01-01_00:00:00_+0000' NOW()
+Filter Column Date where t.a Date(timeIntervalSince1970:_10000) table.a '1970-01-01_02:46:40_+0000'
+Filter Date Column where Date(timeIntervalSince1970:_50000) t.a '1970-01-01_13:53:20_+0000' table.a
 Having AggregateColumnExpression String having last(t.a) "banana" LAST(table.a) 'banana'
 Having String AggregateColumnExpression having "banana" last(t.a) 'banana' LAST(table.a)
 Having Column String having t.a "banana" table.a 'banana'
@@ -87,3 +91,7 @@ Having Int Select having 7 Select(t2.c,_from:_t2) 7 (SELECT_table2.c_FROM_table2
 Having Float Select having Float(7.2) Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
 Having Double Select having 7.2 Select(t2.c,_from:_t2) 7.2 (SELECT_table2.c_FROM_table2)
 Having Parameter Select having Parameter() Select(t2.c,_from:_t2) \?1 (SELECT_table2.c_FROM_table2)
+Having AggregateColumnExpression Date having last(t.a) Date(timeIntervalSince1970:_0) LAST(table.a) '1970-01-01_00:00:00_+0000'
+Having Date AggregateColumnExpression having Date(timeIntervalSince1970:_0) last(t.a) '1970-01-01_00:00:00_+0000' LAST(table.a)
+Having Column Date having t.a Date(timeIntervalSince1970:_10000) table.a '1970-01-01_02:46:40_+0000'
+Having Date Column having Date(timeIntervalSince1970:_50000) t.a '1970-01-01_13:53:20_+0000' table.a

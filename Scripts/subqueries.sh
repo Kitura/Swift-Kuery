@@ -56,6 +56,8 @@ cat <<'EOF' > ${OUTPUT_FILE}
 * limitations under the License.
 **/
 
+import Foundation
+
 EOF
 
 # Generate operators with subqueries, i.e. 'expression operator ANY/ALL(subquery)'
