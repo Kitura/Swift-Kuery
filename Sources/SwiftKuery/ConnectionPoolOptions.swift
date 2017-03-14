@@ -32,9 +32,9 @@ public struct ConnectionPoolOptions {
     
     /// Initialize an instance of `ConnectionPoolOptions`.
     ///
-    /// Parameter initialCapacity: The initial number of connections in the pool.
-    /// Parameter maxCapacity: The maximum number of connections in the pool
-    /// Parameter timeout: Maximum wait (in milliseconds) to receive a connection before returning nil.
+    /// - Parameter initialCapacity: The initial number of connections in the pool.
+    /// - Parameter maxCapacity: The maximum number of connections in the pool
+    /// - Parameter timeout: Maximum wait (in milliseconds) to receive a connection before returning nil.
     public init(initialCapacity: Int, maxCapacity: Int = 0, timeout: Int = 0) {
         self.initialCapacity = initialCapacity
         self.maxCapacity = maxCapacity

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Update Struct Reference</title>
+    <title>ConnectionPool Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -11,9 +11,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Struct/Update" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Class/ConnectionPool" class="dashAnchor"></a>
 
-    <a title="Update Struct Reference"></a>
+    <a title="ConnectionPool Class Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -35,7 +35,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">SwiftKuery Reference</a>
       <img class="carat" src="../img/carat.png" />
-      Update Struct Reference
+      ConnectionPool Class Reference
     </p>
 
     <div class="content-wrapper">
@@ -1934,14 +1934,15 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>Update</h1>
+            <h1>ConnectionPool</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Update</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Query.html">Query</a></span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ConnectionPool</span></code></pre>
 
                 </div>
               </div>
-            <p>The SQL UPDATE statement.</p>
+            <p>A connection pool implementation.
+The pool is FIFO.</p>
 
           </div>
         </section>
@@ -1953,9 +1954,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV10SwiftKuery6Update5tableCS_5Table"></a>
-                    <a name="//apple_ref/swift/Property/table" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Update5tableCS_5Table">table</a>
+                    <a name="/s:FC10SwiftKuery14ConnectionPoolcFT7optionsVS_21ConnectionPoolOptions19connectionGeneratorFT_GSqPS_10Connection__18connectionReleaserFPS2__T__S0_"></a>
+                    <a name="//apple_ref/swift/Method/init(options:connectionGenerator:connectionReleaser:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10SwiftKuery14ConnectionPoolcFT7optionsVS_21ConnectionPoolOptions19connectionGeneratorFT_GSqPS_10Connection__18connectionReleaserFPS2__T__S0_">init(options:connectionGenerator:connectionReleaser:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1963,132 +1964,25 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The table to update.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">table</span><span class="p">:</span> <span class="kt">Table</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vV10SwiftKuery6Update11whereClauseGSqPS_19QueryFilterProtocol__"></a>
-                    <a name="//apple_ref/swift/Property/whereClause" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Update11whereClauseGSqPS_19QueryFilterProtocol__">whereClause</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The SQL WHERE clause containing the filter for the rows to update.
-Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></code> clause or a <code>String</code> containing raw SQL.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">whereClause</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vV10SwiftKuery6Update6suffixGSqPS_19QuerySuffixProtocol__"></a>
-                    <a name="//apple_ref/swift/Property/suffix" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Update6suffixGSqPS_19QuerySuffixProtocol__">suffix</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A String with a clause to be appended to the end of the query.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">suffix</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QuerySuffixProtocol">QuerySuffixProtocol</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vV10SwiftKuery6Update4withGSqGSaCS_14AuxiliaryTable__"></a>
-                    <a name="//apple_ref/swift/Property/with" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV10SwiftKuery6Update4withGSqGSaCS_14AuxiliaryTable__">with</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>An array of <code>AuxiliaryTable</code> which will be used in a query with a WITH clause.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">with</span><span class="p">:</span> <span class="p">[</span><span class="kt">AuxiliaryTable</span><span class="p">]?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV10SwiftKuery6UpdatecFTCS_5Table3setGSaTCS_6ColumnP___5whereGSqPS_19QueryFilterProtocol___S0_"></a>
-                    <a name="//apple_ref/swift/Method/init(_:set:where:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6UpdatecFTCS_5Table3setGSaTCS_6ColumnP___5whereGSqPS_19QueryFilterProtocol___S0_">init(_:set:where:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Initialize an instance of Update.</p>
+                        <p>Creates an instance of <code>ConnectionPool</code> containing <code><a href="../Structs/ConnectionPoolOptions.html#/s:vV10SwiftKuery21ConnectionPoolOptions15initialCapacitySi">ConnectionPoolOptions.initialCapacity</a></code> connections.
+The <code>connectionGenerator</code> will be invoked <code><a href="../Structs/ConnectionPoolOptions.html#/s:vV10SwiftKuery21ConnectionPoolOptions15initialCapacitySi">ConnectionPoolOptions.initialCapacity</a></code> times to fill
+the pool to the initial capacity.</p>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter table: The table to update.
+    Parameter options: <code><a href="../Structs/ConnectionPoolOptions.html">ConnectionPoolOptions</a></code> describing pool configuration.
 
 </div>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter set: An array of (column, value) tuples to set.
+    Parameter connectionGenerator: A closure that returns a new connection for the pool.
 
 </div>
 
 <div class="aside aside-parameter">
     <p class="aside-title">Parameter</p>
-    Parameter conditions: An optional where clause to apply.
+    Parameter connectionReleaser: A closure to be used to release a connection from the pool.
 
 </div>
 
@@ -2097,7 +1991,7 @@ Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></c
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">table</span><span class="p">:</span> <span class="kt">Table</span><span class="p">,</span> <span class="nv">set</span><span class="p">:</span> <span class="p">[(</span><span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">,</span> <span class="kt">Any</span><span class="p">)],</span> <span class="k">where</span> <span class="nv">conditions</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a></span><span class="p">?</span><span class="o">=</span><span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="kt"><a href="../Structs/ConnectionPoolOptions.html">ConnectionPoolOptions</a></span><span class="p">,</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Connection.html">Connection</a></span><span class="p">?,</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Protocols/Connection.html">Connection</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span></code></pre>
 
                         </div>
                       </div>
@@ -2108,12 +2002,12 @@ Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></c
                             <tr>
                               <td>
                                 <code>
-                                <em>table</em>
+                                <em>options</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The table to update.</p>
+                                  <p><code>ConnectionPoolOptions</code> describing pool configuration.</p>
 
                                 </div>
                               </td>
@@ -2121,12 +2015,12 @@ Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></c
                             <tr>
                               <td>
                                 <code>
-                                <em>set</em>
+                                <em>connectionGenerator</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>An array of (column, value) tuples to set.</p>
+                                  <p>A closure that returns a new connection for the pool.</p>
 
                                 </div>
                               </td>
@@ -2134,12 +2028,12 @@ Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></c
                             <tr>
                               <td>
                                 <code>
-                                <em>conditions</em>
+                                <em>connectionReleaser</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>An optional where clause to apply.</p>
+                                  <p>A closure to be used to release a connection from the pool.</p>
 
                                 </div>
                               </td>
@@ -2153,9 +2047,9 @@ Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></c
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV10SwiftKuery6Update5buildFzT12queryBuilderCS_12QueryBuilder_SS"></a>
-                    <a name="//apple_ref/swift/Method/build(queryBuilder:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Update5buildFzT12queryBuilderCS_12QueryBuilder_SS">build(queryBuilder:)</a>
+                    <a name="/s:FC10SwiftKuery14ConnectionPool13getConnectionFT_GSqPS_10Connection__"></a>
+                    <a name="//apple_ref/swift/Method/getConnection()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10SwiftKuery14ConnectionPool13getConnectionFT_GSqPS_10Connection__">getConnection()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2163,23 +2057,12 @@ Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></c
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Build the query using <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code>.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter queryBuilder: The QueryBuilder to use.
-
-</div>
+                        <p>Get a connection from the pool.
+This function will block until a connection can be obtained from the pool or for <code><a href="../Structs/ConnectionPoolOptions.html#/s:vV10SwiftKuery21ConnectionPoolOptions7timeoutSi">ConnectionPoolOptions.timeout</a></code>.</p>
 
 <div class="aside aside-returns">
     <p class="aside-title">Returns</p>
-    A String representation of the query.
-
-</div>
-
-<div class="aside aside-throws">
-    <p class="aside-title">Throws</p>
-    QueryError.syntaxError if query build fails.
+    A <code><a href="../Protocols/Connection.html">Connection</a></code> or nil if the wait for a free connection timed out.
 
 </div>
 
@@ -2188,33 +2071,13 @@ Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></c
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">build</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="kt"><a href="../Classes/QueryBuilder.html">QueryBuilder</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getConnection</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Connection.html">Connection</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
                       <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>queryBuilder</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The QueryBuilder to use.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
                         <h4>Return Value</h4>
-                        <p>A String representation of the query.</p>
+                        <p>A <code><a href="../Protocols/Connection.html">Connection</a></code> or nil if the wait for a free connection timed out.</p>
 
                       </div>
                     </section>
@@ -2223,9 +2086,9 @@ Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></c
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV10SwiftKuery6Update5whereFPS_19QueryFilterProtocol_S0_"></a>
-                    <a name="//apple_ref/swift/Method/where(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Update5whereFPS_19QueryFilterProtocol_S0_">where(_:)</a>
+                    <a name="/s:FC10SwiftKuery14ConnectionPool10disconnectFT_T_"></a>
+                    <a name="//apple_ref/swift/Method/disconnect()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FC10SwiftKuery14ConnectionPool10disconnectFT_T_">disconnect()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2233,117 +2096,17 @@ Could be represented with a <code><a href="../Structs/Filter.html">Filter</a></c
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Add an SQL WHERE clause to the update statement.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter conditions: The <code><a href="../Structs/Filter.html">Filter</a></code> clause or a <code>String</code> containing the SQL WHERE to apply.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A new instance of Update.
-
-</div>
+                        <p>Release all the connections in the pool by calling connectionReleaser closure on each connection,
+and empty the pool.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">where</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">conditions</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10SwiftKuery19QueryFilterProtocol">QueryFilterProtocol</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Update</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">disconnect</span><span class="p">()</span></code></pre>
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>conditions</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The <code>Filter</code> clause or a <code>String</code> containing the SQL WHERE to apply.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of Update.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV10SwiftKuery6Update6suffixFSSS0_"></a>
-                    <a name="//apple_ref/swift/Method/suffix(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV10SwiftKuery6Update6suffixFSSS0_">suffix(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Add a raw suffix to the update statement.</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter raw: A String with a clause to be appended to the end of the query.
-
-</div>
-
-<div class="aside aside-returns">
-    <p class="aside-title">Returns</p>
-    A new instance of Update.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">suffix</span><span class="p">(</span><span class="n">_</span> <span class="nv">raw</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Update</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>raw</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A String with a clause to be appended to the end of the query.</p>
-
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of Update.</p>
-
                       </div>
                     </section>
                   </div>
