@@ -26,6 +26,9 @@ public protocol Connection {
     /// Close the connection to the database.
     func closeConnection()
     
+    /// An indication whether there is a connection to the database.
+    var isConnected: Bool { get }
+    
     /// Execute a query.
     ///
     /// - Parameter query: The query to execute.

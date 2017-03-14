@@ -44,6 +44,8 @@ class TestConnection: Connection {
     
     func connect(onCompletion: (QueryError?) -> ()) {}
     
+    public var isConnected: Bool { return true }
+    
     func closeConnection() {}
     
     func execute(query: Query, onCompletion: @escaping ((QueryResult) -> ())) {
