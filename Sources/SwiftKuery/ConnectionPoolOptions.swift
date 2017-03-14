@@ -27,7 +27,7 @@ public struct ConnectionPoolOptions {
     public let maxCapacity: Int
     
     /// Maximum wait (in milliseconds) to receive a connection before returning nil. If set to 0 (default), there will be
-    /// no timeout, i.e., the wait will block forever.
+    /// no timeout, i.e., the wait may block forever.
     public let timeout: Int
     
     /// Initialize an instance of `ConnectionPoolOptions`.

@@ -57,6 +57,7 @@ public class ConnectionPool {
     /// The `connectionGenerator` will be invoked `ConnectionPoolOptions.initialCapacity` times to fill
     /// the pool to the initial capacity.
     ///
+    /// Parameter options: `ConnectionPoolOptions` describing pool configuration.
     /// Parameter connectionGenerator: A closure that returns a new connection for the pool.
     /// Parameter connectionReleaser: A closure to be used to release a connection from the pool.
     public init(options: ConnectionPoolOptions, connectionGenerator: @escaping () -> Connection?, connectionReleaser: @escaping (Connection) -> ()) {
@@ -85,7 +86,7 @@ public class ConnectionPool {
     /// Get a connection from the pool.
     /// This function will block until a connection can be obtained from the pool or for `ConnectionPoolOptions.timeout`.
     ///
-    /// Returns: A Connection or nil if the wait for a free connection timed out.
+    /// Returns: A `Connection` or nil if the wait for a free connection timed out.
     public func getConnection() -> Connection? {
         if let connection = take() {
             return ConnectionPoolConnection(connection: connection, pool: self)
