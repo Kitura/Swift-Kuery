@@ -129,7 +129,8 @@ public class ConnectionPool {
         if (pool.count == 0 && capacity < limit) {
             capacity += 1
             if let newItem = generator() {
-                give(newItem)
+                pool.append(newItem)
+                semaphore.signal()
             }
         }
         unlockPoolLock()
