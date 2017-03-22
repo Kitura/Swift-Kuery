@@ -21,7 +21,12 @@ public class ConnectionPoolConnection: Connection {
     
     private var connection: Connection?
     private weak var pool: ConnectionPool?
-    
+ 
+    /// The `QueryBuilder` with connection specific substitutions.
+    public var queryBuilder: QueryBuilder {
+        return connection?.queryBuilder ?? QueryBuilder()
+    }
+
     init(connection: Connection, pool: ConnectionPool) {
         self.connection = connection
         self.pool = pool

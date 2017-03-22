@@ -135,7 +135,7 @@ class T2 {
 }
 ```
 <br>
-__SELECT * FROM t1;__
+**SELECT * FROM t1;**
 
 ```swift
 let t1 = T1()
@@ -160,10 +160,10 @@ s.execute(connection) { queryResult in
 ```
 
 <br>                                                      
-__SELECT a, b FROM t1      
+**SELECT a, b FROM t1      
    WHERE (a LIKE '%b' OR a = 'apple') AND b > 5  
    ORDER BY b ASC, a DESC       
-   OFFSET 5;__
+   OFFSET 5;**
 
 ```swift
 ...
@@ -178,11 +178,11 @@ connection.execute(query: s) { queryResult in
 ```
 
 <br>
-__SELECT UCASE(a) AS name FROM t1    
+**SELECT UCASE(a) AS name FROM t1    
  WHERE b >= 0         
  GROUP BY a         
  HAVING SUM(b) > 3        
- ORDER BY a DESC;__
+ ORDER BY a DESC;**
 
 ```swift
 ...
@@ -195,8 +195,8 @@ let s = Select(ucase(t1.a).as("name"), from: t1)
 ```
 
 <br>
-__INSERT INTO t1             
-VALUES ('apple', 10), ('apricot', 3), ('banana', 17);__
+**INSERT INTO t1             
+VALUES ('apple', 10), ('apricot', 3), ('banana', 17);**
 
 ```swift
 ...
@@ -213,8 +213,8 @@ connection.execute(query: i) { queryResult in
 ```
 
 <br>
-__INSERT INTO t1             
-VALUES ('apple', 10);__
+**INSERT INTO t1             
+VALUES ('apple', 10);**
 
 ```swift
 ...
@@ -224,8 +224,8 @@ let i = Insert(into: t1, values: "apple", 10)
 
 
 <br>
-__INSERT INTO t1 (a, b)              
-VALUES ('apricot', '3');__
+**INSERT INTO t1 (a, b)              
+VALUES ('apricot', '3');**
 
 ```swift
 ...
@@ -234,8 +234,8 @@ let i = Insert(into: t1, valueTuples: (t1.a, "apricot"), (t1.b, "3"))
 ```
 
 <br>
-__INSERT INTO t1 (a, b)              
-VALUES ('apricot', '3');__
+**INSERT INTO t1 (a, b)              
+VALUES ('apricot', '3');**
 
 ```swift
 ...
@@ -243,8 +243,8 @@ let i = Insert(into: t1, columns: [t1.a, t1.b], values: ["apricot", 3])
 ...
 ```
 <br>
-__UPDATE t1 SET a = 'peach', b = 2            
-WHERE a = 'banana';__
+**UPDATE t1 SET a = 'peach', b = 2            
+WHERE a = 'banana';**
 
 ```swift
 ...
@@ -254,9 +254,9 @@ let u = Update(t1, set: [(t1.a, "peach"), (t1.b, 2)])
 ```
 
 <br>
-__SELECT * FROM t1 AS left            
+**SELECT * FROM t1 AS left            
 LEFT JOIN t2 AS right           
-ON left.b = right.b;__
+ON left.b = right.b;**
 
 ```swift
 let t1 = T1()
@@ -271,9 +271,9 @@ let s2 = Select(from: leftTable)
 ```
 
 <br>
-__SELECT * FROM t1           
+**SELECT * FROM t1           
 JOIN t2           
-USING (b);__
+USING (b);**
 
 ```swift
 ...
@@ -282,10 +282,13 @@ let s2 = Select(from: t1)
   .using(t1.b)
 ...
 ```
+<br>
+#### Queries with parameters:                         
+**Note**: Named parameters are supported for all databases, even for those that do not support named parameters (e.g. PostgreSQL).
 
 <br>
-__INSERT INTO t1             
-VALUES (@0,@1);__
+**INSERT INTO t1             
+VALUES (@0,@1);**
 
 ```swift
 let i = Insert(into: t1, values: Parameter(), Parameter())
@@ -296,8 +299,8 @@ connection.execute(query: i1, parameters: "banana", 28) { queryResult in
 ```
 
 <br>
-__INSERT INTO t1             
-VALUES (@fruit,@number);__
+**INSERT INTO t1             
+VALUES (@fruit,@number);**
 
 ```swift
 let i = Insert(into: t1, values: Parameter("fruit"), Parameter("number"))
@@ -307,7 +310,7 @@ connection.execute(query: i1, parameters: ["number" : 28, "fruit" : "banana"]) {
 }
 ```
 <br>
-__Raw query:__
+**Raw query:**
 
 ```swift
 connection.execute("CREATE TABLE myTable (a varchar(40), b integer)") {  queryResult in
@@ -315,11 +318,11 @@ connection.execute("CREATE TABLE myTable (a varchar(40), b integer)") {  queryRe
 }
 ```
 <br>
-__SELECT LEFT(a, 2) as raw FROM t1     
+**SELECT LEFT(a, 2) as raw FROM t1     
  WHERE b >= 0
  GROUP BY a         
  HAVING sum(b) > 3               
- ORDER BY a DESC;__
+ ORDER BY a DESC;**
 
 ```swift
 ...
@@ -332,8 +335,8 @@ let s = Select(RawField("LEFT(a, 2) as raw"), from: t1)
 ```
 
 <br>
-__SELECT * FROM t1     
-WHERE b >= ANY (SELECT b FROM t2);__
+**SELECT * FROM t1     
+WHERE b >= ANY (SELECT b FROM t2);**
 
 ```swift
 ...
@@ -342,8 +345,8 @@ let s = Select(from: t1)
 ...
 ```
 <br>
-__SELECT * FROM t1     
-WHERE NOT EXISTS (SELECT * FROM t2 WHERE b < 8);__
+**SELECT * FROM t1     
+WHERE NOT EXISTS (SELECT * FROM t2 WHERE b < 8);**
 
 ```swift
 ...
@@ -352,9 +355,9 @@ let s = Select(from: t1)
 ...
 ```
 <br>
-__SELECT c FROM t2
+**SELECT c FROM t2
 GROUP BY c     
-HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = 'apple');__
+HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = 'apple');**
 
 ```swift
 ...
