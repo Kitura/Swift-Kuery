@@ -73,26 +73,33 @@ struct Utils {
         return resultQuery
     }
     
-    static func convertNamedParametersToNumbered(query: String, queryBuilder: QueryBuilder) -> (String, [String:Int]) {
+    static func convertNamedParametersToNumbered(query: String, queryBuilder: QueryBuilder) -> (String, [String:[Int]], Int) {
         var resultQuery = ""
-        var nameToNumber = [String:Int]()
+        var nameToNumber = [String:[Int]]()
         var index = 1
         let marker = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.numberedParameter.rawValue]
         var inputQuery = query
         var startRange = inputQuery.range(of: Parameter.namedParameterStart)
         var endRange = inputQuery.range(of: Parameter.namedParameterEnd)
         while startRange != nil && endRange != nil {
-            resultQuery += inputQuery.substring(to: startRange!.lowerBound) + marker + "\(index)"
+            resultQuery += inputQuery.substring(to: startRange!.lowerBound) + marker
+            if queryBuilder.addNumbersToParameters {
+                resultQuery += "\(index)"
+            }
             let nameRange = startRange!.upperBound..<endRange!.lowerBound
             let name = inputQuery.substring(with: nameRange)
-            nameToNumber[name] = index
+            if let _ = nameToNumber[name] {
+                nameToNumber[name]!.append(index)
+            }
+            else {
+                nameToNumber[name] = [index]
+            }
             index += 1
             inputQuery = inputQuery.substring(from: endRange!.upperBound)
             startRange = inputQuery.range(of: Parameter.namedParameterStart)
             endRange = inputQuery.range(of: Parameter.namedParameterEnd)
         }
         resultQuery += inputQuery
-        print(nameToNumber)
-        return (resultQuery, nameToNumber)
+        return (resultQuery, nameToNumber, index - 1)
     }
 }

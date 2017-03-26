@@ -118,11 +118,13 @@ public extension Connection {
     func execute(query: Query, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {
         do {
             let databaseQuery = try query.build(queryBuilder: queryBuilder)
-            let (convertedQuery, namedToNumbered) = Utils.convertNamedParametersToNumbered(query: databaseQuery, queryBuilder: queryBuilder)
-            var numberedParameters: [Any?] = Array(repeating: nil, count: parameters.count)
+            let (convertedQuery, namedToNumbered, count) = Utils.convertNamedParametersToNumbered(query: databaseQuery, queryBuilder: queryBuilder)
+            var numberedParameters: [Any?] = Array(repeating: nil, count: count)
             for (parameterName, parameterValue) in parameters {
-                if let number = namedToNumbered[parameterName] {
-                    numberedParameters[number - 1] = parameterValue
+                if let numbers = namedToNumbered[parameterName] {
+                    for number in numbers {
+                        numberedParameters[number - 1] = parameterValue
+                    }
                 }
                 else {
                     onCompletion(.error(QueryError.syntaxError("Failed to map parameters.")))
