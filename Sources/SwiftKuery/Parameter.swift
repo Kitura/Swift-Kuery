@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016
+ Copyright IBM Corporation 2016, 2017
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -29,6 +29,8 @@ public struct Parameter: Buildable {
     }
     
     static var numberedParameterMarker = "\u{00}\u{01}\u{01}\u{00}"
+    static var namedParameterStart = "\u{01}\u{02}\u{02}\u{01}"
+    static var namedParameterEnd = "\u{02}\u{03}\u{03}\u{02}"
     
     /// Build the parameter using `QueryBuilder`. If the parameter's name is set,
     /// return it along with the named parameter marker in `QueryBuilder`. Otherwise, 
@@ -41,7 +43,7 @@ public struct Parameter: Buildable {
         if let name = name {
             let marker = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.namedParameter.rawValue]
             if marker == "" {
-                throw QueryError.syntaxError("No marker specified in QueryBuilder for named query parameters")
+                return Parameter.namedParameterStart + name + Parameter.namedParameterEnd
             }
             else {
                 return marker + name

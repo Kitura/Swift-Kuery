@@ -18,6 +18,10 @@
 
 /// Defines the protocol which all database plugins must implement.
 public protocol Connection {
+  
+    /// The `QueryBuilder` with connection specific substitutions.
+    var queryBuilder: QueryBuilder { get }
+    
     /// Establish a connection with the database.
     ///
     /// - Parameter onCompletion: The function to be called when the connection is established.
@@ -108,4 +112,31 @@ public protocol Connection {
     /// - Parameter savepoint: The name of the savepoint to release.
     /// - Parameter onCompletion: The function to be called when the execution of release savepoint command has completed.
     func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ()))    
+}
+
+public extension Connection {
+    func execute(query: Query, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {
+        do {
+            let databaseQuery = try query.build(queryBuilder: queryBuilder)
+            let (convertedQuery, namedToNumbered, count) = Utils.convertNamedParametersToNumbered(query: databaseQuery, queryBuilder: queryBuilder)
+            var numberedParameters: [Any?] = Array(repeating: nil, count: count)
+            for (parameterName, parameterValue) in parameters {
+                if let numbers = namedToNumbered[parameterName] {
+                    for number in numbers {
+                        numberedParameters[number - 1] = parameterValue
+                    }
+                }
+                else {
+                    onCompletion(.error(QueryError.syntaxError("Failed to map parameters.")))
+                }
+            }
+            execute(convertedQuery, parameters: numberedParameters, onCompletion: onCompletion)
+        }
+        catch  QueryError.syntaxError(let error) {
+            onCompletion(.error(QueryError.syntaxError(error)))
+        }
+        catch {
+            onCompletion(.error(QueryError.syntaxError("Failed to build the query.")))
+        }
+    }
 }

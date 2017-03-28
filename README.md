@@ -134,7 +134,9 @@ class T2 {
   let b = Column("b")
 }
 ```
-<br>
+
+&nbsp;
+
 __SELECT * FROM t1;__
 
 ```swift
@@ -159,7 +161,8 @@ s.execute(connection) { queryResult in
 }
 ```
 
-<br>                                                      
+&nbsp;
+
 __SELECT a, b FROM t1      
    WHERE (a LIKE '%b' OR a = 'apple') AND b > 5  
    ORDER BY b ASC, a DESC       
@@ -177,7 +180,8 @@ connection.execute(query: s) { queryResult in
 }
 ```
 
-<br>
+&nbsp;
+
 __SELECT UCASE(a) AS name FROM t1    
  WHERE b >= 0         
  GROUP BY a         
@@ -194,7 +198,8 @@ let s = Select(ucase(t1.a).as("name"), from: t1)
 ...
 ```
 
-<br>
+&nbsp;
+
 __INSERT INTO t1             
 VALUES ('apple', 10), ('apricot', 3), ('banana', 17);__
 
@@ -212,7 +217,8 @@ connection.execute(query: i) { queryResult in
 }
 ```
 
-<br>
+&nbsp;
+
 __INSERT INTO t1             
 VALUES ('apple', 10);__
 
@@ -222,8 +228,9 @@ let i = Insert(into: t1, values: "apple", 10)
 ...
 ```
 
+&nbsp;
 
-<br>
+
 __INSERT INTO t1 (a, b)              
 VALUES ('apricot', '3');__
 
@@ -233,7 +240,8 @@ let i = Insert(into: t1, valueTuples: (t1.a, "apricot"), (t1.b, "3"))
 ...
 ```
 
-<br>
+&nbsp;
+
 __INSERT INTO t1 (a, b)              
 VALUES ('apricot', '3');__
 
@@ -242,7 +250,9 @@ VALUES ('apricot', '3');__
 let i = Insert(into: t1, columns: [t1.a, t1.b], values: ["apricot", 3])
 ...
 ```
-<br>
+
+&nbsp;
+
 __UPDATE t1 SET a = 'peach', b = 2            
 WHERE a = 'banana';__
 
@@ -253,7 +263,8 @@ let u = Update(t1, set: [(t1.a, "peach"), (t1.b, 2)])
 ...
 ```
 
-<br>
+&nbsp;
+
 __SELECT * FROM t1 AS left            
 LEFT JOIN t2 AS right           
 ON left.b = right.b;__
@@ -270,7 +281,8 @@ let s2 = Select(from: leftTable)
 ...
 ```
 
-<br>
+&nbsp;
+
 __SELECT * FROM t1           
 JOIN t2           
 USING (b);__
@@ -283,7 +295,12 @@ let s2 = Select(from: t1)
 ...
 ```
 
-<br>
+&nbsp;
+
+#### Queries with parameters:                         
+**Note**: Named parameters are supported for all databases, even for those that do not support named parameters (e.g. PostgreSQL).
+
+
 __INSERT INTO t1             
 VALUES (@0,@1);__
 
@@ -295,7 +312,8 @@ connection.execute(query: i1, parameters: "banana", 28) { queryResult in
 }
 ```
 
-<br>
+&nbsp;
+
 __INSERT INTO t1             
 VALUES (@fruit,@number);__
 
@@ -306,7 +324,9 @@ connection.execute(query: i1, parameters: ["number" : 28, "fruit" : "banana"]) {
   ...
 }
 ```
-<br>
+
+&nbsp;
+
 __Raw query:__
 
 ```swift
@@ -314,7 +334,9 @@ connection.execute("CREATE TABLE myTable (a varchar(40), b integer)") {  queryRe
   ...
 }
 ```
-<br>
+
+&nbsp;
+
 __SELECT LEFT(a, 2) as raw FROM t1     
  WHERE b >= 0
  GROUP BY a         
@@ -331,7 +353,8 @@ let s = Select(RawField("LEFT(a, 2) as raw"), from: t1)
 ...
 ```
 
-<br>
+&nbsp;
+
 __SELECT * FROM t1     
 WHERE b >= ANY (SELECT b FROM t2);__
 
@@ -341,7 +364,9 @@ let s = Select(from: t1)
   .where(t1.b >= any(Select(t2.b, from: t2)))
 ...
 ```
-<br>
+
+&nbsp;
+
 __SELECT * FROM t1     
 WHERE NOT EXISTS (SELECT * FROM t2 WHERE b < 8);__
 
@@ -351,7 +376,9 @@ let s = Select(from: t1)
   .where(notExists(Select(from: t2).where(t2.b < 8)))
 ...
 ```
-<br>
+
+&nbsp;
+
 __SELECT c FROM t2
 GROUP BY c     
 HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = 'apple');__
