@@ -56,17 +56,21 @@ class Grades : Table {
 let grades = Grades()
 ```
 
-Next we create a connection to PostgreSQL and connect to it. Note that the API is asynchronous:
+Next we create a pool of connections to PostgreSQL:
 
 ```swift
-let connection = PostgreSQLConnection(host: "localhost", port: 5432, options: [.userName("username"), .password("password")])
-connection.connect() { error: QueryError in
-  if let error = error {
-    print(error)
-  }
-  else {
-    // Build and execute your query here.
-  }
+let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.userName("username"), .password("password")], poolOptions: ConnectionPoolOptions(initialCapacity: 10, maxCapacity: 50, timeout: 10000)))
+```
+
+Every time we need a connection, we get it from the pool:
+
+```swift
+if let connection = pool.getConnection() {
+   // Build and execute your query here.
+}
+else {
+   print("Error: failed to get a connection.")
+}
 ```
 
 Now lets build the query. Suppose we want to retrieve the average grades for courses with average greater than 90, and sort the results by the average ascending. Here is the SQL query we need to build:
@@ -92,6 +96,10 @@ As you can see, it is very similar to the SQL query syntax.
 Now we execute the created query on our PostgreSQL connection:
 
 ```swift
+guard let connection = pool.getConnection() else {
+   // Error
+}
+
 connection.execute(query: query) { result: QueryResult in
   if let resultSet = queryResult.asResultSet {
     for title in resultSet.titles {
@@ -143,6 +151,10 @@ __SELECT * FROM t1;__
 let t1 = T1()
 
 let s = Select(from: t1)
+
+guard let connection = pool.getConnection() else {
+   // Error
+}
 
 s.execute(connection) { queryResult in
   if let resultSet = queryResult.asResultSet {
