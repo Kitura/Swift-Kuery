@@ -16,9 +16,9 @@
 
 // MARK: Migration
 
-/// Migration between two versions of the table.
+/// A class to help with migrations between two versions of a table.
 ///
-/// The intended usage is to keep versions of the tables somewhere in the application code:
+/// The suggested usage is to keep versions of the table classes somewhere in the application code:
 ///
 /// public class MyTable_v0: Table {
 ///     let a = Column("a", ...)
@@ -32,7 +32,7 @@
 ///     let tableName = "MyTable"
 /// }
 ///
-/// And use typealias to refer to the current version in the application:
+/// And use a typealias to refer to the current version of the table class in the application:
 ///
 /// typealias MyTable = MyTable_v0
 /// let t = MyTable()
@@ -46,7 +46,7 @@
 /// let migration0 = Migration(from: t0, to: t1, using: connection)
 /// migration0.alterTableAdd(column: t1.c) { result in ... }
 ///
-/// And raw alternations if needed:
+/// And raw alternations, if needed:
 ///
 /// let dropColumnQuery = "ALTER TABLE " + t1.tableName + " DROP COLUMN " + t0.a.name
 /// connection.execute(dropColumnQuery) { result in ... }
