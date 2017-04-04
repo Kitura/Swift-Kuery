@@ -27,22 +27,22 @@ class TestSelect: XCTestCase {
     }
     
     class MyTable : Table {
-        let a = Column("a")
-        let b = Column("b")
+        let a = Column("a", type: String.self)
+        let b = Column("b", type: Int.self)
         
         let tableName = "tableSelect"
     }
     
     class MyTable2 : Table {
-        let c = Column("c")
-        let b = Column("b")
+        let c = Column("c", type: String.self)
+        let b = Column("b", type: Int.self)
         
         let tableName = "tableSelect2"
     }
     
     class MyTable3 : Table {
-        let d = Column("d")
-        let b = Column("b")
+        let d = Column("d", type: String.self)
+        let b = Column("b", type: Int.self)
         
         let tableName = "tableSelect3"
     }
@@ -180,8 +180,8 @@ class TestSelect: XCTestCase {
         class AuxTable: AuxiliaryTable {
             let tableName = "aux_table"
             
-            let d = Column("d")
-            let f = Column("f")
+            let d = Column("d", type: String.self)
+            let f = Column("f", type: Int.self)
         }
         
         var withTable = AuxTable(as: Select(t2.c.as("d"), t2.b.as("f"), from: t2))

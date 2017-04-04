@@ -18,7 +18,7 @@
 
 /// Subclasses of the Table class are metadata describing a table in a relational database that you want to work with.
 open class Table: Buildable {
-    private var _name = ""
+    var _name = ""
     private var numberOfColumns = 0
     
     /// The alias of the table.
@@ -29,7 +29,7 @@ open class Table: Buildable {
     public var nameInQuery: String {
         return alias ?? _name
     }
-
+    
     /// Initialize an instance of Table.
     public required init() {
         let mirror = Mirror(reflecting: self)
@@ -88,4 +88,23 @@ open class Table: Buildable {
     public func drop() -> Raw {
         return Raw(query: "DROP TABLE", table: self)
     }
+
+    /// Create the table in the database.
+    ///
+    /// - Parameter connection: The connection to the database.
+    /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
+    public func create(connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
+        var columns = [Column]()
+        let mirror = Mirror(reflecting: self)
+        for child in mirror.children {
+            if let ch = child.value as? Column {
+                columns.append(ch)
+            }
+        }
+        
+        let query = "CREATE TABLE " + _name + " (" +
+                        columns.map { $0.create(queryBuilder: connection.queryBuilder) }.joined(separator: ", ") + ")"
+        connection.execute(query, onCompletion: onCompletion)
+    }
 }
+

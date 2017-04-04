@@ -27,22 +27,22 @@ class TestJoin: XCTestCase {
     }
     
     class MyTable1: Table {
-        let a = Column("a")
-        let b = Column("b")
+        let a = Column("a", type: String.self)
+        let b = Column("b", type: Int.self)
         
         let tableName = "table1Join"
     }
     
     class MyTable2: Table {
-        let c = Column("c")
-        let b = Column("b")
+        let c = Column("c", type: String.self)
+        let b = Column("b", type: Int.self)
         
         let tableName = "table2Join"
     }
     
     class MyTable3: Table {
-        let d = Column("d")
-        let b = Column("b")
+        let d = Column("d", type: String.self)
+        let b = Column("b", type: Int.self)
         
         let tableName = "table3Join"
     }

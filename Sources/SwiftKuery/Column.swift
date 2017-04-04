@@ -19,19 +19,34 @@
 /// Definition of table column.
 public class Column: Field {
     /// The name of the column.
-    public private (set) var name: String
+    public let name: String
     
     /// The alias of the column.
     public var alias: String?
     
     /// The table to which the column belongs.
     public weak var table: Table!
+    
+    public let type: SQLDataType.Type
+    public let isPrimaryKey: Bool
+    public let isNotNullable: Bool
+    public let isUnique: Bool
+    public let defaultValue: Any?
+    // check
+    // collate
+    // on conflict (per constraint)
+    
 
     /// Initialize an instance of Column.
     ///
     /// - Parameter name: The name of the column.
-    public init(_ name: String) {
+    public init(_ name: String, type: SQLDataType.Type, isPrimaryKey: Bool = false, isNotNullable: Bool = false, isUnique: Bool = false, defaultValue: Any? = nil) {
         self.name = name
+        self.type = type
+        self.isPrimaryKey = isPrimaryKey
+        self.isNotNullable = isNotNullable
+        self.isUnique = isUnique
+        self.defaultValue = defaultValue
     }
     
     /// Build the column using `QueryBuilder`.
@@ -56,10 +71,31 @@ public class Column: Field {
     /// - Parameter newName: A String containing the alias for the column.
     /// - Returns: A new Column instance with the alias.
     public func `as`(_ newName: String) -> Column {
-        let new = Column(name)
+        let new = Column(name, type: type, isPrimaryKey: isPrimaryKey, isNotNullable: isNotNullable, isUnique: isUnique, defaultValue: defaultValue)
         new.alias = newName
         new.table = table
         return new
+    }
+    
+    /// Return database specific description of the column using `QueryBuilder` to be used in CREATE TABLE.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the column.
+    public func create(queryBuilder: QueryBuilder) -> String {
+        var result = name + " " + type.create(queryBuilder: queryBuilder)
+        if isPrimaryKey {
+            result += " PRIMARY KEY"
+        }
+        if isNotNullable {
+            result += " NULL"
+        }
+        if isUnique {
+            result += " UNIQUE"
+        }
+        if let defaultValue = defaultValue {
+            result += " DEFAULT " + Utils.packType(defaultValue)
+        }
+        return result
     }
 }
 

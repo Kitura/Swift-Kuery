@@ -72,14 +72,14 @@ class TestSubqueries: XCTestCase {
     }
 
     class MyTable: Table {
-        let a = Column("a")
-        let b = Column("b")
+        let a = Column("a", type: String.self)
+        let b = Column("b", type: Int.self)
 
         let tableName = "table"
     }
 
     class MyTable2: Table {
-        let c = Column("c")
+        let c = Column("c", type: String.self)
         let tableName = "table2"
     }
 
