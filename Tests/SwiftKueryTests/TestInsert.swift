@@ -24,6 +24,7 @@ class TestInsert: XCTestCase {
         return [
             ("testInsert", testInsert),
             ("testInsertWith", testInsertWith),
+            ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
         ]
     }
         
@@ -120,5 +121,14 @@ class TestInsert: XCTestCase {
         } catch {
             XCTFail("Other than syntax error.")
         }
+    }
+    
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+            let thisClass = type(of: self)
+            let linuxCount = thisClass.allTests.count
+            let darwinCount = Int(thisClass.defaultTestSuite().testCaseCount)
+            XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
     }
 }

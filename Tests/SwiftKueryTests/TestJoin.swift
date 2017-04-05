@@ -23,6 +23,7 @@ class TestJoin: XCTestCase {
     static var allTests: [(String, (TestJoin) -> () throws -> Void)] {
         return [
             ("testJoin", testJoin),
+            ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
         ]
     }
     
@@ -124,5 +125,14 @@ class TestJoin: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         query = "SELECT table1Join.a FROM table1Join UNION SELECT table2Join.c FROM table2Join UNION ALL SELECT table3Join.d FROM table3Join"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+    }
+    
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+            let thisClass = type(of: self)
+            let linuxCount = thisClass.allTests.count
+            let darwinCount = Int(thisClass.defaultTestSuite().testCaseCount)
+            XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
     }
 }

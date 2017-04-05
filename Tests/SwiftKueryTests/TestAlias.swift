@@ -23,6 +23,7 @@ class TestAlias: XCTestCase {
     static var allTests: [(String, (TestAlias) -> () throws -> Void)] {
         return [
             ("testAlias", testAlias),
+            ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
         ]
     }
     
@@ -52,5 +53,14 @@ class TestAlias: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         query = "SELECT \"t 2\".a FROM tableAlias AS \"t 2\""
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+    }
+    
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+            let thisClass = type(of: self)
+            let linuxCount = thisClass.allTests.count
+            let darwinCount = Int(thisClass.defaultTestSuite().testCaseCount)
+            XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
     }
 }

@@ -23,6 +23,7 @@ class TestParameters: XCTestCase {
     static var allTests: [(String, (TestParameters) -> () throws -> Void)] {
         return [
             ("testParameters", testParameters),
+            ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
         ]
     }
 
@@ -72,5 +73,14 @@ class TestParameters: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         query = "SELECT tableParameters.a FROM tableParameters WHERE tableParameters.a LIKE ?1"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+    }
+    
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+            let thisClass = type(of: self)
+            let linuxCount = thisClass.allTests.count
+            let darwinCount = Int(thisClass.defaultTestSuite().testCaseCount)
+            XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
     }
 }

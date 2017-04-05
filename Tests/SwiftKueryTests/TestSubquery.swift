@@ -22,6 +22,7 @@ class TestSubquery: XCTestCase {
     static var allTests: [(String, (TestSubquery) -> () throws -> Void)] {
         return [
             ("testSubquery", testSubquery),
+            ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
         ]
     }
     
@@ -106,5 +107,14 @@ class TestSubquery: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         query = "SELECT * FROM tableSubquery WHERE false NOT IN (?1, ?2)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+    }
+    
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+            let thisClass = type(of: self)
+            let linuxCount = thisClass.allTests.count
+            let darwinCount = Int(thisClass.defaultTestSuite().testCaseCount)
+            XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
     }
 }

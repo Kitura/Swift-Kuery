@@ -26,6 +26,7 @@ class TestSpecialOperators: XCTestCase {
     static var allTests: [(String, (TestSpecialOperators) -> () throws -> Void)] {
         return [
             ("testSpecialOperators", testSpecialOperators),
+            ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
         ]
     }
 
@@ -2045,4 +2046,13 @@ class TestSpecialOperators: XCTestCase {
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
   }
+    
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+            let thisClass = type(of: self)
+            let linuxCount = thisClass.allTests.count
+            let darwinCount = Int(thisClass.defaultTestSuite().testCaseCount)
+            XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
+    }
 }
