@@ -85,7 +85,12 @@ public class Migration {
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func alterTableAdd(column: Column, onCompletion: @escaping ((QueryResult) -> ())) {
         let tableName = renamed ? table2._name : table1._name
-        let query = "ALTER TABLE " + tableName + " ADD COLUMN " + column.create(queryBuilder: connection.queryBuilder)
-        connection.execute(query, onCompletion: onCompletion)
+        do {
+            let query = try "ALTER TABLE " + tableName + " ADD COLUMN " + column.create(queryBuilder: connection.queryBuilder)
+            connection.execute(query, onCompletion: onCompletion)
+        }
+        catch {
+            onCompletion(.error(QueryError.syntaxError("Failed to alter table: \(error)")))
+        }
     }
 }

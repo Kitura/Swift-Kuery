@@ -27,7 +27,7 @@ public class Column: Field {
     /// The table to which the column belongs.
     public weak var table: Table!
     
-    public let type: SQLDataType.Type
+    public let type: SQLDataType.Type?
     public let isPrimaryKey: Bool
     public let isNotNullable: Bool
     public let isUnique: Bool
@@ -40,7 +40,7 @@ public class Column: Field {
     /// Initialize an instance of Column.
     ///
     /// - Parameter name: The name of the column.
-    public init(_ name: String, type: SQLDataType.Type, isPrimaryKey: Bool = false, isNotNullable: Bool = false, isUnique: Bool = false, defaultValue: Any? = nil) {
+    public init(_ name: String, type: SQLDataType.Type? = nil, isPrimaryKey: Bool = false, isNotNullable: Bool = false, isUnique: Bool = false, defaultValue: Any? = nil) {
         self.name = name
         self.type = type
         self.isPrimaryKey = isPrimaryKey
@@ -81,7 +81,12 @@ public class Column: Field {
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the column.
-    public func create(queryBuilder: QueryBuilder) -> String {
+    /// - Throws: QueryError.syntaxError if column creation fails.
+    public func create(queryBuilder: QueryBuilder) throws -> String {
+        guard let type = type else {
+            throw QueryError.syntaxError("Column type not set for column \(name). ")
+        }
+        
         var result = name + " " + type.create(queryBuilder: queryBuilder)
         if isPrimaryKey {
             result += " PRIMARY KEY"

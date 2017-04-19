@@ -102,9 +102,14 @@ open class Table: Buildable {
             }
         }
         
-        let query = "CREATE TABLE " + _name + " (" +
-                        columns.map { $0.create(queryBuilder: connection.queryBuilder) }.joined(separator: ", ") + ")"
-        connection.execute(query, onCompletion: onCompletion)
+        do {
+            let query = try "CREATE TABLE " + _name + " (" +
+                columns.map { try $0.create(queryBuilder: connection.queryBuilder) }.joined(separator: ", ") + ")"
+            connection.execute(query, onCompletion: onCompletion)
+        }
+        catch {
+            onCompletion(.error(QueryError.syntaxError("Failed to create table: \(error)")))
+        }
     }
 }
 
