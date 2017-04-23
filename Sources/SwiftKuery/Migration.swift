@@ -74,7 +74,7 @@ public class Migration {
     ///
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func alterTableName(onCompletion: @escaping ((QueryResult) -> ())) {
-        let query = "ALTER TABLE " + table1._name + " RENAME TO " + table2._name
+        let query = "ALTER TABLE " + Utils.packName(table1._name, queryBuilder: connection.queryBuilder) + " RENAME TO " + Utils.packName(table2._name, queryBuilder: connection.queryBuilder)
         renamed = true
         connection.execute(query, onCompletion: onCompletion)
     }
@@ -86,7 +86,7 @@ public class Migration {
     public func alterTableAdd(column: Column, onCompletion: @escaping ((QueryResult) -> ())) {
         let tableName = renamed ? table2._name : table1._name
         do {
-            let query = try "ALTER TABLE " + tableName + " ADD COLUMN " + column.create(queryBuilder: connection.queryBuilder)
+            let query = try "ALTER TABLE " + Utils.packName(tableName, queryBuilder: connection.queryBuilder) + " ADD COLUMN " + column.create(queryBuilder: connection.queryBuilder)
             connection.execute(query, onCompletion: onCompletion)
         }
         catch {

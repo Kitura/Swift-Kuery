@@ -17,7 +17,7 @@
 // MARK: Column
 
 /// Definition of table column.
-public class Column: Field {
+public class Column: Field, IndexColumn {
     /// The name of the column.
     public let name: String
     
@@ -64,6 +64,14 @@ public class Column: Field {
             result += " AS " + Utils.packName(alias, queryBuilder: queryBuilder)
         }
         return result
+    }
+
+    /// Build the index column using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the index column.
+    public func buildIndex(queryBuilder: QueryBuilder) -> String {
+        return Utils.packName(name, queryBuilder: queryBuilder)
     }
 
     /// Add an alias to the column, i.e., implement the SQL AS operator.

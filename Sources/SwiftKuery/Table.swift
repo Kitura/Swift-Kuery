@@ -103,13 +103,13 @@ open class Table: Buildable {
         }
         
         do {
-            let query = try "CREATE TABLE " + _name + " (" +
+            let query = try "CREATE TABLE " + Utils.packName(_name, queryBuilder: connection.queryBuilder) + " (" +
                 columns.map { try $0.create(queryBuilder: connection.queryBuilder) }.joined(separator: ", ") + ")"
             connection.execute(query, onCompletion: onCompletion)
         }
         catch {
             onCompletion(.error(QueryError.syntaxError("Failed to create table: \(error)")))
         }
-    }
+    }   
 }
 
