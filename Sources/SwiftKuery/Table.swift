@@ -22,9 +22,12 @@ open class Table: Buildable {
     private var numberOfColumns = 0
     
     /// The alias of the table.
-    public var alias: String?
+    public private (set)  var alias: String?
     
     private var primaryKey: [Column]?
+    private var foreignKeyColumns: [Column]?
+    private var foreignKeyReferences: [Column]?
+    private var syntaxError = ""
     
     /// The name of the table to be used inside a query, i.e., either its alias (if exists)
     /// or its name.
@@ -96,6 +99,10 @@ open class Table: Buildable {
     /// - Parameter connection: The connection to the database.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func create(connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
+        if syntaxError != "" {
+            onCompletion(.error(QueryError.syntaxError(syntaxError)))
+        }
+
         var columnsWithPrimaryKeyProperty = 0
         var columns = [Column]()
         let mirror = Mirror(reflecting: self)
@@ -108,21 +115,55 @@ open class Table: Buildable {
             }
         }
         
-        if (primaryKey != nil && columnsWithPrimaryKeyProperty > 0) ||  columnsWithPrimaryKeyProperty > 1 {
+        guard columns.count != 0 else {
+            onCompletion(.error(QueryError.syntaxError("Table has no columns.")))
+            return
+        }
+        
+        guard (primaryKey == nil || columnsWithPrimaryKeyProperty == 0) && columnsWithPrimaryKeyProperty <= 1 else {
             onCompletion(.error(QueryError.syntaxError("Table has conflicting definitions of primary key.")))
             return
         }
         
+        guard primaryKey == nil || primaryKey!.count > 0 else {
+            onCompletion(.error(QueryError.syntaxError("Empty primary key.")))
+            return
+        }
+
+        if foreignKeyColumns != nil || foreignKeyReferences != nil {
+            guard let foreignKeyColumns = foreignKeyColumns, let foreignKeyReferences = foreignKeyReferences,
+                foreignKeyColumns.count > 0, foreignKeyReferences.count > 0 else {
+                    onCompletion(.error(QueryError.syntaxError("Invalid definition of foreign key.")))
+                    return
+            }
+        }
+
+        let queryBuilder = connection.queryBuilder
+        
         do {
-            var query = "CREATE TABLE " + Utils.packName(_name, queryBuilder: connection.queryBuilder)
+            var query = "CREATE TABLE " + Utils.packName(_name, queryBuilder: queryBuilder)
             query +=  " ("
-            query += try columns.map { try $0.create(queryBuilder: connection.queryBuilder) }.joined(separator: ", ")
+
+            query += try columns.map { try $0.create(queryBuilder: queryBuilder) }.joined(separator: ", ")
+     
             if let primaryKey = primaryKey {
                 query += ", PRIMARY KEY ("
-                query += primaryKey.map { Utils.packName($0.name, queryBuilder: connection.queryBuilder) }.joined(separator: ", ")
+                query += primaryKey.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ")
                 query += ")"
             }
+            
+            if let foreignKeyColumns = foreignKeyColumns, let foreignKeyReferences = foreignKeyReferences {
+                query += ", FOREIGN KEY ("
+                query += foreignKeyColumns.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ")
+                query += ") REFERENCES "
+                let referencedTableName = foreignKeyReferences[0].table._name
+                query += Utils.packName(referencedTableName, queryBuilder: queryBuilder) + "("
+                query += foreignKeyReferences.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ")
+                query += ")"
+            }
+            
             query += ")"
+            
             connection.execute(query, onCompletion: onCompletion)
         }
         catch {
@@ -130,14 +171,53 @@ open class Table: Buildable {
         }
     }
     
+    /// Add a primary key to the table.
+    ///
+    /// - Parameter columns: An Array of columns that constitute the primary key.
+    /// - Returns: A new instance of `Table`.
     public func primaryKey(_ columns: [Column]) -> Self {
         let new = type(of: self).init()
-        new.primaryKey = columns
+        if new.primaryKey != nil {
+            new.syntaxError += "Conflicting definitions of primary key. "
+        }
+        else {
+            new.primaryKey = columns
+        }
         return new
     }
     
+    /// Add a primary key to the table.
+    ///
+    /// - Parameter columns: Columns that constitute the primary key.
+    /// - Returns: A new instance of `Table`.
     public func primaryKey(_ columns: Column...) -> Self {
         return primaryKey(columns)
+    }
+    
+    /// Add a foreign key to the table.
+    ///
+    /// - Parameter columns: An Array of columns that constitute the foreign key.
+    /// - Parameter references: An Array of columns of the foreign table the foreign key references.
+    /// - Returns: A new instance of `Table`.
+    public func foreignKey(_ columns: [Column], references: [Column]) -> Self {
+        let new = type(of: self).init()
+        if new.foreignKeyColumns != nil || new.foreignKeyReferences != nil {
+            new.syntaxError += "Conflicting definitions of foreign key. "
+        }
+        else {
+            new.foreignKeyColumns = columns
+            new.foreignKeyReferences = references
+        }
+        return new
+    }
+    
+    /// Add a foreign key to the table.
+    ///
+    /// - Parameter columns: A column that is the foreign key.
+    /// - Parameter references: A column in the foreign table the foreign key references.
+    /// - Returns: A new instance of `Table`.
+    public func foreignKey(_ column: Column, references: Column) -> Self {
+        return foreignKey([column], references: [references])
     }
 }
 
