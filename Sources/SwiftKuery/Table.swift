@@ -24,6 +24,8 @@ open class Table: Buildable {
     /// The alias of the table.
     public var alias: String?
     
+    private var primaryKey: [Column]?
+    
     /// The name of the table to be used inside a query, i.e., either its alias (if exists)
     /// or its name.
     public var nameInQuery: String {
@@ -94,22 +96,48 @@ open class Table: Buildable {
     /// - Parameter connection: The connection to the database.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func create(connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
+        var columnsWithPrimaryKeyProperty = 0
         var columns = [Column]()
         let mirror = Mirror(reflecting: self)
         for child in mirror.children {
-            if let ch = child.value as? Column {
-                columns.append(ch)
+            if let column = child.value as? Column {
+                columns.append(column)
+                if column.isPrimaryKey {
+                    columnsWithPrimaryKeyProperty += 1
+                }
             }
         }
         
+        if (primaryKey != nil && columnsWithPrimaryKeyProperty > 0) ||  columnsWithPrimaryKeyProperty > 1 {
+            onCompletion(.error(QueryError.syntaxError("Table has conflicting definitions of primary key.")))
+            return
+        }
+        
         do {
-            let query = try "CREATE TABLE " + Utils.packName(_name, queryBuilder: connection.queryBuilder) + " (" +
-                columns.map { try $0.create(queryBuilder: connection.queryBuilder) }.joined(separator: ", ") + ")"
+            var query = "CREATE TABLE " + Utils.packName(_name, queryBuilder: connection.queryBuilder)
+            query +=  " ("
+            query += try columns.map { try $0.create(queryBuilder: connection.queryBuilder) }.joined(separator: ", ")
+            if let primaryKey = primaryKey {
+                query += ", PRIMARY KEY ("
+                query += primaryKey.map { Utils.packName($0.name, queryBuilder: connection.queryBuilder) }.joined(separator: ", ")
+                query += ")"
+            }
+            query += ")"
             connection.execute(query, onCompletion: onCompletion)
         }
         catch {
             onCompletion(.error(QueryError.syntaxError("Failed to create table: \(error)")))
         }
-    }   
+    }
+    
+    public func primaryKey(_ columns: [Column]) -> Self {
+        let new = type(of: self).init()
+        new.primaryKey = columns
+        return new
+    }
+    
+    public func primaryKey(_ columns: Column...) -> Self {
+        return primaryKey(columns)
+    }
 }
 
