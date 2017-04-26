@@ -19,7 +19,8 @@
 /// Subclasses of the Table class are metadata describing a table in a relational database that you want to work with.
 open class Table: Buildable {
     var _name = ""
-    private var numberOfColumns = 0
+    private var columns: [Column]
+    private var columnsWithPrimaryKeyProperty = 0
     
     /// The alias of the table.
     public private (set)  var alias: String?
@@ -37,18 +38,29 @@ open class Table: Buildable {
     
     /// Initialize an instance of Table.
     public required init() {
+        columns = [Column]()
         let mirror = Mirror(reflecting: self)
-        var columnsCount = 0
         for child in mirror.children {
-            if let ch = child.value as? Column {
-                ch.table = self
-                columnsCount += 1
+            if let column = child.value as? Column {
+                column.table = self
+                columns.append(column)
+                if column.isPrimaryKey {
+                    columnsWithPrimaryKeyProperty += 1
+                }
             }
             else if let label = child.label, label == "tableName" {
                 _name = child.value as! String
             }
         }
-        numberOfColumns = columnsCount
+        if columns.count == 0 {
+            syntaxError += "No columns in the table. "
+        }
+        if columnsWithPrimaryKeyProperty > 1 {
+            syntaxError += "Conflicting definitions of primary key. "
+        }
+        if _name == "" {
+            syntaxError += "Table name not set. "
+        }
     }
     
     /// Build the table using `QueryBuilder`.
@@ -57,7 +69,7 @@ open class Table: Buildable {
     /// - Returns: A String representation of the table.
     /// - Throws: QueryError.syntaxError if query build fails.
     public func build(queryBuilder: QueryBuilder) throws -> String {
-        if numberOfColumns == 0 {
+        if columns.count == 0 {
             throw QueryError.syntaxError("No columns in the table. ")
         }
         if _name == "" {
@@ -101,41 +113,7 @@ open class Table: Buildable {
     public func create(connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
         if syntaxError != "" {
             onCompletion(.error(QueryError.syntaxError(syntaxError)))
-        }
-
-        var columnsWithPrimaryKeyProperty = 0
-        var columns = [Column]()
-        let mirror = Mirror(reflecting: self)
-        for child in mirror.children {
-            if let column = child.value as? Column {
-                columns.append(column)
-                if column.isPrimaryKey {
-                    columnsWithPrimaryKeyProperty += 1
-                }
-            }
-        }
-        
-        guard columns.count != 0 else {
-            onCompletion(.error(QueryError.syntaxError("Table has no columns.")))
             return
-        }
-        
-        guard (primaryKey == nil || columnsWithPrimaryKeyProperty == 0) && columnsWithPrimaryKeyProperty <= 1 else {
-            onCompletion(.error(QueryError.syntaxError("Table has conflicting definitions of primary key.")))
-            return
-        }
-        
-        guard primaryKey == nil || primaryKey!.count > 0 else {
-            onCompletion(.error(QueryError.syntaxError("Empty primary key.")))
-            return
-        }
-
-        if foreignKeyColumns != nil || foreignKeyReferences != nil {
-            guard let foreignKeyColumns = foreignKeyColumns, let foreignKeyReferences = foreignKeyReferences,
-                foreignKeyColumns.count > 0, foreignKeyReferences.count > 0 else {
-                    onCompletion(.error(QueryError.syntaxError("Invalid definition of foreign key.")))
-                    return
-            }
         }
 
         let queryBuilder = connection.queryBuilder
@@ -177,11 +155,16 @@ open class Table: Buildable {
     /// - Returns: A new instance of `Table`.
     public func primaryKey(_ columns: [Column]) -> Self {
         let new = type(of: self).init()
-        if new.primaryKey != nil {
+        if new.primaryKey != nil || columnsWithPrimaryKeyProperty > 0 {
             new.syntaxError += "Conflicting definitions of primary key. "
         }
         else {
-            new.primaryKey = columns
+            if columns.count == 0 {
+                new.syntaxError += "Empty primary key. "
+            }
+            else {
+                new.primaryKey = columns
+            }
         }
         return new
     }
@@ -205,8 +188,13 @@ open class Table: Buildable {
             new.syntaxError += "Conflicting definitions of foreign key. "
         }
         else {
-            new.foreignKeyColumns = columns
-            new.foreignKeyReferences = references
+            if columns.count == 0 || references.count == 0 {
+                new.syntaxError += "Invalid definition of foreign key. "
+            }
+            else {
+                new.foreignKeyColumns = columns
+                new.foreignKeyReferences = references
+            }
         }
         return new
     }
