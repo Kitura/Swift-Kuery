@@ -67,6 +67,9 @@ public class QueryBuilder {
     /// An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause.
     public var withUpdateRequiresFrom = false
     
+    /// A function to create column's autoincrement expression based on the column's type.
+    public var createAutoIncrement: ((String) -> String)?
+    
     
     /// Initialize an instance of QueryBuilder.
     ///
@@ -74,8 +77,9 @@ public class QueryBuilder {
     /// - Parameter firstParameterIndex: The starting index for numbered parameters.
     /// - Parameter anyOnSubquerySupported: An indication whether ANY on subqueries is supported.
     /// - Parameter withDeleteRequiresUsing: An indication whether a `DELETE` query should use `USING` clause for tables in `WITH` clause.
-    /// - Parameter withUpdateRequiresFrom: An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause..
-    public init(addNumbersToParameters: Bool?=nil, firstParameterIndex: Int?=nil, anyOnSubquerySupported: Bool?=nil, withDeleteRequiresUsing: Bool?=nil, withUpdateRequiresFrom: Bool?=nil) {
+    /// - Parameter withUpdateRequiresFrom: An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause.
+    /// - Parameter createAutoIncrement: A function to create column's autoincrement expression based on the column's type..
+    public init(addNumbersToParameters: Bool = true, firstParameterIndex: Int = 1, anyOnSubquerySupported: Bool = true, withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String) -> String)? = nil) {
         substitutions = Array(repeating: "", count: QuerySubstitutionNames.namesCount.rawValue)
         substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"
         substitutions[QuerySubstitutionNames.lcase.rawValue] = "LCASE"
@@ -88,25 +92,12 @@ public class QueryBuilder {
         substitutions[QuerySubstitutionNames.all.rawValue] = "ALL"
         substitutions[QuerySubstitutionNames.identifierQuoteCharacter.rawValue] = "\""
 
-        if let addNumbersToParameters = addNumbersToParameters {
-            self.addNumbersToParameters = addNumbersToParameters
-        }
-        
-        if let anyOnSubquerySupported = anyOnSubquerySupported {
-            self.anyOnSubquerySupported = anyOnSubquerySupported
-        }
-        
-        if let firstParameterIndex = firstParameterIndex {
-            self.firstParameterIndex = firstParameterIndex
-        }
-        
-        if let withDeleteRequiresUsing = withDeleteRequiresUsing {
-            self.withDeleteRequiresUsing = withDeleteRequiresUsing
-        }
-        
-        if let withUpdateRequiresFrom = withUpdateRequiresFrom {
-            self.withUpdateRequiresFrom = withUpdateRequiresFrom
-        }
+        self.addNumbersToParameters = addNumbersToParameters
+        self.anyOnSubquerySupported = anyOnSubquerySupported
+        self.firstParameterIndex = firstParameterIndex
+        self.withDeleteRequiresUsing = withDeleteRequiresUsing
+        self.withUpdateRequiresFrom = withUpdateRequiresFrom
+        self.createAutoIncrement = createAutoIncrement
     }
     
     /// Update substitutions array.

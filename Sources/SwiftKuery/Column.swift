@@ -32,6 +32,7 @@ public class Column: Field, IndexColumn {
     public let isNotNullable: Bool
     public let isUnique: Bool
     public let defaultValue: Any?
+    public let autoIncrement: Bool
     // check
     // collate
     // on conflict (per constraint)
@@ -40,9 +41,10 @@ public class Column: Field, IndexColumn {
     /// Initialize an instance of Column.
     ///
     /// - Parameter name: The name of the column.
-    public init(_ name: String, type: SQLDataType.Type? = nil, isPrimaryKey: Bool = false, isNotNullable: Bool = false, isUnique: Bool = false, defaultValue: Any? = nil) {
+    public init(_ name: String, type: SQLDataType.Type? = nil, autoIncrement: Bool = false, isPrimaryKey: Bool = false, isNotNullable: Bool = false, isUnique: Bool = false, defaultValue: Any? = nil) {
         self.name = name
         self.type = type
+        self.autoIncrement = autoIncrement
         self.isPrimaryKey = isPrimaryKey
         self.isNotNullable = isNotNullable
         self.isUnique = isUnique
@@ -95,12 +97,30 @@ public class Column: Field, IndexColumn {
             throw QueryError.syntaxError("Column type not set for column \(name). ")
         }
         
-        var result = name + " " + type.create(queryBuilder: queryBuilder)
+        var result = name + " "
+        
+        let typeString = type.create(queryBuilder: queryBuilder)
+        if autoIncrement {
+            if let createAutoIncrement = queryBuilder.createAutoIncrement {
+                let autoIncrementString = createAutoIncrement(typeString)
+                guard autoIncrementString != "" else {
+                    throw QueryError.syntaxError("Invalid autoincrement for column \(name). ")
+                }
+                result += autoIncrementString
+            }
+            else {
+                result += typeString + " AUTO_INCREMENT"
+            }
+        }
+        else {
+            result += typeString
+        }
+        
         if isPrimaryKey {
             result += " PRIMARY KEY"
         }
         if isNotNullable {
-            result += " NULL"
+            result += " NOT NULL"
         }
         if isUnique {
             result += " UNIQUE"
