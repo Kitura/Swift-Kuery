@@ -33,7 +33,8 @@ public class Column: Field, IndexColumn {
     public let isUnique: Bool
     public let defaultValue: Any?
     public let autoIncrement: Bool
-    // check
+    public let checkExpression: String?
+    
     // collate
     // on conflict (per constraint)
     
@@ -41,7 +42,7 @@ public class Column: Field, IndexColumn {
     /// Initialize an instance of Column.
     ///
     /// - Parameter name: The name of the column.
-    public init(_ name: String, type: SQLDataType.Type? = nil, autoIncrement: Bool = false, isPrimaryKey: Bool = false, isNotNullable: Bool = false, isUnique: Bool = false, defaultValue: Any? = nil) {
+    public init(_ name: String, type: SQLDataType.Type? = nil, autoIncrement: Bool = false, isPrimaryKey: Bool = false, isNotNullable: Bool = false, isUnique: Bool = false, defaultValue: Any? = nil, check: String? = nil) {
         self.name = name
         self.type = type
         self.autoIncrement = autoIncrement
@@ -49,6 +50,7 @@ public class Column: Field, IndexColumn {
         self.isNotNullable = isNotNullable
         self.isUnique = isUnique
         self.defaultValue = defaultValue
+        self.checkExpression = check
     }
     
     /// Build the column using `QueryBuilder`.
@@ -127,6 +129,9 @@ public class Column: Field, IndexColumn {
         }
         if let defaultValue = defaultValue {
             result += " DEFAULT " + Utils.packType(defaultValue)
+        }
+        if let checkExpression = checkExpression {
+            result += " CHECK (" + checkExpression + ")"
         }
         return result
     }
