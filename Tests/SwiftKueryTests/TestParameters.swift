@@ -27,8 +27,8 @@ class TestParameters: XCTestCase {
     }
 
     class MyTable : Table {
-        let a = Column("a", type: String.self)
-        let b = Column("b", type: Int.self)
+        let a = Column("a")
+        let b = Column("b")
         
         let tableName = "tableParameters"
     }

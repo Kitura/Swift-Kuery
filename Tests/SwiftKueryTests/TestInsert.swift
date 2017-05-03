@@ -28,15 +28,15 @@ class TestInsert: XCTestCase {
     }
         
     class MyTable : Table {
-        let a = Column("a", type: String.self)
-        let b = Column("b", type: Int.self)
+        let a = Column("a")
+        let b = Column("b")
         
         let tableName = "tableInsert"
     }
 
     class MyTable2 : Table {
-        let a = Column("a", type: String.self)
-        let b = Column("b", type: Int.self)
+        let a = Column("a")
+        let b = Column("b")
         
         let tableName = "tableInsert2"
     }
@@ -87,7 +87,7 @@ class TestInsert: XCTestCase {
         class AuxTable: AuxiliaryTable {
             let tableName = "aux_table"
             
-            let c = Column("c", type: String.self)
+            let c = Column("c")
         }
         
         var withTable = AuxTable(as: Select(t2.a.as("c"), from: t2))

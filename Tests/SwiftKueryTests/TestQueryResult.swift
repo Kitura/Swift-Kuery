@@ -26,9 +26,9 @@ class TestQueryResult: XCTestCase {
     }
     
     class MyTable : Table {
-        let a = Column("fruit", type: String.self)
-        let b = Column("number", type: Int.self)
-        let c = Column("fruit", type: String.self)
+        let a = Column("fruit")
+        let b = Column("number")
+        let c = Column("fruit")
         
         let tableName = "table"
     }
