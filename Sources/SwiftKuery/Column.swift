@@ -28,6 +28,7 @@ public class Column: Field, IndexColumn {
     public weak var table: Table!
     
     public let type: SQLDataType.Type?
+    public let typeLength: Int?
     public let isPrimaryKey: Bool
     public let isNotNullable: Bool
     public let isUnique: Bool
@@ -42,9 +43,10 @@ public class Column: Field, IndexColumn {
     /// Initialize an instance of Column.
     ///
     /// - Parameter name: The name of the column.
-    public init(_ name: String, type: SQLDataType.Type? = nil, autoIncrement: Bool = false, isPrimaryKey: Bool = false, isNotNullable: Bool = false, isUnique: Bool = false, defaultValue: Any? = nil, check: String? = nil) {
+    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, isPrimaryKey: Bool = false, isNotNullable: Bool = false, isUnique: Bool = false, defaultValue: Any? = nil, check: String? = nil) {
         self.name = name
         self.type = type
+        self.typeLength = length
         self.autoIncrement = autoIncrement
         self.isPrimaryKey = isPrimaryKey
         self.isNotNullable = isNotNullable
@@ -83,7 +85,7 @@ public class Column: Field, IndexColumn {
     /// - Parameter newName: A String containing the alias for the column.
     /// - Returns: A new Column instance with the alias.
     public func `as`(_ newName: String) -> Column {
-        let new = Column(name, type: type, isPrimaryKey: isPrimaryKey, isNotNullable: isNotNullable, isUnique: isUnique, defaultValue: defaultValue)
+        let new = Column(name, type, length: typeLength,isPrimaryKey: isPrimaryKey, isNotNullable: isNotNullable, isUnique: isUnique, defaultValue: defaultValue)
         new.alias = newName
         new.table = table
         return new
@@ -101,7 +103,10 @@ public class Column: Field, IndexColumn {
         
         var result = name + " "
         
-        let typeString = type.create(queryBuilder: queryBuilder)
+        var typeString = type.create(queryBuilder: queryBuilder)
+        if let length = typeLength {
+            typeString += "(\(length))"
+        }
         if autoIncrement {
             if let createAutoIncrement = queryBuilder.createAutoIncrement {
                 let autoIncrementString = createAutoIncrement(typeString)

@@ -47,6 +47,15 @@ public class QueryBuilder {
         case all
         /// The character used to quote identifiers (table name, column name, etc.) with spaces or special characters.
         case identifierQuoteCharacter
+        /// The database type that corresponds to Int32.
+        case int32
+        /// The database type that corresponds to Float.
+        case float
+        /// The database type that corresponds to Double.
+        case double
+        /// The database type that corresponds to char.
+        case char
+        
         /// Last case, add new values before it.
         case namesCount
     }
@@ -91,6 +100,10 @@ public class QueryBuilder {
         substitutions[QuerySubstitutionNames.booleanFalse.rawValue] = "false"
         substitutions[QuerySubstitutionNames.all.rawValue] = "ALL"
         substitutions[QuerySubstitutionNames.identifierQuoteCharacter.rawValue] = "\""
+        substitutions[QuerySubstitutionNames.int32.rawValue] = "integer"
+        substitutions[QuerySubstitutionNames.float.rawValue] = "real"
+        substitutions[QuerySubstitutionNames.double.rawValue] = "double"
+        substitutions[QuerySubstitutionNames.char.rawValue] = "char"
 
         self.addNumbersToParameters = addNumbersToParameters
         self.anyOnSubquerySupported = anyOnSubquerySupported

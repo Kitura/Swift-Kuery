@@ -25,6 +25,60 @@ public protocol SQLDataType {
     static func create(queryBuilder: QueryBuilder) -> String
 }
 
+/// SQL varchar type.
+public struct Varchar: SQLDataType {
+    /// Return database specific description of the type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        return "varchar"
+    }
+}
+
+/// SQL char/character type.
+public struct Char: SQLDataType {
+    /// Return database specific description of the type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        return queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.char.rawValue]
+    }
+}
+
+/// SQL date type.
+public struct SQLDate: SQLDataType {
+    /// Return database specific description of the type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        return "date"
+    }
+}
+
+/// SQL time type.
+public struct Time: SQLDataType {
+    /// Return database specific description of the type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        return "time"
+    }
+}
+
+/// SQL timestamp type.
+public struct Timestamp: SQLDataType {
+    /// Return database specific description of the type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        return "timestamp"
+    }
+}
 
 extension Int: SQLDataType {
     /// Return database specific description of the type using `QueryBuilder`.
@@ -33,6 +87,36 @@ extension Int: SQLDataType {
     /// - Returns: A String representation of the type.
     public static func create(queryBuilder: QueryBuilder) -> String {
         return "integer"
+    }
+}
+
+extension Int16: SQLDataType {
+    /// Return database specific description of the type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        return "smallint"
+    }
+}
+
+extension Int32: SQLDataType {
+    /// Return database specific description of the type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        return queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.int32.rawValue]
+    }
+}
+
+extension Int64: SQLDataType {
+    /// Return database specific description of the type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        return "bigint"
     }
 }
 
@@ -46,12 +130,35 @@ extension String: SQLDataType {
     }
 }
 
+extension Float: SQLDataType {
+    /// Return database specific description of the type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        return queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.float.rawValue]
+    }
+}
+
 extension Double: SQLDataType {
     /// Return database specific description of the type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
     public static func create(queryBuilder: QueryBuilder) -> String {
-        return "real"
+        return queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.double.rawValue]
     }
 }
+
+extension Bool: SQLDataType {
+    /// Return database specific description of the type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        return "boolean"
+    }
+}
+
+
+
