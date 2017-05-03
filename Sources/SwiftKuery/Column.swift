@@ -27,23 +27,47 @@ public class Column: Field, IndexColumn {
     /// The table to which the column belongs.
     public weak var table: Table!
     
+    /// The type of the column.
     public let type: SQLDataType.Type?
+    
+    /// The length of the column values according to the type.
     public let typeLength: Int?
+    
+    /// An indication whether the column is the primary key of the table.
     public let isPrimaryKey: Bool
+    
+    /// An indication whether the column is not nullable.
     public let isNotNullable: Bool
+    
+    /// An indication whether the column values have to be unique.
     public let isUnique: Bool
+    
+    /// The default value of the column.
     public let defaultValue: Any?
+    
+    /// An indication whether the column autoincrements.
     public let autoIncrement: Bool
+    
+    /// The expression to check for values inserted into of the column.
     public let checkExpression: String?
     
-    // collate
-    // on conflict (per constraint)
+    /// The collation rule for the column.
+    public let collate: String?
     
 
     /// Initialize an instance of Column.
     ///
     /// - Parameter name: The name of the column.
-    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, isPrimaryKey: Bool = false, isNotNullable: Bool = false, isUnique: Bool = false, defaultValue: Any? = nil, check: String? = nil) {
+    /// - Parameter type: The type of the column.
+    /// - Parameter length: The length of the column values according to the type.
+    /// - Parameter autoIncrement: An indication whether the column autoincrements.
+    /// - Parameter isPrimaryKey: An indication whether the column is the primary key of the table.
+    /// - Parameter isNotNullable: An indication whether the column is not nullable.
+    /// - Parameter isUnique: An indication whether the column values have to be unique.
+    /// - Parameter defaultValue: The default value of the column.
+    /// - Parameter check: The expression to check for values inserted into of the column.
+    /// - Parameter collate: The collation rule for the column.
+    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, isPrimaryKey: Bool = false, isNotNullable: Bool = false, isUnique: Bool = false, defaultValue: Any? = nil, check: String? = nil, collate: String? = nil) {
         self.name = name
         self.type = type
         self.typeLength = length
@@ -53,6 +77,7 @@ public class Column: Field, IndexColumn {
         self.isUnique = isUnique
         self.defaultValue = defaultValue
         self.checkExpression = check
+        self.collate = collate
     }
     
     /// Build the column using `QueryBuilder`.
@@ -85,7 +110,7 @@ public class Column: Field, IndexColumn {
     /// - Parameter newName: A String containing the alias for the column.
     /// - Returns: A new Column instance with the alias.
     public func `as`(_ newName: String) -> Column {
-        let new = Column(name, type, length: typeLength,isPrimaryKey: isPrimaryKey, isNotNullable: isNotNullable, isUnique: isUnique, defaultValue: defaultValue)
+        let new = Column(name, type, length: typeLength,isPrimaryKey: isPrimaryKey, isNotNullable: isNotNullable, isUnique: isUnique, defaultValue: defaultValue, collate: collate)
         new.alias = newName
         new.table = table
         return new
@@ -137,6 +162,9 @@ public class Column: Field, IndexColumn {
         }
         if let checkExpression = checkExpression {
             result += " CHECK (" + checkExpression + ")"
+        }
+        if let collate = collate {
+            result += " COLLATE \"" + collate + "\""
         }
         return result
     }
