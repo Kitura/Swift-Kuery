@@ -177,16 +177,10 @@ open class Table: Buildable {
     
     private static func columnsBelongToTheTable(_ table: Table, columns: [Column]) -> Bool {
         for column in columns {
-            #if os(Linux)
-                #if swift(>=3.1)
-                    if column.table !== table {
-                        return false
-                    }
-                #else
-                    if column.table! != table {
+            #if os(Linux) && swift(>=3.1)
+                if column.table! !== table {
                     return false
-                    }
-                #endif
+                }
             #else
                 if column.table !== table {
                     return false
