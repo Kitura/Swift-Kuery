@@ -165,7 +165,7 @@ open class Table: Buildable {
         else if !Table.columnsBelongToTheTable(self, columns: columns) {
             new.syntaxError += "Foreign key contains columns from another table. "
         }
-        else if !Table.columnsBelongToTheTable(references[0].table, columns: columns) {
+        else if !Table.columnsBelongToTheTable(references[0].table, columns: references) {
             new.syntaxError += "Foreign key references columns from several tables. "
         }
         else {
