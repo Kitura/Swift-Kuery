@@ -183,7 +183,7 @@ open class Table: Buildable {
                         return false
                     }
                 #else
-                    if column.table != table {
+                    if column.table! != table {
                     return false
                     }
                 #endif
