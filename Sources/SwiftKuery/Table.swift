@@ -129,19 +129,14 @@ open class Table: Buildable {
         if new.primaryKey != nil || columnsWithPrimaryKeyProperty > 0 {
             new.syntaxError += "Conflicting definitions of primary key. "
         }
+        else if columns.count == 0 {
+            new.syntaxError += "Empty primary key. "
+        }
+        else if !Table.columnsBelongToTheTable(self, columns: columns) {
+            new.syntaxError += "Primary key contains columns from another table. "
+        }
         else {
-            if columns.count == 0 {
-                new.syntaxError += "Empty primary key. "
-            }
-            else {
-                for column in columns {
-                    if column.table !== self {
-                        new.syntaxError += "Primary key contains columns from another table. "
-                        break
-                    }
-                }
-                new.primaryKey = columns
-            }
+            new.primaryKey = columns
         }
         return new
     }
@@ -164,23 +159,41 @@ open class Table: Buildable {
         if new.foreignKeyColumns != nil || new.foreignKeyReferences != nil {
             new.syntaxError += "Conflicting definitions of foreign key. "
         }
+        else if columns.count == 0 || references.count == 0 {
+            new.syntaxError += "Invalid definition of foreign key. "
+        }
+        else if !Table.columnsBelongToTheTable(self, columns: columns) {
+            new.syntaxError += "Foreign key contains columns from another table. "
+        }
+        else if !Table.columnsBelongToTheTable(references[0].table, columns: columns) {
+            new.syntaxError += "Foreign key references columns from several tables. "
+        }
         else {
-            if columns.count == 0 || references.count == 0 {
-                new.syntaxError += "Invalid definition of foreign key. "
-            }
-            else {
-                for column in columns {
-                    if column.table !== self {
-                        new.syntaxError += "Foreign key contains columns from another table. "
-                        break
-                    }
-                }
-                
-                new.foreignKeyColumns = columns
-                new.foreignKeyReferences = references
-            }
+            new.foreignKeyColumns = columns
+            new.foreignKeyReferences = references
         }
         return new
+    }
+    
+    private static func columnsBelongToTheTable(_ table: Table, columns: [Column]) -> Bool {
+        for column in columns {
+            #if os(Linux)
+                #if swift(>=3.1)
+                    if column.table !== table {
+                        return false
+                    }
+                #else
+                    if column.table != table {
+                    return false
+                    }
+                #endif
+            #else
+                if column.table !== table {
+                    return false
+                }
+            #endif
+        }
+        return true
     }
     
     /// Add a foreign key to the table.
