@@ -31,7 +31,7 @@ public class Column: Field, IndexColumn {
     public let type: SQLDataType.Type?
     
     /// The length of the column values according to the type.
-    public let typeLength: Int?
+    public let length: Int?
     
     /// An indication whether the column is the primary key of the table.
     public let isPrimaryKey: Bool
@@ -61,20 +61,20 @@ public class Column: Field, IndexColumn {
     /// - Parameter type: The type of the column.
     /// - Parameter length: The length of the column values according to the type.
     /// - Parameter autoIncrement: An indication whether the column autoincrements.
-    /// - Parameter isPrimaryKey: An indication whether the column is the primary key of the table.
-    /// - Parameter isNotNullable: An indication whether the column is not nullable.
-    /// - Parameter isUnique: An indication whether the column values have to be unique.
+    /// - Parameter primaryKey: An indication whether the column is the primary key of the table.
+    /// - Parameter notNull: An indication whether the column is not nullable.
+    /// - Parameter unique: An indication whether the column values have to be unique.
     /// - Parameter defaultValue: The default value of the column.
     /// - Parameter check: The expression to check for values inserted into of the column.
     /// - Parameter collate: The collation rule for the column.
-    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, isPrimaryKey: Bool = false, isNotNullable: Bool = false, isUnique: Bool = false, defaultValue: Any? = nil, check: String? = nil, collate: String? = nil) {
+    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = true, unique: Bool = false, defaultValue: Any? = nil, check: String? = nil, collate: String? = nil) {
         self.name = name
         self.type = type
-        self.typeLength = length
+        self.length = length
         self.autoIncrement = autoIncrement
-        self.isPrimaryKey = isPrimaryKey
-        self.isNotNullable = isNotNullable
-        self.isUnique = isUnique
+        self.isPrimaryKey = primaryKey
+        self.isNotNullable = notNull
+        self.isUnique = unique
         self.defaultValue = defaultValue
         self.checkExpression = check
         self.collate = collate
@@ -110,7 +110,7 @@ public class Column: Field, IndexColumn {
     /// - Parameter newName: A String containing the alias for the column.
     /// - Returns: A new Column instance with the alias.
     public func `as`(_ newName: String) -> Column {
-        let new = Column(name, type, length: typeLength,isPrimaryKey: isPrimaryKey, isNotNullable: isNotNullable, isUnique: isUnique, defaultValue: defaultValue, collate: collate)
+        let new = Column(name, type, length: length, primaryKey: isPrimaryKey, notNull: isNotNullable, unique: isUnique, defaultValue: defaultValue, collate: collate)
         new.alias = newName
         new.table = table
         return new
@@ -129,7 +129,7 @@ public class Column: Field, IndexColumn {
         var result = name + " "
         
         var typeString = type.create(queryBuilder: queryBuilder)
-        if let length = typeLength {
+        if let length = length {
             typeString += "(\(length))"
         }
         if autoIncrement {

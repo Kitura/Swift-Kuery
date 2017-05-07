@@ -23,7 +23,7 @@ open class Table: Buildable {
     private var columnsWithPrimaryKeyProperty = 0
     
     /// The alias of the table.
-    public private (set)  var alias: String?
+    public private (set) var alias: String?
     
     private var primaryKey: [Column]?
     private var foreignKeyColumns: [Column]?
@@ -81,7 +81,7 @@ open class Table: Buildable {
         }
         return result
     }
-
+    
     /// Add alias to the table, i.e., implement the SQL AS operator.
     ///
     /// - Parameter newName: A String containing the alias for the table.
@@ -91,7 +91,7 @@ open class Table: Buildable {
         new.alias = newName
         return new
     }
-
+    
     /// Apply TRUNCATE TABLE query on the table.
     ///
     /// - Returns: An instance of `Raw`.
@@ -105,47 +105,18 @@ open class Table: Buildable {
     public func drop() -> Raw {
         return Raw(query: "DROP TABLE", table: self)
     }
-
+    
     /// Create the table in the database.
     ///
     /// - Parameter connection: The connection to the database.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func create(connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
-        if syntaxError != "" {
-            onCompletion(.error(QueryError.syntaxError(syntaxError)))
-            return
-        }
-
-        let queryBuilder = connection.queryBuilder
-        
         do {
-            var query = "CREATE TABLE " + Utils.packName(_name, queryBuilder: queryBuilder)
-            query +=  " ("
-
-            query += try columns.map { try $0.create(queryBuilder: queryBuilder) }.joined(separator: ", ")
-     
-            if let primaryKey = primaryKey {
-                query += ", PRIMARY KEY ("
-                query += primaryKey.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ")
-                query += ")"
-            }
-            
-            if let foreignKeyColumns = foreignKeyColumns, let foreignKeyReferences = foreignKeyReferences {
-                query += ", FOREIGN KEY ("
-                query += foreignKeyColumns.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ")
-                query += ") REFERENCES "
-                let referencedTableName = foreignKeyReferences[0].table._name
-                query += Utils.packName(referencedTableName, queryBuilder: queryBuilder) + "("
-                query += foreignKeyReferences.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ")
-                query += ")"
-            }
-            
-            query += ")"
-            
+            let query = try description(connection: connection)
             connection.execute(query, onCompletion: onCompletion)
         }
         catch {
-            onCompletion(.error(QueryError.syntaxError("Failed to create table: \(error)")))
+            onCompletion(.error(QueryError.syntaxError("\(error)")))
         }
     }
     
@@ -163,6 +134,12 @@ open class Table: Buildable {
                 new.syntaxError += "Empty primary key. "
             }
             else {
+                for column in columns {
+                    if column.table !== self {
+                        new.syntaxError += "Primary key contains columns from another table. "
+                        break
+                    }
+                }
                 new.primaryKey = columns
             }
         }
@@ -192,6 +169,13 @@ open class Table: Buildable {
                 new.syntaxError += "Invalid definition of foreign key. "
             }
             else {
+                for column in columns {
+                    if column.table !== self {
+                        new.syntaxError += "Foreign key contains columns from another table. "
+                        break
+                    }
+                }
+                
                 new.foreignKeyColumns = columns
                 new.foreignKeyReferences = references
             }
@@ -207,5 +191,40 @@ open class Table: Buildable {
     public func foreignKey(_ column: Column, references: Column) -> Self {
         return foreignKey([column], references: [references])
     }
+    
+    /// Return a String representation of the table create statement.
+    ///
+    /// - Returns: A String representation of the table create statement.
+    /// - Throws: QueryError.syntaxError if statement build fails.
+    public func description(connection: Connection) throws -> String {
+        if syntaxError != "" {
+            throw QueryError.syntaxError(syntaxError)
+        }
+        
+        let queryBuilder = connection.queryBuilder
+        
+        var query = "CREATE TABLE " + Utils.packName(_name, queryBuilder: queryBuilder)
+        query +=  " ("
+        
+        query += try columns.map { try $0.create(queryBuilder: queryBuilder) }.joined(separator: ", ")
+        
+        if let primaryKey = primaryKey {
+            query += ", PRIMARY KEY ("
+            query += primaryKey.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ")
+            query += ")"
+        }
+        
+        if let foreignKeyColumns = foreignKeyColumns, let foreignKeyReferences = foreignKeyReferences {
+            query += ", FOREIGN KEY ("
+            query += foreignKeyColumns.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ")
+            query += ") REFERENCES "
+            let referencedTableName = foreignKeyReferences[0].table._name
+            query += Utils.packName(referencedTableName, queryBuilder: queryBuilder) + "("
+            query += foreignKeyReferences.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ")
+            query += ")"
+        }
+        
+        query += ")"
+        return query
+    }
 }
-

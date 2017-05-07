@@ -27,12 +27,12 @@ public struct Index {
     /// Initialize an instance of Index.
     ///
     /// - Parameter name: The name of the index.
-    /// - Parameter isUnique: An indication whether the index has to be unique.
+    /// - Parameter unique: An indication whether the index has to be unique.
     /// - Parameter on table: The table of the index.
     /// - Parameter columns: An array of columns of the index.
-    public init(_ name: String, isUnique: Bool = false, on table: Table, columns: [IndexColumn]) {
+    public init(_ name: String, unique: Bool = false, on table: Table, columns: [IndexColumn]) {
         self.name = name
-        self.isUnique = isUnique
+        self.isUnique = unique
         self.table = table
         self.columns = columns
     }
@@ -40,11 +40,11 @@ public struct Index {
     /// Initialize an instance of Index.
     ///
     /// - Parameter name: The name of the index.
-    /// - Parameter isUnique: An indication whether the index has to be unique.
+    /// - Parameter unique: An indication whether the index has to be unique.
     /// - Parameter on table: The table of the index.
     /// - Parameter columns: A list of columns of the index.
-    public init(_ name: String, isUnique: Bool = false, on table: Table, columns: IndexColumn...) {
-        self.init(name, isUnique: isUnique, on: table, columns: columns)
+    public init(_ name: String, unique: Bool = false, on table: Table, columns: IndexColumn...) {
+        self.init(name, unique: unique, on: table, columns: columns)
     }
 
     /// Create the index in the database.

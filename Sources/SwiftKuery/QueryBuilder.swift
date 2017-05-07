@@ -87,7 +87,7 @@ public class QueryBuilder {
     /// - Parameter anyOnSubquerySupported: An indication whether ANY on subqueries is supported.
     /// - Parameter withDeleteRequiresUsing: An indication whether a `DELETE` query should use `USING` clause for tables in `WITH` clause.
     /// - Parameter withUpdateRequiresFrom: An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause.
-    /// - Parameter createAutoIncrement: A function to create column's autoincrement expression based on the column's type..
+    /// - Parameter createAutoIncrement: A function to create column's autoincrement expression based on the column's type.
     public init(addNumbersToParameters: Bool = true, firstParameterIndex: Int = 1, anyOnSubquerySupported: Bool = true, withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String) -> String)? = nil) {
         substitutions = Array(repeating: "", count: QuerySubstitutionNames.namesCount.rawValue)
         substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"

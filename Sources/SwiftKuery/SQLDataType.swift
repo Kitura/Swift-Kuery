@@ -16,9 +16,9 @@
 
 // MARK: SQLDataType protocol
 
-/// 
+/// Defines the protocol for data types to be used as table column types.
 public protocol SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
@@ -27,7 +27,7 @@ public protocol SQLDataType {
 
 /// SQL varchar type.
 public struct Varchar: SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the varchar type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
@@ -38,7 +38,7 @@ public struct Varchar: SQLDataType {
 
 /// SQL char/character type.
 public struct Char: SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the char type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
@@ -49,7 +49,7 @@ public struct Char: SQLDataType {
 
 /// SQL date type.
 public struct SQLDate: SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the date type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
@@ -60,7 +60,7 @@ public struct SQLDate: SQLDataType {
 
 /// SQL time type.
 public struct Time: SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the time type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
@@ -71,7 +71,7 @@ public struct Time: SQLDataType {
 
 /// SQL timestamp type.
 public struct Timestamp: SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the timestamp type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
@@ -81,7 +81,7 @@ public struct Timestamp: SQLDataType {
 }
 
 extension Int: SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the int type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
@@ -91,7 +91,7 @@ extension Int: SQLDataType {
 }
 
 extension Int16: SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the int16 type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
@@ -101,7 +101,7 @@ extension Int16: SQLDataType {
 }
 
 extension Int32: SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the int32 type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
@@ -111,7 +111,7 @@ extension Int32: SQLDataType {
 }
 
 extension Int64: SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the int32 type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
@@ -121,7 +121,7 @@ extension Int64: SQLDataType {
 }
 
 extension String: SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the string type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
@@ -131,7 +131,7 @@ extension String: SQLDataType {
 }
 
 extension Float: SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the float type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
@@ -141,7 +141,7 @@ extension Float: SQLDataType {
 }
 
 extension Double: SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the double type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
@@ -151,7 +151,7 @@ extension Double: SQLDataType {
 }
 
 extension Bool: SQLDataType {
-    /// Return database specific description of the type using `QueryBuilder`.
+    /// Return database specific representation of the boolean type using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the type.
