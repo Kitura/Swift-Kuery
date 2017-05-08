@@ -67,7 +67,7 @@ public class Column: Field, IndexColumn {
     /// - Parameter defaultValue: The default value of the column.
     /// - Parameter check: The expression to check for values inserted into of the column.
     /// - Parameter collate: The collation rule for the column.
-    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = true, unique: Bool = false, defaultValue: Any? = nil, check: String? = nil, collate: String? = nil) {
+    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, check: String? = nil, collate: String? = nil) {
         self.name = name
         self.type = type
         self.length = length
