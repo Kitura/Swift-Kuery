@@ -106,6 +106,17 @@ class TestSchema: XCTestCase {
         expectedError = "Foreign key references columns from more than one table. "
         XCTAssertEqual(error, expectedError)
 
+        error = createBadTable(t4.foreignKey([t4.b, t4.a], references: [t2.a]), connection: connection)
+        expectedError = "Invalid definition of foreign key. "
+        XCTAssertEqual(error, expectedError)
+
+        error = createBadTable(t4.primaryKey([]), connection: connection)
+        expectedError = "Empty primary key. "
+        XCTAssertEqual(error, expectedError)
+
+        error = createBadTable(t4.foreignKey([], references: [t2.a]), connection: connection)
+        expectedError = "Invalid definition of foreign key. "
+        XCTAssertEqual(error, expectedError)
     }
     
     private func createTable(_ table: Table, connection: Connection) -> String {

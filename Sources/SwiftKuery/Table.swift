@@ -159,7 +159,7 @@ open class Table: Buildable {
         if new.foreignKeyColumns != nil || new.foreignKeyReferences != nil {
             new.syntaxError += "Conflicting definitions of foreign key. "
         }
-        else if columns.count == 0 || references.count == 0 {
+        else if columns.count == 0 || references.count == 0 || columns.count != references.count {
             new.syntaxError += "Invalid definition of foreign key. "
         }
         else if !Table.columnsBelongTo(table: self, columns: columns) {
