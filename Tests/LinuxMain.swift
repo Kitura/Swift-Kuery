@@ -10,6 +10,7 @@ XCTMain([
      testCase(TestParameters.allTests),
      testCase(TestQueryResult.allTests),
      testCase(TestRaw.allTests),
+     testCase(TestSchema.allTests),
      testCase(TestSelect.allTests),
      testCase(TestSpecialOperators.allTests),
      testCase(TestSubqueries.allTests),
