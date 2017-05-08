@@ -15,6 +15,7 @@ Swift-Kuery is easy to learn, consumable framework that comes with a set of [imp
 
 ## Table of Contents
 * [Example](#example)
+* [Schema management](#schema-management)
 * [Query Examples](#query-examples)
 * [List of plugins](#list-of-plugins)
 * [License](#license)
@@ -47,7 +48,7 @@ import SwiftKueryPostgreSQL
 Now we create a `Table` that corresponds to our Grades table in PostgreSQL - we set the table's name and its columns:
 
 ```swift
-class Grades : Table {
+class Grades: Table {
     let tableName = "Grades"
     let id = Column("id")
     let course = Column("course")
@@ -124,8 +125,41 @@ chemistry  92.0
 history    96.0
 ```
 
+## Schema Management
+Swift-Kuery enables you to create tables on the database server.
+
+Let's rewrite our `Grades` table by adding columns type and constraints: 
+
+```swift
+class Grades: Table {
+    let tableName = "Grades"
+    let id = Column("id", Char.self, length: 6, primaryKey: true)
+    let course = Column("course", Varchar.self, length: 50)
+    let grade = Column("grade", Int16.self, check: "grade >= 0")
+}
+```
+
+We can add a foreign key to `Grades` that references a column in another table:
+
+```swift
+let grades = Grades().foreignKey(grades.course, references: courses.name)
+```
+
+And create the table in the database:
+
+```swift
+
+grades.create(connection: connection) { result in
+     guard result.success else {
+        print("Failed to create table: \(result.asError?)")
+     }
+    ...
+}
+```
+
+
 ## Query Examples
-Lets see more examples of how to build and execute SQL queries using Swift-Kuery.
+Let's see more examples of how to build and execute SQL queries using Swift-Kuery.
 
 #### Classes used in the examples:
 
