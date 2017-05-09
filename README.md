@@ -126,6 +126,8 @@ history    96.0
 ```
 
 ## Schema Management
+
+### Table creation
 Swift-Kuery enables you to create tables on the database server.
 
 Let's rewrite our `Grades` table by adding columns type and constraints: 
@@ -151,7 +153,7 @@ And create a multi-column primary key (if not set in the column as for `Grades.i
 grades.primaryKey(grades.id, grades.course)
 ```
 
-And create the table in the database:
+To create the table in the database, do:
 
 ```swift
 
