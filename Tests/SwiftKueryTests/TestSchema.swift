@@ -36,7 +36,7 @@ class TestSchema: XCTestCase {
         let tableName = "table2"
         let a = Column("a", Varchar.self, primaryKey: false, unique: false)
         let b = Column("b", Varchar.self, length: 20, unique: true)
-        let c = Column("c", Int16.self)
+        let c = Column("c", Int16.self, notNull: true)
         let d = Column("d", Int32.self)
         let e = Column("e", SQLDate.self)
         let f = Column("f", Timestamp.self)
@@ -65,17 +65,24 @@ class TestSchema: XCTestCase {
         let e = Column("e", Time.self)
     }
     
+    class Table5: Table {
+        let tableName = "table5"
+        let a = Column("a", Char.self)
+        let b = Column("b")
+    }
+
+    
     func testCreateTable () {
         let connection = createConnection()
         
-        let t1 = Table1()
+        var t1 = Table1()
         var createStmt = createTable(t1, connection: connection)
         var expectedCreateStmt = "CREATE TABLE table1 (a text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", b integer AUTO_INCREMENT, c double DEFAULT 4.95 CHECK (c > 0))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
         
         let t2 = Table2()
         createStmt = createTable(t2, connection: connection)
-        expectedCreateStmt = "CREATE TABLE table2 (a varchar, b varchar(20) UNIQUE, c smallint, d integer, e date, f timestamp, g mySQLType(15))"
+        expectedCreateStmt = "CREATE TABLE table2 (a varchar, b varchar(20) UNIQUE, c smallint NOT NULL, d integer, e date, f timestamp, g mySQLType(15))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
         
         let t3 = Table3()
@@ -88,7 +95,7 @@ class TestSchema: XCTestCase {
         XCTAssertEqual(error, expectedError)
 
         createStmt = createTable(t2.primaryKey([t2.b, t2.c]), connection: connection)
-        expectedCreateStmt = "CREATE TABLE table2 (a varchar, b varchar(20) UNIQUE, c smallint, d integer, e date, f timestamp, g mySQLType(15), PRIMARY KEY (b, c))"
+        expectedCreateStmt = "CREATE TABLE table2 (a varchar, b varchar(20) UNIQUE, c smallint NOT NULL, d integer, e date, f timestamp, g mySQLType(15), PRIMARY KEY (b, c))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
 
         var t4 = Table4()
@@ -125,6 +132,31 @@ class TestSchema: XCTestCase {
         error = createBadTable(t4.primaryKey(t2.a).foreignKey([], references: [t2.a]), connection: connection)
         expectedError = "Primary key contains columns from another table. Invalid definition of foreign key. "
         XCTAssertEqual(error, expectedError)
+
+        let t5 = Table5()
+        error = createBadTable(t5, connection: connection)
+        expectedError = "Column type not set for column b. "
+        XCTAssertEqual(error, expectedError)
+
+        t1 = Table1()
+        let connectionWithAutoIncrement = createConnection(createAutoIncrement: createAutoIncrement)
+        createStmt = createTable(t1, connection: connectionWithAutoIncrement)
+        expectedCreateStmt = "CREATE TABLE table1 (a text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", b auto_increment, c double DEFAULT 4.95 CHECK (c > 0))"
+        XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
+    }
+    
+    
+    public func createAutoIncrement(_ type: String) -> String {
+        switch type {
+        case "smallint":
+            return "small_auto_increment"
+        case "integer":
+            return "auto_increment"
+        case "bigint":
+            return "big_auto_increment"
+        default:
+            return ""
+        }
     }
     
     private func createTable(_ table: Table, connection: Connection) -> String {
