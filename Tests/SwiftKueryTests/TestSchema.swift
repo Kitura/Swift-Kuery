@@ -25,14 +25,14 @@ class TestSchema: XCTestCase {
         ]
     }
     
-    class Table1 : Table {
+    class Table1: Table {
         let tableName = "table1"
         let a = Column("a", String.self, primaryKey: true, defaultValue: "qiwi", collate: "en_US")
         let b = Column("b", Int.self, autoIncrement: true)
         let c = Column("c", Double.self, defaultValue: 4.95, check: "c > 0")
     }
     
-    class Table2 : Table {
+    class Table2: Table {
         let tableName = "table2"
         let a = Column("a", Varchar.self, primaryKey: false, unique: false)
         let b = Column("b", Varchar.self, length: 20, unique: true)
@@ -49,18 +49,20 @@ class TestSchema: XCTestCase {
         }
     }
     
-    class Table3 : Table {
+    class Table3: Table {
         let tableName = "table3"
         let a = Column("a", String.self, primaryKey: true, defaultValue: "qiwi", collate: "en_US")
         let b = Column("b", Int.self, autoIncrement: true, primaryKey: true)
         let c = Column("c", Double.self, defaultValue: 4.95, check: "c > 0")
     }
     
-    class Table4 : Table {
+    class Table4: Table {
         let tableName = "table4"
         let a = Column("a", Char.self, length: 20)
         let b = Column("b", Int64.self)
         let c = Column("c", Float.self)
+        let d = Column("d", Bool.self)
+        let e = Column("e", Time.self)
     }
     
     func testCreateTable () {
@@ -89,33 +91,39 @@ class TestSchema: XCTestCase {
         expectedCreateStmt = "CREATE TABLE table2 (a varchar, b varchar(20) UNIQUE, c smallint, d integer, e date, f timestamp, g mySQLType(15), PRIMARY KEY (b, c))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
 
-        error = createBadTable(t2.primaryKey(t1.b, t1.c), connection: connection)
+        var t4 = Table4()
+        createStmt = createTable(t4.primaryKey(t4.b).foreignKey(t4.a, references: t2.b), connection: connection)
+        expectedCreateStmt = "CREATE TABLE table4 (a char(20), b bigint, c real, d boolean, e time, PRIMARY KEY (b), FOREIGN KEY (a) REFERENCES table2(b))"
+        XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
+        
+        t4 = Table4()
+        error = createBadTable(t4.primaryKey(t1.b, t1.c), connection: connection)
         expectedError = "Primary key contains columns from another table. "
         XCTAssertEqual(error, expectedError)
         
-        let t4 = Table4()
-        createStmt = createTable(t4.primaryKey(t4.b).foreignKey(t4.a, references: t2.b), connection: connection)
-        expectedCreateStmt = "CREATE TABLE table4 (a char(20), b bigint, c real, PRIMARY KEY (b), FOREIGN KEY (a) REFERENCES table2(b))"
-        XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
-        
+        t4 = Table4()
         error = createBadTable(t4.foreignKey(t4.b, references: t2.a).foreignKey(t4.a, references: t2.b), connection: connection)
         expectedError = "Conflicting definitions of foreign key. "
         XCTAssertEqual(error, expectedError)
 
+        t4 = Table4()
         error = createBadTable(t4.foreignKey([t4.b, t4.a], references: [t2.a, t1.a]), connection: connection)
         expectedError = "Foreign key references columns from more than one table. "
         XCTAssertEqual(error, expectedError)
 
+        t4 = Table4()
         error = createBadTable(t4.foreignKey([t4.b, t4.a], references: [t2.a]), connection: connection)
         expectedError = "Invalid definition of foreign key. "
         XCTAssertEqual(error, expectedError)
 
+        t4 = Table4()
         error = createBadTable(t4.primaryKey([]), connection: connection)
         expectedError = "Empty primary key. "
         XCTAssertEqual(error, expectedError)
 
-        error = createBadTable(t4.foreignKey([], references: [t2.a]), connection: connection)
-        expectedError = "Invalid definition of foreign key. "
+        t4 = Table4()
+        error = createBadTable(t4.primaryKey(t2.a).foreignKey([], references: [t2.a]), connection: connection)
+        expectedError = "Primary key contains columns from another table. Invalid definition of foreign key. "
         XCTAssertEqual(error, expectedError)
     }
     

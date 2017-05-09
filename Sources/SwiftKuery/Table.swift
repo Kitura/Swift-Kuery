@@ -124,28 +124,27 @@ open class Table: Buildable {
     ///
     /// - Parameter columns: An Array of columns that constitute the primary key.
     /// - Returns: A new instance of `Table`.
-    public func primaryKey(_ columns: [Column]) -> Table {
-        let new = clone()
-        if new.primaryKey != nil || columnsWithPrimaryKeyProperty > 0 {
-            new.syntaxError += "Conflicting definitions of primary key. "
+    public func primaryKey(_ columns: [Column]) -> Self {
+        if primaryKey != nil || columnsWithPrimaryKeyProperty > 0 {
+            syntaxError += "Conflicting definitions of primary key. "
         }
         else if columns.count == 0 {
-            new.syntaxError += "Empty primary key. "
+            syntaxError += "Empty primary key. "
         }
         else if !Table.columnsBelongTo(table: self, columns: columns) {
-            new.syntaxError += "Primary key contains columns from another table. "
+            syntaxError += "Primary key contains columns from another table. "
         }
         else {
-            new.primaryKey = columns
+            primaryKey = columns
         }
-        return new
+        return self
     }
     
     /// Add a primary key to the table.
     ///
     /// - Parameter columns: Columns that constitute the primary key.
     /// - Returns: A new instance of `Table`.
-    public func primaryKey(_ columns: Column...) -> Table {
+    public func primaryKey(_ columns: Column...) -> Self {
         return primaryKey(columns)
     }
     
@@ -154,33 +153,24 @@ open class Table: Buildable {
     /// - Parameter columns: An Array of columns that constitute the foreign key.
     /// - Parameter references: An Array of columns of the foreign table the foreign key references.
     /// - Returns: A new instance of `Table`.
-    public func foreignKey(_ columns: [Column], references: [Column]) -> Table {
-        let new = clone()
-        if new.foreignKeyColumns != nil || new.foreignKeyReferences != nil {
-            new.syntaxError += "Conflicting definitions of foreign key. "
+    public func foreignKey(_ columns: [Column], references: [Column]) -> Self {
+        if foreignKeyColumns != nil || foreignKeyReferences != nil {
+            syntaxError += "Conflicting definitions of foreign key. "
         }
         else if columns.count == 0 || references.count == 0 || columns.count != references.count {
-            new.syntaxError += "Invalid definition of foreign key. "
+            syntaxError += "Invalid definition of foreign key. "
         }
         else if !Table.columnsBelongTo(table: self, columns: columns) {
-            new.syntaxError += "Foreign key contains columns from another table. "
+            syntaxError += "Foreign key contains columns from another table. "
         }
         else if !Table.columnsBelongTo(table: references[0].table, columns: references) {
-            new.syntaxError += "Foreign key references columns from more than one table. "
+            syntaxError += "Foreign key references columns from more than one table. "
         }
         else {
-            new.foreignKeyColumns = columns
-            new.foreignKeyReferences = references
+            foreignKeyColumns = columns
+            foreignKeyReferences = references
         }
-        return new
-    }
-    
-    private func clone() -> Table {
-        let new = type(of: self).init()
-        new.primaryKey = primaryKey
-        new.foreignKeyColumns = foreignKeyColumns
-        new.foreignKeyReferences = foreignKeyReferences
-        return new
+        return self
     }
     
     private static func columnsBelongTo(table: Table, columns: [Column]) -> Bool {
@@ -197,7 +187,7 @@ open class Table: Buildable {
     /// - Parameter columns: A column that is the foreign key.
     /// - Parameter references: A column in the foreign table the foreign key references.
     /// - Returns: A new instance of `Table`.
-    public func foreignKey(_ column: Column, references: Column) -> Table {
+    public func foreignKey(_ column: Column, references: Column) -> Self {
         return foreignKey([column], references: [references])
     }
     
