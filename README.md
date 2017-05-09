@@ -145,6 +145,12 @@ We can add a foreign key to `Grades` that references a column in another table:
 let grades = Grades().foreignKey(grades.course, references: courses.name)
 ```
 
+And create a multi-column primary key (if not set in the column as for `Grades.id`):
+
+```swift
+grades.primaryKey(grades.id, grades.course)
+```
+
 And create the table in the database:
 
 ```swift
@@ -157,6 +163,49 @@ grades.create(connection: connection) { result in
 }
 ```
 
+### Migration
+Swift-Kuery has a class `Migration` to help with migrations between two versions of a table.
+
+Suppose we have a table `MyTable` in our application. The suggested usage is to keep versions of the table classes somewhere in the application code:
+
+```swift
+public class MyTable_v0: Table {
+    let a = Column("a", ...)
+    let b = Column("b", ...)
+    let tableName = "MyTable"
+}
+
+public class MyTable_v1: Table {
+    let b = Column("b", ...)
+    let c = Column("c", ...)
+    let tableName = "MyTable"
+}
+```
+
+And use a typealias to refer to the current version of the table class in the application:
+
+```swift
+typealias MyTable = MyTable_v0
+let t = MyTable()
+let q = Select(from t)
+...
+```
+
+The migration code from v0 to v1 should be something like this:
+
+```swift
+let t0 = MyTable_v0()
+let t1 = MyTable_v1()
+let migration0 = Migration(from: t0, to: t1, using: connection)
+migration0.alterTableAdd(column: t1.c) { result in ... }
+```
+
+And raw alternations, if needed:
+
+```swift
+let dropColumnQuery = "ALTER TABLE " + t1.tableName + " DROP COLUMN " + t0.a.name
+connection.execute(dropColumnQuery) { result in ... }
+```
 
 ## Query Examples
 Let's see more examples of how to build and execute SQL queries using Swift-Kuery.
