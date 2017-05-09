@@ -165,6 +165,17 @@ grades.create(connection: connection) { result in
 }
 ```
 
+### Indices
+
+You can manage indices with Swift-Kuery in the following way:
+
+```swift
+let index = Index("index", on: grades, columns: [grades.id, desc(grades.grade)])
+index.create(connection: connection) { result in ... }
+...
+index.drop(connection: connection) { result in ... }
+```
+
 ### Migration
 Swift-Kuery has a class `Migration` to help with migrations between two versions of a table.
 
