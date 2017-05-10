@@ -71,7 +71,7 @@ public struct Update: Query {
         
         result += try table.build(queryBuilder: queryBuilder)
         result += try " SET " + valueTuples.map {
-            column, value in "\(column.name) = \(try Utils.packType(value, queryBuilder: queryBuilder))"
+            column, value in "\(Utils.packName(column.name, queryBuilder: queryBuilder)) = \(try Utils.packType(value, queryBuilder: queryBuilder))"
             }.joined(separator: ", ")
         
         if let with = with,
