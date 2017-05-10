@@ -25,7 +25,7 @@ public class Column: Field, IndexColumn {
     public var alias: String?
     
     /// The table to which the column belongs.
-    public weak var table: Table!
+    weak var _table: Table!
     
     /// The type of the column.
     public let type: SQLDataType.Type?
@@ -54,7 +54,11 @@ public class Column: Field, IndexColumn {
     /// The collation rule for the column.
     public let collate: String?
     
-
+    /// The table to which the column belongs.
+    public var table: Table {
+        return _table
+    }
+    
     /// Initialize an instance of Column.
     ///
     /// - Parameter name: The name of the column.
@@ -112,7 +116,7 @@ public class Column: Field, IndexColumn {
     public func `as`(_ newName: String) -> Column {
         let new = Column(name, type, length: length, primaryKey: isPrimaryKey, notNull: isNotNullable, unique: isUnique, defaultValue: defaultValue, collate: collate)
         new.alias = newName
-        new.table = table
+        new._table = table
         return new
     }
     

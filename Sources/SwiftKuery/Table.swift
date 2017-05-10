@@ -42,7 +42,7 @@ open class Table: Buildable {
         let mirror = Mirror(reflecting: self)
         for child in mirror.children {
             if let column = child.value as? Column {
-                column.table = self
+                column._table = self
                 columns.append(column)
                 if column.isPrimaryKey {
                     columnsWithPrimaryKeyProperty += 1

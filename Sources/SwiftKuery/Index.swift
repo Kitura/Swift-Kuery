@@ -52,6 +52,13 @@ public struct Index {
     /// - Parameter connection: The connection to the database.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func create(connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
+        for column in columns {
+            if column.table._name != table._name {
+                onCompletion(.error(QueryError.syntaxError("Index contains columns that do not belong to its table.")))
+                return
+            }
+        }
+        
         var query = "CREATE INDEX "
         
         if isUnique {

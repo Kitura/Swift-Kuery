@@ -23,43 +23,6 @@ public protocol IndexColumn {
     /// - Parameter queryBuilder: The QueryBuilder to use.
     /// - Returns: A String representation of the index column.
     func buildIndex(queryBuilder: QueryBuilder) -> String
-}
-
-// MARK: IndexColumnOrdered
-
-public enum IndexColumnOrdered: IndexColumn {
-    /// Order ascending.
-    case ASC(Column)
-    /// Order descending.
-    case DESC(Column)
     
-    /// Build the index column using `QueryBuilder`.
-    ///
-    /// - Parameter queryBuilder: The QueryBuilder to use.
-    /// - Returns: A String representation of the index column.
-    public func buildIndex(queryBuilder: QueryBuilder) -> String {
-        switch self {
-        case .ASC(let column):
-            return column.buildIndex(queryBuilder: queryBuilder) + " ASC"
-        case .DESC(let column):
-            return column.buildIndex(queryBuilder: queryBuilder) + " DESC"
-        }
-    }
-}
-
-
-/// Create a IndexColumnOrdered.ASC for the column.
-///
-/// - Parameter column: The column to apply IndexColumnOrdered.ASC.
-/// - Returns: IndexColumnOrdered.ASC for the column.
-public func asc(_ column: Column) -> IndexColumnOrdered {
-    return IndexColumnOrdered.ASC(column)
-}
-
-/// Create a IndexColumnOrdered.DESC for the column.
-///
-/// - Parameter column: The column to apply IndexColumnOrdered.ASC.
-/// - Returns: IndexColumnOrdered.DESC for the column.
-public func desc(_ column: Column) -> IndexColumnOrdered {
-    return IndexColumnOrdered.DESC(column)
+    var table: Table { get }
 }
