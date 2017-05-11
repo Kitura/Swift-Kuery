@@ -10,6 +10,7 @@ XCTMain([
      testCase(TestParameters.allTests.shuffled()),
      testCase(TestQueryResult.allTests.shuffled()),
      testCase(TestRaw.allTests.shuffled()),
+     testCase(TestSchema.allTests.shuffled()),
      testCase(TestSelect.allTests.shuffled()),
      testCase(TestSpecialOperators.allTests.shuffled()),
      testCase(TestSubqueries.allTests.shuffled()),

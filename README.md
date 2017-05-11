@@ -15,6 +15,7 @@ Swift-Kuery is easy to learn, consumable framework that comes with a set of [imp
 
 ## Table of Contents
 * [Example](#example)
+* [Schema management](#schema-management)
 * [Query Examples](#query-examples)
 * [List of plugins](#list-of-plugins)
 * [License](#license)
@@ -47,7 +48,7 @@ import SwiftKueryPostgreSQL
 Now we create a `Table` that corresponds to our Grades table in PostgreSQL - we set the table's name and its columns:
 
 ```swift
-class Grades : Table {
+class Grades: Table {
     let tableName = "Grades"
     let id = Column("id")
     let course = Column("course")
@@ -124,8 +125,103 @@ chemistry  92.0
 history    96.0
 ```
 
+## Schema Management
+
+### Table creation
+Swift-Kuery enables you to create tables on the database server.
+
+Let's rewrite our `Grades` table by adding columns type and constraints: 
+
+```swift
+class Grades: Table {
+    let tableName = "Grades"
+    let id = Column("id", Char.self, length: 6, primaryKey: true)
+    let course = Column("course", Varchar.self, length: 50)
+    let grade = Column("grade", Int16.self, check: "grade >= 0")
+}
+```
+
+We can add a foreign key to `Grades` that references a column in another table:
+
+```swift
+let grades = Grades().foreignKey(grades.course, references: courses.name)
+```
+
+And create a multi-column primary key (if not set in the column as for `Grades.id`):
+
+```swift
+grades.primaryKey(grades.id, grades.course)
+```
+
+To create the table in the database, do:
+
+```swift
+
+grades.create(connection: connection) { result in
+     guard result.success else {
+        print("Failed to create table: \(result.asError?)")
+     }
+    ...
+}
+```
+
+### Indices
+
+You can manage indices with Swift-Kuery in the following way:
+
+```swift
+let index = Index("index", on: grades, columns: [grades.id, desc(grades.grade)])
+index.create(connection: connection) { result in ... }
+...
+index.drop(connection: connection) { result in ... }
+```
+
+### Migration
+Swift-Kuery has a class `Migration` to help with migrations between two versions of a table.
+
+Suppose we have a table `MyTable` in our application. The suggested usage is to keep versions of the table classes somewhere in the application code:
+
+```swift
+public class MyTable_v0: Table {
+    let a = Column("a", ...)
+    let b = Column("b", ...)
+    let tableName = "MyTable"
+}
+
+public class MyTable_v1: Table {
+    let b = Column("b", ...)
+    let c = Column("c", ...)
+    let tableName = "MyTable"
+}
+```
+
+And use a typealias to refer to the current version of the table class in the application:
+
+```swift
+typealias MyTable = MyTable_v0
+let t = MyTable()
+let q = Select(from t)
+...
+```
+
+The migration code from v0 to v1 should be something like this:
+
+```swift
+let t0 = MyTable_v0()
+let t1 = MyTable_v1()
+let migration0 = Migration(from: t0, to: t1, using: connection)
+migration0.alterTableAdd(column: t1.c) { result in ... }
+```
+
+And raw alternations, if needed:
+
+```swift
+let dropColumnQuery = "ALTER TABLE " + t1.tableName + " DROP COLUMN " + t0.a.name
+connection.execute(dropColumnQuery) { result in ... }
+```
+
 ## Query Examples
-Lets see more examples of how to build and execute SQL queries using Swift-Kuery.
+Let's see more examples of how to build and execute SQL queries using Swift-Kuery.
 
 #### Classes used in the examples:
 
@@ -408,6 +504,8 @@ let s = Select(t2.c, from: t2)
 * [PostgreSQL](https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL)
 
 * [SQLite](https://github.com/IBM-Swift/Swift-Kuery-SQLite)
+
+* [MySQL](https://github.com/IBM-Swift/SwiftKueryMySQL)
 
 ## License
 This library is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE.txt).
