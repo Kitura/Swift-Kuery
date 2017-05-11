@@ -22,7 +22,6 @@ class TestQueryResult: XCTestCase {
     static var allTests: [(String, (TestQueryResult) -> () throws -> Void)] {
         return [
             ("testQueryResult", testQueryResult),
-            ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
         ]
     }
     
@@ -147,14 +146,5 @@ class TestQueryResult: XCTestCase {
             XCTAssertEqual(rows![2]["number"] as! Int, 7, "Query returned wrong data")
             XCTAssertEqual(rows![2]["fruit.1"] as! String, "plum", "Query returned wrong data")
         }
-    }
-    
-    func testLinuxTestSuiteIncludesAllTests() {
-        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-            let thisClass = type(of: self)
-            let linuxCount = thisClass.allTests.count
-            let darwinCount = Int(thisClass.defaultTestSuite().testCaseCount)
-            XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
-        #endif
     }
 }

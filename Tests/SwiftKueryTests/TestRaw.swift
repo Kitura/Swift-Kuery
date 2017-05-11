@@ -22,7 +22,6 @@ class TestRaw: XCTestCase {
     static var allTests: [(String, (TestRaw) -> () throws -> Void)] {
         return [
             ("testRaw", testRaw),
-            ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
         ]
     }
     
@@ -46,14 +45,5 @@ class TestRaw: XCTestCase {
         kuery = connection.descriptionOf(query: r)
         query = "DROP TABLE tableRaw"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
-    }
-    
-    func testLinuxTestSuiteIncludesAllTests() {
-        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-            let thisClass = type(of: self)
-            let linuxCount = thisClass.allTests.count
-            let darwinCount = Int(thisClass.defaultTestSuite().testCaseCount)
-            XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
-        #endif
     }
 }
