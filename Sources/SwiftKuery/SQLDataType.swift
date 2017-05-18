@@ -80,16 +80,6 @@ public struct Timestamp: SQLDataType {
     }
 }
 
-extension Int: SQLDataType {
-    /// Return database specific representation of the int type using `QueryBuilder`.
-    ///
-    /// - Parameter queryBuilder: The QueryBuilder to use.
-    /// - Returns: A String representation of the type.
-    public static func create(queryBuilder: QueryBuilder) -> String {
-        return "integer"
-    }
-}
-
 extension Int16: SQLDataType {
     /// Return database specific representation of the int16 type using `QueryBuilder`.
     ///
