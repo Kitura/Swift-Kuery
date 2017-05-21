@@ -435,6 +435,17 @@ connection.execute(query: i1, parameters: ["number" : 28, "fruit" : "banana"]) {
 
 &nbsp;
 
+It is possible to insert NULL values using parameters:
+&nbsp;
+
+```swift
+connection.execute(query: i1, parameters: ["number" : 28, "fruit" : nil]) { queryResult in
+  ...
+}
+```
+
+&nbsp;
+
 __Raw query:__
 
 ```swift
