@@ -145,6 +145,52 @@ public class ConnectionPoolConnection: Connection {
         connection.execute(raw, parameters: parameters, onCompletion: onCompletion)
     }
     
+    public func prepareStatement(_ query: Query) throws -> PreparedStatement {
+        guard let connection = connection else {
+            throw QueryError.connection("Connection is disconnected")
+        }
+        return try connection.prepareStatement(query)
+    }
+    
+    public func prepareStatement(_ raw: String) throws -> PreparedStatement {
+        guard let connection = connection else {
+            throw QueryError.connection("Connection is disconnected")
+        }
+        return try connection.prepareStatement(raw)
+    }
+    
+    public func execute(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {
+        guard let connection = connection else {
+            onCompletion(.error(QueryError.connection("Connection is disconnected")))
+            return
+        }
+        connection.execute(preparedStatement: preparedStatement, onCompletion: onCompletion)
+    }
+    
+    public func execute(preparedStatement: PreparedStatement, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ())) {
+        guard let connection = connection else {
+            onCompletion(.error(QueryError.connection("Connection is disconnected")))
+            return
+        }
+        connection.execute(preparedStatement: preparedStatement, parameters: parameters, onCompletion: onCompletion)
+    }
+
+    public func execute(preparedStatement: PreparedStatement, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {
+        guard let connection = connection else {
+            onCompletion(.error(QueryError.connection("Connection is disconnected")))
+            return
+        }
+        connection.execute(preparedStatement: preparedStatement, parameters: parameters, onCompletion: onCompletion)
+    }
+
+    public func release(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {
+        guard let connection = connection else {
+            onCompletion(.error(QueryError.connection("Connection is disconnected")))
+            return
+        }
+        connection.release(preparedStatement: preparedStatement, onCompletion: onCompletion)
+    }
+
     /// Return a String representation of the query.
     ///
     /// - Parameter query: The query.
