@@ -59,12 +59,8 @@ public struct Index {
             }
         }
         
-        var query = "CREATE INDEX "
-        
-        if isUnique {
-            query += " UNIQUE "
-        }
-        
+        var query = "CREATE \(isUnique ? "UNIQUE" : "") INDEX "
+
         let queryBuilder = connection.queryBuilder
         query += Utils.packName(name, queryBuilder: queryBuilder) + " ON " +  Utils.packName(table._name, queryBuilder: queryBuilder) + " ("
         query += columns.map { $0.buildIndex(queryBuilder: queryBuilder) }.joined(separator: ", ") + ")"
@@ -77,8 +73,14 @@ public struct Index {
     /// - Parameter connection: The connection to the database.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func drop(connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
-        var query = "DROP INDEX "
-        query += Utils.packName(name, queryBuilder: connection.queryBuilder)
+        let queryBuilder = connection.queryBuilder
+        var query: String
+        if queryBuilder.plugin == .mysql {
+            query = "ALTER TABLE \(Utils.packName(table._name, queryBuilder: queryBuilder)) DROP INDEX "
+        } else {
+            query = "DROP INDEX "
+        }
+        query += Utils.packName(name, queryBuilder: queryBuilder)
         connection.execute(query, onCompletion: onCompletion)
     }
 }

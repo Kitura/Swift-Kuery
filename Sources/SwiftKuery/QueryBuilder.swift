@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+import Foundation
+
 // MARK: QueryBuilder
 
 /// Used in code dealing with variances between the various database engines. As
@@ -59,7 +61,13 @@ public class QueryBuilder {
         /// Last case, add new values before it.
         case namesCount
     }
-    
+
+    public enum Plugin {
+        case postgresql
+        case sqlite
+        case mysql
+    }
+
     /// An indication whether the parameters should be numbered (e.g., '$1, $2'), or just marked
     /// with the numbered parameter marker (e.g., '?').
     public var addNumbersToParameters = true
@@ -79,7 +87,12 @@ public class QueryBuilder {
     /// A function to create column's autoincrement expression based on the column's type.
     public var createAutoIncrement: ((String) -> String)?
     
-    
+    /// DateFormatter to convert between Date and String instances.
+    public let dateFormatter: DateFormatter?
+
+    /// Enum to specify the plugin in use for differences not easily pluggable externally.
+    public let plugin: Plugin?
+
     /// Initialize an instance of QueryBuilder.
     ///
     /// - Parameter addNumbersToParameters: An indication whether query parameters should be numbered.
@@ -88,7 +101,9 @@ public class QueryBuilder {
     /// - Parameter withDeleteRequiresUsing: An indication whether a `DELETE` query should use `USING` clause for tables in `WITH` clause.
     /// - Parameter withUpdateRequiresFrom: An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause.
     /// - Parameter createAutoIncrement: A function to create column's autoincrement expression based on the column's type.
-    public init(addNumbersToParameters: Bool = true, firstParameterIndex: Int = 1, anyOnSubquerySupported: Bool = true, withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String) -> String)? = nil) {
+    /// - Parameter dateFormatter: DateFormatter to convert between Date and String instances.
+    /// - Parameter plugin: Enum to specify the plugin in use for differences not easily pluggable externally.
+    public init(addNumbersToParameters: Bool = true, firstParameterIndex: Int = 1, anyOnSubquerySupported: Bool = true, withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String) -> String)? = nil, dateFormatter: DateFormatter? = nil, plugin: Plugin? = nil) {
         substitutions = Array(repeating: "", count: QuerySubstitutionNames.namesCount.rawValue)
         substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"
         substitutions[QuerySubstitutionNames.lcase.rawValue] = "LCASE"
@@ -111,6 +126,8 @@ public class QueryBuilder {
         self.withDeleteRequiresUsing = withDeleteRequiresUsing
         self.withUpdateRequiresFrom = withUpdateRequiresFrom
         self.createAutoIncrement = createAutoIncrement
+        self.dateFormatter = dateFormatter
+        self.plugin = plugin
     }
     
     /// Update substitutions array.
