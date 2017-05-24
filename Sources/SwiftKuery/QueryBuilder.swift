@@ -62,36 +62,30 @@ public class QueryBuilder {
         case namesCount
     }
 
-    public enum Plugin {
-        case postgresql
-        case sqlite
-        case mysql
-    }
-
     /// An indication whether the parameters should be numbered (e.g., '$1, $2'), or just marked
     /// with the numbered parameter marker (e.g., '?').
-    public var addNumbersToParameters = true
+    public let addNumbersToParameters: Bool
     
     /// The starting index for numbered parameters.
-    public var firstParameterIndex = 1
+    public let firstParameterIndex: Int
     
     /// An indication whether ANY on subqueries is supported.
-    public var anyOnSubquerySupported = true
+    public let anyOnSubquerySupported: Bool
     
     /// An indication whether a `DELETE` query should use `USING` clause for tables in `WITH` clause.
-    public var withDeleteRequiresUsing = false
+    public let withDeleteRequiresUsing: Bool
     
     /// An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause.
-    public var withUpdateRequiresFrom = false
+    public let withUpdateRequiresFrom: Bool
     
     /// A function to create column's autoincrement expression based on the column's type.
-    public var createAutoIncrement: ((String) -> String)?
-    
+    public let createAutoIncrement: ((String) -> String)?
+
+    /// An indication whether the drop index syntax requires `ON table.name` clause.
+    public let dropIndexRequiresOnTableName: Bool
+
     /// DateFormatter to convert between Date and String instances.
     public let dateFormatter: DateFormatter?
-
-    /// Enum to specify the plugin in use for differences not easily pluggable externally.
-    public let plugin: Plugin?
 
     /// Initialize an instance of QueryBuilder.
     ///
@@ -101,9 +95,11 @@ public class QueryBuilder {
     /// - Parameter withDeleteRequiresUsing: An indication whether a `DELETE` query should use `USING` clause for tables in `WITH` clause.
     /// - Parameter withUpdateRequiresFrom: An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause.
     /// - Parameter createAutoIncrement: A function to create column's autoincrement expression based on the column's type.
+    /// - Parameter dropIndexRequiresOnTableName: An indication whether the drop index syntax requires `ON table.name` clause.
     /// - Parameter dateFormatter: DateFormatter to convert between Date and String instances.
-    /// - Parameter plugin: Enum to specify the plugin in use for differences not easily pluggable externally.
-    public init(addNumbersToParameters: Bool = true, firstParameterIndex: Int = 1, anyOnSubquerySupported: Bool = true, withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String) -> String)? = nil, dateFormatter: DateFormatter? = nil, plugin: Plugin? = nil) {
+    public init(addNumbersToParameters: Bool = true, firstParameterIndex: Int = 1, anyOnSubquerySupported: Bool = true,
+                withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String) -> String)? = nil,
+                dropIndexRequiresOnTableName: Bool = false, dateFormatter: DateFormatter? = nil) {
         substitutions = Array(repeating: "", count: QuerySubstitutionNames.namesCount.rawValue)
         substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"
         substitutions[QuerySubstitutionNames.lcase.rawValue] = "LCASE"
@@ -126,8 +122,8 @@ public class QueryBuilder {
         self.withDeleteRequiresUsing = withDeleteRequiresUsing
         self.withUpdateRequiresFrom = withUpdateRequiresFrom
         self.createAutoIncrement = createAutoIncrement
+        self.dropIndexRequiresOnTableName = dropIndexRequiresOnTableName
         self.dateFormatter = dateFormatter
-        self.plugin = plugin
     }
     
     /// Update substitutions array.

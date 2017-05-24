@@ -74,13 +74,10 @@ public struct Index {
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func drop(connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
         let queryBuilder = connection.queryBuilder
-        var query: String
-        if queryBuilder.plugin == .mysql {
-            query = "ALTER TABLE \(Utils.packName(table._name, queryBuilder: queryBuilder)) DROP INDEX "
-        } else {
-            query = "DROP INDEX "
+        var query = "DROP INDEX " + Utils.packName(name, queryBuilder: queryBuilder)
+        if queryBuilder.dropIndexRequiresOnTableName {
+            query += " ON " + Utils.packName(table._name, queryBuilder: queryBuilder)
         }
-        query += Utils.packName(name, queryBuilder: queryBuilder)
         connection.execute(query, onCompletion: onCompletion)
     }
 }
