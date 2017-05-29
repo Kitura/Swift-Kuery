@@ -39,6 +39,9 @@ struct Utils {
         case let val as Parameter:
             return try val.build(queryBuilder: queryBuilder)
         case let value as Date:
+            if let dateFormatter = queryBuilder.dateFormatter {
+                return dateFormatter.string(from: value)
+            }
             return "'\(String(describing: value))'"
         default:
             return String(describing: item)
