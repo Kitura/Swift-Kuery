@@ -19,7 +19,7 @@
 /// Subclasses of the Table class are metadata describing a table in a relational database that you want to work with.
 open class Table: Buildable {
     var _name = ""
-    private var columns: [Column]
+    public private (set) var columns: [Column]
     private var columnsWithPrimaryKeyProperty = 0
     
     /// The alias of the table.

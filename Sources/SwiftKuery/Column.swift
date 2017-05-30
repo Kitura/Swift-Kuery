@@ -130,7 +130,7 @@ public class Column: Field, IndexColumn {
             throw QueryError.syntaxError("Column type not set for column \(name). ")
         }
         
-        var result = name + " "
+        var result = Utils.packName(name, queryBuilder: queryBuilder) + " "
         
         var typeString = type.create(queryBuilder: queryBuilder)
         if let length = length {
