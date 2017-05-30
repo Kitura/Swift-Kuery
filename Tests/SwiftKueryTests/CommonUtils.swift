@@ -108,8 +108,21 @@ class TestConnection: Connection {
     
     func rollback(to savepoint: String, onCompletion: @escaping ((QueryResult) -> ())) {}
     
-    func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ()))  {}
-
+    func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ())) {}
+    
+    struct TestPreparedStatement: PreparedStatement {}
+    
+    func prepareStatement(_ query: Query) throws -> PreparedStatement { return TestPreparedStatement() }
+    
+    func prepareStatement(_ raw: String) throws -> PreparedStatement { return TestPreparedStatement() }
+    
+    func execute(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}
+    
+    func execute(preparedStatement: PreparedStatement, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ())) {}
+    
+    func execute(preparedStatement: PreparedStatement, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {}
+    
+    func release(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}
 }
 
 class TestResultFetcher: ResultFetcher {

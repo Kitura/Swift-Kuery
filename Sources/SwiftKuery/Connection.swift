@@ -73,6 +73,46 @@ public protocol Connection {
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     func execute(_ raw: String, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ()))
     
+    /// Prepare statement.
+    ///
+    /// - Parameter query: The query to prepare statement for.
+    /// - Returns: The prepared statement.
+    /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
+    func prepareStatement(_ query: Query) throws -> PreparedStatement
+
+    /// Prepare statement.
+    ///
+    /// - Parameter raw: A String with the query to prepare statement for.
+    /// - Returns: The prepared statement.
+    /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
+    func prepareStatement(_ raw: String) throws -> PreparedStatement
+
+    /// Execute a prepared statement.
+    ///
+    /// - Parameter preparedStatement: The prepared statement to execute.
+    /// - Parameter onCompletion: The function to be called when the execution has completed.
+    func execute(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ()))
+
+    /// Execute a prepared statement with parameters.
+    ///
+    /// - Parameter preparedStatement: The prepared statement to execute.
+    /// - Parameter parameters: An array of the parameters.
+    /// - Parameter onCompletion: The function to be called when the execution has completed.
+    func execute(preparedStatement: PreparedStatement, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ()))
+
+    /// Execute a prepared statement with parameters.
+    ///
+    /// - Parameter preparedStatement: The prepared statement to execute.
+    /// - Parameter parameters: A dictionary of the parameters with parameter names as the keys.
+    /// - Parameter onCompletion: The function to be called when the execution has completed.
+    func execute(preparedStatement: PreparedStatement, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ()))
+
+    /// Release a prepared statement.
+    ///
+    /// - Parameter preparedStatement: The prepared statement to release.
+    /// - Parameter onCompletion: The function to be called when the execution has completed.
+    func release(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ()))
+    
     /// Return a String representation of the query.
     ///
     /// - Parameter query: The query.
