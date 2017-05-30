@@ -52,20 +52,13 @@ public struct Index {
     /// - Parameter connection: The connection to the database.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func create(connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
-        for column in columns {
-            if column.table._name != table._name {
-                onCompletion(.error(QueryError.syntaxError("Index contains columns that do not belong to its table.")))
-                return
-            }
+        do {
+            let query = try description(connection: connection)
+            connection.execute(query, onCompletion: onCompletion)
         }
-        
-        var query = "CREATE \(isUnique ? "UNIQUE" : "") INDEX "
-
-        let queryBuilder = connection.queryBuilder
-        query += Utils.packName(name, queryBuilder: queryBuilder) + " ON " +  Utils.packName(table._name, queryBuilder: queryBuilder) + " ("
-        query += columns.map { $0.buildIndex(queryBuilder: queryBuilder) }.joined(separator: ", ") + ")"
-
-        connection.execute(query, onCompletion: onCompletion)
+        catch {
+            onCompletion(.error(error))
+        }
     }
     
     /// Drop the index from the database.
@@ -79,5 +72,25 @@ public struct Index {
             query += " ON " + Utils.packName(table._name, queryBuilder: queryBuilder)
         }
         connection.execute(query, onCompletion: onCompletion)
+    }
+    
+    /// Return a String representation of the index create statement.
+    ///
+    /// - Returns: A String representation of the index create statement.
+    /// - Throws: QueryError.syntaxError if statement build fails.
+    public func description(connection: Connection) throws -> String {
+        for column in columns {
+            if column.table._name != table._name {
+                throw QueryError.syntaxError("Index contains columns that do not belong to its table.")
+            }
+        }
+        
+        var query = "CREATE \(isUnique ? "UNIQUE" : "") INDEX "
+        
+        let queryBuilder = connection.queryBuilder
+        query += Utils.packName(name, queryBuilder: queryBuilder) + " ON " +  Utils.packName(table._name, queryBuilder: queryBuilder) + " ("
+        query += columns.map { $0.buildIndex(queryBuilder: queryBuilder) }.joined(separator: ", ") + ")"
+        
+        return query
     }
 }
