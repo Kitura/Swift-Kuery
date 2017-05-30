@@ -145,6 +145,11 @@ public class ConnectionPoolConnection: Connection {
         connection.execute(raw, parameters: parameters, onCompletion: onCompletion)
     }
     
+    /// Prepare statement.
+    ///
+    /// - Parameter query: The query to prepare statement for.
+    /// - Returns: The prepared statement.
+    /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
     public func prepareStatement(_ query: Query) throws -> PreparedStatement {
         guard let connection = connection else {
             throw QueryError.connection("Connection is disconnected")
@@ -152,6 +157,11 @@ public class ConnectionPoolConnection: Connection {
         return try connection.prepareStatement(query)
     }
     
+    /// Prepare statement.
+    ///
+    /// - Parameter raw: A String with the query to prepare statement for.
+    /// - Returns: The prepared statement.
+    /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
     public func prepareStatement(_ raw: String) throws -> PreparedStatement {
         guard let connection = connection else {
             throw QueryError.connection("Connection is disconnected")
@@ -159,6 +169,10 @@ public class ConnectionPoolConnection: Connection {
         return try connection.prepareStatement(raw)
     }
     
+    /// Execute a prepared statement.
+    ///
+    /// - Parameter preparedStatement: The prepared statement to execute.
+    /// - Parameter onCompletion: The function to be called when the execution has completed.
     public func execute(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {
         guard let connection = connection else {
             onCompletion(.error(QueryError.connection("Connection is disconnected")))
@@ -167,6 +181,11 @@ public class ConnectionPoolConnection: Connection {
         connection.execute(preparedStatement: preparedStatement, onCompletion: onCompletion)
     }
     
+    /// Execute a prepared statement with parameters.
+    ///
+    /// - Parameter preparedStatement: The prepared statement to execute.
+    /// - Parameter parameters: An array of the parameters.
+    /// - Parameter onCompletion: The function to be called when the execution has completed.
     public func execute(preparedStatement: PreparedStatement, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ())) {
         guard let connection = connection else {
             onCompletion(.error(QueryError.connection("Connection is disconnected")))
@@ -175,6 +194,11 @@ public class ConnectionPoolConnection: Connection {
         connection.execute(preparedStatement: preparedStatement, parameters: parameters, onCompletion: onCompletion)
     }
 
+    /// Execute a prepared statement with parameters.
+    ///
+    /// - Parameter preparedStatement: The prepared statement to execute.
+    /// - Parameter parameters: A dictionary of the parameters with parameter names as the keys.
+    /// - Parameter onCompletion: The function to be called when the execution has completed.
     public func execute(preparedStatement: PreparedStatement, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {
         guard let connection = connection else {
             onCompletion(.error(QueryError.connection("Connection is disconnected")))
@@ -183,6 +207,10 @@ public class ConnectionPoolConnection: Connection {
         connection.execute(preparedStatement: preparedStatement, parameters: parameters, onCompletion: onCompletion)
     }
 
+    /// Release a prepared statement.
+    ///
+    /// - Parameter preparedStatement: The prepared statement to release.
+    /// - Parameter onCompletion: The function to be called when the execution has completed.
     public func release(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {
         guard let connection = connection else {
             onCompletion(.error(QueryError.connection("Connection is disconnected")))
