@@ -128,9 +128,9 @@ history    96.0
 
 ## Prepared Statements
 
-If your application executes some query multiple times with different parameters, you may want to improve the performance of the application by using prepared statement for that query. I.e. send the query to the database in advance, and later use the returned handle to execute the query providing the parameters. This way the database server will process the query only once.
+If your application executes some query multiple times with different parameters, you may want to improve the performance of the application by using a prepared statement for that query. I.e. send the query to the database in advance, and later use the returned handle to execute the query providing the parameters. This way the database server will process the query only once.
 
-For example, suppose our application needs to retrieve the average grades for courses with average above various values. We change our query to use a parameter instead of preset value of 90: 
+For example, suppose our application needs to retrieve the average grade for courses with an average above various values. We change our query to use a parameter instead of a preset value of 90: 
 
 ```swift
 let query = Select(grades.course, round(avg(grades.grade), to: 1).as("average"), from: grades)
@@ -150,7 +150,7 @@ catch {
 }
 ```
 
-`preparedStatement` is a plugin-specific handle for the prepared statement.
+**Note**: `preparedStatement` is a plugin-specific handle for the prepared statement.
 
 Now we can use this handle to execute the query with different parameters without creating it every time:
 
@@ -160,7 +160,7 @@ connection.execute(preparedStatement: preparedStatement, parameters: [70]) { res
 }
 ```
 
-Use `release` function to free the prepared statement:
+Use the `release` function to free the prepared statement:
 ```swift
 connection.release(preparedStatement: preparedStatement) { result in 
   ...
