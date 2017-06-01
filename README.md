@@ -15,7 +15,8 @@ Swift-Kuery is easy to learn, consumable framework that comes with a set of [imp
 
 ## Table of Contents
 * [Example](#example)
-* [Schema management](#schema-management)
+* [Prepared Statements](#prepared-statements)
+* [Schema Management](#schema-management)
 * [Query Examples](#query-examples)
 * [List of plugins](#list-of-plugins)
 * [License](#license)
@@ -123,6 +124,47 @@ The expected result is:
 course     average
 chemistry  92.0
 history    96.0
+```
+
+## Prepared Statements
+
+If your application executes some query multiple times with different parameters, you may want to improve the performance of the application by using a prepared statement for that query. I.e. send the query to the database in advance, and later use the returned handle to execute the query providing the parameters. This way the database server will process the query only once.
+
+For example, suppose our application needs to retrieve the average grade for courses with an average above various values. We change our query to use a parameter instead of a preset value of 90: 
+
+```swift
+let query = Select(grades.course, round(avg(grades.grade), to: 1).as("average"), from: grades)
+            .group(by: grades.course)
+            .having(avg(grades.grade) > Parameter())
+            .order(by: .ASC(avg(grades.grade)))
+```
+
+Now we prepare the statement:
+
+```swift
+do {
+   let preparedStatement = try connection.prepareStatement(query)
+}
+catch {
+   // Error.
+}
+```
+
+**Note**: `preparedStatement` is a plugin-specific handle for the prepared statement.
+
+Now we can use this handle to execute the query with different parameters without creating it every time:
+
+```swift
+connection.execute(preparedStatement: preparedStatement, parameters: [70]) { result in
+   ...
+}
+```
+
+Use the `release` function to free the prepared statement:
+```swift
+connection.release(preparedStatement: preparedStatement) { result in 
+  ...
+}
 ```
 
 ## Schema Management
