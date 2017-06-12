@@ -82,10 +82,13 @@ public struct Update: Query {
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
+
         if let suffix = suffix {
             result += try " " + suffix.build(queryBuilder: queryBuilder)
         }
+
         result = Utils.updateParameterNumbers(query: result, queryBuilder: queryBuilder)
+
         return result
     }
 
