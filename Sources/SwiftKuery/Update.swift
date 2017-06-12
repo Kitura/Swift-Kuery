@@ -1,12 +1,12 @@
 /**
  Copyright IBM Corporation 2016, 2017
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,17 +24,17 @@ public struct Update: Query {
     /// The SQL WHERE clause containing the filter for the rows to update.
     /// Could be represented with a `Filter` clause or a `String` containing raw SQL.
     public private (set) var whereClause: QueryFilterProtocol?
-    
+
     /// A String with a clause to be appended to the end of the query.
     public private (set) var suffix: QuerySuffixProtocol?
-    
+
     private let valueTuples: [(Column, Any)]
-    
+
     /// An array of `AuxiliaryTable` which will be used in a query with a WITH clause.
     public private (set) var with: [AuxiliaryTable]?
-    
+
     private var syntaxError = ""
-    
+
     /// Initialize an instance of Update.
     ///
     /// - Parameter table: The table to update.
@@ -58,27 +58,27 @@ public struct Update: Query {
         if syntaxError != "" {
             throw QueryError.syntaxError(syntaxError)
         }
-        
+
         var result = ""
-        
+
         if let with = with {
             result += "WITH "
                 + "\(try with.map { try $0.buildWith(queryBuilder: queryBuilder) }.joined(separator: ", "))"
                 + " "
         }
-        
+
         result += "UPDATE "
-        
+
         result += try table.build(queryBuilder: queryBuilder)
         result += try " SET " + valueTuples.map {
-            column, value in "\(Utils.packName(column.name, queryBuilder: queryBuilder)) = \(try Utils.packType(value, queryBuilder: queryBuilder))"
+            "\(Utils.packName($0.0.name, queryBuilder: queryBuilder)) = \(try Utils.packType($0.1, queryBuilder: queryBuilder))"
             }.joined(separator: ", ")
-        
+
         if let with = with,
             queryBuilder.withDeleteRequiresUsing {
             result += try " FROM " + with.map { try $0.build(queryBuilder: queryBuilder) }.joined(separator: ", ")
         }
-        
+
         if let whereClause = whereClause {
             result += try " WHERE " + whereClause.build(queryBuilder: queryBuilder)
         }
@@ -88,7 +88,7 @@ public struct Update: Query {
         result = Utils.updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
     }
-    
+
     /// Add an SQL WHERE clause to the update statement.
     ///
     /// - Parameter conditions: The `Filter` clause or a `String` containing the SQL WHERE to apply.
@@ -103,7 +103,7 @@ public struct Update: Query {
         }
         return new
     }
-    
+
     /// Add a raw suffix to the update statement.
     ///
     /// - Parameter raw: A String with a clause to be appended to the end of the query.
@@ -118,7 +118,7 @@ public struct Update: Query {
         }
         return new
     }
-    
+
     /// Set tables to be used for WITH clause.
     ///
     /// - Parameter tables: A list of the `AuxiliaryTable` to apply.
