@@ -70,6 +70,7 @@ public struct Update: Query {
         result += "UPDATE "
 
         result += try table.build(queryBuilder: queryBuilder)
+
         result += try " SET " + valueTuples.map {
             "\(Utils.packName($0.0.name, queryBuilder: queryBuilder)) = \(try Utils.packType($0.1, queryBuilder: queryBuilder))"
             }.joined(separator: ", ")
