@@ -28,7 +28,7 @@ public struct Update: Query {
     /// A String with a clause to be appended to the end of the query.
     public private (set) var suffix: QuerySuffixProtocol?
 
-    private let valueTuples: [(Column, Any)]
+    private let valueTuples: [(column: Column, value: Any)]
 
     /// An array of `AuxiliaryTable` which will be used in a query with a WITH clause.
     public private (set) var with: [AuxiliaryTable]?
@@ -72,7 +72,7 @@ public struct Update: Query {
         result += try table.build(queryBuilder: queryBuilder)
 
         result += try " SET " + valueTuples.map {
-            "\(Utils.packName($0.0.name, queryBuilder: queryBuilder)) = \(try Utils.packType($0.1, queryBuilder: queryBuilder))"
+            "\(Utils.packName($0.column.name, queryBuilder: queryBuilder)) = \(try Utils.packType($0.value, queryBuilder: queryBuilder))"
             }.joined(separator: ", ")
 
         if let with = with,
