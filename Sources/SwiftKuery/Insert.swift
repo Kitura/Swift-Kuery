@@ -31,7 +31,7 @@ public struct Insert: Query {
     public private (set) var suffix: QuerySuffixProtocol?
     
     /// The select query that retrieves the rows to insert (for INSERT INTO SELECT).
-    public private (set) var query: Select?
+    public private (set) var query: SelectQuery?
     
     /// An array of `AuxiliaryTable` which will be used in a query with a WITH clause.
     public private (set) var with: [AuxiliaryTable]?
@@ -115,12 +115,12 @@ public struct Insert: Query {
     /// - Parameter into: The table to insert rows.
     /// - Parameter columns: An optional array of columns to insert. If nil, values of all the columns have to be provided.
     /// - Parameter query: The select query that retrieves the rows to insert.
-    public init(into table: Table, columns: [Column]?=nil, _ query: Select) {
+    public init(into table: Table, columns: [Column]?=nil, _ query: SelectQuery) {
         self.columns = columns
         self.table = table
         self.query = query
-        if let tableColumns = self.columns, let selectColumns = query.fields,
-            tableColumns.count != selectColumns.count {
+        if let tableColumns = self.columns, let selectColumnCount = query.columnCount,
+            tableColumns.count != selectColumnCount {
             syntaxError = "Number of columns in Select doesn't match column count. "
         }
     }

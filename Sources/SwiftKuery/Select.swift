@@ -17,7 +17,7 @@
 // Mark: Select
 
 /// The SQL SELECT statement.
-public struct Select: Query {
+public struct Select: SelectQuery {
     /// An array of `Field` elements to select.
     public let fields: [Field]?
     
@@ -189,6 +189,10 @@ public struct Select: Query {
 
         result = Utils.updateParameterNumbers(query: result, queryBuilder: queryBuilder)
         return result
+    }
+
+    public var columnCount: Int? {
+        return self.fields?.count
     }
 
     /// Create a SELECT DISTINCT query.

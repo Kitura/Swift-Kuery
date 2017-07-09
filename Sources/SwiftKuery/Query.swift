@@ -38,3 +38,7 @@ public extension Query {
         connection.execute(query: self, parameters: parameters, onCompletion: onCompletion)
     }
 }
+
+public protocol SelectQuery: Query {
+    var columnCount: Int? { get }
+}
