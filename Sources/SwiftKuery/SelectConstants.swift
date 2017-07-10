@@ -29,6 +29,8 @@ public struct ConstantField: Field {
             case .now:
                 return queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.now.rawValue]
             }
+        case let buildable as Buildable:
+            return try buildable.build(queryBuilder: queryBuilder)
         default:
             return String(describing: value)
         }
