@@ -1,7 +1,7 @@
 # Swift-Kuery
 SQL database abstraction layer
 
-[![Build Status - Master](https://travis-ci.org/IBM-Swift/Kitura.svg?branch=master)](https://travis-ci.org/IBM-Swift/Swift-Kuery)
+[![Build Status - Master](https://travis-ci.org/IBM-Swift/Swift-Kuery.svg?branch=master)](https://travis-ci.org/IBM-Swift/Swift-Kuery)
 ![Mac OS X](https://img.shields.io/badge/os-Mac%20OS%20X-green.svg?style=flat)
 ![Linux](https://img.shields.io/badge/os-linux-green.svg?style=flat)
 ![Apache 2](https://img.shields.io/badge/license-Apache2-blue.svg?style=flat)
