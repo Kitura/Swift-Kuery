@@ -15,6 +15,7 @@ Swift-Kuery is easy to learn, consumable framework that comes with a set of [imp
 
 ## Table of Contents
 * [Example](#example)
+* [SQL Injection Prevention using Parameterization](#sql-injection-prevention-using-parameterization)
 * [Prepared Statements](#prepared-statements)
 * [Schema Management](#schema-management)
 * [Query Examples](#query-examples)
@@ -124,6 +125,30 @@ The expected result is:
 course     average
 chemistry  92.0
 history    96.0
+```
+
+## SQL Injection Prevention using Parameterization
+
+Parameterize queries to prevent SQL Injection attacks by using Parameter() for untrusted input.
+
+For example, this is vulnerable to SQL Injection attacks if `supplied_key1` or `supplied_key2` is untrusted input:
+```swift
+let query = Select(from: confidential)
+  .where(confidential.key1 == supplied_key1 || confidential.key2 == supplied_key2)
+
+connection.execute(query: query) { queryResult in
+  ...
+}
+```
+
+To guard against SQL Injection attacks, use the following Parameterized version instead:
+```swift
+let query = Select(from: confidential)
+  .where(confidential.key1 == Parameter() || confidential.key2 == Parameter())
+
+connection.execute(query: query, parameters: supplied_key1, supplied_key2) { queryResult in
+  ...
+}
 ```
 
 ## Prepared Statements
