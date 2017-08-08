@@ -89,7 +89,7 @@ struct Utils {
             if queryBuilder.addNumbersToParameters {
                 resultQuery += "\(index)"
             }
-            let nameRange = startRange!.upperBound..<endRange!.lowerBound
+            let nameRange: Range = startRange!.upperBound..<endRange!.lowerBound
             let name = inputQuery.substring(with: nameRange)
             if let _ = nameToNumber[name] {
                 nameToNumber[name]!.append(index)
