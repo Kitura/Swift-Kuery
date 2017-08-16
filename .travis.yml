@@ -24,6 +24,11 @@ matrix:
       dist: trusty
       sudo: required
       env: SWIFT_SNAPSHOT=$SWIFT_4_DEV_SNAPSHOT
+    - os: linux
+      dist: trusty
+      sudo: required
+      services: docker
+      env: DOCKER_IMAGE=ubuntu:16.04 SWIFT_SNAPSHOT=$SWIFT_4_DEV_SNAPSHOT
     - os: osx
       osx_image: xcode8.3
       sudo: required
