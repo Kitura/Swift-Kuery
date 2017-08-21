@@ -62,7 +62,7 @@ let grades = Grades()
 Next we create a pool of connections to PostgreSQL:
 
 ```swift
-let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.userName("username"), .password("password")], poolOptions: ConnectionPoolOptions(initialCapacity: 10, maxCapacity: 50, timeout: 10000)))
+let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.userName("username"), .password("password")], poolOptions: ConnectionPoolOptions(initialCapacity: 10, maxCapacity: 50, timeout: 10000))
 ```
 
 Every time we need a connection, we get it from the pool:
@@ -103,7 +103,7 @@ guard let connection = pool.getConnection() else {
    // Error
 }
 
-connection.execute(query: query) { result: QueryResult in
+connection.execute(query: query) { queryResult in
   if let resultSet = queryResult.asResultSet {
     for title in resultSet.titles {
       // The column names of the result.
@@ -330,7 +330,7 @@ s.execute(connection) { queryResult in
       }
     }
   }
-  else if let queryError = result.asError {
+  else if let queryError = queryResult.asError {
     ...
   }
 }
