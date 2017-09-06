@@ -67,9 +67,20 @@ struct Utils {
         var range = inputQuery.range(of: Parameter.numberedParameterMarker)
         var index = 1
         while range != nil {
-            resultQuery += inputQuery.substring(to: range!.lowerBound) + marker + "\(index)"
+            #if swift(>=3.2)
+                resultQuery += inputQuery[..<range!.lowerBound] + marker + "\(index)"
+            #else
+                resultQuery += inputQuery.substring(to: range!.lowerBound) + marker + "\(index)"
+            #endif
+
             index += 1
-            inputQuery = inputQuery.substring(from: range!.upperBound)
+
+            #if swift(>=3.2)
+                inputQuery = String(inputQuery[range!.upperBound...])
+            #else
+                inputQuery = inputQuery.substring(from: range!.upperBound)
+            #endif
+
             range = inputQuery.range(of: Parameter.numberedParameterMarker)
         }
         resultQuery += inputQuery
@@ -85,20 +96,43 @@ struct Utils {
         var startRange = inputQuery.range(of: Parameter.namedParameterStart)
         var endRange = inputQuery.range(of: Parameter.namedParameterEnd)
         while startRange != nil && endRange != nil {
-            resultQuery += inputQuery.substring(to: startRange!.lowerBound) + marker
+
+            #if swift(>=3.2)
+                resultQuery += inputQuery[..<startRange!.lowerBound] + marker
+            #else
+                resultQuery += inputQuery.substring(to: startRange!.lowerBound) + marker
+            #endif
+
             if queryBuilder.addNumbersToParameters {
                 resultQuery += "\(index)"
             }
-            let nameRange: Range = startRange!.upperBound..<endRange!.lowerBound
-            let name = inputQuery.substring(with: nameRange)
+
+            #if swift(>=3.2)
+                #if os(macOS)
+                    let name = String(inputQuery[startRange!.upperBound..<endRange!.lowerBound])
+                #else
+                    let name = String(inputQuery[startRange!.upperBound..<endRange!.lowerBound])!
+                #endif
+            #else
+                let nameRange: Range = startRange!.upperBound..<endRange!.lowerBound
+                let name = inputQuery.substring(with: nameRange)
+            #endif
+
             if let _ = nameToNumber[name] {
                 nameToNumber[name]!.append(index)
             }
             else {
                 nameToNumber[name] = [index]
             }
+
             index += 1
-            inputQuery = inputQuery.substring(from: endRange!.upperBound)
+
+            #if swift(>=3.2)
+                inputQuery = String(inputQuery[endRange!.upperBound...])
+            #else
+                inputQuery = inputQuery.substring(from: endRange!.upperBound)
+            #endif
+
             startRange = inputQuery.range(of: Parameter.namedParameterStart)
             endRange = inputQuery.range(of: Parameter.namedParameterEnd)
         }
