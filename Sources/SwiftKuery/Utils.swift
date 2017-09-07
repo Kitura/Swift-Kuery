@@ -108,11 +108,14 @@ struct Utils {
             }
 
             #if swift(>=3.2)
-                #if os(macOS)
-                    let name = String(inputQuery[startRange!.upperBound..<endRange!.lowerBound])
-                #else
-                    let name = String(inputQuery[startRange!.upperBound..<endRange!.lowerBound])!
-                #endif
+
+                let name = String(inputQuery[startRange!.upperBound..<endRange!.lowerBound])
+
+//                #if os(macOS)
+//                    let name = String(inputQuery[startRange!.upperBound..<endRange!.lowerBound])
+//                #else
+//                    let name = String(inputQuery[startRange!.upperBound..<endRange!.lowerBound])!
+//                #endif
             #else
                 let nameRange: Range = startRange!.upperBound..<endRange!.lowerBound
                 let name = inputQuery.substring(with: nameRange)
