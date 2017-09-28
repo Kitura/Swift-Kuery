@@ -581,8 +581,6 @@ let s = Select(t2.c, from: t2)
 
 * [PostgreSQL](https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL)
 
-* [SQLite](https://github.com/IBM-Swift/Swift-Kuery-SQLite)
-
 * [MySQL](https://github.com/IBM-Swift/SwiftKueryMySQL)
 
 ## License
