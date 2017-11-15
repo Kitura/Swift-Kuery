@@ -22,7 +22,7 @@ matrix:
       dist: trusty
       sudo: required
     - os: osx
-      osx_image: xcode9
+      osx_image: xcode9.1
       sudo: required
 
 before_install:
