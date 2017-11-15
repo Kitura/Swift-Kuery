@@ -46,6 +46,8 @@ public class ConnectionPool {
     // The initial size of this pool.
     private var capacity: Int
     
+    private let initialCapacity: Int
+
     // A semaphore to enable take() to block when the pool is empty.
     private var semaphore: DispatchSemaphore
     
@@ -61,19 +63,18 @@ public class ConnectionPool {
     /// - Parameter connectionGenerator: A closure that returns a new connection for the pool.
     /// - Parameter connectionReleaser: A closure to be used to release a connection from the pool.
     public init(options: ConnectionPoolOptions, connectionGenerator: @escaping () -> Connection?, connectionReleaser: @escaping (Connection) -> ()) {
-        capacity = options.initialCapacity
-        if capacity < 1 {
-            capacity = 1
-        }
+        initialCapacity = max(1, options.initialCapacity)
+        capacity = 0
         limit = options.maxCapacity
         timeout = options.timeout
         timeoutNs = Int64(timeout) * 1000000  // Convert ms to ns
         generator = connectionGenerator
         releaser = connectionReleaser
-        semaphore = DispatchSemaphore(value: capacity)
-        for _ in 0 ..< capacity {
+        semaphore = DispatchSemaphore(value: 0)
+        for _ in 0 ..< initialCapacity {
             if let item = generator() {
-                pool.append(item)
+                capacity += 1
+                give(item)
             }
             else {} // TODO: Handle generation failure.
         }
@@ -103,6 +104,32 @@ public class ConnectionPool {
     public func disconnect() {
         release()
     }
+
+    public func regenerate() {
+        lockPoolLock()
+
+        for item in pool {
+            releaser(item)
+            _ = semaphore.wait(timeout: .now())
+            capacity -= 1
+        }
+        pool.removeAll()
+
+        for _ in 0 ..< initialCapacity {
+            tryToMakeNewConnectionWhileInsideLock()
+        }
+
+        unlockPoolLock()
+    }
+
+    private func tryToMakeNewConnectionWhileInsideLock() {
+        if let item = generator() {
+            pool.append(item)
+            semaphore.signal()
+            capacity += 1
+        }
+        else {} // TODO: Handle generation failure.
+    }
     
     // Take an item from the pool. The item will not magically rejoin the pool when no longer
     // needed, so MUST later be returned to the pool with give() if it is to be reused.
@@ -113,6 +140,12 @@ public class ConnectionPool {
         var item: Connection!
         // Indicate that we are going to take an item from the pool. The semaphore will
         // block if there are currently no items to take, until one is returned via give()
+        lockPoolLock()
+        if capacity == 0 {
+            tryToMakeNewConnectionWhileInsideLock()
+        }
+        unlockPoolLock()
+
         let result = semaphore.wait(timeout: (timeout == 0) ? .distantFuture : .now() + DispatchTimeInterval.milliseconds(timeout))
         if result == DispatchTimeoutResult.timedOut {
             return nil
@@ -127,11 +160,7 @@ public class ConnectionPool {
         pool.removeFirst()
         // If we took the last item, we can choose to grow the pool
         if (pool.count == 0 && capacity < limit) {
-            capacity += 1
-            if let newItem = generator() {
-                pool.append(newItem)
-                semaphore.signal()
-            }
+            tryToMakeNewConnectionWhileInsideLock()
         }
         unlockPoolLock()
         return item
