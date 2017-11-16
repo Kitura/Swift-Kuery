@@ -67,13 +67,8 @@ struct Utils {
         var range = inputQuery.range(of: Parameter.numberedParameterMarker)
         var index = 1
         while let _range = range {
-            #if swift(>=3.2)
-                resultQuery += inputQuery[..<_range.lowerBound] + marker + "\(index)"
-                inputQuery = String(inputQuery[_range.upperBound...])
-            #else
-                resultQuery += inputQuery.substring(to: _range.lowerBound) + marker + "\(index)"
-                inputQuery = inputQuery.substring(from: _range.upperBound)
-            #endif
+            resultQuery += inputQuery[..<_range.lowerBound] + marker + "\(index)"
+            inputQuery = String(inputQuery[_range.upperBound...])
 
             index += 1
 
@@ -92,22 +87,13 @@ struct Utils {
         var startRange = inputQuery.range(of: Parameter.namedParameterStart)
         var endRange = inputQuery.range(of: Parameter.namedParameterEnd)
         while let _startRange = startRange, let _endRange = endRange {
-            #if swift(>=3.2)
-                resultQuery += inputQuery[..<_startRange.lowerBound] + marker
-            #else
-                resultQuery += inputQuery.substring(to: _startRange.lowerBound) + marker
-            #endif
+            resultQuery += inputQuery[..<_startRange.lowerBound] + marker
 
             if queryBuilder.addNumbersToParameters {
                 resultQuery += "\(index)"
             }
 
-            #if swift(>=3.2)
-                let name = String(inputQuery[_startRange.upperBound..<_endRange.lowerBound])
-            #else
-                let nameRange: Range = _startRange.upperBound..<_endRange.lowerBound
-                let name = inputQuery.substring(with: nameRange)
-            #endif
+            let name = String(inputQuery[_startRange.upperBound..<_endRange.lowerBound])
 
             if let _ = nameToNumber[name] {
                 nameToNumber[name]!.append(index)
@@ -118,11 +104,7 @@ struct Utils {
 
             index += 1
 
-            #if swift(>=3.2)
-                inputQuery = String(inputQuery[_endRange.upperBound...])
-            #else
-                inputQuery = inputQuery.substring(from: _endRange.upperBound)
-            #endif
+            inputQuery = String(inputQuery[_endRange.upperBound...])
 
             startRange = inputQuery.range(of: Parameter.namedParameterStart)
             endRange = inputQuery.range(of: Parameter.namedParameterEnd)
