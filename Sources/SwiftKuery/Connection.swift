@@ -151,7 +151,10 @@ public protocol Connection {
     ///
     /// - Parameter savepoint: The name of the savepoint to release.
     /// - Parameter onCompletion: The function to be called when the execution of release savepoint command has completed.
-    func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ()))    
+    func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ()))
+    
+    /// Get the ID of the last insert
+    func lastInsertID() throws -> Int32
 }
 
 public extension Connection {
