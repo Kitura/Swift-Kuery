@@ -154,7 +154,7 @@ public protocol Connection {
     func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ()))
     
     /// Get the ID of the last insert
-    func lastInsertID() throws -> Int32
+    func lastInsertID(onCompletion: @escaping ((QueryResult) -> ()))
 }
 
 public extension Connection {

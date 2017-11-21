@@ -124,8 +124,8 @@ class TestConnection: Connection {
     
     func release(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}
     
-    func lastInsertID() throws -> Int32 {
-        return 1
+    public func lastInsertID(onCompletion: @escaping ((QueryResult) -> ())) {
+        onCompletion(.success(Int32(1)))
     }
 }
 
