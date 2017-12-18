@@ -1,5 +1,5 @@
 test:
-  image: ibmcom/swift-ubuntu:4.0.2
+  image: ibmcom/swift-ubuntu:4.0.3
   volumes:
       - .:/Swift-Kuery
   command: bash -c "cd /Swift-Kuery && swift package clean && swift build"
