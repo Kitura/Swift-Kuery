@@ -30,6 +30,8 @@ public enum QueryError: Error {
     case unsupported(String)
     /// An error in transaction.
     case transactionError(String)
+    /// An error when downcasting a Query
+    case downcastError(String)
 }
 
 extension QueryError: CustomStringConvertible {
@@ -47,6 +49,8 @@ extension QueryError: CustomStringConvertible {
         case .unsupported(let error):
             return error
         case .transactionError(let error):
+            return error
+        case .downcastError(let error):
             return error
         }
     }
