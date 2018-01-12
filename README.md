@@ -31,7 +31,7 @@ While Swift-Kuery is not an Object-Relational Mapping (ORM), it provides a great
 Swift-Kuery is easy to learn, consumable framework that comes with a set of [implemented plugins](#list-of-plugins).
 
 ## Table of Contents
-* [Example](#example)
+* [Examples](#example)
 * [SQL Injection Prevention using Parameterization](#sql-injection-prevention-using-parameterization)
 * [Prepared Statements](#prepared-statements)
 * [Schema Management](#schema-management)
@@ -39,7 +39,11 @@ Swift-Kuery is easy to learn, consumable framework that comes with a set of [imp
 * [List of plugins](#list-of-plugins)
 * [License](#license)
 
-## Example
+## Examples
+A Swift-Kuery tutorial on adding a PostgreSQL database to a foodTracker app is available [here](https://github.com/IBM/FoodTrackerBackend/blob/master/AddDatabase.md).
+
+An example ToDo list application, implementing Swift-Kuery, is available [here](https://github.com/IBM-Swift/iOSSampleKituraKit/tree/persistentiOSKituraKit).
+
 This example demonstrates how to execute an SQL query using Swift-Kuery and Swift-Kuery-PostgreSQL. It assumes there is a PostgreSQL server running on localhost:5432, that contains a table called Grades:
 
 ```

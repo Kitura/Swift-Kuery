@@ -2037,7 +2037,11 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
+<<<<<<< HEAD
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">AuxiliaryTable</span><span class="p">:</span> <span class="kt"><a href="Classes/Table.html">Table</a></span></code></pre>
+=======
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">AuxiliaryTable</span><span class="p">:</span> <span class="kt"><a href="Classes/Table.html">Table</a></span></code></pre>
+>>>>>>> column docs updated
 
                         </div>
                       </div>
@@ -2068,7 +2072,23 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Definition of table column.</p>
+                        <p>The <code>Column</code> class is used to represent a single column in an SQL table in swift.
+A combination of columns are used to construct a <code><a href="Classes/Table.html">Table</a></code> class which matches a specific table in an SQL database.
+The <code>Column</code> Class details the column name, the table the column belongs to, any SQL keywords which apply to the column, The number of cells and the data type of the cells.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, a ToDo table class matching a table stored in an SQL database is defined.
+The <q>ToDoTable</q> class contains the table name and three instances of the <code>Column</code> class.
+The toDo_id column is an set as autoIncrementing, containing Int32 types, primaryKey, which must be unique and not null.
+toDo_title column contains String types which are not null and toDo_completed contains Boolean types, which default to false.</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ToDoTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"toDoTable"</span>
+   <span class="k">let</span> <span class="nv">toDo_id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">autoIncrement</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">unique</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+   <span class="k">let</span> <span class="nv">toDo_title</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_title"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+   <span class="k">let</span> <span class="nv">toDo_completed</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_completed"</span><span class="p">,</span> <span class="kt">Bool</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre>
 
                         <a href="Classes/Column.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2318,14 +2338,58 @@ then builds its string representation using that array.</p>
                 </li>
               </ul>
             </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Table"></a>
+                <a name="//apple_ref/swift/Section/Table" class="dashAnchor"></a>
+                <a href="#/Table">
+                  <h3 class="section-name">Table</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC"></a>
+                    <a name="//apple_ref/swift/Class/Table" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC">Table</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Subclasses of the Table class are metadata describing a table in a relational database that you want to work with.</p>
+
+                        <a href="Classes/Table.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">Table</span><span class="p">:</span> <span class="kt"><a href="Protocols/Buildable.html">Buildable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </section>
 
       </article>
     </div>
     <section class="footer">
+<<<<<<< HEAD
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-17)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+=======
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-01-12)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+>>>>>>> column docs updated
     </section>
   </body>
 </div>
