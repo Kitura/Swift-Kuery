@@ -32,6 +32,7 @@
       "symbol": "IndexColumnOrdered.table",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
+<<<<<<< HEAD
     },
     {
 <<<<<<< HEAD
@@ -43,6 +44,8 @@
       "symbol": "Table.columns",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
+=======
+>>>>>>> table class Jazzy update
     }
   ],
 <<<<<<< HEAD

@@ -81,7 +81,8 @@ public class Column: Field, IndexColumn {
     // MARK: Column Initializer
     
     /**
-     The initializer for the `Column` class. This creates an instance of `Column` using the provided parameters. Name must be provided, but all other fields will default to either nil or false if not given.
+     The initializer for the `Column` class. This creates an instance of `Column` using the provided parameters.
+    Name must be provided, but all other fields will default to either nil or false if not given.
      ### Usage Example: ###
      In this example, an instances of the `Column` class is created to match The toDo_id column of an SQL table.
      The toDo_id column in the database is stored as an Int32 and is the tables primary key.
@@ -117,14 +118,18 @@ public class Column: Field, IndexColumn {
     //MARK: Column Decription Functions
     
     /**
-     Function to build a String representation for referencing a `Column` instance. A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description. This function is required to obey the `Buildable` protocol.
+     Function to build a String representation for referencing a `Column` instance.
+     A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
+     This function is required to obey the `Buildable` protocol.
      ### Usage Example: ###
-     In this example, we initialize `QueryBuilder` and `Column` instances. We then use the build function to produce a String description and print the results.
+     In this example, we initialize `QueryBuilder` and `Column` instances.
+     We then use the build function to produce a String description and print the results.
      ```swift
      let queryBuilder = QueryBuilder()
      let toDo_title = Column("toDo_title", String.self, notNull: true)
      let description = try todotable.toDo_id.build(queryBuilder: queryBuilder)
-     print(description) // toDoTable.toDo_id
+     print(description)
+     //Prints toDoTable.toDo_id
      ```
      */
     /// - Parameter queryBuilder: The QueryBuilder to use.
@@ -143,14 +148,17 @@ public class Column: Field, IndexColumn {
     }
     
     /**
-     Function to build a String representation of the index of a `Column` instance. A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
+     Function to build a String representation of the index of a `Column` instance.
+     A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
      ### Usage Example: ###
-     In this example, we initialize `QueryBuilder` and `Column` instances. We then use the build function to produce a String description and print the results.
+     In this example, we initialize `QueryBuilder` and `Column` instances.
+     We then use the build function to produce a String description and print the results.
      ```swift
      let queryBuilder = QueryBuilder()
      let toDo_title = Column("toDo_title", String.self, notNull: true)
      let description = todotable.toDo_id.buildIndex(queryBuilder: queryBuilder)
-     print(description) // toDo_id
+     print(description)
+     //Prints toDo_id
      ```
      */
     /// - Parameter queryBuilder: The QueryBuilder to use.
@@ -160,14 +168,17 @@ public class Column: Field, IndexColumn {
     }
 
     /**
-     Function to create a String representation of a `Column` instance for use in an SQL CREATE TABLE query. A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
+     Function to create a String representation of a `Column` instance for use in an SQL CREATE TABLE query.
+     A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
      ### Usage Example: ###
-     In this example, we initialize `QueryBuilder` and `Column` instances. We then use the create function to produce a String description of the column and print the results.
+     In this example, we initialize `QueryBuilder` and `Column` instances.
+     We then use the create function to produce a String description of the column and print the results.
      ```swift
      let queryBuilder = QueryBuilder()
      let toDo_title = Column("toDo_title", String.self, notNull: true)
      let description = try todotable.toDo_id.create(queryBuilder: queryBuilder)
-     print(description) // toDo_id integer AUTO_INCREMENT PRIMARY KEY NOT NULL UNIQUE
+     print(description)
+     //Prints "toDo_id integer AUTO_INCREMENT PRIMARY KEY NOT NULL UNIQUE"
      ```
      */
     /// - Parameter queryBuilder: The QueryBuilder to use.
@@ -224,13 +235,16 @@ public class Column: Field, IndexColumn {
     //MARK: Column Expressions
 
     /**
-     Function to return a copy of the current `Column` instance with the given name as its alias. This is equivelent to the SQL AS operator.
+     Function to return a copy of the current `Column` instance with the given name as its alias.
+     This is equivelent to the SQL AS operator.
      ### Usage Example: ###
-     In this example, a `Table` instance is created which contains a `Column`. An alias for this `Column` instance is then created and its alias printed.
+     In this example, a `Table` instance is created which contains a `Column`.
+     An alias for this `Column` instance is then created and its alias printed. 
      ```swift
      let todotable = ToDoTable()
      let aliasColumn = todotable.toDo_title.as("new name")
-     print(String(describing: aliasColumn.alias)) // Optional("new name")
+     print(String(describing: aliasColumn.alias))
+     //Prints Optional("new name")
      ```
      */
     /// - Parameter newName: A String containing the alias for the column.

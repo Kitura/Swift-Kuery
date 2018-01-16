@@ -2014,7 +2014,28 @@
 
                 </div>
               </div>
-            <p>Subclasses of the Table class are metadata describing a table in a relational database that you want to work with.</p>
+            <p>The <code>Table</code> class is used to represent a specific table from an SQL database in swift.
+This class details the table name, contains the <code><a href="../Classes/Column.html">Column</a></code> instances present inside the table and provides methods to build SQL String descriptions for the various database engines.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, a ToDo table class matching a table stored in an SQL database is defined.
+The <q>ToDoTable</q> class contains the table name and three instances of the <code><a href="../Classes/Column.html">Column</a></code> class.
+An instance of this <q>ToDoTable</q> class is then initialized.
+This instance is then referenced for a SQL select query to retrieve all data from a database.</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ToDoTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"toDoTable"</span>
+   <span class="k">let</span> <span class="nv">toDo_id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">autoIncrement</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">unique</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+   <span class="k">let</span> <span class="nv">toDo_title</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_title"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+   <span class="k">let</span> <span class="nv">toDo_completed</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_completed"</span><span class="p">,</span> <span class="kt">Bool</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">Application</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
+   <span class="k">let</span> <span class="nv">selectQuery</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span> <span class="p">:</span><span class="n">todotable</span><span class="p">)</span>
+<span class="p">}</span>
+
+
+</code></pre>
 
           </div>
         </section>
@@ -2022,6 +2043,13 @@
         <section class="section">
           <div class="section-content">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Parameters"></a>
+                <a name="//apple_ref/swift/Section/Parameters" class="dashAnchor"></a>
+                <a href="#/Parameters">
+                  <h3 class="section-name">Parameters</h3>
+                </a>
+              </div>
               <ul class="item-container">
                 <li class="item">
                   <div>
@@ -2036,7 +2064,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The columns inside the table.</p>
 
                       </div>
                       <div class="declaration">
@@ -2044,10 +2072,14 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
 <<<<<<< HEAD
+<<<<<<< HEAD
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">columns</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">]</span></code></pre>
 =======
                           <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">Table</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Buildable.html">Buildable</a></span></code></pre>
 >>>>>>> column docs updated
+=======
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">columns</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">]</span></code></pre>
+>>>>>>> table class Jazzy update
 
                         </div>
                       </div>
@@ -2117,6 +2149,17 @@ or its name.</p>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initializer"></a>
+                <a name="//apple_ref/swift/Section/Initializer" class="dashAnchor"></a>
+                <a href="#/Initializer">
+                  <h3 class="section-name">Initializer</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -2176,6 +2219,17 @@ and an array of Columns</p>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/String%20Representation"></a>
+                <a name="//apple_ref/swift/Section/String Representation" class="dashAnchor"></a>
+                <a href="#/String%20Representation">
+                  <h3 class="section-name">String Representation</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -2189,10 +2243,49 @@ and an array of Columns</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Build the table using <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code>.</p>
+                        <p>Function to build a String representation for referencing a <code>Table</code> instance.
+A <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code> is used handle variances between the various database engines and produce a correct SQL description.
+This function is required to obey the <code><a href="../Protocols/Buildable.html">Buildable</a></code> protocol.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, we initialize <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code> and <code>Table</code> instances. (The ToDoTable() is defined in the class example).
+We then use the build function to produce a String description and print the results.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">queryBuilder</span> <span class="o">=</span> <span class="kt">QueryBuilder</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">description</span> <span class="o">=</span> <span class="k">try</span> <span class="n">todotable</span><span class="o">.</span><span class="nf">build</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="n">queryBuilder</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
+<span class="c1">//Prints toDoTable</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">build</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="kt"><a href="../Classes/QueryBuilder.html">QueryBuilder</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC11descriptionSSAA10Connection_p10connection_tKF"></a>
+                    <a name="//apple_ref/swift/Method/description(connection:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC11descriptionSSAA10Connection_p10connection_tKF">description(connection:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Function to create a String representation of a <code>Table</code> instance for use in an SQL CREATE TABLE query.</p>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
-    QueryError.syntaxError if query build fails.
+    QueryError.syntaxError if statement build fails.
 
 </div>
 
@@ -2202,39 +2295,35 @@ and an array of Columns</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
 <<<<<<< HEAD
+<<<<<<< HEAD
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">build</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="kt"><a href="../Classes/QueryBuilder.html">QueryBuilder</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 =======
                           <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">build</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="kt"><a href="../Classes/QueryBuilder.html">QueryBuilder</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 >>>>>>> column docs updated
+=======
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">description</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Connection.html">Connection</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+>>>>>>> table class Jazzy update
 
                         </div>
                       </div>
                       <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>queryBuilder</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The QueryBuilder to use.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
                         <h4>Return Value</h4>
-                        <p>A String representation of the table.</p>
+                        <p>A String representation of the table create statement.</p>
                       </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Create%20Alias"></a>
+                <a name="//apple_ref/swift/Section/Create Alias" class="dashAnchor"></a>
+                <a href="#/Create%20Alias">
+                  <h3 class="section-name">Create Alias</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -2248,7 +2337,16 @@ and an array of Columns</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Add alias to the table, i.e., implement the SQL AS operator.</p>
+                        <p>Function to return a copy of the current <code>Table</code> instance with the given name as its alias.
+This is equivalent to the SQL AS operator.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, a <code>Table</code> instance is created. An alias for this <code>Table</code> instance is then created and its alias printed.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">aliasTable</span> <span class="o">=</span> <span class="n">todotable</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"new name"</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="kt">String</span><span class="p">(</span><span class="nv">describing</span><span class="p">:</span> <span class="n">aliasTable</span><span class="o">.</span><span class="n">alias</span><span class="p">))</span>
+<span class="c1">//Prints Optional("new name")</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -2263,32 +2361,20 @@ and an array of Columns</p>
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>newName</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A String containing the alias for the table.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new Table instance with the alias.</p>
-                      </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Query%20Database"></a>
+                <a name="//apple_ref/swift/Section/Query Database" class="dashAnchor"></a>
+                <a href="#/Query%20Database">
+                  <h3 class="section-name">Query Database</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -2302,7 +2388,15 @@ and an array of Columns</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Apply TRUNCATE TABLE query on the table.</p>
+                        <p>Function to return a <code><a href="../Structs/Raw.html">Raw</a></code> instance, which will execute a TRUNCATE query on the current <code>Table</code> instance.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, a <code>Table</code> instance is created. The truncate function is called to create a <code><a href="../Structs/Raw.html">Raw</a></code> instance of an String to execute the TRUNCATE SQL Query for todotable.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">truncateRaw</span> <span class="o">=</span> <span class="n">todotable</span><span class="o">.</span><span class="nf">truncate</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">truncateRaw</span><span class="p">))</span>
+<span class="c1">//Prints Raw(query: "TRUNCATE TABLE", tables: [Application.ToDoTable])</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -2316,10 +2410,6 @@ and an array of Columns</p>
 >>>>>>> column docs updated
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>An instance of <code><a href="../Structs/Raw.html">Raw</a></code>.</p>
                       </div>
                     </section>
                   </div>
@@ -2337,7 +2427,15 @@ and an array of Columns</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Apply DROP TABLE query on the table.</p>
+                        <p>Function to return a <code><a href="../Structs/Raw.html">Raw</a></code> instance, which will execute a DROP TABLE query on the current <code>Table</code> instance.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, a <code>Table</code> instance is created. The drop function is called to create a <code><a href="../Structs/Raw.html">Raw</a></code> instance of an String to execute the DROP TABLE SQL Query for todotable.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">dropRaw</span> <span class="o">=</span> <span class="n">todotable</span><span class="o">.</span><span class="nf">drop</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">dropRaw</span><span class="p">))</span>
+<span class="c1">//Prints Raw(query: "DROP TABLE", tables: [Application.ToDoTable])</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -2351,10 +2449,6 @@ and an array of Columns</p>
 >>>>>>> column docs updated
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>An instance of <code><a href="../Structs/Raw.html">Raw</a></code>.</p>
                       </div>
                     </section>
                   </div>
@@ -2372,7 +2466,16 @@ and an array of Columns</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Create the table in the database.</p>
+                        <p>Function to create a table in an SQL database, with matching parameters to an instance of the <code>Table</code> class.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, a <code>Table</code> instance is created and a connection to an SQL database is established.
+The create function is called, sending an SQL query to create a matching table in the database.
+The <code><a href="../Enums/QueryResult.html">QueryResult</a></code> is then handled by <q>queryHandler</q>, a function which processes the result.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">SQLConnection</span> <span class="o">=</span> <span class="kt">PostgreSQLConnection</span><span class="p">(</span><span class="nv">host</span><span class="p">:</span> <span class="s">"localhost"</span><span class="p">,</span> <span class="nv">port</span><span class="p">:</span> <span class="mi">5432</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="nf">databaseName</span><span class="p">(</span><span class="s">"ToDoDatabase"</span><span class="p">)])</span>
+<span class="n">todotable</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt">SQLConnection</span><span class="p">,</span> <span class="nv">onCompletion</span><span class="p">:</span> <span class="n">queryHandler</span><span class="p">)</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -2387,40 +2490,20 @@ and an array of Columns</p>
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>connection</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The connection to the database.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>onCompletion</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The function to be called when the execution of the query has completed.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Assign%20Keys"></a>
+                <a name="//apple_ref/swift/Section/Assign Keys" class="dashAnchor"></a>
+                <a href="#/Assign%20Keys">
+                  <h3 class="section-name">Assign Keys</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -2434,7 +2517,22 @@ and an array of Columns</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Add a primary key to the table.</p>
+                        <p>Function to set multiple <code><a href="../Classes/Column.html">Column</a></code> instances, as a composite primary key, in the <code>Table</code> instance.
+The function also validates the columns to ensure they belong to the table and do not conflict with the definition of a primary key.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, columns for first and last name are initialized and a <code>Table</code> instance called personTable is created. The personTable primary key is then set to be a composite of firstColumn and lastColumn.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">firstColumn</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">lastColumn</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"lastName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
+   <span class="k">let</span> <span class="nv">firstName</span> <span class="o">=</span> <span class="n">firstColumn</span>
+   <span class="k">let</span> <span class="nv">lastName</span> <span class="o">=</span> <span class="n">lastColumn</span>
+   <span class="k">let</span> <span class="nv">dateOfBirth</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_completed"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">var</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>
+<span class="n">personTable</span> <span class="o">=</span> <span class="n">personTable</span><span class="o">.</span><span class="nf">primaryKey</span><span class="p">([</span><span class="n">firstColumn</span><span class="p">,</span> <span class="n">lastColumn</span><span class="p">])</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -2448,29 +2546,6 @@ and an array of Columns</p>
 >>>>>>> column docs updated
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>columns</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>An Array of columns that constitute the primary key.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of <code>Table</code>.</p>
                       </div>
                     </section>
                   </div>
@@ -2488,7 +2563,22 @@ and an array of Columns</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Add a primary key to the table.</p>
+                        <p>Function to set a single <code><a href="../Classes/Column.html">Column</a></code> instances<code>as a primary key, in the</code>Table` instance.
+This function calls the composite primaryKey function with a single column to create a single primary key.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, a column for id is initialized and a <code>Table</code> instance called <q>personTable</q> is created.
+The personTable primary key is then set to be <q>idColumn</q>.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">idColumn</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
+   <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="n">idColumn</span>
+   <span class="k">let</span> <span class="nv">firstName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+   <span class="k">let</span> <span class="nv">lastName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"lastName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">var</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>
+<span class="n">personTable</span> <span class="o">=</span> <span class="n">personTable</span><span class="o">.</span><span class="nf">primaryKey</span><span class="p">(</span><span class="n">idColumn</span><span class="p">)</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -2502,29 +2592,6 @@ and an array of Columns</p>
 >>>>>>> column docs updated
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>columns</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Columns that constitute the primary key.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of <code>Table</code>.</p>
                       </div>
                     </section>
                   </div>
@@ -2542,7 +2609,24 @@ and an array of Columns</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Add a foreign key to the table.</p>
+                        <p>Function to set multiple <code><a href="../Classes/Column.html">Column</a></code> instances, as a composite foreign key, in the <code>Table</code> instance.
+This function calls the composite primaryKey function with a single column to create a single primary key.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, columns for first and last name are initialized and a <code>Table</code> instance called personTable is created. A <q>personTable</q> foreign key is then set to be a composite of firstColumn and lastColumn, which reference columns describing the persons salary.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">firstColumn</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">lastColumn</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"lastName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">monthlyPay</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"monthlyPay"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">employeeBand</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"employeeBand"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
+   <span class="k">let</span> <span class="nv">firstName</span> <span class="o">=</span> <span class="n">firstColumn</span>
+   <span class="k">let</span> <span class="nv">lastName</span> <span class="o">=</span> <span class="n">lastColumn</span>
+   <span class="k">let</span> <span class="nv">dateOfBirth</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_completed"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">var</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>
+<span class="n">personTable</span> <span class="o">=</span> <span class="n">personTable</span><span class="o">.</span><span class="nf">foreignKey</span><span class="p">([</span><span class="n">firstColumn</span><span class="p">,</span> <span class="n">lastColumn</span><span class="p">],</span> <span class="nv">references</span><span class="p">:</span> <span class="p">[</span><span class="n">monthlyPay</span><span class="p">,</span> <span class="n">employeeBand</span><span class="p">])</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -2556,41 +2640,6 @@ and an array of Columns</p>
 >>>>>>> column docs updated
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>columns</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>An Array of columns that constitute the foreign key.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>references</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>An Array of columns of the foreign table the foreign key references.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A new instance of <code>Table</code>.</p>
                       </div>
                     </section>
                   </div>
@@ -2608,8 +2657,11 @@ and an array of Columns</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Add a foreign key to the table.</p>
+                        <p>Function to set a single <code><a href="../Classes/Column.html">Column</a></code> instances, as a composite foreign key, in the <code>Table</code> instance.
+The function also validates the columns to ensure they belong to the table and do not conflict with the definition of a foreign key.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
 
+<<<<<<< HEAD
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -2680,6 +2732,22 @@ and an array of Columns</p>
     QueryError.syntaxError if statement build fails.
 
 </div>
+=======
+<p>In this example, a column for id is initialized and a <code>Table</code> instance called <q>personTable</q> is created.
+The personTable foreign key is then set to be firstColumn, referencing columns describing the persons salary.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">idColumn</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">monthlyPay</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"monthlyPay"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">employeeBand</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"employeeBand"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
+   <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="n">idColumn</span>
+   <span class="k">let</span> <span class="nv">firstName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+   <span class="k">let</span> <span class="nv">lastName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"lastName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">var</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>
+<span class="n">personTable</span> <span class="o">=</span> <span class="n">personTable</span><span class="o">.</span><span class="nf">foreignKey</span><span class="p">(</span><span class="n">idColumn</span><span class="p">,</span> <span class="nv">references</span><span class="p">:</span> <span class="p">[</span><span class="n">monthlyPay</span><span class="p">,</span> <span class="n">employeeBand</span><span class="p">])</span>
+</code></pre>
+>>>>>>> table class Jazzy update
 
                       </div>
                       <div class="declaration">
@@ -2687,16 +2755,16 @@ and an array of Columns</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
 <<<<<<< HEAD
+<<<<<<< HEAD
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">description</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Connection.html">Connection</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 =======
                           <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">description</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Connection.html">Connection</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 >>>>>>> column docs updated
+=======
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">foreignKey</span><span class="p">(</span><span class="n">_</span> <span class="nv">column</span><span class="p">:</span> <span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">,</span> <span class="nv">references</span><span class="p">:</span> <span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+>>>>>>> table class Jazzy update
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A String representation of the table create statement.</p>
                       </div>
                     </section>
                   </div>
@@ -2710,10 +2778,14 @@ and an array of Columns</p>
     </div>
     <section class="footer">
 <<<<<<< HEAD
+<<<<<<< HEAD
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-17)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 =======
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-01-12)</p>
+=======
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-01-16)</p>
+>>>>>>> table class Jazzy update
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 >>>>>>> column docs updated
     </section>
