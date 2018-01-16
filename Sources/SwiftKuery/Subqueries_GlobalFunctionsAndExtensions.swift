@@ -22,6 +22,7 @@ import Foundation
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func ==(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .columnExpression(lhs), rhs: rhs, condition: .equal)
 }
@@ -32,6 +33,7 @@ public func ==(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnEx
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func ==(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .string(lhs), rhs: rhs, condition: .equal)
 }
@@ -42,6 +44,7 @@ public func ==(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fi
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func ==(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .column(lhs), rhs: rhs, condition: .equal)
 }
@@ -52,6 +55,7 @@ public func ==(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fi
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func ==(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .int(lhs), rhs: rhs, condition: .equal)
 }
@@ -62,6 +66,7 @@ public func ==(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filte
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func ==(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .float(lhs), rhs: rhs, condition: .equal)
 }
@@ -72,6 +77,7 @@ public func ==(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fil
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func ==(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .double(lhs), rhs: rhs, condition: .equal)
 }
@@ -82,6 +88,7 @@ public func ==(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fi
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func ==(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: rhs, condition: .equal)
 }
@@ -92,6 +99,7 @@ public func ==(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func ==(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .bool(lhs), rhs: rhs, condition: .equal)
 }
@@ -102,6 +110,7 @@ public func ==(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filt
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func ==(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .columnExpression(lhs), rhs: rhs, condition: .equal)
 }
@@ -112,6 +121,7 @@ public func ==(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateCo
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func ==(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .string(lhs), rhs: rhs, condition: .equal)
 }
@@ -122,6 +132,7 @@ public func ==(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func ==(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .column(lhs), rhs: rhs, condition: .equal)
 }
@@ -132,6 +143,7 @@ public func ==(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func ==(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .int(lhs), rhs: rhs, condition: .equal)
 }
@@ -142,6 +154,7 @@ public func ==(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Ha
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func ==(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .float(lhs), rhs: rhs, condition: .equal)
 }
@@ -152,6 +165,7 @@ public func ==(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func ==(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .double(lhs), rhs: rhs, condition: .equal)
 }
@@ -162,6 +176,7 @@ public func ==(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func ==(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .parameter(lhs), rhs: rhs, condition: .equal)
 }
@@ -172,6 +187,7 @@ public func ==(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>)
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func ==(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .bool(lhs), rhs: rhs, condition: .equal)
 }
@@ -182,6 +198,7 @@ public func ==(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> H
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >=(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .columnExpression(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -192,6 +209,7 @@ public func >=(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnEx
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >=(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .string(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -202,6 +220,7 @@ public func >=(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fi
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >=(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .column(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -212,6 +231,7 @@ public func >=(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fi
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >=(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .int(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -222,6 +242,7 @@ public func >=(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filte
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >=(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .float(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -232,6 +253,7 @@ public func >=(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fil
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >=(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .double(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -242,6 +264,7 @@ public func >=(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fi
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >=(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -252,6 +275,7 @@ public func >=(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >=(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .bool(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -262,6 +286,7 @@ public func >=(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filt
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >=(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .columnExpression(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -272,6 +297,7 @@ public func >=(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateCo
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >=(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .string(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -282,6 +308,7 @@ public func >=(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >=(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .column(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -292,6 +319,7 @@ public func >=(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >=(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .int(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -302,6 +330,7 @@ public func >=(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Ha
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >=(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .float(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -312,6 +341,7 @@ public func >=(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >=(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .double(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -322,6 +352,7 @@ public func >=(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >=(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .parameter(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -332,6 +363,7 @@ public func >=(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>)
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >=(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .bool(lhs), rhs: rhs, condition: .greaterThanOrEqual)
 }
@@ -342,6 +374,7 @@ public func >=(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> H
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .columnExpression(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -352,6 +385,7 @@ public func >(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExp
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .string(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -362,6 +396,7 @@ public func >(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fil
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .column(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -372,6 +407,7 @@ public func >(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fil
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .int(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -382,6 +418,7 @@ public func >(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .float(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -392,6 +429,7 @@ public func >(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filt
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .double(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -402,6 +440,7 @@ public func >(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fil
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -412,6 +451,7 @@ public func >(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func >(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .bool(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -422,6 +462,7 @@ public func >(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filte
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .columnExpression(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -432,6 +473,7 @@ public func >(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateCol
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .string(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -442,6 +484,7 @@ public func >(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .column(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -452,6 +495,7 @@ public func >(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .int(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -462,6 +506,7 @@ public func >(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Hav
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .float(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -472,6 +517,7 @@ public func >(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> H
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .double(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -482,6 +528,7 @@ public func >(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .parameter(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -492,6 +539,7 @@ public func >(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func >(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .bool(lhs), rhs: rhs, condition: .greaterThan)
 }
@@ -502,6 +550,7 @@ public func >(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Ha
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <=(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .columnExpression(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -512,6 +561,7 @@ public func <=(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnEx
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <=(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .string(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -522,6 +572,7 @@ public func <=(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fi
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <=(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .column(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -532,6 +583,7 @@ public func <=(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fi
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <=(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .int(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -542,6 +594,7 @@ public func <=(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filte
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <=(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .float(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -552,6 +605,7 @@ public func <=(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fil
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <=(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .double(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -562,6 +616,7 @@ public func <=(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fi
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <=(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -572,6 +627,7 @@ public func <=(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <=(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .bool(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -582,6 +638,7 @@ public func <=(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filt
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <=(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .columnExpression(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -592,6 +649,7 @@ public func <=(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateCo
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <=(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .string(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -602,6 +660,7 @@ public func <=(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <=(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .column(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -612,6 +671,7 @@ public func <=(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <=(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .int(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -622,6 +682,7 @@ public func <=(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Ha
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <=(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .float(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -632,6 +693,7 @@ public func <=(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <=(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .double(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -642,6 +704,7 @@ public func <=(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <=(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .parameter(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -652,6 +715,7 @@ public func <=(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>)
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <=(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .bool(lhs), rhs: rhs, condition: .lessThanOrEqual)
 }
@@ -662,6 +726,7 @@ public func <=(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> H
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .columnExpression(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -672,6 +737,7 @@ public func <(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExp
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .string(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -682,6 +748,7 @@ public func <(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fil
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .column(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -692,6 +759,7 @@ public func <(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fil
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .int(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -702,6 +770,7 @@ public func <(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .float(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -712,6 +781,7 @@ public func <(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filt
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .double(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -722,6 +792,7 @@ public func <(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fil
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -732,6 +803,7 @@ public func <(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func <(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .bool(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -742,6 +814,7 @@ public func <(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filte
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .columnExpression(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -752,6 +825,7 @@ public func <(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateCol
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .string(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -762,6 +836,7 @@ public func <(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .column(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -772,6 +847,7 @@ public func <(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .int(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -782,6 +858,7 @@ public func <(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Hav
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .float(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -792,6 +869,7 @@ public func <(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> H
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .double(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -802,6 +880,7 @@ public func <(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .parameter(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -812,6 +891,7 @@ public func <(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func <(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .bool(lhs), rhs: rhs, condition: .lessThan)
 }
@@ -822,6 +902,7 @@ public func <(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Ha
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func !=(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .columnExpression(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -832,6 +913,7 @@ public func !=(lhs: ScalarColumnExpression, rhs: Predicate<Filter,ScalarColumnEx
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func !=(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .string(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -842,6 +924,7 @@ public func !=(lhs: String, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fi
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func !=(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .column(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -852,6 +935,7 @@ public func !=(lhs: Column, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fi
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func !=(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .int(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -862,6 +946,7 @@ public func !=(lhs: Int, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filte
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func !=(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .float(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -872,6 +957,7 @@ public func !=(lhs: Float, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fil
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func !=(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .double(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -882,6 +968,7 @@ public func !=(lhs: Double, rhs: Predicate<Filter,ScalarColumnExpression>) -> Fi
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func !=(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .parameter(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -892,6 +979,7 @@ public func !=(lhs: Parameter, rhs: Predicate<Filter,ScalarColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Filter` containing the clause.
+/// :nodoc:
 public func !=(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filter {
     return Filter(lhs: .bool(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -902,6 +990,7 @@ public func !=(lhs: Bool, rhs: Predicate<Filter,ScalarColumnExpression>) -> Filt
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func !=(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .columnExpression(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -912,6 +1001,7 @@ public func !=(lhs: AggregateColumnExpression, rhs: Predicate<Having,AggregateCo
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func !=(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .string(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -922,6 +1012,7 @@ public func !=(lhs: String, rhs: Predicate<Having,AggregateColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func !=(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .column(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -932,6 +1023,7 @@ public func !=(lhs: Column, rhs: Predicate<Having,AggregateColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func !=(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .int(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -942,6 +1034,7 @@ public func !=(lhs: Int, rhs: Predicate<Having,AggregateColumnExpression>) -> Ha
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func !=(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .float(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -952,6 +1045,7 @@ public func !=(lhs: Float, rhs: Predicate<Having,AggregateColumnExpression>) -> 
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func !=(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .double(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -962,6 +1056,7 @@ public func !=(lhs: Double, rhs: Predicate<Having,AggregateColumnExpression>) ->
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func !=(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .parameter(lhs), rhs: rhs, condition: .notEqual)
 }
@@ -972,6 +1067,7 @@ public func !=(lhs: Parameter, rhs: Predicate<Having,AggregateColumnExpression>)
 /// - Parameter lhs: The left hand side of the clause.
 /// - Parameter rhs: The right hand side of the clause.
 /// - Returns: A `Having` containing the clause.
+/// :nodoc:
 public func !=(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> Having {
     return Having(lhs: .bool(lhs), rhs: rhs, condition: .notEqual)
 }
