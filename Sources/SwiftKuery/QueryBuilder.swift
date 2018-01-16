@@ -18,12 +18,30 @@ import Foundation
 
 // MARK: QueryBuilder
 
-/// Used in code dealing with variances between the various database engines. As
-/// different databases have different query syntax, sometimes changes need to be
-/// made when generating the actual SQL statement to run. Additional needed changes
-/// should be done by updating QueryBuilder substitutions array. Every query component
-/// then builds its string representation using that array.
+/**
+ Used in code dealing with variances between the various database engines. As
+ different databases have different query syntax, sometimes changes need to be
+ made when generating the actual SQL statement to run. Additional needed changes
+ should be done by updating QueryBuilder substitutions array. Every query component
+ then builds its string representation using that array.
+ ### Usage Example: ###
+ In this example, a `QueryBuilder` for PostgreSQL is initialized.
+ Parameters are set for postgreSQL and Strings keywords for SQL queries are substituted into the queryBuilder.
+ The queryBuilder is then used to create a String description of an instance of the `Table` class called "todotable".
+ ```swift
+ let queryBuilder = QueryBuilder(withDeleteRequiresUsing: true, withUpdateRequiresFrom: true, createAutoIncrement: createAutoIncrement)
+ queryBuilder.updateSubstitutions([QueryBuilder.QuerySubstitutionNames.ucase : "UPPER",
+    QueryBuilder.QuerySubstitutionNames.lcase : "LOWER",
+    QueryBuilder.QuerySubstitutionNames.len : "LENGTH",
+    QueryBuilder.QuerySubstitutionNames.numberedParameter : "$",
+    QueryBuilder.QuerySubstitutionNames.namedParameter : "",
+    QueryBuilder.QuerySubstitutionNames.double : "double precision"
+ ])
+ let description = try todotable.build(queryBuilder: queryBuilder)
+ ```
+ */
 public class QueryBuilder {
+    // MARK: Substitutions
     /// An array of substitutions to be made in query String representation.
     public var substitutions: [String]
     
@@ -59,11 +77,12 @@ public class QueryBuilder {
         case char
         /// The database type that corresponds to UUID. Accepts a string representation of UUID.
         case uuid
-        
+
         /// Last case, add new values before it.
         case namesCount
     }
-
+    // MARK: Parameters
+    
     /// An indication whether the parameters should be numbered (e.g., '$1, $2'), or just marked
     /// with the numbered parameter marker (e.g., '?').
     public let addNumbersToParameters: Bool
@@ -89,8 +108,15 @@ public class QueryBuilder {
     /// DateFormatter to convert between Date and String instances.
     public let dateFormatter: DateFormatter?
 
-    /// Initialize an instance of QueryBuilder.
-    ///
+    // MARK: Initializer
+    /**
+      Initialize an instance of QueryBuilder.
+     ### Usage Example: ###
+     In this example, a `QueryBuilder` for PostgreSQL is initialized. Parameters not defined are set to default values.
+     ```swift
+     let queryBuilder = QueryBuilder(withDeleteRequiresUsing: true, withUpdateRequiresFrom: true, createAutoIncrement: createAutoIncrement)
+     ```
+     */
     /// - Parameter addNumbersToParameters: An indication whether query parameters should be numbered.
     /// - Parameter firstParameterIndex: The starting index for numbered parameters.
     /// - Parameter anyOnSubquerySupported: An indication whether ANY on subqueries is supported.
@@ -129,8 +155,21 @@ public class QueryBuilder {
         self.dateFormatter = dateFormatter
     }
     
-    /// Update substitutions array.
-    ///
+    // MARK: Update substitutions
+    /**
+     Update substitutions array of a `QueryBuilder` instance.
+     ### Usage Example: ###
+     In this example, a `QueryBuilder` for PostgreSQL is initialized. The default substitutions are updated for a PostgreSQL database.
+     ```swift
+     let queryBuilder = QueryBuilder(withDeleteRequiresUsing: true, withUpdateRequiresFrom: true, createAutoIncrement: createAutoIncrement)
+     queryBuilder.updateSubstitutions([QueryBuilder.QuerySubstitutionNames.ucase : "UPPER",
+        QueryBuilder.QuerySubstitutionNames.lcase : "LOWER",
+        QueryBuilder.QuerySubstitutionNames.len : "LENGTH",
+        QueryBuilder.QuerySubstitutionNames.numberedParameter : "$",
+        QueryBuilder.QuerySubstitutionNames.namedParameter : "",
+        QueryBuilder.QuerySubstitutionNames.double : "double precision"
+     ])     ```
+     */
     /// - Parameter newSubstitutions: A Dictionary containing the entries to update.
     public func updateSubstitutions(_ newSubstitutions: [QuerySubstitutionNames:String]) {
         for (index, substitution) in newSubstitutions {

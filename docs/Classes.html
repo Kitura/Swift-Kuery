@@ -687,6 +687,21 @@ different databases have different query syntax, sometimes changes need to be
 made when generating the actual SQL statement to run. Additional needed changes
 should be done by updating QueryBuilder substitutions array. Every query component
 then builds its string representation using that array.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, a <code>QueryBuilder</code> for PostgreSQL is initialized.
+Parameters are set for postgreSQL and Strings keywords for SQL queries are substituted into the queryBuilder.
+The queryBuilder is then used to create a String description of an instance of the <code><a href="Classes/Table.html">Table</a></code> class called <q>todotable</q>.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">queryBuilder</span> <span class="o">=</span> <span class="kt">QueryBuilder</span><span class="p">(</span><span class="nv">withDeleteRequiresUsing</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">withUpdateRequiresFrom</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">createAutoIncrement</span><span class="p">:</span> <span class="n">createAutoIncrement</span><span class="p">)</span>
+<span class="n">queryBuilder</span><span class="o">.</span><span class="nf">updateSubstitutions</span><span class="p">([</span><span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">ucase</span> <span class="p">:</span> <span class="s">"UPPER"</span><span class="p">,</span>
+   <span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">lcase</span> <span class="p">:</span> <span class="s">"LOWER"</span><span class="p">,</span>
+   <span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">len</span> <span class="p">:</span> <span class="s">"LENGTH"</span><span class="p">,</span>
+   <span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">numberedParameter</span> <span class="p">:</span> <span class="s">"$"</span><span class="p">,</span>
+   <span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">namedParameter</span> <span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+   <span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">double</span> <span class="p">:</span> <span class="s">"double precision"</span>
+<span class="p">])</span>
+<span class="k">let</span> <span class="nv">description</span> <span class="o">=</span> <span class="k">try</span> <span class="n">todotable</span><span class="o">.</span><span class="nf">build</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="n">queryBuilder</span><span class="p">)</span>
+</code></pre>
 
                         <a href="Classes/QueryBuilder.html" class="slightly-smaller">See more</a>
                       </div>
