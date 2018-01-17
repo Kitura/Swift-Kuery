@@ -608,16 +608,17 @@ A single <code><a href="Protocols/Connection.html">Connection</a></code> is then
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>This class uses a <code><a href="Protocols/Connection.html">Connection</a></code> instance and a <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code> instance to implements a wrapper for the <code><a href="Protocols/Connection.html">Connection</a></code> class.
- It implements the functions of the <code><a href="Protocols/Connection.html">Connection</a></code> protocol, in addition to the <code>closeConnection()</code> function
- for releasing a <code><a href="Protocols/Connection.html">Connection</a></code> instance from the <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code>.
- It is usually initialised by the <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code> instance.
- ### Usage Example: ###
- In this example, a <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code> instance is initialized (parameters defined in docs for <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code>).
- A <code>ConnectionPoolConnection</code> instance called <q>connection</q> is then returned by calling <q>getConnection()</q> on <q>connectionPool</q>.
- The closeConnection() function is then called on connection to release it from the pool.</p>
-<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">connectionPool</span> <span class="o">=</span> <span class="kt">ConnectionPool</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="n">options</span><span class="p">,</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="n">connectionGenerator</span><span class="p">,</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="n">connectionReleaser</span><span class="p">)</span>
- <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span>
- <span class="n">connection</span><span class="o">.</span><span class="nf">closeConnection</span><span class="p">()</span>
+It implements the functions of the <code><a href="Protocols/Connection.html">Connection</a></code> protocol, in addition to the <code>closeConnection()</code> function
+for releasing a <code><a href="Protocols/Connection.html">Connection</a></code> instance from the <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code>.
+It is usually initialised by the <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code> instance.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, a <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code> instance is initialized (parameters defined in docs for <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code>).
+A <code>ConnectionPoolConnection</code> instance called <q>connection</q> is then returned by calling <q>getConnection()</q> on <q>connectionPool</q>.
+The closeConnection() function is then called on connection to release it from the pool.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">connectionPool</span> <span class="o">=</span> <span class="kt">ConnectionPool</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="n">options</span><span class="p">,</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="n">connectionGenerator</span><span class="p">,</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="n">connectionReleaser</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span>
+<span class="n">connection</span><span class="o">.</span><span class="nf">closeConnection</span><span class="p">()</span>
 </code></pre>
 
                         <a href="Classes/ConnectionPoolConnection.html" class="slightly-smaller">See more</a>
@@ -658,39 +659,39 @@ A single <code><a href="Protocols/Connection.html">Connection</a></code> is then
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>A class to help with migrations between two versions of a table.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <p>The suggested usage is to keep versions of the table classes somewhere in the application code:</p>
-
-<p>public class MyTable_v0: Table {
-    let a = Column(<q>a</q>, &hellip;)
-    let b = Column(<q>b</q>, &hellip;)
-    let tableName = <q>MyTable</q>
-}</p>
-
-<p>public class MyTable_v1: Table {
-    let b = Column(<q>b</q>, &hellip;)
-    let c = Column(<q>c</q>, &hellip;)
-    let tableName = <q>MyTable</q>
-}</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">MyTable_v0</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"a"</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"b"</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"MyTable"</span>
+<span class="p">}</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">MyTable_v1</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">b</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"b"</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">c</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"c"</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"MyTable"</span>
+<span class="p">}</span>
+</code></pre>
 
 <p>And use a typealias to refer to the current version of the table class in the application:</p>
-
-<p>typealias MyTable = MyTable_v0
-let t = MyTable()
-let q = Select(from t)
-&hellip;</p>
+<pre class="highlight swift"><code><span class="kd">typealias</span> <span class="kt">MyTable</span> <span class="o">=</span> <span class="kt">MyTable_v0</span>
+<span class="k">let</span> <span class="nv">t</span> <span class="o">=</span> <span class="kt">MyTable</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">q</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="n">from</span> <span class="n">t</span><span class="p">)</span>
+<span class="o">...</span>
+</code></pre>
 
 <p>The migration code from v0 to v1 should be something like this:</p>
-
-<p>let t0 = MyTable_v0()
-let t1 = MyTable_v1()
-let migration0 = Migration(from: t0, to: t1, using: connection)
-migration0.alterTableAdd(column: t1.c) { result in &hellip; }</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">t0</span> <span class="o">=</span> <span class="kt">MyTable_v0</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">t1</span> <span class="o">=</span> <span class="kt">MyTable_v1</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">migration0</span> <span class="o">=</span> <span class="kt">Migration</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">t0</span><span class="p">,</span> <span class="nv">to</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span> <span class="nv">using</span><span class="p">:</span> <span class="n">connection</span><span class="p">)</span>
+<span class="n">migration0</span><span class="o">.</span><span class="nf">alterTableAdd</span><span class="p">(</span><span class="nv">column</span><span class="p">:</span> <span class="n">t1</span><span class="o">.</span><span class="n">c</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span> <span class="o">...</span> <span class="p">}</span>
+</code></pre>
 
 <p>And raw alternations, if needed:</p>
-
-<p>let dropColumnQuery = <q>ALTER TABLE</q> + t1.tableName + <q>DROP COLUMN</q> + t0.a.name
-connection.execute(dropColumnQuery) { result in &hellip; }</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">dropColumnQuery</span> <span class="o">=</span> <span class="s">"ALTER TABLE "</span> <span class="o">+</span> <span class="n">t1</span><span class="o">.</span><span class="n">tableName</span> <span class="o">+</span> <span class="s">" DROP COLUMN "</span> <span class="o">+</span> <span class="n">t0</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">name</span>
+<span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">dropColumnQuery</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span> <span class="o">...</span> <span class="p">}</span>
+</code></pre>
 
                         <a href="Classes/Migration.html" class="slightly-smaller">See more</a>
                       </div>

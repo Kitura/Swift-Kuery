@@ -17,7 +17,7 @@
 // MARK: ConnectionPoolConnection
 
 /**
-This class uses a `Connection` instance and a `ConnectionPool` instance to implements a wrapper for the `Connection` class.
+ This class uses a `Connection` instance and a `ConnectionPool` instance to implements a wrapper for the `Connection` class.
  It implements the functions of the `Connection` protocol, in addition to the `closeConnection()` function
  for releasing a `Connection` instance from the `ConnectionPool`.
  It is usually initialised by the `ConnectionPool` instance.
