@@ -112,8 +112,8 @@ open class Table: Buildable {
      A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
      This function is required to obey the `Buildable` protocol.
      ### Usage Example: ###
-     In this example, we initialize `QueryBuilder` and `Table` instances. (The ToDoTable() is defined in the class example).
-     We then use the build function to produce a String description and print the results.
+     In this example, `QueryBuilder` and `Table` instances are initialized. (The ToDoTable() is defined in the class example).
+     The build function is then called to produce a String description and print the results.
      ```swift
      let queryBuilder = QueryBuilder()
      let todotable = ToDoTable()

@@ -122,8 +122,8 @@ public class Column: Field, IndexColumn {
      A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
      This function is required to obey the `Buildable` protocol.
      ### Usage Example: ###
-     In this example, we initialize `QueryBuilder` and `Column` instances.
-     We then use the build function to produce a String description and print the results.
+     In this example, `QueryBuilder` and `Column` instances are initialized.
+     The build function is then called to produce a String description and the results are printed.
      ```swift
      let queryBuilder = QueryBuilder()
      let toDo_title = Column("toDo_title", String.self, notNull: true)
@@ -151,8 +151,8 @@ public class Column: Field, IndexColumn {
      Function to build a String representation of the index of a `Column` instance.
      A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
      ### Usage Example: ###
-     In this example, we initialize `QueryBuilder` and `Column` instances.
-     We then use the build function to produce a String description and print the results.
+     In this example, `QueryBuilder` and `Column` instances are initialized.
+     The build Index function is used to produce a String description and print the results.
      ```swift
      let queryBuilder = QueryBuilder()
      let toDo_title = Column("toDo_title", String.self, notNull: true)
@@ -171,8 +171,8 @@ public class Column: Field, IndexColumn {
      Function to create a String representation of a `Column` instance for use in an SQL CREATE TABLE query.
      A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
      ### Usage Example: ###
-     In this example, we initialize `QueryBuilder` and `Column` instances.
-     We then use the create function to produce a String description of the column and print the results.
+     In this example, `QueryBuilder` and `Column` instances are initialized.
+     The create function is then used to produce a String description of the `Column` and print the results.
      ```swift
      let queryBuilder = QueryBuilder()
      let toDo_title = Column("toDo_title", String.self, notNull: true)
