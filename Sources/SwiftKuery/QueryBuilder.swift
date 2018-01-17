@@ -45,28 +45,48 @@ public class QueryBuilder {
     /// An array of substitutions to be made in query String representation.
     public var substitutions: [String]
     
-    /// The index for the substitutions array.
+    /**
+     Enum defining the cases and their index for the substitutions array used by `QueryBuilder` to account for variances between the various database engines.
+     ### Usage Example: ###
+     In this example, a `QueryBuilder` for PostgreSQL is initialized.
+     Parameters are set for postgreSQL and Strings keywords for SQL queries are substituted into the queryBuilder. The `QuerySubstitutionNames` enum is used to refer to substitutions by name instead of their position in the "substitutions" array.
+     ```swift
+     let queryBuilder = QueryBuilder(withDeleteRequiresUsing: true, withUpdateRequiresFrom: true, createAutoIncrement: createAutoIncrement)
+     queryBuilder.updateSubstitutions([QueryBuilder.QuerySubstitutionNames.ucase : "UPPER",
+        QueryBuilder.QuerySubstitutionNames.lcase : "LOWER",
+        QueryBuilder.QuerySubstitutionNames.len : "LENGTH",
+        QueryBuilder.QuerySubstitutionNames.numberedParameter : "$",
+        QueryBuilder.QuerySubstitutionNames.namedParameter : "",
+        QueryBuilder.QuerySubstitutionNames.double : "double precision"
+     ])
+     ```
+     */
     public enum QuerySubstitutionNames : Int {
-        /// The SQL UCASE scalar function.
+        // MARK: SQL Functions
+        /// The SQL UCASE scalar function to convert a string to upper-case.
         case ucase
-        /// The SQL LCASE scalar function.
+        /// The SQL LCASE scalar function to convert a string to lower-case.
         case lcase
-        /// The SQL LEN scalar function.
+        /// The SQL LEN scalar function to returns the length of a string.
         case len
-        /// The SQL NOW scalar function.
+        /// The SQL NOW scalar function to return the current date and time.
         case now
+        // MARK: SQL Parameters
         /// The marker for the query numbered parameters.
         case numberedParameter
         /// The marker for the query named parameters.
         case namedParameter
+        // MARK: Boolean Representation
         /// The boolean true.
         case booleanTrue
         /// The boolean false.
         case booleanFalse
+        // MARK: SQL All
         /// The ALL function for subqueries.
         case all
         /// The character used to quote identifiers (table name, column name, etc.) with spaces or special characters.
         case identifierQuoteCharacter
+        // MARK: Data Types
         /// The database type that corresponds to Int32.
         case int32
         /// The database type that corresponds to Float.
@@ -110,7 +130,7 @@ public class QueryBuilder {
 
     // MARK: Initializer
     /**
-      Initialize an instance of QueryBuilder.
+     Initialize an instance of QueryBuilder.
      ### Usage Example: ###
      In this example, a `QueryBuilder` for PostgreSQL is initialized. Parameters not defined are set to default values.
      ```swift

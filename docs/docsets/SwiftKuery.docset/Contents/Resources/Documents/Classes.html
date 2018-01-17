@@ -433,7 +433,27 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Subclasses of the <code>AuxiliaryTable</code> class are describing a table that is used in WITH clauses.</p>
+                        <p>Subclasses of the <code>AuxiliaryTable</code> class are describing a <code><a href="Classes/Table.html">Table</a></code> that is used in WITH clauses.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, a <code>ToDoTable</code>, a <code>PersonTable</code> and a connection instances are initialized. (Under the assumtion these classes have been defined elsewhere)
+An <code>AuxiliaryTable</code> class is defined containing two columns. An instance of this <code>AuxiliaryTable</code> is then initialised from <code><a href="Classes/Column.html">Column</a></code> instances in <q>todotable</q>.
+This <code>AuxiliaryTable</code> is then used to create an SQL WITH query.
+A description of the created query is then printed.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">persontable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="nf">createConnection</span><span class="p">()</span>
+<span class="kd">class</span> <span class="kt">AuxTable</span><span class="p">:</span> <span class="kt">AuxiliaryTable</span> <span class="p">{</span>
+   <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"aux_table"</span>
+   <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"name"</span><span class="p">)</span>
+   <span class="k">let</span> <span class="nv">finished</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"finished"</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">let</span> <span class="nv">withTable</span> <span class="o">=</span> <span class="kt">AuxTable</span><span class="p">(</span><span class="nv">as</span><span class="p">:</span> <span class="kt">Select</span><span class="p">(</span><span class="n">todotable</span><span class="o">.</span><span class="n">toDo_completed</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"finished"</span><span class="p">),</span> <span class="n">todotable</span><span class="o">.</span><span class="n">toDo_title</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"name"</span><span class="p">),</span> <span class="nv">from</span><span class="p">:</span> <span class="n">todotable</span><span class="p">))</span>
+<span class="k">let</span> <span class="nv">withQuery</span> <span class="o">=</span> <span class="nf">with</span><span class="p">(</span><span class="n">withTable</span><span class="p">,</span> <span class="kt">Select</span><span class="p">(</span><span class="n">withTable</span><span class="o">.</span><span class="n">finished</span><span class="p">,</span> <span class="n">persontable</span><span class="o">.</span><span class="n">monthlyPay</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">persontable</span><span class="p">)</span><span class="o">.</span><span class="nf">join</span><span class="p">(</span><span class="n">withTable</span><span class="p">)</span><span class="o">.</span><span class="nf">on</span><span class="p">(</span><span class="n">persontable</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">withTable</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+<span class="k">let</span> <span class="nv">stringQuery</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="nf">descriptionOf</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">withQuery</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">stringQuery</span><span class="p">)</span>
+<span class="c1">// Prints WITH aux_table AS (SELECT todotable.toDo_completed AS finished, todotable.toDo_title AS name FROM todotable) SELECT aux_table.name, persontable.monthlyPay FROM persontable JOIN aux_table ON persontable.name = aux_table.name"</span>
+</code></pre>
 
                         <a href="Classes/AuxiliaryTable.html" class="slightly-smaller">See more</a>
                       </div>
@@ -798,8 +818,6 @@ This instance is then referenced for a SQL select query to retrieve all data fro
    <span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
    <span class="k">let</span> <span class="nv">selectQuery</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span> <span class="p">:</span><span class="n">todotable</span><span class="p">)</span>
 <span class="p">}</span>
-
-
 </code></pre>
 
                         <a href="Classes/Table.html" class="slightly-smaller">See more</a>

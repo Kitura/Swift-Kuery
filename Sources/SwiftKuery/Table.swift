@@ -36,8 +36,6 @@
     let todotable = ToDoTable()
     let selectQuery = Select(from :todotable)
  }
- 
- 
  ```
  */
 open class Table: Buildable {
