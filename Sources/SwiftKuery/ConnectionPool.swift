@@ -35,11 +35,9 @@ import Dispatch
     let connection = PostgreSQLConnection(connectionParameters: connectionParameters)
     return connection
  }
- 
  let connectionReleaser: (_ connection: Connection) -> () = { connection in
  connection.closeConnection()
  }
- 
  let connectionPool = ConnectionPool(options: options, connectionGenerator: connectionGenerator, connectionReleaser: connectionReleaser)
  }
  let singleConnection = connectionPool.getConnection()
@@ -73,7 +71,7 @@ public class ConnectionPool {
     private let timeoutNs: Int64
     private let timeout: Int
     
-    ///
+    // MARK: Initializer
     /**
      Creates an instance of `ConnectionPool` containing `ConnectionPoolOptions.initialCapacity` connections.
      The `connectionGenerator` will be invoked `ConnectionPoolOptions.initialCapacity` times to fill
@@ -122,6 +120,7 @@ public class ConnectionPool {
         disconnect()
     }
     
+    // MARK: Retrieve Connection
     /**
      Get a connection from the pool.
      This function will block until a connection can be obtained from the pool or for `ConnectionPoolOptions.timeout`.
@@ -143,7 +142,7 @@ public class ConnectionPool {
         give(connection)
     }
     
-    ///
+    // MARK: Disconnect Pool
     /**
      Release all the connections in the pool by calling `connectionReleaser` closure on each connection, and empty the pool.
      ### Usage Example: ###

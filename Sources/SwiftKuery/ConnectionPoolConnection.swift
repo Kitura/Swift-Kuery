@@ -16,12 +16,27 @@
 
 // MARK: ConnectionPoolConnection
 
-/// A wrapper around actual `Connection`. Allows seemless release of the connection.
+/**
+This class uses a `Connection` instance and a `ConnectionPool` instance to implements a wrapper for the `Connection` class.
+ It implements the functions of the `Connection` protocol, in addition to the `closeConnection()` function
+ for releasing a `Connection` instance from the `ConnectionPool`.
+ It is usually initialised by the `ConnectionPool` instance.
+ ### Usage Example: ###
+ In this example, a `ConnectionPool` instance is initialized (parameters defined in docs for `ConnectionPool`).
+ A `ConnectionPoolConnection` instance called "connection" is then returned by calling "getConnection()" on "connectionPool".
+ The closeConnection() function is then called on connection to release it from the pool.
+ ```swift
+ let connectionPool = ConnectionPool(options: options, connectionGenerator: connectionGenerator, connectionReleaser: connectionReleaser)
+ let connection = connectionPool.getConnection()
+ connection.closeConnection()
+ ```
+ */
 public class ConnectionPoolConnection: Connection {
     
     private var connection: Connection?
     private weak var pool: ConnectionPool?
  
+    // MARK: QueryBuilder
     /// The `QueryBuilder` with connection specific substitutions.
     public var queryBuilder: QueryBuilder {
         return connection?.queryBuilder ?? QueryBuilder()
@@ -38,6 +53,7 @@ public class ConnectionPoolConnection: Connection {
         }
     }
     
+    // MARK: Connections
     /// Establish a connection with the database.
     ///
     /// - Parameter onCompletion: The function to be called when the connection is established.
@@ -56,7 +72,14 @@ public class ConnectionPoolConnection: Connection {
         }
     }
     
-    /// Close the connection to the database.
+    /**
+     Close the connection to the database.
+     ### Usage Example: ###
+     In this example, The closeConnection() function is called on a `ConnectionPoolConnection` instance called "connection" to release it from it's `ConnectionPool` instance.
+     ```swift
+     connection.closeConnection()
+     ```
+     */
     public func closeConnection() {
         if let connection = connection {
             pool?.release(connection: connection)
@@ -64,11 +87,22 @@ public class ConnectionPoolConnection: Connection {
         }
     }
     
-    /// An indication whether there is a connection to the database.
+    /**
+     An indication whether there is a connection to the database.
+     ### Usage Example: ###
+     In this example, The isConnected() function is called on a `ConnectionPoolConnection` instance called "connection" and returns a true value, which is then printed.
+     ```swift
+     let connected = connection.isConnected()
+     print(connected)
+     // Prints true
+     ```
+     */
+    /// - Returns: A boolean value, for whether the connection is connected.
     public var isConnected: Bool {
         return connection?.isConnected ?? false
     }
     
+    // MARK: Execute Querys
     /// Execute a query.
     ///
     /// - Parameter query: The query to execute.
@@ -145,6 +179,8 @@ public class ConnectionPoolConnection: Connection {
         connection.execute(raw, parameters: parameters, onCompletion: onCompletion)
     }
     
+    // MARK: Prepared statements
+
     /// Prepare statement.
     ///
     /// - Parameter query: The query to prepare statement for.
@@ -233,6 +269,8 @@ public class ConnectionPoolConnection: Connection {
         }
     }
     
+    // MARK: Transactions
+
     /// Start a transaction.
     ///
     /// - Parameter onCompletion: The function to be called when the execution of start transaction command has completed.

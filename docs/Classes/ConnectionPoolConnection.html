@@ -411,7 +411,18 @@
 
                 </div>
               </div>
-            <p>A wrapper around actual <code><a href="../Protocols/Connection.html">Connection</a></code>. Allows seemless release of the connection.</p>
+            <p>This class uses a <code><a href="../Protocols/Connection.html">Connection</a></code> instance and a <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code> instance to implements a wrapper for the <code><a href="../Protocols/Connection.html">Connection</a></code> class.
+ It implements the functions of the <code><a href="../Protocols/Connection.html">Connection</a></code> protocol, in addition to the <code>closeConnection()</code> function
+ for releasing a <code><a href="../Protocols/Connection.html">Connection</a></code> instance from the <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code>.
+ It is usually initialised by the <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code> instance.
+ ### Usage Example: ###
+ In this example, a <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code> instance is initialized (parameters defined in docs for <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code>).
+ A <code>ConnectionPoolConnection</code> instance called <q>connection</q> is then returned by calling <q>getConnection()</q> on <q>connectionPool</q>.
+ The closeConnection() function is then called on connection to release it from the pool.</p>
+<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">connectionPool</span> <span class="o">=</span> <span class="kt">ConnectionPool</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="n">options</span><span class="p">,</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="n">connectionGenerator</span><span class="p">,</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="n">connectionReleaser</span><span class="p">)</span>
+ <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span>
+ <span class="n">connection</span><span class="o">.</span><span class="nf">closeConnection</span><span class="p">()</span>
+</code></pre>
 
           </div>
         </section>
@@ -419,6 +430,13 @@
         <section class="section">
           <div class="section-content">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/QueryBuilder"></a>
+                <a name="//apple_ref/swift/Section/QueryBuilder" class="dashAnchor"></a>
+                <a href="#/QueryBuilder">
+                  <h3 class="section-name">QueryBuilder</h3>
+                </a>
+              </div>
               <ul class="item-container">
                 <li class="item">
                   <div>
@@ -447,6 +465,17 @@
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Connections"></a>
+                <a name="//apple_ref/swift/Section/Connections" class="dashAnchor"></a>
+                <a href="#/Connections">
+                  <h3 class="section-name">Connections</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -507,6 +536,11 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Close the connection to the database.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, The closeConnection() function is called on a <code>ConnectionPoolConnection</code> instance called <q>connection</q> to release it from it&rsquo;s <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code> instance.</p>
+<pre class="highlight swift"><code><span class="n">connection</span><span class="o">.</span><span class="nf">closeConnection</span><span class="p">()</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -534,6 +568,13 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>An indication whether there is a connection to the database.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example, The isConnected() function is called on a <code>ConnectionPoolConnection</code> instance called <q>connection</q> and returns a true value, which is then printed.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">connected</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="nf">isConnected</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">connected</span><span class="p">)</span>
+<span class="c1">// Prints true</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -547,6 +588,17 @@
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Execute%20Querys"></a>
+                <a name="//apple_ref/swift/Section/Execute Querys" class="dashAnchor"></a>
+                <a href="#/Execute%20Querys">
+                  <h3 class="section-name">Execute Querys</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -943,6 +995,17 @@
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Prepared%20statements"></a>
+                <a name="//apple_ref/swift/Section/Prepared statements" class="dashAnchor"></a>
+                <a href="#/Prepared%20statements">
+                  <h3 class="section-name">Prepared statements</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -1388,6 +1451,17 @@
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Transactions"></a>
+                <a name="//apple_ref/swift/Section/Transactions" class="dashAnchor"></a>
+                <a href="#/Transactions">
+                  <h3 class="section-name">Transactions</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>

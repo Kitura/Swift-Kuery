@@ -44,6 +44,7 @@ open class AuxiliaryTable: Table {
     /// A query used to build table in WITH clause
     private var query: Query?
     
+    // MARK: Initializer
     /**
      Initialize an instance of `AuxiliaryTable`.
      ### Usage Example: ###
@@ -65,6 +66,7 @@ open class AuxiliaryTable: Table {
         self.query = query
     }
     
+    // MARK: Build Query
     /**
      Build a String representation of the WITH clause used to create the `AuxiliaryTable` instance, using `QueryBuilder` to account for the various databases.
      ### Usage Example: ###

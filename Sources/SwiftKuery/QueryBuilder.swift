@@ -62,7 +62,6 @@ public class QueryBuilder {
      ```
      */
     public enum QuerySubstitutionNames : Int {
-        // MARK: SQL Functions
         /// The SQL UCASE scalar function to convert a string to upper-case.
         case ucase
         /// The SQL LCASE scalar function to convert a string to lower-case.
@@ -71,22 +70,18 @@ public class QueryBuilder {
         case len
         /// The SQL NOW scalar function to return the current date and time.
         case now
-        // MARK: SQL Parameters
         /// The marker for the query numbered parameters.
         case numberedParameter
         /// The marker for the query named parameters.
         case namedParameter
-        // MARK: Boolean Representation
         /// The boolean true.
         case booleanTrue
         /// The boolean false.
         case booleanFalse
-        // MARK: SQL All
         /// The ALL function for subqueries.
         case all
         /// The character used to quote identifiers (table name, column name, etc.) with spaces or special characters.
         case identifierQuoteCharacter
-        // MARK: Data Types
         /// The database type that corresponds to Int32.
         case int32
         /// The database type that corresponds to Float.

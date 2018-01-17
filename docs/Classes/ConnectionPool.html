@@ -422,11 +422,9 @@ A single <code><a href="../Protocols/Connection.html">Connection</a></code> is t
    <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="kt">PostgreSQLConnection</span><span class="p">(</span><span class="nv">connectionParameters</span><span class="p">:</span> <span class="n">connectionParameters</span><span class="p">)</span>
    <span class="k">return</span> <span class="n">connection</span>
 <span class="p">}</span>
-
 <span class="k">let</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="p">(</span><span class="n">_</span> <span class="nv">connection</span><span class="p">:</span> <span class="kt">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span> <span class="o">=</span> <span class="p">{</span> <span class="n">connection</span> <span class="k">in</span>
 <span class="n">connection</span><span class="o">.</span><span class="nf">closeConnection</span><span class="p">()</span>
 <span class="p">}</span>
-
 <span class="k">let</span> <span class="nv">connectionPool</span> <span class="o">=</span> <span class="kt">ConnectionPool</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="n">options</span><span class="p">,</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="n">connectionGenerator</span><span class="p">,</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="n">connectionReleaser</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="k">let</span> <span class="nv">singleConnection</span> <span class="o">=</span> <span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span>
@@ -438,6 +436,13 @@ A single <code><a href="../Protocols/Connection.html">Connection</a></code> is t
         <section class="section">
           <div class="section-content">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initializer"></a>
+                <a name="//apple_ref/swift/Section/Initializer" class="dashAnchor"></a>
+                <a href="#/Initializer">
+                  <h3 class="section-name">Initializer</h3>
+                </a>
+              </div>
               <ul class="item-container">
                 <li class="item">
                   <div>
@@ -485,6 +490,17 @@ A connection pool is then initialized with given options, the <code>connectionGe
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Retrieve%20Connection"></a>
+                <a name="//apple_ref/swift/Section/Retrieve Connection" class="dashAnchor"></a>
+                <a href="#/Retrieve%20Connection">
+                  <h3 class="section-name">Retrieve Connection</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -518,6 +534,17 @@ This function will block until a connection can be obtained from the pool or for
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Disconnect%20Pool"></a>
+                <a name="//apple_ref/swift/Section/Disconnect Pool" class="dashAnchor"></a>
+                <a href="#/Disconnect%20Pool">
+                  <h3 class="section-name">Disconnect Pool</h3>
+                </a>
+              </div>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>

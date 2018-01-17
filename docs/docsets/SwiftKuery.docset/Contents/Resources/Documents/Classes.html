@@ -562,11 +562,9 @@ A single <code><a href="Protocols/Connection.html">Connection</a></code> is then
    <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="kt">PostgreSQLConnection</span><span class="p">(</span><span class="nv">connectionParameters</span><span class="p">:</span> <span class="n">connectionParameters</span><span class="p">)</span>
    <span class="k">return</span> <span class="n">connection</span>
 <span class="p">}</span>
-
 <span class="k">let</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="p">(</span><span class="n">_</span> <span class="nv">connection</span><span class="p">:</span> <span class="kt">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span> <span class="o">=</span> <span class="p">{</span> <span class="n">connection</span> <span class="k">in</span>
 <span class="n">connection</span><span class="o">.</span><span class="nf">closeConnection</span><span class="p">()</span>
 <span class="p">}</span>
-
 <span class="k">let</span> <span class="nv">connectionPool</span> <span class="o">=</span> <span class="kt">ConnectionPool</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="n">options</span><span class="p">,</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="n">connectionGenerator</span><span class="p">,</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="n">connectionReleaser</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="k">let</span> <span class="nv">singleConnection</span> <span class="o">=</span> <span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span>
@@ -609,7 +607,18 @@ A single <code><a href="Protocols/Connection.html">Connection</a></code> is then
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A wrapper around actual <code><a href="Protocols/Connection.html">Connection</a></code>. Allows seemless release of the connection.</p>
+                        <p>This class uses a <code><a href="Protocols/Connection.html">Connection</a></code> instance and a <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code> instance to implements a wrapper for the <code><a href="Protocols/Connection.html">Connection</a></code> class.
+ It implements the functions of the <code><a href="Protocols/Connection.html">Connection</a></code> protocol, in addition to the <code>closeConnection()</code> function
+ for releasing a <code><a href="Protocols/Connection.html">Connection</a></code> instance from the <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code>.
+ It is usually initialised by the <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code> instance.
+ ### Usage Example: ###
+ In this example, a <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code> instance is initialized (parameters defined in docs for <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code>).
+ A <code>ConnectionPoolConnection</code> instance called <q>connection</q> is then returned by calling <q>getConnection()</q> on <q>connectionPool</q>.
+ The closeConnection() function is then called on connection to release it from the pool.</p>
+<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">connectionPool</span> <span class="o">=</span> <span class="kt">ConnectionPool</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="n">options</span><span class="p">,</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="n">connectionGenerator</span><span class="p">,</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="n">connectionReleaser</span><span class="p">)</span>
+ <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span>
+ <span class="n">connection</span><span class="o">.</span><span class="nf">closeConnection</span><span class="p">()</span>
+</code></pre>
 
                         <a href="Classes/ConnectionPoolConnection.html" class="slightly-smaller">See more</a>
                       </div>
