@@ -37,7 +37,7 @@ public struct Insert: Query {
     public private (set) var with: [AuxiliaryTable]?
     
     /// A flag for return ID
-    public private (set) var returnID: Bool
+    public let returnID: Bool
 
     private var syntaxError = ""
     
