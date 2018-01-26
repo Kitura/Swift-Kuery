@@ -123,6 +123,10 @@ class TestConnection: Connection {
     func execute(preparedStatement: PreparedStatement, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {}
     
     func release(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}
+    
+    public func lastInsertID(onCompletion: @escaping ((QueryResult) -> ())) {
+        onCompletion(.success(Int32(1)))
+    }
 }
 
 class TestResultFetcher: ResultFetcher {

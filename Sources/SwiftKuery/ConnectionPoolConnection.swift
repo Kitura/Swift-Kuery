@@ -301,4 +301,15 @@ public class ConnectionPoolConnection: Connection {
         }
         connection.release(savepoint: savepoint, onCompletion: onCompletion)
     }
+    
+    /// Get the ID of the last insert
+    public func lastInsertID(onCompletion: @escaping ((QueryResult) -> ())) {
+        guard let connection = connection else {
+            onCompletion(.error(QueryError.connection("No connection to the database")))
+            return
+        }
+        connection.lastInsertID(onCompletion: { (result) in
+            onCompletion(result)
+        })
+    }
 }

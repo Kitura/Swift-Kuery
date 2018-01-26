@@ -77,6 +77,18 @@ class TestInsert: XCTestCase {
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO tableInsert (a) SELECT tableInsert2.a FROM tableInsert2 RETURNING a"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+        
+        connection.lastInsertID(onCompletion: { (result) in
+            XCTAssertNil(result.asError)
+            XCTAssertNil(result.asRows)
+            XCTAssertNil(result.asResultSet)
+            
+            if let id = result.asValue as? Int32 {
+                XCTAssertEqual(id, 1)
+            } else {
+                XCTFail()
+            }
+        })
     }
     
     func testInsertWith() {
