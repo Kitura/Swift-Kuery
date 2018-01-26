@@ -52,6 +52,7 @@ open class Table: Buildable {
                 _name = child.value as! String
             }
         }
+        /// TODO create function that implements this logic
         if columns.count == 0 {
             syntaxError += "No columns in the table. "
         }

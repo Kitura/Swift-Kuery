@@ -36,6 +36,9 @@ public struct Insert: Query {
     /// An array of `AuxiliaryTable` which will be used in a query with a WITH clause.
     public private (set) var with: [AuxiliaryTable]?
     
+    /// A flag for return ID
+    public let returnID: Bool
+
     private var syntaxError = ""
     
     /// Initialize an instance of Insert.
@@ -43,7 +46,7 @@ public struct Insert: Query {
     /// - Parameter into: The table to insert rows.
     /// - Parameter columns: An optional array of columns to insert. If nil, values of all the columns have to be provided.
     /// - Parameter values: An array containg the row to insert.
-    public init(into table: Table, columns: [Column]?, values: [Any]) {
+    public init(into table: Table, columns: [Column]?, values: [Any], returnID: Bool=false) {
         self.columns = columns
         var valuesToInsert = [[Any]]()
         valuesToInsert.append(values)
@@ -52,6 +55,7 @@ public struct Insert: Query {
         if let tableColumns = self.columns, tableColumns.count != values.count {
             syntaxError = "Values count doesn't match column count. "
         }
+        self.returnID = returnID
     }
     
     /// Initialize an instance of Insert.
@@ -59,7 +63,7 @@ public struct Insert: Query {
     /// - Parameter into: The table to insert rows.
     /// - Parameter columns: An optional array of columns to insert. If not specified, values of all the columns have to be provided.
     /// - Parameter values: An array of rows (values to insert in each row).
-    public init(into table: Table, columns: [Column]?=nil, rows: [[Any]]) {
+    public init(into table: Table, columns: [Column]?=nil, rows: [[Any]], returnID: Bool=false) {
         self.columns = columns
         self.values = rows
         self.table = table
@@ -70,44 +74,45 @@ public struct Insert: Query {
                 }
             }
         }
+        self.returnID = returnID
     }
     
     /// Initialize an instance of Insert.
     ///
     /// - Parameter into: The table to insert rows.
     /// - Parameter values: A list of values (the row) to insert.
-    public init(into table: Table, values: Any...) {
-        self.init(into: table, columns: nil, values: values)
+    public init(into table: Table, values: Any..., returnID: Bool=false) {
+        self.init(into: table, columns: nil, values: values, returnID: returnID)
     }
     
     /// Initialize an instance of Insert.
     ///
     /// - Parameter into: The table to insert rows.
     /// - Parameter values: An array of values (the row) to insert.
-    public init(into table: Table, values: [Any]) {
-        self.init(into: table, columns: nil, values: values)
+    public init(into table: Table, values: [Any], returnID: Bool=false) {
+        self.init(into: table, columns: nil, values: values, returnID: returnID)
     }
 
     /// Initialize an instance of Insert.
     ///
     /// - Parameter into: The table to insert rows.
     /// - Parameter valueTuples: An array of (column, value) pairs to insert.
-    public init(into table: Table, valueTuples: [(Column, Any)]) {
+    public init(into table: Table, valueTuples: [(Column, Any)], returnID: Bool=false) {
         var columnsArray = Array<Column>()
         var valuesArray = Array<Any>()
         for (column, value) in valueTuples {
             columnsArray.append(column)
             valuesArray.append(value)
         }
-        self.init(into: table, columns: columnsArray, values: valuesArray)
+        self.init(into: table, columns: columnsArray, values: valuesArray, returnID: returnID)
     }
     
     /// Initialize an instance of Insert.
     ///
     /// - Parameter into: The table to insert rows.
     /// - Parameter valueTuples: A list of (column, value) pairs to insert.
-    public init(into table: Table, valueTuples: (Column, Any)...) {
-        self.init(into: table, valueTuples: valueTuples)
+    public init(into table: Table, valueTuples: (Column, Any)..., returnID: Bool=false) {
+        self.init(into: table, valueTuples: valueTuples, returnID: returnID)
     }
 
     /// Initialize an instance of Insert.
@@ -115,7 +120,7 @@ public struct Insert: Query {
     /// - Parameter into: The table to insert rows.
     /// - Parameter columns: An optional array of columns to insert. If nil, values of all the columns have to be provided.
     /// - Parameter query: The select query that retrieves the rows to insert.
-    public init(into table: Table, columns: [Column]?=nil, _ query: Select) {
+    public init(into table: Table, columns: [Column]?=nil, _ query: Select, returnID: Bool=false) {
         self.columns = columns
         self.table = table
         self.query = query
@@ -123,6 +128,7 @@ public struct Insert: Query {
             tableColumns.count != selectColumns.count {
             syntaxError = "Number of columns in Select doesn't match column count. "
         }
+        self.returnID = returnID
     }
     
     /// Build the query using `QueryBuilder`.
