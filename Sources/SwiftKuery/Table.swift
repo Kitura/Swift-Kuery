@@ -63,7 +63,17 @@ open class Table: Buildable {
             syntaxError += "Table name not set. "
         }
     }
-    
+
+    /// Initialize an instance of Table with an array of columns
+
+    public required init(tableName: String, columns: [Column]) {
+      self._name = tableName
+      self.columns = columns
+      for column in columns {
+        column._table = self
+      }
+    }
+
     /// Build the table using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.
