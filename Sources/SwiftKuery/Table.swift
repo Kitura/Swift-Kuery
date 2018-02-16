@@ -55,8 +55,8 @@ open class Table: Buildable {
         verifyTableProperties()
     }
 
-    /// Initialize an instance of Table with an array of columns
-
+    /// Initialize an instance of Table with a table name
+    /// and an array of Columns
     public required init(tableName: String, columns: [Column]) {
         self._name = tableName
         self.columns = columns
@@ -70,7 +70,6 @@ open class Table: Buildable {
     }
 
     /// Verifies that the properties have been correctly set
-
     private func verifyTableProperties() {
         if columns.count == 0 {
             syntaxError += "No columns in the table. "
