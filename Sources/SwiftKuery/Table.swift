@@ -52,7 +52,25 @@ open class Table: Buildable {
                 _name = child.value as! String
             }
         }
-        /// TODO create function that implements this logic
+        verifyTableProperties()
+    }
+
+    /// Initialize an instance of Table with a table name
+    /// and an array of Columns
+    public required init(tableName: String, columns: [Column]) {
+        self._name = tableName
+        self.columns = columns
+        for column in columns {
+            column._table = self
+            if column.isPrimaryKey {
+                columnsWithPrimaryKeyProperty += 1
+            }
+        }
+        verifyTableProperties()
+    }
+
+    /// Verifies that the properties have been correctly set
+    private func verifyTableProperties() {
         if columns.count == 0 {
             syntaxError += "No columns in the table. "
         }
@@ -62,16 +80,6 @@ open class Table: Buildable {
         if _name == "" {
             syntaxError += "Table name not set. "
         }
-    }
-
-    /// Initialize an instance of Table with an array of columns
-
-    public required init(tableName: String, columns: [Column]) {
-      self._name = tableName
-      self.columns = columns
-      for column in columns {
-        column._table = self
-      }
     }
 
     /// Build the table using `QueryBuilder`.
