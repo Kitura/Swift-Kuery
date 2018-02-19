@@ -31,7 +31,7 @@ While Swift-Kuery is not an Object-Relational Mapping (ORM), it provides a great
 Swift-Kuery is easy to learn, consumable framework that comes with a set of [implemented plugins](#list-of-plugins).
 
 ## Table of Contents
-* [Examples](#example)
+* [Examples](#examples)
 * [SQL Injection Prevention using Parameterization](#sql-injection-prevention-using-parameterization)
 * [Prepared Statements](#prepared-statements)
 * [Schema Management](#schema-management)
@@ -176,7 +176,7 @@ connection.execute(query: query, parameters: supplied_key1, supplied_key2) { que
 
 If your application executes some query multiple times with different parameters, you may want to improve the performance of the application by using a prepared statement for that query. I.e. send the query to the database in advance, and later use the returned handle to execute the query providing the parameters. This way the database server will process the query only once.
 
-For example, suppose our application needs to retrieve the average grade for courses with an average above various values. We change our query to use a parameter instead of a preset value of 90: 
+For example, suppose our application needs to retrieve the average grade for courses with an average above various values. We change our query to use a parameter instead of a preset value of 90:
 
 ```swift
 let query = Select(grades.course, round(avg(grades.grade), to: 1).as("average"), from: grades)
@@ -208,7 +208,7 @@ connection.execute(preparedStatement: preparedStatement, parameters: [70]) { res
 
 Use the `release` function to free the prepared statement:
 ```swift
-connection.release(preparedStatement: preparedStatement) { result in 
+connection.release(preparedStatement: preparedStatement) { result in
   ...
 }
 ```
@@ -218,7 +218,7 @@ connection.release(preparedStatement: preparedStatement) { result in
 ### Table creation
 Swift-Kuery enables you to create tables on the database server.
 
-Let's rewrite our `Grades` table by adding columns type and constraints: 
+Let's rewrite our `Grades` table by adding columns type and constraints:
 
 ```swift
 class Grades: Table {

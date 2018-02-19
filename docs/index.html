@@ -459,10 +459,14 @@
 
 <ul>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <li><a href="#example">Example</a></li>
 =======
 <li><a href="#example">Examples</a></li>
 >>>>>>> column docs updated
+=======
+<li><a href="#examples">Examples</a></li>
+>>>>>>> docs reviewed
 <li><a href="#sql-injection-prevention-using-parameterization">SQL Injection Prevention using Parameterization</a></li>
 <li><a href="#prepared-statements">Prepared Statements</a></li>
 <li><a href="#schema-management">Schema Management</a></li>
@@ -593,7 +597,7 @@ history    96.0
 
 <p>If your application executes some query multiple times with different parameters, you may want to improve the performance of the application by using a prepared statement for that query. I.e. send the query to the database in advance, and later use the returned handle to execute the query providing the parameters. This way the database server will process the query only once.</p>
 
-<p>For example, suppose our application needs to retrieve the average grade for courses with an average above various values. We change our query to use a parameter instead of a preset value of 90: </p>
+<p>For example, suppose our application needs to retrieve the average grade for courses with an average above various values. We change our query to use a parameter instead of a preset value of 90:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="n">grades</span><span class="o">.</span><span class="n">course</span><span class="p">,</span> <span class="nf">round</span><span class="p">(</span><span class="nf">avg</span><span class="p">(</span><span class="n">grades</span><span class="o">.</span><span class="n">grade</span><span class="p">),</span> <span class="nv">to</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"average"</span><span class="p">),</span> <span class="nv">from</span><span class="p">:</span> <span class="n">grades</span><span class="p">)</span>
             <span class="o">.</span><span class="nf">group</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">grades</span><span class="o">.</span><span class="n">course</span><span class="p">)</span>
             <span class="o">.</span><span class="nf">having</span><span class="p">(</span><span class="nf">avg</span><span class="p">(</span><span class="n">grades</span><span class="o">.</span><span class="n">grade</span><span class="p">)</span> <span class="o">&gt;</span> <span class="kt">Parameter</span><span class="p">())</span>
@@ -618,7 +622,7 @@ history    96.0
 </code></pre>
 
 <p>Use the <code>release</code> function to free the prepared statement:</p>
-<pre class="highlight swift"><code><span class="n">connection</span><span class="o">.</span><span class="nf">release</span><span class="p">(</span><span class="nv">preparedStatement</span><span class="p">:</span> <span class="n">preparedStatement</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span> 
+<pre class="highlight swift"><code><span class="n">connection</span><span class="o">.</span><span class="nf">release</span><span class="p">(</span><span class="nv">preparedStatement</span><span class="p">:</span> <span class="n">preparedStatement</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
   <span class="o">...</span>
 <span class="p">}</span>
 </code></pre>
@@ -627,7 +631,7 @@ history    96.0
 
 <p>Swift-Kuery enables you to create tables on the database server.</p>
 
-<p>Let&rsquo;s rewrite our <code>Grades</code> table by adding columns type and constraints: </p>
+<p>Let&rsquo;s rewrite our <code>Grades</code> table by adding columns type and constraints:</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">Grades</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
     <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"Grades"</span>
     <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span> <span class="kt">Char</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">length</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
@@ -967,6 +971,7 @@ HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = &lsquo;apple&rsquo;);</strong><
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-17)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 =======
@@ -977,6 +982,9 @@ HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = &lsquo;apple&rsquo;);</strong><
 =======
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-01-17)</p>
 >>>>>>> Connection Pool Jazzy Update
+=======
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-02-19)</p>
+>>>>>>> docs reviewed
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 >>>>>>> column docs updated
     </section>

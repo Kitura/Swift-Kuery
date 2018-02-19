@@ -17,22 +17,21 @@
 // MARK: Column
 
 /**
- The `Column` class is used to represent a single column in an SQL table in swift.
+ The `Column` class is used to represent a single column in an SQL table in Swift.
  A combination of columns are used to construct a `Table` class which matches a specific table in an SQL database.
- The `Column` Class details the column name, the table the column belongs to, any SQL keywords which apply to the column, The number of cells and the data type of the cells.
+ The `Column` class details the column name, the table the column belongs to, any SQL keywords which apply to the column and the data type of the column.
  ### Usage Example: ###
- In this example, a ToDo table class matching a table stored in an SQL database is defined.
- The "ToDoTable" class contains the table name and three instances of the `Column` class.
- The toDo_id column is an set as autoIncrementing, containing Int32 types, primaryKey, which must be unique and not null.
- toDo_title column contains String types which are not null and toDo_completed contains Boolean types, which default to false.
+ In this example, a person `Table` class matching a table stored in an SQL database is defined.
+ The "PersonTable" class contains the table name and three instances of the `Column` class.
+ The person_id column is an set as an autoIncrementing, primary key, containing values of type Int32, which must be unique and not null.
+ The name column contains not null, Strings and monthlyPay contains values of type Int32.
  ```swift
- public class ToDoTable : Table {
-    let tableName = "toDoTable"
-    let toDo_id = Column("toDo_id", Int32.self, autoIncrement: true, primaryKey: true, notNull: true, unique: true)
-    let toDo_title = Column("toDo_title", String.self, notNull: true)
-    let toDo_completed = Column("toDo_completed", Bool.self, defaultValue: false)
+ public class PersonTable : Table {
+     let tableName = "personTable"
+     let person_id = Column("person_id", Int32.self, autoIncrement: true, primaryKey: true, notNull: true, unique: true)
+     let name = Column("firstName", String.self, notNull: true)
+     let monthlyPay = Column("monthlyPay", Int32.self)
  }
-
  ```
  */
 public class Column: Field, IndexColumn {
@@ -82,14 +81,14 @@ public class Column: Field, IndexColumn {
     
     /**
      The initializer for the `Column` class. This creates an instance of `Column` using the provided parameters.
-    Name must be provided, but all other fields will default to either nil or false if not given.
+     Name must be provided, but all other fields will default to either nil or false if not given.
      ### Usage Example: ###
-     In this example, an instances of the `Column` class is created to match The toDo_id column of an SQL table.
-     The toDo_id column in the database is stored as an Int32 and is the tables primary key.
-     To represent this a `Column` is initialised with name set to "toDo_id", type set as Int32.self (self is required to pass Int32 as the class) and primaryKey set to true.
+     In this example, an instance of the `Column` class is created to match The person_id column of an SQL table.
+     The person_id column in the database is stored as an Int32 and is the table's primary key.
+     To represent this a `Column` is initialised with name set to "person_id", type set as Int32.self (self is required to pass Int32 as the class) and primaryKey set to true.
      A feature of the primary key is that they must be unique can cannot be null so unique and notNull are set to true.
      ```swift
-     let toDo_id = Column("toDo_id", Int32.self, autoIncrement: true, primaryKey: true, notNull: true, unique: true)
+     let person_id = Column("person_id", Int32.self, autoIncrement: true, primaryKey: true, notNull: true, unique: true)
      ```
      */
     /// - Parameter name: The name of the column.
@@ -122,14 +121,14 @@ public class Column: Field, IndexColumn {
      A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
      This function is required to obey the `Buildable` protocol.
      ### Usage Example: ###
-     In this example, `QueryBuilder` and `Column` instances are initialized.
+     In this example, `QueryBuilder` and a `PersonTable` (as defined at the top of this class) instances are initialized.
      The build function is then called to produce a String description and the results are printed.
      ```swift
      let queryBuilder = QueryBuilder()
-     let toDo_title = Column("toDo_title", String.self, notNull: true)
-     let description = try todotable.toDo_id.build(queryBuilder: queryBuilder)
+     let personTable = PersonTable()  // PersonTable() is a previously defined `Table` class
+     let description = try personTable.name.build(queryBuilder: queryBuilder)
      print(description)
-     //Prints toDoTable.toDo_id
+     // Prints personTable.name
      ```
      */
     /// - Parameter queryBuilder: The QueryBuilder to use.
@@ -151,14 +150,14 @@ public class Column: Field, IndexColumn {
      Function to build a String representation of the index of a `Column` instance.
      A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
      ### Usage Example: ###
-     In this example, `QueryBuilder` and `Column` instances are initialized.
-     The build Index function is used to produce a String description and print the results.
+     In this example, `QueryBuilder` and a `PersonTable` (as defined at the top of this class) instances are initialized.
+     The build function is then called to produce a String representation of the index column and the results are printed.
      ```swift
      let queryBuilder = QueryBuilder()
-     let toDo_title = Column("toDo_title", String.self, notNull: true)
-     let description = todotable.toDo_id.buildIndex(queryBuilder: queryBuilder)
+     let personTable = PersonTable()  // PersonTable() is a previously defined `Table` class
+     let description = try personTable.name.build(queryBuilder: queryBuilder)
      print(description)
-     //Prints toDo_id
+     // Prints name
      ```
      */
     /// - Parameter queryBuilder: The QueryBuilder to use.
@@ -171,14 +170,14 @@ public class Column: Field, IndexColumn {
      Function to create a String representation of a `Column` instance for use in an SQL CREATE TABLE query.
      A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
      ### Usage Example: ###
-     In this example, `QueryBuilder` and `Column` instances are initialized.
+     In this example, `QueryBuilder` and a `PersonTable` (as defined at the top of this class) instances are initialized.
      The create function is then used to produce a String description of the `Column` and print the results.
      ```swift
      let queryBuilder = QueryBuilder()
-     let toDo_title = Column("toDo_title", String.self, notNull: true)
-     let description = try todotable.toDo_id.create(queryBuilder: queryBuilder)
+     let personTable = PersonTable()  // PersonTable() is a previously defined `Table` class
+     let description = try personTable.person_id.create(queryBuilder: queryBuilder)
      print(description)
-     //Prints "toDo_id integer AUTO_INCREMENT PRIMARY KEY NOT NULL UNIQUE"
+     // Prints "person_id integer AUTO_INCREMENT PRIMARY KEY NOT NULL UNIQUE"
      ```
      */
     /// - Parameter queryBuilder: The QueryBuilder to use.
@@ -238,11 +237,11 @@ public class Column: Field, IndexColumn {
      Function to return a copy of the current `Column` instance with the given name as its alias.
      This is equivelent to the SQL AS operator.
      ### Usage Example: ###
-     In this example, a `Table` instance is created which contains a `Column`.
+     In this example, a `PersonTable` (as defined at the top of this class) instance is created which contains a `Column`.
      An alias for this `Column` instance is then created and its alias printed. 
      ```swift
-     let todotable = ToDoTable()
-     let aliasColumn = todotable.toDo_title.as("new name")
+     let personTable = PersonTable()  // PersonTable() is a previously defined `Table` class
+     let aliasColumn = personTable.name.as("new name")
      print(String(describing: aliasColumn.alias))
      //Prints Optional("new name")
      ```

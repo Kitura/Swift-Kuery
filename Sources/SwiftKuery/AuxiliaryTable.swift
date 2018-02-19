@@ -19,19 +19,22 @@
 /**
  Subclasses of the `AuxiliaryTable` class are describing a `Table` that is used in WITH clauses.
  ### Usage Example: ###
- In this example, a `ToDoTable`, a `PersonTable` and a connection instances are initialized. (Under the assumtion these classes have been defined elsewhere)
- An `AuxiliaryTable` class is defined containing two columns. An instance of this `AuxiliaryTable` is then initialised from `Column` instances in "todotable".
+ In this example, an `AuxiliaryTable` class is defined containing two columns.
+ A `ToDoTable` (as defined in `Table`), a `PersonTable` (as defined in `Column`) and a connection instances are initialized.
+ An instance of the `AuxiliaryTable` is then initialised from `Column` instances in "todotable".
  This `AuxiliaryTable` is then used to create an SQL WITH query.
  A description of the created query is then printed.
  ```swift
- let todotable = ToDoTable()
- let persontable = PersonTable()
- let connection = createConnection()
  class AuxTable: AuxiliaryTable {
     let tableName = "aux_table"
     let name = Column("name")
     let finished = Column("finished")
  }
+ 
+ let todotable = ToDoTable()          // ToDoTable() is a previously defined `Table` class
+ let persontable = PersonTable()      // PersonTable() is a previously defined `Table` class
+ let connection = createConnection()
+ 
  let withTable = AuxTable(as: Select(todotable.toDo_completed.as("finished"), todotable.toDo_title.as("name"), from: todotable))
  let withQuery = with(withTable, Select(withTable.finished, persontable.monthlyPay, from: persontable).join(withTable).on(persontable.name == withTable.name))
  let stringQuery = connection.descriptionOf(query: withQuery)
@@ -48,15 +51,17 @@ open class AuxiliaryTable: Table {
     /**
      Initialize an instance of `AuxiliaryTable`.
      ### Usage Example: ###
-     In this example, a `ToDoTable`, a `PersonTable` and a connection instances are initialized. (Under the assumtion these classes have been defined elsewhere)
-     An `AuxiliaryTable` class is defined containing two columns. An instance of this `AuxiliaryTable` is then initialised from the `Column` instances in "todotable".
+     In this example, an `AuxiliaryTable` class is defined containing two columns.
+     A `ToDoTable` (as defined in `Table`) instance, and a connection instance are initialized.
+     An instance of this `AuxiliaryTable` is then initialised from the `Column` instances in "todotable".
      ```swift
-     let todotable = ToDoTable()
      class AuxTable: AuxiliaryTable {
         let tableName = "aux_table"
         let name = Column("name")
         let finished = Column("finished")
      }
+     
+     let todotable = ToDoTable()  // ToDoTable() is a previously defined `Table` class
      let withTable = AuxTable(as: Select(todotable.toDo_completed.as("finished"), todotable.toDo_title.as("name"), from: todotable))
      ```
      */
@@ -70,17 +75,20 @@ open class AuxiliaryTable: Table {
     /**
      Build a String representation of the WITH clause used to create the `AuxiliaryTable` instance, using `QueryBuilder` to account for the various databases.
      ### Usage Example: ###
-     In this example, `ToDoTable`, and queryBuilder instances are initialized. (Under the assumtion these classes have been defined elsewhere)
-     An `AuxiliaryTable` class is defined containing two columns. An instance of this `AuxiliaryTable` is then initialised from the `Column` instances in "todotable".
+     In this example, an `AuxiliaryTable` class is defined containing two columns.
+     A `ToDoTable` (as defined in `Table`) instance and queryBuilder instance are initialized.
+     An instance of this `AuxiliaryTable` is then initialised from the `Column` instances in "todotable".
      The buildWith function is then called on this `AuxiliaryTable` instance, with the resulting String being printed out.
      ```swift
-     let todotable = ToDoTable()
-     let queryBuilder = QueryBuilder()
      class AuxTable: AuxiliaryTable {
-     let tableName = "aux_table"
-        let name = Column("name")
-        let finished = Column("finished")
+         let tableName = "aux_table"
+         let name = Column("name")
+         let finished = Column("finished")
      }
+     
+     let todotable = ToDoTable()  // ToDoTable() is a previously defined `Table` class
+     let queryBuilder = QueryBuilder()
+     
      let withTable = AuxTable(as: Select(todotable.toDo_completed.as("finished"), todotable.toDo_title.as("name"), from: todotable))
      let withString = try withTable.buildWith(queryBuilder: queryBuilder)
      print(withString)
