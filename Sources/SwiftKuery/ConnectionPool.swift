@@ -125,6 +125,15 @@ public class ConnectionPool {
         }
         item = pool[0]
         pool.removeFirst()
+        // Check if the item is alive, and append a new one to the pool if it isn't
+        if item.isConnected == false {
+            releaser(item)
+            capacity += 1
+            if let newItem = generator() {
+                pool.append(newItem)
+                semaphore.signal()
+            }
+        }
         // If we took the last item, we can choose to grow the pool
         if (pool.count == 0 && capacity < limit) {
             capacity += 1
