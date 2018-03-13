@@ -84,7 +84,7 @@ dependencies: [
   ]
 ```
 
-### Create a Grades Table class
+### Send SQL querys to the database
 Inside the `Main.swift` file:
 
 1. Add SwiftKuery and SwiftKueryPostgreSQL to your import statements:
@@ -130,69 +130,10 @@ if let connection = pool.getConnection() {
     }
 }
 ```
-let insertQuery = Insert(into: self.meals, values: [meal.name, String(describing: meal.photo), meal.rating])
 
-Every time we need a connection, we get it from the pool:
+Save this file, run `swift build` and then run the created executable module.
 
-```swift
-if let connection = pool.getConnection() {
-   // Build and execute your query here.
-}
-else {
-   print("Error: failed to get a connection.")
-}
-```
-
-Now lets build the query. Suppose we want to retrieve the average grades for courses with average greater than 90, and sort the results by the average ascending. Here is the SQL query we need to build:
-
-```SQL
-SELECT course, ROUND(AVG(grade), 1) AS "average" FROM grades
-GROUP BY course
-HAVING AVG(grade) > 90
-ORDER BY AVG(grade) ASC
-```
-Note, that we also round the average grades and alias this column in the result as "average".
-
-Here is how to create such query using Swift-Kuery:
-
-```swift
-let query = Select(grades.course, round(avg(grades.grade), to: 1).as("average"), from: grades)
-            .group(by: grades.course)
-            .having(avg(grades.grade) > 90)
-            .order(by: .ASC(avg(grades.grade)))
-```
-As you can see, it is very similar to the SQL query syntax.
-
-Now we execute the created query on our PostgreSQL connection:
-
-```swift
-guard let connection = pool.getConnection() else {
-   // Error
-}
-
-connection.execute(query: query) { queryResult in
-  if let resultSet = queryResult.asResultSet {
-    for title in resultSet.titles {
-      // The column names of the result.
-    }
-    for row in resultSet.rows {
-      for value in row {
-        ...
-      }
-    }
-  }
-  else if let queryError = result.asError {
-      // Something went wrong.
-  }
-}
-```
-The expected result is:
-
-```
-course     average
-chemistry  92.0
-history    96.0
-```
+This will print the each students id, course and grade, which have been taken from the database. If you go to your database with `psql school` and enter `TABLE grades` you will see that the table has been populated with the students.
 
 ## SQL Injection Prevention using Parameterization
 
