@@ -96,8 +96,9 @@ public class ConnectionPoolConnection: Connection {
      print(connected)
      // Prints true
      ```
-     */
-    /// - Returns: A boolean value, for whether the connection is connected.
+    
+     - Returns: A boolean value, for whether the connection is connected.
+    */
     public var isConnected: Bool {
         return connection?.isConnected ?? false
     }

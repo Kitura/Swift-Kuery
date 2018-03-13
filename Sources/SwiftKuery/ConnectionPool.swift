@@ -93,10 +93,11 @@ public class ConnectionPool {
      let connectionPool = ConnectionPool(options: options, connectionGenerator: connectionGenerator, connectionReleaser: connectionReleaser)
      }
      ```
-     */
-    /// - Parameter options: `ConnectionPoolOptions` describing pool configuration.
-    /// - Parameter connectionGenerator: A closure that returns a new connection for the pool.
-    /// - Parameter connectionReleaser: A closure to be used to release a connection from the pool.
+    
+     - Parameter options: `ConnectionPoolOptions` describing pool configuration.
+     - Parameter connectionGenerator: A closure that returns a new connection for the pool.
+     - Parameter connectionReleaser: A closure to be used to release a connection from the pool.
+    */
     public init(options: ConnectionPoolOptions, connectionGenerator: @escaping () -> Connection?, connectionReleaser: @escaping (Connection) -> ()) {
         capacity = options.initialCapacity
         if capacity < 1 {
@@ -129,8 +130,9 @@ public class ConnectionPool {
      ```swift
      let connection = connectionPool.getConnection()
      ```
-     */
-    /// - Returns: A `Connection` or nil if the wait for a free connection timed out.
+    
+     - Returns: A `Connection` or nil if the wait for a free connection timed out.
+    */
     public func getConnection() -> Connection? {
         if let connection = take() {
             return ConnectionPoolConnection(connection: connection, pool: self)

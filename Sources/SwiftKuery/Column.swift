@@ -90,17 +90,18 @@ public class Column: Field, IndexColumn {
      ```swift
      let person_id = Column("person_id", Int32.self, autoIncrement: true, primaryKey: true, notNull: true, unique: true)
      ```
+ 
+     - Parameter name: The name of the column.
+     - Parameter type: The type of the column. Defaults to nil.
+     - Parameter length: The length of the column values according to the type. Defaults to nil.
+     - Parameter autoIncrement: An indication whether the column autoincrements. Defaults to false.
+     - Parameter primaryKey: An indication whether the column is the primary key of the table. Defaults to false.
+     - Parameter notNull: An indication whether the column is not nullable. Defaults to false.
+     - Parameter unique: An indication whether the column values have to be unique. Defaults to false.
+     - Parameter defaultValue: The default value of the column. Defaults to nil.
+     - Parameter check: The expression to check for values inserted into of the column. Defaults to nil.
+     - Parameter collate: The collation rule for the column. Defaults to nil.
      */
-    /// - Parameter name: The name of the column.
-    /// - Parameter type: The type of the column. Defaults to nil.
-    /// - Parameter length: The length of the column values according to the type. Defaults to nil.
-    /// - Parameter autoIncrement: An indication whether the column autoincrements. Defaults to false.
-    /// - Parameter primaryKey: An indication whether the column is the primary key of the table. Defaults to false.
-    /// - Parameter notNull: An indication whether the column is not nullable. Defaults to false.
-    /// - Parameter unique: An indication whether the column values have to be unique. Defaults to false.
-    /// - Parameter defaultValue: The default value of the column. Defaults to nil.
-    /// - Parameter check: The expression to check for values inserted into of the column. Defaults to nil.
-    /// - Parameter collate: The collation rule for the column. Defaults to nil.
     public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, check: String? = nil, collate: String? = nil) {
         self.name = name
         self.type = type
@@ -130,10 +131,11 @@ public class Column: Field, IndexColumn {
      print(description)
      // Prints personTable.name
      ```
-     */
-    /// - Parameter queryBuilder: The QueryBuilder to use.
-    /// - Returns: A String representation of the column.
-    /// - Throws: QueryError.syntaxError if query build fails.
+    
+     - Parameter queryBuilder: The QueryBuilder to use.
+     - Returns: A String representation of the column.
+     - Throws: QueryError.syntaxError if query build fails.
+    */
     public func build(queryBuilder: QueryBuilder) throws -> String {
         let tableName = Utils.packName(table.nameInQuery, queryBuilder: queryBuilder)
         if tableName == "" {
@@ -159,9 +161,10 @@ public class Column: Field, IndexColumn {
      print(description)
      // Prints name
      ```
-     */
-    /// - Parameter queryBuilder: The QueryBuilder to use.
-    /// - Returns: A String representation of the index column.
+    
+     - Parameter queryBuilder: The QueryBuilder to use.
+     - Returns: A String representation of the index column.
+    */
     public func buildIndex(queryBuilder: QueryBuilder) -> String {
         return Utils.packName(name, queryBuilder: queryBuilder)
     }
@@ -179,10 +182,11 @@ public class Column: Field, IndexColumn {
      print(description)
      // Prints "person_id integer AUTO_INCREMENT PRIMARY KEY NOT NULL UNIQUE"
      ```
-     */
-    /// - Parameter queryBuilder: The QueryBuilder to use.
-    /// - Returns: A String representation of the column.
-    /// - Throws: QueryError.syntaxError if column creation fails.
+    
+     - Parameter queryBuilder: The QueryBuilder to use.
+     - Returns: A String representation of the column.
+     - Throws: QueryError.syntaxError if column creation fails.
+    */
     public func create(queryBuilder: QueryBuilder) throws -> String {
         guard let type = type else {
             throw QueryError.syntaxError("Column type not set for column \(name). ")
@@ -245,9 +249,10 @@ public class Column: Field, IndexColumn {
      print(String(describing: aliasColumn.alias))
      //Prints Optional("new name")
      ```
-     */
-    /// - Parameter newName: A String containing the alias for the column.
-    /// - Returns: A new Column instance with the alias.
+    
+     - Parameter newName: A String containing the alias for the column.
+     - Returns: A new Column instance with the alias.
+    */
     public func `as`(_ newName: String) -> Column {
         let new = Column(name, type, length: length, primaryKey: isPrimaryKey, notNull: isNotNullable, unique: isUnique, defaultValue: defaultValue, collate: collate)
         new.alias = newName

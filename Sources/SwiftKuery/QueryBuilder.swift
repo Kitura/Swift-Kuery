@@ -131,15 +131,16 @@ public class QueryBuilder {
      ```swift
      let queryBuilder = QueryBuilder(withDeleteRequiresUsing: true, withUpdateRequiresFrom: true, createAutoIncrement: createAutoIncrement)
      ```
-     */
-    /// - Parameter addNumbersToParameters: An indication whether query parameters should be numbered.
-    /// - Parameter firstParameterIndex: The starting index for numbered parameters.
-    /// - Parameter anyOnSubquerySupported: An indication whether ANY on subqueries is supported.
-    /// - Parameter withDeleteRequiresUsing: An indication whether a `DELETE` query should use `USING` clause for tables in `WITH` clause.
-    /// - Parameter withUpdateRequiresFrom: An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause.
-    /// - Parameter createAutoIncrement: A function to create column's autoincrement expression based on the column's type.
-    /// - Parameter dropIndexRequiresOnTableName: An indication whether the drop index syntax requires `ON table.name` clause.
-    /// - Parameter dateFormatter: DateFormatter to convert between Date and String instances.
+    
+     - Parameter addNumbersToParameters: An indication whether query parameters should be numbered.
+     - Parameter firstParameterIndex: The starting index for numbered parameters.
+     - Parameter anyOnSubquerySupported: An indication whether ANY on subqueries is supported.
+     - Parameter withDeleteRequiresUsing: An indication whether a `DELETE` query should use `USING` clause for tables in `WITH` clause.
+     - Parameter withUpdateRequiresFrom: An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause.
+     - Parameter createAutoIncrement: A function to create column's autoincrement expression based on the column's type.
+     - Parameter dropIndexRequiresOnTableName: An indication whether the drop index syntax requires `ON table.name` clause.
+     - Parameter dateFormatter: DateFormatter to convert between Date and String instances.
+    */
     public init(addNumbersToParameters: Bool = true, firstParameterIndex: Int = 1, anyOnSubquerySupported: Bool = true,
                 withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String) -> String)? = nil,
                 dropIndexRequiresOnTableName: Bool = false, dateFormatter: DateFormatter? = nil) {
@@ -184,8 +185,9 @@ public class QueryBuilder {
         QueryBuilder.QuerySubstitutionNames.namedParameter : "",
         QueryBuilder.QuerySubstitutionNames.double : "double precision"
      ])     ```
-     */
-    /// - Parameter newSubstitutions: A Dictionary containing the entries to update.
+    
+     - Parameter newSubstitutions: A Dictionary containing the entries to update.
+    */
     public func updateSubstitutions(_ newSubstitutions: [QuerySubstitutionNames:String]) {
         for (index, substitution) in newSubstitutions {
             substitutions[index.rawValue] = substitution

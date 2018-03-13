@@ -81,6 +81,8 @@ open class Table: Buildable {
 
     /// Initialize an instance of Table with a table name
     /// and an array of Columns
+    /// - Parameter tableName: The name of the table.
+    /// - Parameter columns: The array of columns inside the table.
     public required init(tableName: String, columns: [Column]) {
         self._name = tableName
         self.columns = columns
@@ -121,10 +123,11 @@ open class Table: Buildable {
      print(description)
      //Prints toDoTable
      ```
-     */
-    /// - Parameter queryBuilder: The QueryBuilder to use.
-    /// - Returns: A String representation of the table.
-    /// - Throws: QueryError.syntaxError if query build fails.
+    
+     - Parameter queryBuilder: The QueryBuilder to use.
+     - Returns: A String representation of the table.
+     - Throws: QueryError.syntaxError if query build fails.
+    */
     public func build(queryBuilder: QueryBuilder) throws -> String {
         if columns.count == 0 {
             throw QueryError.syntaxError("No columns in the table. ")
@@ -186,9 +189,10 @@ open class Table: Buildable {
      print(String(describing: aliasTable.alias))
      //Prints Optional("new name")
      ```
-     */
-    /// - Parameter newName: A String containing the alias for the table.
-    /// - Returns: A new Table instance with the alias.
+    
+     - Parameter newName: A String containing the alias for the table.
+     - Returns: A new Table instance with the alias.
+    */
     public func `as`(_ newName: String) -> Self {
         let new = type(of: self).init()
         new.alias = newName
@@ -206,8 +210,9 @@ open class Table: Buildable {
      print(truncateRaw))
      //Prints Raw(query: "TRUNCATE TABLE", tables: [Application.ToDoTable])
      ```
-     */
-    /// - Returns: An instance of `Raw`.
+    
+     - Returns: An instance of `Raw`.
+    */
     public func truncate() -> Raw {
         return Raw(query: "TRUNCATE TABLE", table: self)
     }
@@ -222,8 +227,9 @@ open class Table: Buildable {
      print(dropRaw))
      //Prints Raw(query: "DROP TABLE", tables: [Application.ToDoTable])
      ```
-     */
-    /// - Returns: An instance of `Raw`.
+    
+     - Returns: An instance of `Raw`.
+    */
     public func drop() -> Raw {
         return Raw(query: "DROP TABLE", table: self)
     }
@@ -239,9 +245,10 @@ open class Table: Buildable {
      let SQLConnection = PostgreSQLConnection(host: "localhost", port: 5432, options: [.databaseName("ToDoDatabase")])
      todotable.create(connection: SQLConnection, onCompletion: queryHandler)
      ```
-     */
-    /// - Parameter connection: The connection to the database.
-    /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
+    
+     - Parameter connection: The connection to the database.
+     - Parameter onCompletion: The function to be called when the execution of the query has completed.
+    */
     public func create(connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
         do {
             let query = try description(connection: connection)
@@ -269,9 +276,10 @@ open class Table: Buildable {
      var personTable = PersonTable()
      personTable = personTable.primaryKey([firstColumn, lastColumn])
      ```
-     */
-    /// - Parameter columns: An Array of columns that constitute the primary key.
-    /// - Returns: A new instance of `Table`.
+    
+     - Parameter columns: An Array of columns that constitute the primary key.
+     - Returns: A new instance of `Table`.
+    */
     public func primaryKey(_ columns: [Column]) -> Self {
         if primaryKey != nil || columnsWithPrimaryKeyProperty > 0 {
             syntaxError += "Conflicting definitions of primary key. "
@@ -305,9 +313,10 @@ open class Table: Buildable {
      var personTable = PersonTable()
      personTable = personTable.primaryKey(idColumn)
      ```
-     */
-    /// - Parameter columns: Single Column that constitute the primary key.
-    /// - Returns: A new instance of `Table`.
+    
+     - Parameter columns: Single Column that constitute the primary key.
+     - Returns: A new instance of `Table`.
+    */
     public func primaryKey(_ columns: Column...) -> Self {
         return primaryKey(columns)
     }
@@ -331,10 +340,11 @@ open class Table: Buildable {
      var personTable = PersonTable()
      personTable = personTable.foreignKey([firstColumn, lastColumn], references: [monthlyPay, employeeBand])
      ```
-     */
-    /// - Parameter columns: An Array of columns that constitute the foreign key.
-    /// - Parameter references: An Array of columns of the foreign table the foreign key references.
-    /// - Returns: A new instance of `Table`.
+    
+     - Parameter columns: An Array of columns that constitute the foreign key.
+     - Parameter references: An Array of columns of the foreign table the foreign key references.
+     - Returns: A new instance of `Table`.
+    */
     public func foreignKey(_ columns: [Column], references: [Column]) -> Self {
         if foreignKeyColumns != nil || foreignKeyReferences != nil {
             syntaxError += "Conflicting definitions of foreign key. "
@@ -383,10 +393,11 @@ open class Table: Buildable {
      var personTable = PersonTable()
      personTable = personTable.foreignKey(idColumn, references: [monthlyPay, employeeBand])
      ```
-     */
-    /// - Parameter columns: A column that is the foreign key.
-    /// - Parameter references: A column in the foreign table the foreign key references.
-    /// - Returns: A new instance of `Table`.
+    
+     - Parameter columns: A column that is the foreign key.
+     - Parameter references: A column in the foreign table the foreign key references.
+     - Returns: A new instance of `Table`.
+    */
     public func foreignKey(_ column: Column, references: Column) -> Self {
         return foreignKey([column], references: [references])
     }

@@ -784,6 +784,109 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>addNumbersToParameters</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An indication whether query parameters should be numbered.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>firstParameterIndex</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The starting index for numbered parameters.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>anyOnSubquerySupported</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An indication whether ANY on subqueries is supported.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withDeleteRequiresUsing</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An indication whether a <code>DELETE</code> query should use <code>USING</code> clause for tables in <code>WITH</code> clause.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>withUpdateRequiresFrom</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An indication whether an <code>UPDATE</code> query should use <code>FROM</code> clause for tables in <code>WITH</code> clause.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>createAutoIncrement</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A function to create column&rsquo;s autoincrement expression based on the column&rsquo;s type.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>dropIndexRequiresOnTableName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An indication whether the drop index syntax requires <code>ON table.name</code> clause.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>dateFormatter</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>DateFormatter to convert between Date and String instances.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -823,6 +926,8 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
    <span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">namedParameter</span> <span class="p">:</span> <span class="s">""</span><span class="p">,</span>
    <span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">double</span> <span class="p">:</span> <span class="s">"double precision"</span>
 <span class="p">])</span>     <span class="err">```</span>
+
+<span class="o">-</span> <span class="kt">Parameter</span> <span class="nv">newSubstitutions</span><span class="p">:</span> <span class="kt">A</span> <span class="kt">Dictionary</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">entries</span> <span class="n">to</span> <span class="n">update</span><span class="o">.</span>
 </code></pre>
 
                       </div>
@@ -849,6 +954,7 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-17)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 =======
@@ -864,6 +970,10 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
 >>>>>>> docs reviewed
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 >>>>>>> column docs updated
+=======
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-13)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+>>>>>>> show parameters in jazzy docs
     </section>
   </body>
 </div>

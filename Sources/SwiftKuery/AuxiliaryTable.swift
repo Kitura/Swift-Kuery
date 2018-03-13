@@ -64,8 +64,9 @@ open class AuxiliaryTable: Table {
      let todotable = ToDoTable()  // ToDoTable() is a previously defined `Table` class
      let withTable = AuxTable(as: Select(todotable.toDo_completed.as("finished"), todotable.toDo_title.as("name"), from: todotable))
      ```
+ 
+     - Parameter query: A query that will be used in WITH clause.
      */
-    /// - Parameter query: A query that will be used in WITH clause.
     public convenience init(as query: Query) {
         self.init()
         self.query = query
@@ -94,10 +95,11 @@ open class AuxiliaryTable: Table {
      print(withString)
      // Prints aux_table AS (SELECT toDoTable.toDo_completed AS finished, toDoTable.toDo_title AS name FROM toDoTable)
      ```
+ 
+     - Parameter queryBuilder: The QueryBuilder to use.
+     - Returns: A String representation of the query.
+     - Throws: QueryError.syntaxError if query build fails.
      */
-    /// - Parameter queryBuilder: The QueryBuilder to use.
-    /// - Returns: A String representation of the query.
-    /// - Throws: QueryError.syntaxError if query build fails.
     public func buildWith(queryBuilder: QueryBuilder) throws -> String {
         guard let query = query else {
             throw QueryError.syntaxError("With query was not specified. ")

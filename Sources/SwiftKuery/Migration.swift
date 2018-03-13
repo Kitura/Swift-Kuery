@@ -72,10 +72,11 @@ public class Migration {
      let newTable = MyTable_v1()
      let migration = Migration(from: oldTable, to: newTable, using: connection)
      ```
-     */
-    /// - Parameter from: The version of the table to migrate from.
-    /// - Parameter to: The version of the table to migrate to.
-    /// - Parameter using conenction: The connection to the database to use.
+    
+     - Parameter from: The version of the table to migrate from.
+     - Parameter to: The version of the table to migrate to.
+     - Parameter using conenction: The connection to the database to use.
+    */
     public init(from: Table, to: Table, using connection: Connection) {
         self.connection = connection
         table1 = from
@@ -93,8 +94,9 @@ public class Migration {
      let migration = Migration(from: oldTable, to: newTable, using: connection)
      migration.alterTableName(alterHandler)
      ```
-     */
-    /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
+    
+     - Parameter onCompletion: The function to be called when the execution of the query has completed.
+    */
     public func alterTableName(onCompletion: @escaping ((QueryResult) -> ())) {
         let query = "ALTER TABLE " + Utils.packName(table1._name, queryBuilder: connection.queryBuilder) + " RENAME TO " + Utils.packName(table2._name, queryBuilder: connection.queryBuilder)
         renamed = true
@@ -112,9 +114,10 @@ public class Migration {
      let toDo_title = Column("toDo_title", String.self, notNull: true)
      migration.alterTableAdd(column: toDo_title, onCompletion: alterHandler)
      ```
-     */
-    /// - Parameter column: The column to add. This should be a column in the new version of the table.
-    /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
+    
+     - Parameter column: The column to add. This should be a column in the new version of the table.
+     - Parameter onCompletion: The function to be called when the execution of the query has completed.
+    */
     public func alterTableAdd(column: Column, onCompletion: @escaping ((QueryResult) -> ())) {
         let tableName = renamed ? table2._name : table1._name
         do {
