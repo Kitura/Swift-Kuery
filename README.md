@@ -24,9 +24,9 @@
 SQL database abstraction layer
 
 ## Summary
-Swift-Kuery is a pluggable SQL database driver/SDK abstraction layer. Its main idea is to unify the APIs to the various relational databases, providing a Swifty yet SQL-like API.
+Swift-Kuery is a pluggable SQL database driver/SDK abstraction layer. Its main idea is to unify the APIs to the various relational databases, providing a Swifty yet SQL-like API. This allows easy switching between databases and forms the basis for an Object-Relational Mapping (ORM) framework.
 
-While Swift-Kuery is not an Object-Relational Mapping (ORM), it provides a great basis to build an ORM. It is also useful if you don't want to commit to a specific database, allowing easy switch between databases.
+[Swift-Kuery-ORM](https://github.com/IBM-Swift/Swift-Kuery-ORM) is an ORM, built on top of Swift-Kuery, which allows you to simplify the persistence of model objects with your server.
 
 Swift-Kuery is easy to learn, consumable framework that comes with a set of [implemented plugins](#list-of-plugins).
 
@@ -40,51 +40,97 @@ Swift-Kuery is easy to learn, consumable framework that comes with a set of [imp
 * [License](#license)
 
 ## Examples
-A Swift-Kuery tutorial on adding a PostgreSQL database to a foodTracker app is available [here](https://github.com/IBM/FoodTrackerBackend/blob/master/AddDatabase.md).
+This example demonstrates how to execute an SQL query using Swift-Kuery with the [Swift-Kuery-PostgreSQL](https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL) plugin.
 
-An example ToDo list application, implementing Swift-Kuery, is available [here](https://github.com/IBM-Swift/iOSSampleKituraKit/tree/persistentiOSKituraKit).
+The starting point is a Swift project, created by `swift package init --type executable`.
 
-This example demonstrates how to execute an SQL query using Swift-Kuery and Swift-Kuery-PostgreSQL. It assumes there is a PostgreSQL server running on localhost:5432, that contains a table called Grades:
+### Creating A PostgreSQL Database
 
+1. Install PostgreSQL
+#### Mac
+`brew install postgresql`
+#### Ubuntu Linux
+`sudo apt-get install postgresql postgresql-contrib`
+
+2. Create a `school` database
+    ```
+    createdb school
+    psql school
+    ```
+
+3. Create a `grades` table
+    ```
+    CREATE TABLE grades (
+        id varchar(100) PRIMARY KEY,
+        course text NOT NULL,
+        grade integer
+    );  
+    ```
+
+### Update your Package.swift file
+Add Swift-Kuery-PostgreSQL to your Package.swift. This will bring in Swift-Kuery as well.
+
+```swift
+dependencies: [
+    ...
+    // Add this line
+    .package(url: "https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL.git", from: "1.0.0"),
+  ],
+  targets: [
+    .target(
+      name: ...
+      // Add this modules to your target(s)
+      dependencies: [..., "SwiftKueryPostgreSQL"]),
+  ]
 ```
- id   |  course   | grade
-------+-----------+-------
-12345 | physics   |    82
-12345 | chemistry |    90
-12345 | history   |    98
-78901 | history   |   100
-78901 | chemistry |    94
-78901 | physics   |    90
-24680 | physics   |    74
-24680 | chemistry |    92
-24680 | history   |    90
 
-```
+### Create a Grades Table class
+Inside the `Main.swift` file:
 
-First we import Swift-Kuery and Swift-Kuery-PostgreSQL:
-
+1. Add SwiftKuery and SwiftKueryPostgreSQL to your import statements:
 ```swift
 import SwiftKuery
 import SwiftKueryPostgreSQL
 ```
 
-Now we create a `Table` that corresponds to our Grades table in PostgreSQL - we set the table's name and its columns:
-
+2. Create a `Table` class, which matches the `grades` table you created in the database:
 ```swift
 class Grades: Table {
     let tableName = "Grades"
-    let id = Column("id")
-    let course = Column("course")
-    let grade = Column("grade")
+    let id = Column("id", Int32.self, primaryKey: true)
+    let course = Column("course", String.self)
+    let grade = Column("grade", Int32.self)
 }
 let grades = Grades()
 ```
 
-Next we create a pool of connections to PostgreSQL:
+3. Create a pool of connections to PostgreSQL:
+```swift
+let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.databaseName("school")], poolOptions: ConnectionPoolOptions(initialCapacity: 10, maxCapacity: 50, timeout: 10000))
+```
+
+4. Create some example students:
+```Swift
+let students: [[Any]] = [[0, "computing", 92], [1, "physics", 75], [2, "history", 83]]
+```
+
+5. Connect to database and perform an SQL query:
 
 ```swift
-let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.userName("username"), .password("password")], poolOptions: ConnectionPoolOptions(initialCapacity: 10, maxCapacity: 50, timeout: 10000))
+if let connection = pool.getConnection() {
+    let insertQuery = Insert(into: grades, rows: students)
+    connection.execute(query: insertQuery) { insertResult in
+        connection.execute(query: Select(from: grades)) { selectResult in
+            if let resultSet = selectResult.asResultSet {
+                for row in resultSet.rows {
+                    print("Student \(row[0] ?? ""), studying \(row[1] ?? ""), scored \(row[2] ?? "")")
+                }
+            }
+        }
+    }
+}
 ```
+let insertQuery = Insert(into: self.meals, values: [meal.name, String(describing: meal.photo), meal.rating])
 
 Every time we need a connection, we get it from the pool:
 
@@ -607,4 +653,4 @@ let s = Select(t2.c, from: t2)
 * [MySQL](https://github.com/IBM-Swift/SwiftKueryMySQL)
 
 ## License
-This library is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE.txt).
+This library is licensed under Apache 2.0. Full license text is available in [LICENSE](https://github.com/IBM-Swift/Swift-Kuery/blob/master/LICENSE.txt).
