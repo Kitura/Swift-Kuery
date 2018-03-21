@@ -137,9 +137,9 @@ This will print the each students id, course and grade, which have been taken fr
 
 ## SQL Injection Prevention using Parameterization
 
-Parameterize queries to prevent SQL Injection attacks by using Parameter() for untrusted input.
+Unsanitized data that is used in dynamic queries is one of the most common causes of SQL injection vulnerabilities. Parameterizing queries can help to prevent SQL injection attacks.
 
-For example, this is vulnerable to SQL Injection attacks if `supplied_key1` or `supplied_key2` is untrusted input:
+The following code is vulnerable to SQL injection if `supplied_key1` or `supplied_key2` contain untrusted data (that is, data which has not been validated):
 ```swift
 let query = Select(from: confidential)
   .where(confidential.key1 == supplied_key1 || confidential.key2 == supplied_key2)
@@ -149,7 +149,7 @@ connection.execute(query: query) { queryResult in
 }
 ```
 
-To guard against SQL Injection attacks, use the following Parameterized version instead:
+To guard against SQL Injection attacks, use the following parameterized version of the code:
 ```swift
 let query = Select(from: confidential)
   .where(confidential.key1 == Parameter() || confidential.key2 == Parameter())
@@ -161,9 +161,9 @@ connection.execute(query: query, parameters: supplied_key1, supplied_key2) { que
 
 ## Prepared Statements
 
-If your application executes some query multiple times with different parameters, you may want to improve the performance of the application by using a prepared statement for that query. I.e. send the query to the database in advance, and later use the returned handle to execute the query providing the parameters. This way the database server will process the query only once.
+If your application executes the same (or similar) SQL statements repeatedly with different parameters you may improve the performance of the application by using a prepared statement. Prepared statements can reduce parsing time as the database parses and compiles the statement template only once and then stores the result but doesn’t execute it. Later, the application supplies values for the parameters of the statement template and the database executes the statement.
 
-For example, suppose our application needs to retrieve the average grade for courses with an average above various values. We change our query to use a parameter instead of a preset value of 90:
+For example, suppose our application needs to retrieve the average grade for courses with an average above a given value; a value which we want to vary. Let’s change our query to use a parameter instead of a predefined value:
 
 ```swift
 let query = Select(grades.course, round(avg(grades.grade), to: 1).as("average"), from: grades)
@@ -172,7 +172,7 @@ let query = Select(grades.course, round(avg(grades.grade), to: 1).as("average"),
             .order(by: .ASC(avg(grades.grade)))
 ```
 
-Now we prepare the statement:
+Now, prepare the statement:
 
 ```swift
 do {
@@ -185,7 +185,7 @@ catch {
 
 **Note**: `preparedStatement` is a plugin-specific handle for the prepared statement.
 
-Now we can use this handle to execute the query with different parameters without creating it every time:
+Now the application may execute the prepared statement as many times as it wants with different parameter values:
 
 ```swift
 connection.execute(preparedStatement: preparedStatement, parameters: [70]) { result in
@@ -205,7 +205,7 @@ connection.release(preparedStatement: preparedStatement) { result in
 ### Table creation
 Swift-Kuery enables you to create tables on the database server.
 
-Let's rewrite our `Grades` table by adding columns type and constraints:
+Let's revisit the Grades table, which we used in our Example above, and add in two new columns containing the data type and constraints:
 
 ```swift
 class Grades: Table {
@@ -222,13 +222,13 @@ We can add a foreign key to `Grades` that references a column in another table:
 let grades = Grades().foreignKey(grades.course, references: courses.name)
 ```
 
-And create a multi-column primary key (if not set in the column as for `Grades.id`):
+Create a multi-column primary key (if not set in the column as for `Grades.id`)
 
 ```swift
 grades.primaryKey(grades.id, grades.course)
 ```
 
-To create the table in the database, do:
+Create the table in the database:
 
 ```swift
 
@@ -270,7 +270,7 @@ public class MyTable_v1: Table {
 }
 ```
 
-And use a typealias to refer to the current version of the table class in the application:
+Use a typealias to refer to the current version of the table class in the application:
 
 ```swift
 typealias MyTable = MyTable_v0
@@ -288,7 +288,7 @@ let migration0 = Migration(from: t0, to: t1, using: connection)
 migration0.alterTableAdd(column: t1.c) { result in ... }
 ```
 
-And raw alternations, if needed:
+You can also execute raw alterations, if needed:
 
 ```swift
 let dropColumnQuery = "ALTER TABLE " + t1.tableName + " DROP COLUMN " + t0.a.name
