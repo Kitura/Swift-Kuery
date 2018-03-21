@@ -24,22 +24,19 @@ import Dispatch
 // MARK: ConnectionPool
 
 /**
- This class implements a First in First out connection pool. The pool maintains a cache of `ConnectionPoolConnection` instances, which can be reused for future requests, to enhance performance.
+ This class implements a first in first out connection pool. The pool maintains a cache of `ConnectionPoolConnection` instances, which can be reused for future requests, to enhance performance.
  ### Usage Example: ###
- In this example, a closure to generate and release `Connection` instances are defined.
- A connection pool is then initialized with defined options, the `connectionGenerator` and the `connectionReleaser`.
- A single `Connection` is then retrieved from the pool.
+This example shows how to create a ConnectionPool manually. Two closures to generate and release Connection instances are defined. A connection pool is then initialized with the defined closures and options. A single Connection is then retrieved from the pool.
  ```swift
- let options = ConnectionPoolOptions(initialCapacity: 2, maxCapacity: Int = 5, timeout: Int = 1000)
+ let options = ConnectionPoolOptions(initialCapacity: 2, maxCapacity: 5, timeout: 1000)
  let connectionGenerator: () -> Connection? = {
-    let connection = PostgreSQLConnection(connectionParameters: connectionParameters)
+    let connection = PostgreSQLConnection(host: "localhost", port: 5432, options: [.databaseName("ExampleDatabase")])
     return connection
  }
  let connectionReleaser: (_ connection: Connection) -> () = { connection in
- connection.closeConnection()
+    connection.closeConnection()
  }
  let connectionPool = ConnectionPool(options: options, connectionGenerator: connectionGenerator, connectionReleaser: connectionReleaser)
- }
  let singleConnection = connectionPool.getConnection()
  ```
  */
@@ -77,21 +74,20 @@ public class ConnectionPool {
      The `connectionGenerator` will be invoked `ConnectionPoolOptions.initialCapacity` times to fill
      the pool to the initial capacity.
      ### Usage Example: ###
-     In this example, a closure to generate and release `Connection` instances are defined.
-     A connection pool is then initialized with given options, the `connectionGenerator` and the `connectionReleaser`.
+     In this example, two closures to generate and release `Connection` instances are defined.
+     A connection pool is then initialized with the given `options`, the `connectionGenerator` and the `connectionReleaser`.
      ```swift
-     let options = ConnectionPoolOptions(initialCapacity: 2, maxCapacity: Int = 5, timeout: Int = 1000)
+     let options = ConnectionPoolOptions(initialCapacity: 2, maxCapacity: 5, timeout: 1000)
      let connectionGenerator: () -> Connection? = {
-     let connection = PostgreSQLConnection(connectionParameters: connectionParameters)
-     return connection
+         let connection = PostgreSQLConnection(host: "localhost", port: 5432, options: [.databaseName("ExampleDatabase")])
+         return connection
      }
      
      let connectionReleaser: (_ connection: Connection) -> () = { connection in
-     connection.closeConnection()
+        connection.closeConnection()
      }
      
      let connectionPool = ConnectionPool(options: options, connectionGenerator: connectionGenerator, connectionReleaser: connectionReleaser)
-     }
      ```
     
      - Parameter options: `ConnectionPoolOptions` describing pool configuration.
@@ -126,7 +122,7 @@ public class ConnectionPool {
      Get a connection from the pool.
      This function will block until a connection can be obtained from the pool or for `ConnectionPoolOptions.timeout`.
      ### Usage Example: ###
-     A `Connection` instance is then retrieved from an pool that was previously initialized.
+     A `Connection` instance is retrieved from a pool that was initialized previously.
      ```swift
      let connection = connectionPool.getConnection()
      ```
@@ -146,9 +142,9 @@ public class ConnectionPool {
     
     // MARK: Disconnect Pool
     /**
-     Release all the connections in the pool by calling `connectionReleaser` closure on each connection, and empty the pool.
+     Removes all the connections from the pool and calls the `connectionReleaser` closure on each.
      ### Usage Example: ###
-     A `previously initialized `ConnectionPool` is disconnected removing all connections in the pool.
+     A previously initialized `ConnectionPool` is disconnected, thereby removing all of its connections from the pool.
      ```swift
      connectionPool.disconnect()
      ```

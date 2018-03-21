@@ -19,15 +19,17 @@ import Foundation
 // MARK: QueryBuilder
 
 /**
- Used in code dealing with variances between the various database engines. As
+ Note: Changing the `QueryBuilder` should only be needed for adding support for a new database plugin.
+ 
+ `QueryBuilder` is used in code dealing with variances between the various database engines. As
  different databases have different query syntax, sometimes changes need to be
  made when generating the actual SQL statement to run. Additional needed changes
- should be done by updating QueryBuilder substitutions array. Every query component
+ should be done by updating `QueryBuilder` substitutions array. Every query component
  then builds its string representation using that array.
  ### Usage Example: ###
  In this example, a `QueryBuilder` for PostgreSQL is initialized.
- Parameters are set for postgreSQL and Strings keywords for SQL queries are substituted into the queryBuilder.
- The queryBuilder is then used to create a String description of an instance of the `Table` class called "todotable".
+ Parameters are set for PostgreSQL and string keywords for SQL queries are substituted into the queryBuilder.
+ The `queryBuilder` is then used to create a string description of the `Table` class instance called `todotable`.
  ```swift
  let queryBuilder = QueryBuilder(withDeleteRequiresUsing: true, withUpdateRequiresFrom: true, createAutoIncrement: createAutoIncrement)
  queryBuilder.updateSubstitutions([QueryBuilder.QuerySubstitutionNames.ucase : "UPPER",
@@ -42,14 +44,14 @@ import Foundation
  */
 public class QueryBuilder {
     // MARK: Substitutions
-    /// An array of substitutions to be made in query String representation.
+    /// An array of substitutions to be made in query string representation.
     public var substitutions: [String]
     
     /**
      Enum defining the cases and their index for the substitutions array used by `QueryBuilder` to account for variances between the various database engines.
      ### Usage Example: ###
      In this example, a `QueryBuilder` for PostgreSQL is initialized.
-     Parameters are set for postgreSQL and Strings keywords for SQL queries are substituted into the queryBuilder. The `QuerySubstitutionNames` enum is used to refer to substitutions by name instead of their position in the "substitutions" array.
+     Parameters are set for PostgreSQL and strings keywords for SQL queries are substituted into the queryBuilder. The `QuerySubstitutionNames` enum is used to refer to substitutions by name instead of their position in the "substitutions" array.
      ```swift
      let queryBuilder = QueryBuilder(withDeleteRequiresUsing: true, withUpdateRequiresFrom: true, createAutoIncrement: createAutoIncrement)
      queryBuilder.updateSubstitutions([QueryBuilder.QuerySubstitutionNames.ucase : "UPPER",
@@ -66,7 +68,7 @@ public class QueryBuilder {
         case ucase
         /// The SQL LCASE scalar function to convert a string to lower-case.
         case lcase
-        /// The SQL LEN scalar function to returns the length of a string.
+        /// The SQL LEN scalar function to return the length of a string.
         case len
         /// The SQL NOW scalar function to return the current date and time.
         case now
@@ -108,19 +110,19 @@ public class QueryBuilder {
     /// An indication whether ANY on subqueries is supported.
     public let anyOnSubquerySupported: Bool
     
-    /// An indication whether a `DELETE` query should use `USING` clause for tables in `WITH` clause.
+    /// An indication whether a `DELETE` query should use the `USING` clause for tables in `WITH` clause.
     public let withDeleteRequiresUsing: Bool
     
-    /// An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause.
+    /// An indication whether an `UPDATE` query should use the `FROM` clause for tables in `WITH` clause.
     public let withUpdateRequiresFrom: Bool
     
-    /// A function to create column's autoincrement expression based on the column's type.
+    /// A function to create an autoincrement expression for the column, based on the column type.
     public let createAutoIncrement: ((String) -> String)?
 
-    /// An indication whether the drop index syntax requires `ON table.name` clause.
+    /// An indication whether the drop index syntax requires the `ON table.name` clause.
     public let dropIndexRequiresOnTableName: Bool
 
-    /// DateFormatter to convert between Date and String instances.
+    /// DateFormatter to convert between date and string instances.
     public let dateFormatter: DateFormatter?
 
     // MARK: Initializer
@@ -137,9 +139,9 @@ public class QueryBuilder {
      - Parameter anyOnSubquerySupported: An indication whether ANY on subqueries is supported.
      - Parameter withDeleteRequiresUsing: An indication whether a `DELETE` query should use `USING` clause for tables in `WITH` clause.
      - Parameter withUpdateRequiresFrom: An indication whether an `UPDATE` query should use `FROM` clause for tables in `WITH` clause.
-     - Parameter createAutoIncrement: A function to create column's autoincrement expression based on the column's type.
+     - Parameter createAutoIncrement: A function to create an autoincrement expression for the column, based on the column type.
      - Parameter dropIndexRequiresOnTableName: An indication whether the drop index syntax requires `ON table.name` clause.
-     - Parameter dateFormatter: DateFormatter to convert between Date and String instances.
+     - Parameter dateFormatter: DateFormatter to convert between date and string instances.
     */
     public init(addNumbersToParameters: Bool = true, firstParameterIndex: Int = 1, anyOnSubquerySupported: Bool = true,
                 withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String) -> String)? = nil,
@@ -184,7 +186,8 @@ public class QueryBuilder {
         QueryBuilder.QuerySubstitutionNames.numberedParameter : "$",
         QueryBuilder.QuerySubstitutionNames.namedParameter : "",
         QueryBuilder.QuerySubstitutionNames.double : "double precision"
-     ])     ```
+     ])
+     ```
     
      - Parameter newSubstitutions: A Dictionary containing the entries to update.
     */

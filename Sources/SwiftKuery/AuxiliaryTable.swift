@@ -20,7 +20,7 @@
  Subclasses of the `AuxiliaryTable` class are describing a `Table` that is used in WITH clauses.
  ### Usage Example: ###
  In this example, an `AuxiliaryTable` class is defined containing two columns.
- A `ToDoTable` (as defined in `Table`), a `PersonTable` (as defined in `Column`) and a connection instances are initialized.
+ A `ToDoTable` (as defined in `Table`), a `PersonTable` (as defined in `Column`) and a connection instance are initialized.
  An instance of the `AuxiliaryTable` is then initialised from `Column` instances in "todotable".
  This `AuxiliaryTable` is then used to create an SQL WITH query.
  A description of the created query is then printed.
@@ -33,13 +33,13 @@
  
  let todotable = ToDoTable()          // ToDoTable() is a previously defined `Table` class
  let persontable = PersonTable()      // PersonTable() is a previously defined `Table` class
- let connection = createConnection()
+ let connection = PostgreSQLConnection(host: "localhost", port: 5432, options: [.databaseName("ToDoDatabase")])
  
  let withTable = AuxTable(as: Select(todotable.toDo_completed.as("finished"), todotable.toDo_title.as("name"), from: todotable))
  let withQuery = with(withTable, Select(withTable.finished, persontable.monthlyPay, from: persontable).join(withTable).on(persontable.name == withTable.name))
- let stringQuery = connection.descriptionOf(query: withQuery)
+ let stringQuery = try connection.descriptionOf(query: withQuery)
  print(stringQuery)
- // Prints WITH aux_table AS (SELECT todotable.toDo_completed AS finished, todotable.toDo_title AS name FROM todotable) SELECT aux_table.name, persontable.monthlyPay FROM persontable JOIN aux_table ON persontable.name = aux_table.name"
+ // Prints WITH aux_table AS (SELECT toDoTable.toDo_completed AS finished, toDoTable.toDo_title AS name FROM toDoTable) SELECT aux_table.finished, personTable.monthlyPay FROM personTable JOIN aux_table ON personTable.firstName = aux_table.name
  ```
  */
 open class AuxiliaryTable: Table {
@@ -65,7 +65,7 @@ open class AuxiliaryTable: Table {
      let withTable = AuxTable(as: Select(todotable.toDo_completed.as("finished"), todotable.toDo_title.as("name"), from: todotable))
      ```
  
-     - Parameter query: A query that will be used in WITH clause.
+     - Parameter query: A query that will be used in a WITH clause.
      */
     public convenience init(as query: Query) {
         self.init()
@@ -79,7 +79,7 @@ open class AuxiliaryTable: Table {
      In this example, an `AuxiliaryTable` class is defined containing two columns.
      A `ToDoTable` (as defined in `Table`) instance and queryBuilder instance are initialized.
      An instance of this `AuxiliaryTable` is then initialised from the `Column` instances in "todotable".
-     The buildWith function is then called on this `AuxiliaryTable` instance, with the resulting String being printed out.
+     The `buildWith` function is then called on this `AuxiliaryTable` instance, with the resulting String being printed out.
      ```swift
      class AuxTable: AuxiliaryTable {
          let tableName = "aux_table"

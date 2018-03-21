@@ -17,7 +17,7 @@
 // MARK: Migration
 
 /**
- A class to help with migrations between two versions of a table.
+ A class to help with migration between two versions of a table.
  
  ### Usage Example: ###
  The suggested usage is to keep versions of the table classes somewhere in the application code:
@@ -37,7 +37,7 @@
  ```swift
  typealias MyTable = MyTable_v0
  let t = MyTable()
- let q = Select(from t)
+ let q = Select(from: t)
  ...
  ```
  The migration code from v0 to v1 should be something like this:
@@ -89,10 +89,10 @@ public class Migration {
      ### Usage Example: ###
      In this example, a `Migration` instance is initialized.
      The alterTableName function is called to initiate the SQL query, which changes the name.
-     The "alterHandler" is a closure which handles the response from the database.
+     The "responseHandler" is a closure which handles the response from the database.
      ```swift
      let migration = Migration(from: oldTable, to: newTable, using: connection)
-     migration.alterTableName(alterHandler)
+     migration.alterTableName(responseHandler)
      ```
     
      - Parameter onCompletion: The function to be called when the execution of the query has completed.
@@ -107,12 +107,11 @@ public class Migration {
      Create and execute an SQL query to add a `Column` to the new table in the `Migration` instance.
      ### Usage Example: ###
      In this example, `Migration` and `Column` instances are initialized.
-     The `alterTableAdd` function is called to add the `Column` instance to the "newTable" within the `Migration` instance.
-     The "alterHandler" is a closure which handles the response from the database.
+     The `alterTableAdd` function is called to add a new column to `newTable` within the `Migration` instance and a closure `responseHandler` is passed in to handle the response from the database.
      ```swift
      let migration = Migration(from: oldTable, to: newTable, using: connection)
      let toDo_title = Column("toDo_title", String.self, notNull: true)
-     migration.alterTableAdd(column: toDo_title, onCompletion: alterHandler)
+     migration.alterTableAdd(column: toDo_title, onCompletion: responseHandler)
      ```
     
      - Parameter column: The column to add. This should be a column in the new version of the table.
