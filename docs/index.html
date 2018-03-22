@@ -452,7 +452,7 @@
 
 <p>Swift-Kuery is a pluggable SQL database driver/SDK abstraction layer. Its main idea is to unify the APIs to the various relational databases, providing a Swifty yet SQL-like API. This allows easy switching between databases and forms the basis for an Object-Relational Mapping (ORM) framework.</p>
 
-<p><a href="https://github.com/IBM-Swift/Swift-Kuery-ORM">Swift-Kuery-ORM</a> is an ORM, built on top of Swift-Kuery. Using Swift-Kuery-ORM allows you to simplify the persistence of model objects with your server.</p>
+<p><a href="https://github.com/IBM-Swift/Swift-Kuery-ORM">Swift-Kuery-ORM</a> is an ORM, built on top of Swift-Kuery, which allows you to simplify the persistence of model objects with your server.</p>
 
 <p>Swift-Kuery is easy to learn, consumable framework that comes with a set of <a href="#list-of-plugins">implemented plugins</a>.</p>
 <h2 id='table-of-contents' class='heading'>Table of Contents</h2>
@@ -480,6 +480,7 @@
 <h2 id='examples' class='heading'>Examples</h2>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <p>A Swift-Kuery tutorial on adding a PostgreSQL database to a foodTracker app is available <a href="https://github.com/IBM/FoodTrackerBackend/blob/master/AddDatabase.md">here</a>.</p>
 
 <p>An example ToDo list application, implementing Swift-Kuery, is available <a href="https://github.com/IBM-Swift/iOSSampleKituraKit/tree/persistentiOSKituraKit">here</a>.</p>
@@ -504,83 +505,96 @@
 </code></pre>
 
 <p>First we import Swift-Kuery and Swift-Kuery-PostgreSQL:</p>
+=======
+<p>This example demonstrates how to execute an SQL query using Swift-Kuery with the <a href="https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL">Swift-Kuery-PostgreSQL</a> plugin.</p>
+
+<p>The starting point is a Swift project, created by <code>swift package init --type executable</code>.</p>
+<h3 id='creating-a-postgresql-database' class='heading'>Creating A PostgreSQL Database</h3>
+
+<ol>
+<li><p>Install PostgreSQL</p>
+<h4 id='mac' class='heading'>Mac</h4>
+
+<p><code>brew install postgresql</code></p>
+<h4 id='ubuntu-linux' class='heading'>Ubuntu Linux</h4>
+
+<p><code>sudo apt-get install postgresql postgresql-contrib</code></p></li>
+<li><p>Create a <code>school</code> database</p>
+<pre class="highlight plaintext"><code>createdb school
+psql school
+</code></pre></li>
+<li><p>Create a <code>grades</code> table</p>
+<pre class="highlight plaintext"><code>CREATE TABLE grades (
+    id varchar(100) PRIMARY KEY,
+    course text NOT NULL,
+    grade integer
+);  
+</code></pre></li>
+</ol>
+<h3 id='update-your-package-swift-file' class='heading'>Update your Package.swift file</h3>
+
+<p>Add Swift-Kuery-PostgreSQL to your Package.swift. This will bring in Swift-Kuery as well.</p>
+<pre class="highlight swift"><code><span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
+    <span class="o">...</span>
+    <span class="c1">// Add this line</span>
+    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"1.0.0"</span><span class="p">),</span>
+  <span class="p">],</span>
+  <span class="nv">targets</span><span class="p">:</span> <span class="p">[</span>
+    <span class="o">.</span><span class="nf">target</span><span class="p">(</span>
+      <span class="nv">name</span><span class="p">:</span> <span class="o">...</span>
+      <span class="c1">// Add this modules to your target(s)</span>
+      <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="s">"SwiftKueryPostgreSQL"</span><span class="p">]),</span>
+  <span class="p">]</span>
+</code></pre>
+<h3 id='send-sql-querys-to-the-database' class='heading'>Send SQL querys to the database</h3>
+
+<p>Inside the <code>Main.swift</code> file:</p>
+
+<ol>
+<li><p>Add SwiftKuery and SwiftKueryPostgreSQL to your import statements:</p>
+>>>>>>> refreshed jazzy docs
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftKuery</span>
 <span class="kd">import</span> <span class="kt">SwiftKueryPostgreSQL</span>
-</code></pre>
-
-<p>Now we create a <code><a href="Classes/Table.html">Table</a></code> that corresponds to our <code>Grades</code> table in PostgreSQL - we set the table&rsquo;s name and its columns:</p>
+</code></pre></li>
+<li><p>Create a <code><a href="Classes/Table.html">Table</a></code> class, which matches the <code>grades</code> table you created in the database:</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">Grades</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"Grades"</span>
-    <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"id"</span><span class="p">)</span>
-    <span class="k">let</span> <span class="nv">course</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"course"</span><span class="p">)</span>
-    <span class="k">let</span> <span class="nv">grade</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"grade"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"Grades"</span>
+<span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">course</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"course"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">grade</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"grade"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="k">let</span> <span class="nv">grades</span> <span class="o">=</span> <span class="kt">Grades</span><span class="p">()</span>
-</code></pre>
-
-<p>Next we create a pool of connections to PostgreSQL:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pool</span> <span class="o">=</span> <span class="kt">PostgreSQLConnection</span><span class="o">.</span><span class="nf">createPool</span><span class="p">(</span><span class="nv">host</span><span class="p">:</span> <span class="s">"localhost"</span><span class="p">,</span> <span class="nv">port</span><span class="p">:</span> <span class="mi">5432</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="nf">userName</span><span class="p">(</span><span class="s">"username"</span><span class="p">),</span> <span class="o">.</span><span class="nf">password</span><span class="p">(</span><span class="s">"password"</span><span class="p">)],</span> <span class="nv">poolOptions</span><span class="p">:</span> <span class="kt">ConnectionPoolOptions</span><span class="p">(</span><span class="nv">initialCapacity</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nv">maxCapacity</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="nv">timeout</span><span class="p">:</span> <span class="mi">10000</span><span class="p">))</span>
-</code></pre>
-
-<p>Every time we need a connection, we get it from the pool:</p>
+</code></pre></li>
+<li><p>Create a pool of connections to PostgreSQL:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pool</span> <span class="o">=</span> <span class="kt">PostgreSQLConnection</span><span class="o">.</span><span class="nf">createPool</span><span class="p">(</span><span class="nv">host</span><span class="p">:</span> <span class="s">"localhost"</span><span class="p">,</span> <span class="nv">port</span><span class="p">:</span> <span class="mi">5432</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="nf">databaseName</span><span class="p">(</span><span class="s">"school"</span><span class="p">)],</span> <span class="nv">poolOptions</span><span class="p">:</span> <span class="kt">ConnectionPoolOptions</span><span class="p">(</span><span class="nv">initialCapacity</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nv">maxCapacity</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="nv">timeout</span><span class="p">:</span> <span class="mi">10000</span><span class="p">))</span>
+</code></pre></li>
+<li><p>Create some example students:</p>
+<pre class="highlight plaintext"><code>let students: [[Any]] = [[0, "computing", 92], [1, "physics", 75], [2, "history", 83]]
+</code></pre></li>
+<li><p>Connect to database and perform an SQL query:</p></li>
+</ol>
 <pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span> <span class="p">{</span>
-   <span class="c1">// Build and execute your query here.</span>
-<span class="p">}</span>
-<span class="k">else</span> <span class="p">{</span>
-   <span class="nf">print</span><span class="p">(</span><span class="s">"Error: failed to get a connection."</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>Now lets build the query. Suppose we want to retrieve the average grades for courses with average greater than 90, and sort the results by the average ascending. Here is the SQL query we need to build:</p>
-<pre class="highlight plaintext"><code>SELECT course, ROUND(AVG(grade), 1) AS "average" FROM grades
-GROUP BY course
-HAVING AVG(grade) &gt; 90
-ORDER BY AVG(grade) ASC
-</code></pre>
-
-<p>Note, that we also round the average grades and alias this column in the result as <q>average</q>.</p>
-
-<p>Here is how to create such query using Swift-Kuery:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="n">grades</span><span class="o">.</span><span class="n">course</span><span class="p">,</span> <span class="nf">round</span><span class="p">(</span><span class="nf">avg</span><span class="p">(</span><span class="n">grades</span><span class="o">.</span><span class="n">grade</span><span class="p">),</span> <span class="nv">to</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"average"</span><span class="p">),</span> <span class="nv">from</span><span class="p">:</span> <span class="n">grades</span><span class="p">)</span>
-            <span class="o">.</span><span class="nf">group</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">grades</span><span class="o">.</span><span class="n">course</span><span class="p">)</span>
-            <span class="o">.</span><span class="nf">having</span><span class="p">(</span><span class="nf">avg</span><span class="p">(</span><span class="n">grades</span><span class="o">.</span><span class="n">grade</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">90</span><span class="p">)</span>
-            <span class="o">.</span><span class="nf">order</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="o">.</span><span class="kt">ASC</span><span class="p">(</span><span class="nf">avg</span><span class="p">(</span><span class="n">grades</span><span class="o">.</span><span class="n">grade</span><span class="p">)))</span>
-</code></pre>
-
-<p>As you can see, it is very similar to the SQL query syntax.</p>
-
-<p>Now we execute the created query on our PostgreSQL connection:</p>
-<pre class="highlight swift"><code><span class="k">guard</span> <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span> <span class="k">else</span> <span class="p">{</span>
-   <span class="c1">// Error</span>
-<span class="p">}</span>
-
-<span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">query</span><span class="p">)</span> <span class="p">{</span> <span class="n">queryResult</span> <span class="k">in</span>
-  <span class="k">if</span> <span class="k">let</span> <span class="nv">resultSet</span> <span class="o">=</span> <span class="n">queryResult</span><span class="o">.</span><span class="n">asResultSet</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="n">title</span> <span class="k">in</span> <span class="n">resultSet</span><span class="o">.</span><span class="n">titles</span> <span class="p">{</span>
-      <span class="c1">// The column names of the result.</span>
+    <span class="k">let</span> <span class="nv">insertQuery</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">grades</span><span class="p">,</span> <span class="nv">rows</span><span class="p">:</span> <span class="n">students</span><span class="p">)</span>
+    <span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">insertQuery</span><span class="p">)</span> <span class="p">{</span> <span class="n">insertResult</span> <span class="k">in</span>
+        <span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">grades</span><span class="p">))</span> <span class="p">{</span> <span class="n">selectResult</span> <span class="k">in</span>
+            <span class="k">if</span> <span class="k">let</span> <span class="nv">resultSet</span> <span class="o">=</span> <span class="n">selectResult</span><span class="o">.</span><span class="n">asResultSet</span> <span class="p">{</span>
+                <span class="k">for</span> <span class="n">row</span> <span class="k">in</span> <span class="n">resultSet</span><span class="o">.</span><span class="n">rows</span> <span class="p">{</span>
+                    <span class="nf">print</span><span class="p">(</span><span class="s">"Student </span><span class="se">\(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">??</span> <span class="s">""</span><span class="se">)</span><span class="s">, studying </span><span class="se">\(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">??</span> <span class="s">""</span><span class="se">)</span><span class="s">, scored </span><span class="se">\(</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">??</span> <span class="s">""</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
     <span class="p">}</span>
-    <span class="k">for</span> <span class="n">row</span> <span class="k">in</span> <span class="n">resultSet</span><span class="o">.</span><span class="n">rows</span> <span class="p">{</span>
-      <span class="k">for</span> <span class="n">value</span> <span class="k">in</span> <span class="n">row</span> <span class="p">{</span>
-        <span class="o">...</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-  <span class="k">else</span> <span class="k">if</span> <span class="k">let</span> <span class="nv">queryError</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">asError</span> <span class="p">{</span>
-      <span class="c1">// Something went wrong.</span>
-  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
 
-<p>The expected result is:</p>
-<pre class="highlight plaintext"><code>course     average
-chemistry  92.0
-history    96.0
-</code></pre>
+<p>Save this file, run <code>swift build</code> and then run the created executable module.</p>
+
+<p>This will print the each students id, course and grade, which have been taken from the database. If you go to your database with <code>psql school</code> and enter <code>TABLE grades</code> you will see that the table has been populated with the students.</p>
 <h2 id='sql-injection-prevention-using-parameterization' class='heading'>SQL Injection Prevention using Parameterization</h2>
 
-<p>Parameterize queries to prevent SQL Injection attacks by using Parameter() for untrusted input.</p>
+<p>Unsanitized data that is used in dynamic queries is one of the most common causes of SQL injection vulnerabilities. Parameterizing queries can help to prevent SQL injection attacks.</p>
 
-<p>For example, this is vulnerable to SQL Injection attacks if <code>supplied_key1</code> or <code>supplied_key2</code> is untrusted input:</p>
+<p>The following code is vulnerable to SQL injection if <code>supplied_key1</code> or <code>supplied_key2</code> contain untrusted data (that is, data which has not been validated):</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">confidential</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="n">confidential</span><span class="o">.</span><span class="n">key1</span> <span class="o">==</span> <span class="n">supplied_key1</span> <span class="o">||</span> <span class="n">confidential</span><span class="o">.</span><span class="n">key2</span> <span class="o">==</span> <span class="n">supplied_key2</span><span class="p">)</span>
 
@@ -589,7 +603,7 @@ history    96.0
 <span class="p">}</span>
 </code></pre>
 
-<p>To guard against SQL Injection attacks, use the following Parameterized version instead:</p>
+<p>To guard against SQL Injection attacks, use the following parameterized version of the code:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">confidential</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="n">confidential</span><span class="o">.</span><span class="n">key1</span> <span class="o">==</span> <span class="kt">Parameter</span><span class="p">()</span> <span class="o">||</span> <span class="n">confidential</span><span class="o">.</span><span class="n">key2</span> <span class="o">==</span> <span class="kt">Parameter</span><span class="p">())</span>
 
@@ -599,16 +613,16 @@ history    96.0
 </code></pre>
 <h2 id='prepared-statements' class='heading'>Prepared Statements</h2>
 
-<p>If your application executes some query multiple times with different parameters, you may want to improve the performance of the application by using a prepared statement for that query. I.e. send the query to the database in advance, and later use the returned handle to execute the query providing the parameters. This way the database server will process the query only once.</p>
+<p>If your application executes the same (or similar) SQL statements repeatedly with different parameters you may improve the performance of the application by using a prepared statement. Prepared statements can reduce parsing time as the database parses and compiles the statement template only once and then stores the result but doesn’t execute it. Later, the application supplies values for the parameters of the statement template and the database executes the statement.</p>
 
-<p>For example, suppose our application needs to retrieve the average grade for courses with an average above various values. We change our query to use a parameter instead of a preset value of 90:</p>
+<p>For example, suppose our application needs to retrieve the average grade for courses with an average above a given value; a value which we want to vary. Let’s change our query to use a parameter instead of a predefined value:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="n">grades</span><span class="o">.</span><span class="n">course</span><span class="p">,</span> <span class="nf">round</span><span class="p">(</span><span class="nf">avg</span><span class="p">(</span><span class="n">grades</span><span class="o">.</span><span class="n">grade</span><span class="p">),</span> <span class="nv">to</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"average"</span><span class="p">),</span> <span class="nv">from</span><span class="p">:</span> <span class="n">grades</span><span class="p">)</span>
             <span class="o">.</span><span class="nf">group</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">grades</span><span class="o">.</span><span class="n">course</span><span class="p">)</span>
             <span class="o">.</span><span class="nf">having</span><span class="p">(</span><span class="nf">avg</span><span class="p">(</span><span class="n">grades</span><span class="o">.</span><span class="n">grade</span><span class="p">)</span> <span class="o">&gt;</span> <span class="kt">Parameter</span><span class="p">())</span>
             <span class="o">.</span><span class="nf">order</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="o">.</span><span class="kt">ASC</span><span class="p">(</span><span class="nf">avg</span><span class="p">(</span><span class="n">grades</span><span class="o">.</span><span class="n">grade</span><span class="p">)))</span>
 </code></pre>
 
-<p>Now we prepare the statement:</p>
+<p>Now, prepare the statement:</p>
 <pre class="highlight swift"><code><span class="k">do</span> <span class="p">{</span>
    <span class="k">let</span> <span class="nv">preparedStatement</span> <span class="o">=</span> <span class="k">try</span> <span class="n">connection</span><span class="o">.</span><span class="nf">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 <span class="p">}</span>
@@ -619,7 +633,7 @@ history    96.0
 
 <p><strong>Note</strong>: <code>preparedStatement</code> is a plugin-specific handle for the prepared statement.</p>
 
-<p>Now we can use this handle to execute the query with different parameters without creating it every time:</p>
+<p>Now the application may execute the prepared statement as many times as it wants with different parameter values:</p>
 <pre class="highlight swift"><code><span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">preparedStatement</span><span class="p">:</span> <span class="n">preparedStatement</span><span class="p">,</span> <span class="nv">parameters</span><span class="p">:</span> <span class="p">[</span><span class="mi">70</span><span class="p">])</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
    <span class="o">...</span>
 <span class="p">}</span>
@@ -635,7 +649,7 @@ history    96.0
 
 <p>Swift-Kuery enables you to create tables on the database server.</p>
 
-<p>Let&rsquo;s rewrite our <code>Grades</code> table by adding columns type and constraints:</p>
+<p>Let&rsquo;s revisit the Grades table, which we used in our Example above, and add in two new columns containing the data type and constraints:</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">Grades</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
     <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"Grades"</span>
     <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span> <span class="kt">Char</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">length</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
@@ -648,11 +662,11 @@ history    96.0
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">grades</span> <span class="o">=</span> <span class="kt">Grades</span><span class="p">()</span><span class="o">.</span><span class="nf">foreignKey</span><span class="p">(</span><span class="n">grades</span><span class="o">.</span><span class="n">course</span><span class="p">,</span> <span class="nv">references</span><span class="p">:</span> <span class="n">courses</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </code></pre>
 
-<p>And create a multi-column primary key (if not set in the column as for <code>Grades.id</code>):</p>
+<p>Create a multi-column primary key (if not set in the column as for <code>Grades.id</code>)</p>
 <pre class="highlight swift"><code><span class="n">grades</span><span class="o">.</span><span class="nf">primaryKey</span><span class="p">(</span><span class="n">grades</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">grades</span><span class="o">.</span><span class="n">course</span><span class="p">)</span>
 </code></pre>
 
-<p>To create the table in the database, do:</p>
+<p>Create the table in the database:</p>
 <pre class="highlight swift"><code>
 <span class="n">grades</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="n">connection</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
      <span class="k">guard</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="k">else</span> <span class="p">{</span>
@@ -687,7 +701,7 @@ history    96.0
 <span class="p">}</span>
 </code></pre>
 
-<p>And use a typealias to refer to the current version of the table class in the application:</p>
+<p>Use a typealias to refer to the current version of the table class in the application:</p>
 <pre class="highlight swift"><code><span class="kd">typealias</span> <span class="kt">MyTable</span> <span class="o">=</span> <span class="kt">MyTable_v0</span>
 <span class="k">let</span> <span class="nv">t</span> <span class="o">=</span> <span class="kt">MyTable</span><span class="p">()</span>
 <span class="k">let</span> <span class="nv">q</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="n">from</span> <span class="n">t</span><span class="p">)</span>
@@ -701,7 +715,7 @@ history    96.0
 <span class="n">migration0</span><span class="o">.</span><span class="nf">alterTableAdd</span><span class="p">(</span><span class="nv">column</span><span class="p">:</span> <span class="n">t1</span><span class="o">.</span><span class="n">c</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span> <span class="o">...</span> <span class="p">}</span>
 </code></pre>
 
-<p>And raw alternations, if needed:</p>
+<p>You can also execute raw alterations, if needed:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">dropColumnQuery</span> <span class="o">=</span> <span class="s">"ALTER TABLE "</span> <span class="o">+</span> <span class="n">t1</span><span class="o">.</span><span class="n">tableName</span> <span class="o">+</span> <span class="s">" DROP COLUMN "</span> <span class="o">+</span> <span class="n">t0</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">name</span>
 <span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">dropColumnQuery</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span> <span class="o">...</span> <span class="p">}</span>
 </code></pre>
@@ -977,6 +991,7 @@ HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = &lsquo;apple&rsquo;);</strong><
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-17)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 =======
@@ -994,6 +1009,9 @@ HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = &lsquo;apple&rsquo;);</strong><
 >>>>>>> column docs updated
 =======
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-13)</p>
+=======
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-22)</p>
+>>>>>>> refreshed jazzy docs
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 >>>>>>> show parameters in jazzy docs
     </section>

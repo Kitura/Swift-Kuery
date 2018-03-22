@@ -422,15 +422,12 @@
 
                 </div>
               </div>
-            <p>The <code>Table</code> class is used to represent a specific table from an SQL database in swift.
-This class details the table name, contains the <code><a href="../Classes/Column.html">Column</a></code> instances present inside the table and provides methods to build SQL String descriptions for the various database engines.</p>
+            <p>The <code>Table</code> class is used to create a class in Swift that maps to an external SQL database table.
+To reference a table, you must implement this class and define the table name as well as the <code><a href="../Classes/Column.html">Column</a></code> instances present. The <code>Table</code> class then provides methods to build SQL String descriptions for the various database engines.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, a ToDo table class matching a table stored in an SQL database is defined.
-The <q>ToDoTable</q> class contains the table name and three instances of the <code><a href="../Classes/Column.html">Column</a></code> class.
-An instance of this <q>ToDoTable</q> class is then initialized.
-This instance is then referenced for a SQL select query to retrieve all data from a database.</p>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ToDoTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+<p>In this example, we define a ToDoTable class which maps to an existing table in a SQL database. An instance of the ToDoTable class is then initialized and used in a SQL SELECT query to retrieve the data from the table within the external database.</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ToDoTable</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"toDoTable"</span>
    <span class="k">let</span> <span class="nv">toDo_id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">autoIncrement</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">unique</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
    <span class="k">let</span> <span class="nv">toDo_title</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_title"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
@@ -438,8 +435,7 @@ This instance is then referenced for a SQL select query to retrieve all data fro
 <span class="p">}</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="kt">Application</span> <span class="p">{</span>
-   <span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
-   <span class="k">let</span> <span class="nv">selectQuery</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span> <span class="p">:</span><span class="n">todotable</span><span class="p">)</span>
+   <span class="k">let</span> <span class="nv">selectQuery</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="kt">ToDoTable</span><span class="p">())</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -620,8 +616,8 @@ or its name.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Initialize an instance of Table with a table name
-and an array of Columns</p>
+                        <p>Initialize an instance of the table with a table name
+and an array of Columns.</p>
 
                       </div>
                       <div class="declaration">
@@ -726,16 +722,16 @@ and an array of Columns</p>
                       <div class="abstract">
                         <p>Function to build a String representation for referencing a <code>Table</code> instance.
 A <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code> is used handle variances between the various database engines and produce a correct SQL description.
-This function is required to obey the <code><a href="../Protocols/Buildable.html">Buildable</a></code> protocol.</p>
+This function is required to conform to the <code><a href="../Protocols/Buildable.html">Buildable</a></code> protocol.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code> and <code>Table</code> instances are initialized. (The ToDoTable() is defined in the class example).
+<p>In this example, <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code> and <code>Table</code> instances are initialized. (<code>ToDoTable()</code> is defined in the class example).
 The build function is then called to produce a String description and print the results.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">queryBuilder</span> <span class="o">=</span> <span class="kt">QueryBuilder</span><span class="p">()</span>
 <span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
 <span class="k">let</span> <span class="nv">description</span> <span class="o">=</span> <span class="k">try</span> <span class="n">todotable</span><span class="o">.</span><span class="nf">build</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="n">queryBuilder</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
-<span class="c1">//Prints toDoTable</span>
+<span class="c1">// Prints toDoTable</span>
 </code></pre>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
@@ -858,7 +854,7 @@ This is equivalent to the SQL AS operator.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
 <span class="k">let</span> <span class="nv">aliasTable</span> <span class="o">=</span> <span class="n">todotable</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"new name"</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="kt">String</span><span class="p">(</span><span class="nv">describing</span><span class="p">:</span> <span class="n">aliasTable</span><span class="o">.</span><span class="n">alias</span><span class="p">))</span>
-<span class="c1">//Prints Optional("new name")</span>
+<span class="c1">// Prints Optional("new name")</span>
 </code></pre>
 
                       </div>
@@ -931,11 +927,11 @@ This is equivalent to the SQL AS operator.</p>
                         <p>Function to return a <code><a href="../Structs/Raw.html">Raw</a></code> instance, which will execute a TRUNCATE query on the current <code>Table</code> instance.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, a <code>Table</code> instance is created. The truncate function is called to create a <code><a href="../Structs/Raw.html">Raw</a></code> instance of an String to execute the TRUNCATE SQL Query for todotable.</p>
+<p>In this example, a <code>Table</code> instance is created. The truncate function is called to create a <code><a href="../Structs/Raw.html">Raw</a></code> instance of a String to execute the TRUNCATE SQL Query for todotable.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
 <span class="k">let</span> <span class="nv">truncateRaw</span> <span class="o">=</span> <span class="n">todotable</span><span class="o">.</span><span class="nf">truncate</span><span class="p">()</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">truncateRaw</span><span class="p">))</span>
-<span class="c1">//Prints Raw(query: "TRUNCATE TABLE", tables: [Application.ToDoTable])</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">truncateRaw</span><span class="p">)</span>
+<span class="c1">// Prints Raw(query: "TRUNCATE TABLE", tables: [Application.ToDoTable])</span>
 </code></pre>
 
                       </div>
@@ -981,7 +977,7 @@ This is equivalent to the SQL AS operator.</p>
 <p>In this example, a <code>Table</code> instance is created. The drop function is called to create a <code><a href="../Structs/Raw.html">Raw</a></code> instance of an String to execute the DROP TABLE SQL Query for todotable.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
 <span class="k">let</span> <span class="nv">dropRaw</span> <span class="o">=</span> <span class="n">todotable</span><span class="o">.</span><span class="nf">drop</span><span class="p">()</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">dropRaw</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">dropRaw</span><span class="p">)</span>
 <span class="c1">//Prints Raw(query: "DROP TABLE", tables: [Application.ToDoTable])</span>
 </code></pre>
 
@@ -1026,11 +1022,14 @@ This is equivalent to the SQL AS operator.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <p>In this example, a <code>Table</code> instance is created and a connection to an SQL database is established.
-The create function is called, sending an SQL query to create a matching table in the database.
-The <code><a href="../Enums/QueryResult.html">QueryResult</a></code> is then handled by <q>queryHandler</q>, a function which processes the result.</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
-<span class="k">let</span> <span class="nv">SQLConnection</span> <span class="o">=</span> <span class="kt">PostgreSQLConnection</span><span class="p">(</span><span class="nv">host</span><span class="p">:</span> <span class="s">"localhost"</span><span class="p">,</span> <span class="nv">port</span><span class="p">:</span> <span class="mi">5432</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="nf">databaseName</span><span class="p">(</span><span class="s">"ToDoDatabase"</span><span class="p">)])</span>
-<span class="n">todotable</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt">SQLConnection</span><span class="p">,</span> <span class="nv">onCompletion</span><span class="p">:</span> <span class="n">queryHandler</span><span class="p">)</span>
+The create function is called, executing an SQL query to create a matching table in the database.
+The <code><a href="../Enums/QueryResult.html">QueryResult</a></code> is then handled by <q>queryHandler</q>, a function, which accepts a <code><a href="../Enums/QueryResult.html">QueryResult</a></code>.</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">queryHandler</span><span class="p">(</span><span class="nv">queryResult</span><span class="p">:</span> <span class="kt">QueryResult</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nf">print</span><span class="p">(</span><span class="n">queryResult</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="kt">PostgreSQLConnection</span><span class="p">(</span><span class="nv">host</span><span class="p">:</span> <span class="s">"localhost"</span><span class="p">,</span> <span class="nv">port</span><span class="p">:</span> <span class="mi">5432</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="nf">databaseName</span><span class="p">(</span><span class="s">"ToDoDatabase"</span><span class="p">)])</span>
+<span class="n">todotable</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="n">connection</span><span class="p">,</span> <span class="nv">onCompletion</span><span class="p">:</span> <span class="n">queryHandler</span><span class="p">)</span>
 </code></pre>
 
                       </div>
@@ -1115,7 +1114,7 @@ The function also validates the columns to ensure they belong to the table and d
 <p>In this example, columns for first and last name are initialized and a <code>Table</code> instance called personTable is created. The personTable primary key is then set to be a composite of firstColumn and lastColumn.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">firstColumn</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">lastColumn</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"lastName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
    <span class="k">let</span> <span class="nv">firstName</span> <span class="o">=</span> <span class="n">firstColumn</span>
    <span class="k">let</span> <span class="nv">lastName</span> <span class="o">=</span> <span class="n">lastColumn</span>
@@ -1185,12 +1184,10 @@ The function also validates the columns to ensure they belong to the table and d
 This function calls the composite primaryKey function with a single column to create a single primary key.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, a column for id is initialized and a <code>Table</code> instance called <q>personTable</q> is created.
-The personTable primary key is then set to be <q>idColumn</q>.</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">idColumn</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+<p>In this example, the primary key is set to the <code>id</code> column for the table <code>personTable</code>.</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
-   <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="n">idColumn</span>
+   <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
    <span class="k">let</span> <span class="nv">firstName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
    <span class="k">let</span> <span class="nv">lastName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"lastName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 <span class="p">}</span>
@@ -1263,7 +1260,7 @@ This function calls the composite primaryKey function with a single column to cr
 <span class="k">let</span> <span class="nv">lastColumn</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"lastName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">monthlyPay</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"monthlyPay"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">employeeBand</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"employeeBand"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
    <span class="k">let</span> <span class="nv">firstName</span> <span class="o">=</span> <span class="n">firstColumn</span>
    <span class="k">let</span> <span class="nv">lastName</span> <span class="o">=</span> <span class="n">lastColumn</span>
@@ -1422,7 +1419,7 @@ The personTable foreign key is then set to be firstColumn, referencing columns d
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">idColumn</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">monthlyPay</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"monthlyPay"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">employeeBand</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"employeeBand"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
    <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="n">idColumn</span>
    <span class="k">let</span> <span class="nv">firstName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
@@ -1505,6 +1502,7 @@ The personTable foreign key is then set to be firstColumn, referencing columns d
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-17)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 =======
@@ -1522,6 +1520,9 @@ The personTable foreign key is then set to be firstColumn, referencing columns d
 >>>>>>> column docs updated
 =======
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-13)</p>
+=======
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-22)</p>
+>>>>>>> refreshed jazzy docs
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 >>>>>>> show parameters in jazzy docs
     </section>

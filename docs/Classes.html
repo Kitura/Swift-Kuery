@@ -437,7 +437,7 @@
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <p>In this example, an <code>AuxiliaryTable</code> class is defined containing two columns.
-A <code>ToDoTable</code> (as defined in <code><a href="Classes/Table.html">Table</a></code>), a <code>PersonTable</code> (as defined in <code><a href="Classes/Column.html">Column</a></code>) and a connection instances are initialized.
+A <code>ToDoTable</code> (as defined in <code><a href="Classes/Table.html">Table</a></code>), a <code>PersonTable</code> (as defined in <code><a href="Classes/Column.html">Column</a></code>) and a connection instance are initialized.
 An instance of the <code>AuxiliaryTable</code> is then initialised from <code><a href="Classes/Column.html">Column</a></code> instances in <q>todotable</q>.
 This <code>AuxiliaryTable</code> is then used to create an SQL WITH query.
 A description of the created query is then printed.</p>
@@ -449,13 +449,13 @@ A description of the created query is then printed.</p>
 
 <span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>          <span class="c1">// ToDoTable() is a previously defined `Table` class</span>
 <span class="k">let</span> <span class="nv">persontable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>      <span class="c1">// PersonTable() is a previously defined `Table` class</span>
-<span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="nf">createConnection</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="kt">PostgreSQLConnection</span><span class="p">(</span><span class="nv">host</span><span class="p">:</span> <span class="s">"localhost"</span><span class="p">,</span> <span class="nv">port</span><span class="p">:</span> <span class="mi">5432</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="nf">databaseName</span><span class="p">(</span><span class="s">"ToDoDatabase"</span><span class="p">)])</span>
 
 <span class="k">let</span> <span class="nv">withTable</span> <span class="o">=</span> <span class="kt">AuxTable</span><span class="p">(</span><span class="nv">as</span><span class="p">:</span> <span class="kt">Select</span><span class="p">(</span><span class="n">todotable</span><span class="o">.</span><span class="n">toDo_completed</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"finished"</span><span class="p">),</span> <span class="n">todotable</span><span class="o">.</span><span class="n">toDo_title</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"name"</span><span class="p">),</span> <span class="nv">from</span><span class="p">:</span> <span class="n">todotable</span><span class="p">))</span>
 <span class="k">let</span> <span class="nv">withQuery</span> <span class="o">=</span> <span class="nf">with</span><span class="p">(</span><span class="n">withTable</span><span class="p">,</span> <span class="kt">Select</span><span class="p">(</span><span class="n">withTable</span><span class="o">.</span><span class="n">finished</span><span class="p">,</span> <span class="n">persontable</span><span class="o">.</span><span class="n">monthlyPay</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">persontable</span><span class="p">)</span><span class="o">.</span><span class="nf">join</span><span class="p">(</span><span class="n">withTable</span><span class="p">)</span><span class="o">.</span><span class="nf">on</span><span class="p">(</span><span class="n">persontable</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">withTable</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-<span class="k">let</span> <span class="nv">stringQuery</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="nf">descriptionOf</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">withQuery</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">stringQuery</span> <span class="o">=</span> <span class="k">try</span> <span class="n">connection</span><span class="o">.</span><span class="nf">descriptionOf</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">withQuery</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">stringQuery</span><span class="p">)</span>
-<span class="c1">// Prints WITH aux_table AS (SELECT todotable.toDo_completed AS finished, todotable.toDo_title AS name FROM todotable) SELECT aux_table.name, persontable.monthlyPay FROM persontable JOIN aux_table ON persontable.name = aux_table.name"</span>
+<span class="c1">// Prints WITH aux_table AS (SELECT toDoTable.toDo_completed AS finished, toDoTable.toDo_title AS name FROM toDoTable) SELECT aux_table.finished, personTable.monthlyPay FROM personTable JOIN aux_table ON personTable.firstName = aux_table.name</span>
 </code></pre>
 
                         <a href="Classes/AuxiliaryTable.html" class="slightly-smaller">See more</a>
@@ -504,20 +504,16 @@ A description of the created query is then printed.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>The <code>Column</code> class is used to represent a single column in an SQL table in Swift.
-A combination of columns are used to construct a <code><a href="Classes/Table.html">Table</a></code> class which matches a specific table in an SQL database.
-The <code>Column</code> class details the column name, the table the column belongs to, any SQL keywords which apply to the column and the data type of the column.</p>
-<h3 id='usage-example' class='heading'>Usage Example:</h3>
-
-<p>In this example, a person <code><a href="Classes/Table.html">Table</a></code> class matching a table stored in an SQL database is defined.
-The <q>PersonTable</q> class contains the table name and three instances of the <code>Column</code> class.
-The person_id column is an set as an autoIncrementing, primary key, containing values of type Int32, which must be unique and not null.
-The name column contains not null, Strings and monthlyPay contains values of type Int32.</p>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
-    <span class="k">let</span> <span class="nv">person_id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"person_id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">autoIncrement</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">unique</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-    <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-    <span class="k">let</span> <span class="nv">monthlyPay</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"monthlyPay"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-<span class="p">}</span>
+ A combination of columns are used to construct a <code><a href="Classes/Table.html">Table</a></code> class which matches a specific table in an SQL database.
+ The <code>Column</code> class details the column name, the table the column belongs to, any SQL keywords which apply to the column and the data type of the column.
+ ### Usage Example: ###
+In this example, a person <code><a href="Classes/Table.html">Table</a></code> class, containing three instances of the <code>Column</code> class, is defined.</p>
+<pre class="highlight swift"><code> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+     <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
+     <span class="k">let</span> <span class="nv">person_id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"person_id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">autoIncrement</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">unique</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+     <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"name"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+     <span class="k">let</span> <span class="nv">monthlyPay</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"monthlyPay"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+ <span class="p">}</span>
 </code></pre>
 
                         <a href="Classes/Column.html" class="slightly-smaller">See more</a>
@@ -557,23 +553,19 @@ The name column contains not null, Strings and monthlyPay contains values of typ
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This class implements a First in First out connection pool. The pool maintains a cache of <code><a href="Classes/ConnectionPoolConnection.html">ConnectionPoolConnection</a></code> instances, which can be reused for future requests, to enhance performance.</p>
-<h3 id='usage-example' class='heading'>Usage Example:</h3>
-
-<p>In this example, a closure to generate and release <code><a href="Protocols/Connection.html">Connection</a></code> instances are defined.
-A connection pool is then initialized with defined options, the <code>connectionGenerator</code> and the <code>connectionReleaser</code>.
-A single <code><a href="Protocols/Connection.html">Connection</a></code> is then retrieved from the pool.</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">options</span> <span class="o">=</span> <span class="kt">ConnectionPoolOptions</span><span class="p">(</span><span class="nv">initialCapacity</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nv">maxCapacity</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="nv">timeout</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Connection</span><span class="p">?</span> <span class="o">=</span> <span class="p">{</span>
-   <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="kt">PostgreSQLConnection</span><span class="p">(</span><span class="nv">connectionParameters</span><span class="p">:</span> <span class="n">connectionParameters</span><span class="p">)</span>
-   <span class="k">return</span> <span class="n">connection</span>
-<span class="p">}</span>
-<span class="k">let</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="p">(</span><span class="n">_</span> <span class="nv">connection</span><span class="p">:</span> <span class="kt">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span> <span class="o">=</span> <span class="p">{</span> <span class="n">connection</span> <span class="k">in</span>
-<span class="n">connection</span><span class="o">.</span><span class="nf">closeConnection</span><span class="p">()</span>
-<span class="p">}</span>
-<span class="k">let</span> <span class="nv">connectionPool</span> <span class="o">=</span> <span class="kt">ConnectionPool</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="n">options</span><span class="p">,</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="n">connectionGenerator</span><span class="p">,</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="n">connectionReleaser</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="k">let</span> <span class="nv">singleConnection</span> <span class="o">=</span> <span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span>
+                        <p>This class implements a first in first out connection pool. The pool maintains a cache of <code><a href="Classes/ConnectionPoolConnection.html">ConnectionPoolConnection</a></code> instances, which can be reused for future requests, to enhance performance.
+ ### Usage Example: ###
+This example shows how to create a ConnectionPool manually. Two closures to generate and release Connection instances are defined. A connection pool is then initialized with the defined closures and options. A single Connection is then retrieved from the pool.</p>
+<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">options</span> <span class="o">=</span> <span class="kt">ConnectionPoolOptions</span><span class="p">(</span><span class="nv">initialCapacity</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nv">maxCapacity</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="nv">timeout</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
+ <span class="k">let</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Connection</span><span class="p">?</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="kt">PostgreSQLConnection</span><span class="p">(</span><span class="nv">host</span><span class="p">:</span> <span class="s">"localhost"</span><span class="p">,</span> <span class="nv">port</span><span class="p">:</span> <span class="mi">5432</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="nf">databaseName</span><span class="p">(</span><span class="s">"ExampleDatabase"</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">connection</span>
+ <span class="p">}</span>
+ <span class="k">let</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="p">(</span><span class="n">_</span> <span class="nv">connection</span><span class="p">:</span> <span class="kt">Connection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span> <span class="o">=</span> <span class="p">{</span> <span class="n">connection</span> <span class="k">in</span>
+    <span class="n">connection</span><span class="o">.</span><span class="nf">closeConnection</span><span class="p">()</span>
+ <span class="p">}</span>
+ <span class="k">let</span> <span class="nv">connectionPool</span> <span class="o">=</span> <span class="kt">ConnectionPool</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="n">options</span><span class="p">,</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="n">connectionGenerator</span><span class="p">,</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="n">connectionReleaser</span><span class="p">)</span>
+ <span class="k">let</span> <span class="nv">singleConnection</span> <span class="o">=</span> <span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span>
 </code></pre>
 
                         <a href="Classes/ConnectionPool.html" class="slightly-smaller">See more</a>
@@ -613,15 +605,15 @@ A single <code><a href="Protocols/Connection.html">Connection</a></code> is then
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This class uses a <code><a href="Protocols/Connection.html">Connection</a></code> instance and a <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code> instance to implements a wrapper for the <code><a href="Protocols/Connection.html">Connection</a></code> class.
+                        <p>Note: This class is usually initialised by the <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code> instance. Therefore, a standard user will not use this class unless they are creating their own SQL plugin.</p>
+
+<p>This class uses a <code><a href="Protocols/Connection.html">Connection</a></code> instance and a <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code> instance to implement a wrapper for the <code><a href="Protocols/Connection.html">Connection</a></code> class.
 It implements the functions of the <code><a href="Protocols/Connection.html">Connection</a></code> protocol, in addition to the <code>closeConnection()</code> function
-for releasing a <code><a href="Protocols/Connection.html">Connection</a></code> instance from the <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code>.
-It is usually initialised by the <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code> instance.</p>
+for releasing a <code><a href="Protocols/Connection.html">Connection</a></code> instance from the <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code>.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <p>In this example, a <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code> instance is initialized (parameters defined in docs for <code><a href="Classes/ConnectionPool.html">ConnectionPool</a></code>).
-A <code>ConnectionPoolConnection</code> instance called <q>connection</q> is then returned by calling <q>getConnection()</q> on <q>connectionPool</q>.
-The closeConnection() function is then called on connection to release it from the pool.</p>
+A <code>ConnectionPoolConnection</code> instance is created by calling <code>connectionPool.getConnection()</code>. This connection is then released from the pool.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">connectionPool</span> <span class="o">=</span> <span class="kt">ConnectionPool</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="n">options</span><span class="p">,</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="n">connectionGenerator</span><span class="p">,</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="n">connectionReleaser</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span>
 <span class="n">connection</span><span class="o">.</span><span class="nf">closeConnection</span><span class="p">()</span>
@@ -664,7 +656,7 @@ The closeConnection() function is then called on connection to release it from t
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A class to help with migrations between two versions of a table.</p>
+                        <p>A class to help with migration between two versions of a table.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <p>The suggested usage is to keep versions of the table classes somewhere in the application code:</p>
@@ -683,7 +675,7 @@ The closeConnection() function is then called on connection to release it from t
 <p>And use a typealias to refer to the current version of the table class in the application:</p>
 <pre class="highlight swift"><code><span class="kd">typealias</span> <span class="kt">MyTable</span> <span class="o">=</span> <span class="kt">MyTable_v0</span>
 <span class="k">let</span> <span class="nv">t</span> <span class="o">=</span> <span class="kt">MyTable</span><span class="p">()</span>
-<span class="k">let</span> <span class="nv">q</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="n">from</span> <span class="n">t</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">q</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">t</span><span class="p">)</span>
 <span class="o">...</span>
 </code></pre>
 
@@ -736,16 +728,18 @@ The closeConnection() function is then called on connection to release it from t
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Used in code dealing with variances between the various database engines. As
+                        <p>Note: Changing the <code>QueryBuilder</code> should only be needed for adding support for a new database plugin.</p>
+
+<p><code>QueryBuilder</code> is used in code dealing with variances between the various database engines. As
 different databases have different query syntax, sometimes changes need to be
 made when generating the actual SQL statement to run. Additional needed changes
-should be done by updating QueryBuilder substitutions array. Every query component
+should be done by updating <code>QueryBuilder</code> substitutions array. Every query component
 then builds its string representation using that array.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <p>In this example, a <code>QueryBuilder</code> for PostgreSQL is initialized.
-Parameters are set for postgreSQL and Strings keywords for SQL queries are substituted into the queryBuilder.
-The queryBuilder is then used to create a String description of an instance of the <code><a href="Classes/Table.html">Table</a></code> class called <q>todotable</q>.</p>
+Parameters are set for PostgreSQL and string keywords for SQL queries are substituted into the queryBuilder.
+The <code>queryBuilder</code> is then used to create a string description of the <code><a href="Classes/Table.html">Table</a></code> class instance called <code>todotable</code>.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">queryBuilder</span> <span class="o">=</span> <span class="kt">QueryBuilder</span><span class="p">(</span><span class="nv">withDeleteRequiresUsing</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">withUpdateRequiresFrom</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">createAutoIncrement</span><span class="p">:</span> <span class="n">createAutoIncrement</span><span class="p">)</span>
 <span class="n">queryBuilder</span><span class="o">.</span><span class="nf">updateSubstitutions</span><span class="p">([</span><span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">ucase</span> <span class="p">:</span> <span class="s">"UPPER"</span><span class="p">,</span>
    <span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">lcase</span> <span class="p">:</span> <span class="s">"LOWER"</span><span class="p">,</span>
@@ -836,15 +830,12 @@ The queryBuilder is then used to create a String description of an instance of t
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The <code>Table</code> class is used to represent a specific table from an SQL database in swift.
-This class details the table name, contains the <code><a href="Classes/Column.html">Column</a></code> instances present inside the table and provides methods to build SQL String descriptions for the various database engines.</p>
+                        <p>The <code>Table</code> class is used to create a class in Swift that maps to an external SQL database table.
+To reference a table, you must implement this class and define the table name as well as the <code><a href="Classes/Column.html">Column</a></code> instances present. The <code>Table</code> class then provides methods to build SQL String descriptions for the various database engines.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, a ToDo table class matching a table stored in an SQL database is defined.
-The <q>ToDoTable</q> class contains the table name and three instances of the <code><a href="Classes/Column.html">Column</a></code> class.
-An instance of this <q>ToDoTable</q> class is then initialized.
-This instance is then referenced for a SQL select query to retrieve all data from a database.</p>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ToDoTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+<p>In this example, we define a ToDoTable class which maps to an existing table in a SQL database. An instance of the ToDoTable class is then initialized and used in a SQL SELECT query to retrieve the data from the table within the external database.</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ToDoTable</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"toDoTable"</span>
    <span class="k">let</span> <span class="nv">toDo_id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">autoIncrement</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">unique</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
    <span class="k">let</span> <span class="nv">toDo_title</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_title"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
@@ -852,8 +843,7 @@ This instance is then referenced for a SQL select query to retrieve all data fro
 <span class="p">}</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="kt">Application</span> <span class="p">{</span>
-   <span class="k">let</span> <span class="nv">todotable</span> <span class="o">=</span> <span class="kt">ToDoTable</span><span class="p">()</span>
-   <span class="k">let</span> <span class="nv">selectQuery</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span> <span class="p">:</span><span class="n">todotable</span><span class="p">)</span>
+   <span class="k">let</span> <span class="nv">selectQuery</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="kt">ToDoTable</span><span class="p">())</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -883,6 +873,7 @@ This instance is then referenced for a SQL select query to retrieve all data fro
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-17)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 =======
@@ -900,6 +891,9 @@ This instance is then referenced for a SQL select query to retrieve all data fro
 >>>>>>> column docs updated
 =======
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-13)</p>
+=======
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-22)</p>
+>>>>>>> refreshed jazzy docs
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 >>>>>>> show parameters in jazzy docs
     </section>

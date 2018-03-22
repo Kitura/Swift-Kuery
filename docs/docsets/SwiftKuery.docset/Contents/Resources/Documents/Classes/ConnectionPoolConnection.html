@@ -411,15 +411,15 @@
 
                 </div>
               </div>
-            <p>This class uses a <code><a href="../Protocols/Connection.html">Connection</a></code> instance and a <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code> instance to implements a wrapper for the <code><a href="../Protocols/Connection.html">Connection</a></code> class.
+            <p>Note: This class is usually initialised by the <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code> instance. Therefore, a standard user will not use this class unless they are creating their own SQL plugin.</p>
+
+<p>This class uses a <code><a href="../Protocols/Connection.html">Connection</a></code> instance and a <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code> instance to implement a wrapper for the <code><a href="../Protocols/Connection.html">Connection</a></code> class.
 It implements the functions of the <code><a href="../Protocols/Connection.html">Connection</a></code> protocol, in addition to the <code>closeConnection()</code> function
-for releasing a <code><a href="../Protocols/Connection.html">Connection</a></code> instance from the <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code>.
-It is usually initialised by the <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code> instance.</p>
+for releasing a <code><a href="../Protocols/Connection.html">Connection</a></code> instance from the <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code>.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <p>In this example, a <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code> instance is initialized (parameters defined in docs for <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code>).
-A <code>ConnectionPoolConnection</code> instance called <q>connection</q> is then returned by calling <q>getConnection()</q> on <q>connectionPool</q>.
-The closeConnection() function is then called on connection to release it from the pool.</p>
+A <code>ConnectionPoolConnection</code> instance is created by calling <code>connectionPool.getConnection()</code>. This connection is then released from the pool.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">connectionPool</span> <span class="o">=</span> <span class="kt">ConnectionPool</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="n">options</span><span class="p">,</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="n">connectionGenerator</span><span class="p">,</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="n">connectionReleaser</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span>
 <span class="n">connection</span><span class="o">.</span><span class="nf">closeConnection</span><span class="p">()</span>
@@ -539,7 +539,7 @@ The closeConnection() function is then called on connection to release it from t
                         <p>Close the connection to the database.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, The closeConnection() function is called on a <code>ConnectionPoolConnection</code> instance called <q>connection</q> to release it from it&rsquo;s <code><a href="../Classes/ConnectionPool.html">ConnectionPool</a></code> instance.</p>
+<p>In this example, the <code>closeConnection()</code> function is called on a <code>ConnectionPoolConnection</code> instance to release it from its ConnectionPool instance.</p>
 <pre class="highlight swift"><code><span class="n">connection</span><span class="o">.</span><span class="nf">closeConnection</span><span class="p">()</span>
 </code></pre>
 
@@ -571,7 +571,7 @@ The closeConnection() function is then called on connection to release it from t
                         <p>An indication whether there is a connection to the database.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, The isConnected() function is called on a <code>ConnectionPoolConnection</code> instance called <q>connection</q> and returns a true value, which is then printed.</p>
+<p>In this example, the <code>isConnected()</code> function is called on a <code>ConnectionPoolConnection</code> instance called connection, this returns a true value that is then printed.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">connected</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="nf">isConnected</span><span class="p">()</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">connected</span><span class="p">)</span>
 <span class="c1">// Prints true</span>
@@ -698,7 +698,7 @@ The closeConnection() function is then called on connection to release it from t
                               </td>
                               <td>
                                 <div>
-                                  <p>A String with the query to execute.</p>
+                                  <p>A string that contains the query to execute.</p>
                                 </div>
                               </td>
                             </tr>
@@ -826,7 +826,7 @@ The closeConnection() function is then called on connection to release it from t
                               </td>
                               <td>
                                 <div>
-                                  <p>A String with the query to execute.</p>
+                                  <p>A string that contains the query to execute.</p>
                                 </div>
                               </td>
                             </tr>
@@ -966,7 +966,7 @@ The closeConnection() function is then called on connection to release it from t
                               </td>
                               <td>
                                 <div>
-                                  <p>A String with the query to execute.</p>
+                                  <p>A string that contains the query to execute.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1024,10 +1024,10 @@ The closeConnection() function is then called on connection to release it from t
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Prepare statement.</p>
+                        <p>Create a prepared statement from the passed in query.</p>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
-    QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
+    QueryError.syntaxError if the query build fails, or a database error if it fails to prepare statement.
 
 </div>
 
@@ -1060,7 +1060,7 @@ The closeConnection() function is then called on connection to release it from t
                               </td>
                               <td>
                                 <div>
-                                  <p>The query to prepare statement for.</p>
+                                  <p>The query to prepare the statement for.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1087,10 +1087,10 @@ The closeConnection() function is then called on connection to release it from t
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Prepare statement.</p>
+                        <p>Create a prepared statement from the passed in query.</p>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
-    QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
+    QueryError.syntaxError if query build fails, or a database error if it fails to prepare the statement.
 
 </div>
 
@@ -1123,7 +1123,7 @@ The closeConnection() function is then called on connection to release it from t
                               </td>
                               <td>
                                 <div>
-                                  <p>A String with the query to prepare statement for.</p>
+                                  <p>A String with the query to the prepare statement for.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1441,7 +1441,7 @@ The closeConnection() function is then called on connection to release it from t
                         <p>Return a String representation of the query.</p>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
-    QueryError.syntaxError if query build fails.
+    QueryError.syntaxError if the query build fails.
 
 </div>
 
@@ -1527,7 +1527,7 @@ The closeConnection() function is then called on connection to release it from t
                               </td>
                               <td>
                                 <div>
-                                  <p>The function to be called when the execution of start transaction command has completed.</p>
+                                  <p>The function to be called when the execution of the start transaction command has completed.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1573,7 +1573,7 @@ The closeConnection() function is then called on connection to release it from t
                               </td>
                               <td>
                                 <div>
-                                  <p>The function to be called when the execution of commit transaction command has completed.</p>
+                                  <p>The function to be called when the execution of the commit transaction command has completed.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1619,7 +1619,7 @@ The closeConnection() function is then called on connection to release it from t
                               </td>
                               <td>
                                 <div>
-                                  <p>The function to be called when the execution of rolback transaction command has completed.</p>
+                                  <p>The function to be called when the execution of the rollback transaction command has completed.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1677,7 +1677,7 @@ The closeConnection() function is then called on connection to release it from t
                               </td>
                               <td>
                                 <div>
-                                  <p>The function to be called when the execution of create savepoint command has completed.</p>
+                                  <p>The function to be called when the execution of the create savepoint command has completed.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1723,7 +1723,7 @@ The closeConnection() function is then called on connection to release it from t
                               </td>
                               <td>
                                 <div>
-                                  <p>The function to be called when the execution of rolback transaction command has completed.</p>
+                                  <p>The function to be called when the execution of the rollback transaction command has completed.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1781,7 +1781,7 @@ The closeConnection() function is then called on connection to release it from t
                               </td>
                               <td>
                                 <div>
-                                  <p>The function to be called when the execution of release savepoint command has completed.</p>
+                                  <p>The function to be called when the execution of the release savepoint command has completed.</p>
                                 </div>
                               </td>
                             </tr>
@@ -1804,6 +1804,7 @@ The closeConnection() function is then called on connection to release it from t
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-17)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 =======
@@ -1821,6 +1822,9 @@ The closeConnection() function is then called on connection to release it from t
 >>>>>>> column docs updated
 =======
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-13)</p>
+=======
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-22)</p>
+>>>>>>> refreshed jazzy docs
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 >>>>>>> show parameters in jazzy docs
     </section>

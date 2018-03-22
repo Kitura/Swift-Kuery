@@ -411,16 +411,18 @@
 
                 </div>
               </div>
-            <p>Used in code dealing with variances between the various database engines. As
+            <p>Note: Changing the <code>QueryBuilder</code> should only be needed for adding support for a new database plugin.</p>
+
+<p><code>QueryBuilder</code> is used in code dealing with variances between the various database engines. As
 different databases have different query syntax, sometimes changes need to be
 made when generating the actual SQL statement to run. Additional needed changes
-should be done by updating QueryBuilder substitutions array. Every query component
+should be done by updating <code>QueryBuilder</code> substitutions array. Every query component
 then builds its string representation using that array.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <p>In this example, a <code>QueryBuilder</code> for PostgreSQL is initialized.
-Parameters are set for postgreSQL and Strings keywords for SQL queries are substituted into the queryBuilder.
-The queryBuilder is then used to create a String description of an instance of the <code><a href="../Classes/Table.html">Table</a></code> class called <q>todotable</q>.</p>
+Parameters are set for PostgreSQL and string keywords for SQL queries are substituted into the queryBuilder.
+The <code>queryBuilder</code> is then used to create a string description of the <code><a href="../Classes/Table.html">Table</a></code> class instance called <code>todotable</code>.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">queryBuilder</span> <span class="o">=</span> <span class="kt">QueryBuilder</span><span class="p">(</span><span class="nv">withDeleteRequiresUsing</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">withUpdateRequiresFrom</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">createAutoIncrement</span><span class="p">:</span> <span class="n">createAutoIncrement</span><span class="p">)</span>
 <span class="n">queryBuilder</span><span class="o">.</span><span class="nf">updateSubstitutions</span><span class="p">([</span><span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">ucase</span> <span class="p">:</span> <span class="s">"UPPER"</span><span class="p">,</span>
    <span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">lcase</span> <span class="p">:</span> <span class="s">"LOWER"</span><span class="p">,</span>
@@ -459,7 +461,7 @@ The queryBuilder is then used to create a String description of an instance of t
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An array of substitutions to be made in query String representation.</p>
+                        <p>An array of substitutions to be made in query string representation.</p>
 
                       </div>
                       <div class="declaration">
@@ -490,7 +492,7 @@ The queryBuilder is then used to create a String description of an instance of t
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <p>In this example, a <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code> for PostgreSQL is initialized.
-Parameters are set for postgreSQL and Strings keywords for SQL queries are substituted into the queryBuilder. The <code>QuerySubstitutionNames</code> enum is used to refer to substitutions by name instead of their position in the <q>substitutions</q> array.</p>
+Parameters are set for PostgreSQL and strings keywords for SQL queries are substituted into the queryBuilder. The <code>QuerySubstitutionNames</code> enum is used to refer to substitutions by name instead of their position in the <q>substitutions</q> array.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">queryBuilder</span> <span class="o">=</span> <span class="kt">QueryBuilder</span><span class="p">(</span><span class="nv">withDeleteRequiresUsing</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">withUpdateRequiresFrom</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">createAutoIncrement</span><span class="p">:</span> <span class="n">createAutoIncrement</span><span class="p">)</span>
 <span class="n">queryBuilder</span><span class="o">.</span><span class="nf">updateSubstitutions</span><span class="p">([</span><span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">ucase</span> <span class="p">:</span> <span class="s">"UPPER"</span><span class="p">,</span>
    <span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">lcase</span> <span class="p">:</span> <span class="s">"LOWER"</span><span class="p">,</span>
@@ -620,7 +622,7 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An indication whether a <code>DELETE</code> query should use <code>USING</code> clause for tables in <code>WITH</code> clause.</p>
+                        <p>An indication whether a <code>DELETE</code> query should use the <code>USING</code> clause for tables in <code>WITH</code> clause.</p>
 
                       </div>
                       <div class="declaration">
@@ -647,7 +649,7 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An indication whether an <code>UPDATE</code> query should use <code>FROM</code> clause for tables in <code>WITH</code> clause.</p>
+                        <p>An indication whether an <code>UPDATE</code> query should use the <code>FROM</code> clause for tables in <code>WITH</code> clause.</p>
 
                       </div>
                       <div class="declaration">
@@ -674,7 +676,7 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A function to create column&rsquo;s autoincrement expression based on the column&rsquo;s type.</p>
+                        <p>A function to create an autoincrement expression for the column, based on the column type.</p>
 
                       </div>
                       <div class="declaration">
@@ -701,7 +703,7 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An indication whether the drop index syntax requires <code>ON table.name</code> clause.</p>
+                        <p>An indication whether the drop index syntax requires the <code>ON table.name</code> clause.</p>
 
                       </div>
                       <div class="declaration">
@@ -728,7 +730,7 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>DateFormatter to convert between Date and String instances.</p>
+                        <p>DateFormatter to convert between date and string instances.</p>
 
                       </div>
                       <div class="declaration">
@@ -856,7 +858,7 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>A function to create column&rsquo;s autoincrement expression based on the column&rsquo;s type.</p>
+                                  <p>A function to create an autoincrement expression for the column, based on the column type.</p>
                                 </div>
                               </td>
                             </tr>
@@ -880,7 +882,7 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>DateFormatter to convert between Date and String instances.</p>
+                                  <p>DateFormatter to convert between date and string instances.</p>
                                 </div>
                               </td>
                             </tr>
@@ -925,9 +927,7 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
    <span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">numberedParameter</span> <span class="p">:</span> <span class="s">"$"</span><span class="p">,</span>
    <span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">namedParameter</span> <span class="p">:</span> <span class="s">""</span><span class="p">,</span>
    <span class="kt">QueryBuilder</span><span class="o">.</span><span class="kt">QuerySubstitutionNames</span><span class="o">.</span><span class="nv">double</span> <span class="p">:</span> <span class="s">"double precision"</span>
-<span class="p">])</span>     <span class="err">```</span>
-
-<span class="o">-</span> <span class="kt">Parameter</span> <span class="nv">newSubstitutions</span><span class="p">:</span> <span class="kt">A</span> <span class="kt">Dictionary</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">entries</span> <span class="n">to</span> <span class="n">update</span><span class="o">.</span>
+<span class="p">])</span>
 </code></pre>
 
                       </div>
@@ -938,6 +938,25 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateSubstitutions</span><span class="p">(</span><span class="n">_</span> <span class="nv">newSubstitutions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/QueryBuilder/QuerySubstitutionNames.html">QuerySubstitutionNames</a></span><span class="p">:</span><span class="kt">String</span><span class="p">])</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>newSubstitutions</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A Dictionary containing the entries to update.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -950,6 +969,7 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
       </article>
     </div>
     <section class="footer">
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -972,6 +992,9 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
 >>>>>>> column docs updated
 =======
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-13)</p>
+=======
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-22)</p>
+>>>>>>> refreshed jazzy docs
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 >>>>>>> show parameters in jazzy docs
     </section>

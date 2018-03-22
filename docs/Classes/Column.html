@@ -412,20 +412,16 @@
                 </div>
               </div>
             <p>The <code>Column</code> class is used to represent a single column in an SQL table in Swift.
-A combination of columns are used to construct a <code><a href="../Classes/Table.html">Table</a></code> class which matches a specific table in an SQL database.
-The <code>Column</code> class details the column name, the table the column belongs to, any SQL keywords which apply to the column and the data type of the column.</p>
-<h3 id='usage-example' class='heading'>Usage Example:</h3>
-
-<p>In this example, a person <code><a href="../Classes/Table.html">Table</a></code> class matching a table stored in an SQL database is defined.
-The <q>PersonTable</q> class contains the table name and three instances of the <code>Column</code> class.
-The person_id column is an set as an autoIncrementing, primary key, containing values of type Int32, which must be unique and not null.
-The name column contains not null, Strings and monthlyPay contains values of type Int32.</p>
-<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
-    <span class="k">let</span> <span class="nv">person_id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"person_id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">autoIncrement</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">unique</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-    <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-    <span class="k">let</span> <span class="nv">monthlyPay</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"monthlyPay"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
-<span class="p">}</span>
+ A combination of columns are used to construct a <code><a href="../Classes/Table.html">Table</a></code> class which matches a specific table in an SQL database.
+ The <code>Column</code> class details the column name, the table the column belongs to, any SQL keywords which apply to the column and the data type of the column.
+ ### Usage Example: ###
+In this example, a person <code><a href="../Classes/Table.html">Table</a></code> class, containing three instances of the <code>Column</code> class, is defined.</p>
+<pre class="highlight swift"><code> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span> <span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+     <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
+     <span class="k">let</span> <span class="nv">person_id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"person_id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">autoIncrement</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">unique</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+     <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"name"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+     <span class="k">let</span> <span class="nv">monthlyPay</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"monthlyPay"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+ <span class="p">}</span>
 </code></pre>
 
           </div>
@@ -698,7 +694,7 @@ The name column contains not null, Strings and monthlyPay contains values of typ
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The expression to check for values inserted into of the column.</p>
+                        <p>A boolean expression constraint, which values inserted into of the column will be checked against.</p>
 
                       </div>
                       <div class="declaration">
@@ -826,9 +822,7 @@ Name must be provided, but all other fields will default to either nil or false 
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <p>In this example, an instance of the <code>Column</code> class is created to match The person_id column of an SQL table.
-The person_id column in the database is stored as an Int32 and is the table&rsquo;s primary key.
-To represent this a <code>Column</code> is initialised with name set to <q>person_id</q>, type set as Int32.self (self is required to pass Int32 as the class) and primaryKey set to true.
-A feature of the primary key is that they must be unique can cannot be null so unique and notNull are set to true.</p>
+To represent this a <code>Column</code> is initialised with name set to <q>person_id</q>, type set as Int32.self (self is required to pass Int32 as the class) and primaryKey properties set to true.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">person_id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"person_id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">autoIncrement</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">unique</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 >>>>>>> docs reviewed
 </code></pre>
@@ -1157,7 +1151,7 @@ This function is required to obey the <code><a href="../Protocols/Buildable.html
 <p>In this example, <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code> and a <code>PersonTable</code> (as defined at the top of this class) instances are initialized.
 The build function is then called to produce a String description and the results are printed.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">queryBuilder</span> <span class="o">=</span> <span class="kt">QueryBuilder</span><span class="p">()</span>
-<span class="k">let</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>  <span class="c1">// PersonTable() is a previously defined `Table` class</span>
+<span class="k">let</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>
 <span class="k">let</span> <span class="nv">description</span> <span class="o">=</span> <span class="k">try</span> <span class="n">personTable</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="nf">build</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="n">queryBuilder</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
 <span class="c1">// Prints personTable.name</span>
@@ -1236,11 +1230,11 @@ A <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code> is used h
 >>>>>>> table class Jazzy update
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code> and a <code>PersonTable</code> (as defined at the top of this class) instances are initialized.
-The build function is then called to produce a String representation of the index column and the results are printed.</p>
+<p>In this example, <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code> and <code>PersonTable</code> (as defined at the top of this class) instances are initialized.
+The build function is then called to produce a String representation of the buildIndex and the results are printed.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">queryBuilder</span> <span class="o">=</span> <span class="kt">QueryBuilder</span><span class="p">()</span>
-<span class="k">let</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>  <span class="c1">// PersonTable() is a previously defined `Table` class</span>
-<span class="k">let</span> <span class="nv">description</span> <span class="o">=</span> <span class="k">try</span> <span class="n">personTable</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="nf">build</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="n">queryBuilder</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">description</span> <span class="o">=</span> <span class="n">personTable</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="nf">buildIndex</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="n">queryBuilder</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
 <span class="c1">// Prints name</span>
 </code></pre>
@@ -1323,7 +1317,7 @@ A <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code> is used h
 <p>In this example, <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code> and a <code>PersonTable</code> (as defined at the top of this class) instances are initialized.
 The create function is then used to produce a String description of the <code>Column</code> and print the results.</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">queryBuilder</span> <span class="o">=</span> <span class="kt">QueryBuilder</span><span class="p">()</span>
-<span class="k">let</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>  <span class="c1">// PersonTable() is a previously defined `Table` class</span>
+<span class="k">let</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>
 <span class="k">let</span> <span class="nv">description</span> <span class="o">=</span> <span class="k">try</span> <span class="n">personTable</span><span class="o">.</span><span class="n">person_id</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="n">queryBuilder</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
 <span class="c1">// Prints "person_id integer AUTO_INCREMENT PRIMARY KEY NOT NULL UNIQUE"</span>
@@ -1452,16 +1446,20 @@ The create function is then used to produce a String description of the <code>Co
                         <p>Function to return a copy of the current <code>Column</code> instance with the given name as its alias. This is equivelent to the SQL AS operator.</p>
 =======
                         <p>Function to return a copy of the current <code>Column</code> instance with the given name as its alias.
+<<<<<<< HEAD
 This is equivelent to the SQL AS operator.</p>
 >>>>>>> table class Jazzy update
+=======
+This is equivalent to the SQL AS operator.</p>
+>>>>>>> refreshed jazzy docs
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <p>In this example, a <code>PersonTable</code> (as defined at the top of this class) instance is created which contains a <code>Column</code>.
 An alias for this <code>Column</code> instance is then created and its alias printed. </p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>  <span class="c1">// PersonTable() is a previously defined `Table` class</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>
 <span class="k">let</span> <span class="nv">aliasColumn</span> <span class="o">=</span> <span class="n">personTable</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"new name"</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="kt">String</span><span class="p">(</span><span class="nv">describing</span><span class="p">:</span> <span class="n">aliasColumn</span><span class="o">.</span><span class="n">alias</span><span class="p">))</span>
-<span class="c1">//Prints Optional("new name")</span>
+<span class="c1">// Prints Optional("new name")</span>
 </code></pre>
 >>>>>>> column docs updated
 
@@ -6610,6 +6608,7 @@ An alias for this <code>Column</code> instance is then created and its alias pri
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-17)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 =======
@@ -6627,6 +6626,9 @@ An alias for this <code>Column</code> instance is then created and its alias pri
 >>>>>>> column docs updated
 =======
       <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-13)</p>
+=======
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-22)</p>
+>>>>>>> refreshed jazzy docs
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
 >>>>>>> show parameters in jazzy docs
     </section>
