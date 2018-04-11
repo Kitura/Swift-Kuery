@@ -80,6 +80,28 @@ public struct Timestamp: SQLDataType {
     }
 }
 
+/// SQL binary type.
+public struct Binary: SQLDataType {
+    /// Return database specific representation of the binary type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        return "binary"
+    }
+}
+
+/// SQL varbinary type.
+public struct Varbinary: SQLDataType {
+    /// Return database specific representation of the varbinary type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        return "varbinary"
+    }
+}
+
 extension Int16: SQLDataType {
     /// Return database specific representation of the int16 type using `QueryBuilder`.
     ///
