@@ -23,6 +23,7 @@ matrix:
       sudo: required
     - os: osx
       osx_image: xcode9.2
+      env: JAZZY_ELIGIBLE=true
       sudo: required
 
 before_install:
