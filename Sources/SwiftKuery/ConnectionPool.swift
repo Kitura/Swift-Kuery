@@ -108,9 +108,23 @@ public class ConnectionPool {
     // needed, so MUST later be returned to the pool with give() if it is to be reused.
     // Items can therefore be borrowed or permanently removed with this method.
     //
-    // This function will block until an item can be obtained from the pool. 
+    // This function will block until an item can be obtained from the pool.
     private func take() -> Connection? {
+        defer {
+            unlockPoolLock()
+        }
+        
         var item: Connection!
+        
+        guard increasePoolSize() != nil else {
+            return nil
+        }
+        
+        // If we took the last item, we can choose to grow the pool
+        if (pool.count == 0 && capacity < limit) {
+            _ = populateConnectionPool()
+        }
+        
         // Indicate that we are going to take an item from the pool. The semaphore will
         // block if there are currently no items to take, until one is returned via give()
         let result = semaphore.wait(timeout: (timeout == 0) ? .distantFuture : .now() + DispatchTimeInterval.milliseconds(timeout))
@@ -120,7 +134,6 @@ public class ConnectionPool {
         // We have permission to take an item - do so in a thread-safe way
         lockPoolLock()
         if (pool.count < 1) {
-            unlockPoolLock()
             return nil
         }
         item = pool[0]
@@ -129,21 +142,9 @@ public class ConnectionPool {
         if item.isConnected == false {
             releaser(item)
             capacity -= 1
-            if let newItem = generator() {
-                capacity += 1
-                pool.append(newItem)
-                semaphore.signal()
-            }
+            return populateConnectionPool()
         }
-        // If we took the last item, we can choose to grow the pool
-        if (pool.count == 0 && capacity < limit) {
-            if let newItem = generator() {
-                capacity += 1
-                pool.append(newItem)
-                semaphore.signal()
-            }
-        }
-        unlockPoolLock()
+        
         return item
     }
     
@@ -164,6 +165,29 @@ public class ConnectionPool {
         }
         pool.removeAll()
         unlockPoolLock()
+    }
+    
+    private func increasePoolSize() -> Connection? {
+        defer {
+            unlockPoolLock()
+        }
+        lockPoolLock()
+        var connection: Connection? = nil
+        if capacity == 0 {
+            connection = populateConnectionPool()
+        }
+        return connection
+    }
+    
+    private func populateConnectionPool() -> Connection? {
+        if let newItem = generator() {
+            capacity += 1
+            pool.append(newItem)
+            semaphore.signal()
+            return newItem
+        } else {
+            return nil
+        }
     }
     
     private func lockPoolLock() {
