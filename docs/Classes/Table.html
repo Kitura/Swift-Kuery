@@ -1,0 +1,2651 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Table Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/Table" class="dashAnchor"></a>
+
+    <a title="Table Class Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          SwiftKuery Docs
+        </a>
+         (99% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/IBM-Swift/Swift-Kuery/">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">SwiftKuery Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      Table Class Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/AuxiliaryTable.html">AuxiliaryTable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Column.html">Column</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ConnectionPool.html">ConnectionPool</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ConnectionPoolConnection.html">ConnectionPoolConnection</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Migration.html">Migration</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/QueryBuilder.html">QueryBuilder</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/QueryBuilder/QuerySubstitutionNames.html">– QuerySubstitutionNames</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Table.html">Table</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/Condition.html">Condition</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/IndexColumnOrdered.html">IndexColumnOrdered</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/Join.html">Join</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/OrderBy.html">OrderBy</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/Predicate.html">Predicate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/QueryError.html">QueryError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/QueryResult.html">QueryResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/Union.html">Union</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Bool.html">Bool</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Double.html">Double</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Float.html">Float</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Int16.html">Int16</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Int32.html">Int32</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Int64.html">Int64</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterV10Foundation4DateV_AA22ScalarColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterV10Foundation4DateV_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA22ScalarColumnExpressionV_10Foundation4DateVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA22ScalarColumnExpressionV_AA0F0CtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA22ScalarColumnExpressionV_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA22ScalarColumnExpressionV_AA9ParameterVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA22ScalarColumnExpressionV_AA9PredicateOyAdFGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA22ScalarColumnExpressionV_AFtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA22ScalarColumnExpressionV_SStF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA22ScalarColumnExpressionV_SbtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA22ScalarColumnExpressionV_SdtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA22ScalarColumnExpressionV_SftF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA22ScalarColumnExpressionV_SitF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA6ColumnC_10Foundation4DateVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA6ColumnC_AA06ScalarE10ExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA6ColumnC_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA6ColumnC_AA9ParameterVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA6ColumnC_AA9PredicateOyAdA06ScalarE10ExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA6ColumnC_AFtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA6ColumnC_SStF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA6ColumnC_SbtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA6ColumnC_SdtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA6ColumnC_SftF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA6ColumnC_SitF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA9ParameterV_AA22ScalarColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA9ParameterV_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA9ParameterV_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVAA9ParameterV_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSS_AA22ScalarColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSS_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSS_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSS_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSb_AA22ScalarColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSb_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSb_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSd_AA22ScalarColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSd_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSd_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSd_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSf_AA22ScalarColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSf_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSf_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSf_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSi_AA22ScalarColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSi_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSi_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6FilterVSi_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingV10Foundation4DateV_AA25AggregateColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingV10Foundation4DateV_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA25AggregateColumnExpressionV_10Foundation4DateVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA25AggregateColumnExpressionV_AA0F0CtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA25AggregateColumnExpressionV_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA25AggregateColumnExpressionV_AA9ParameterVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA25AggregateColumnExpressionV_AA9PredicateOyAdFGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA25AggregateColumnExpressionV_AFtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA25AggregateColumnExpressionV_SStF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA25AggregateColumnExpressionV_SbtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA25AggregateColumnExpressionV_SdtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA25AggregateColumnExpressionV_SftF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA25AggregateColumnExpressionV_SitF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA6ColumnC_10Foundation4DateVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA6ColumnC_AA09AggregateE10ExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA6ColumnC_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA6ColumnC_AA9ParameterVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA6ColumnC_AA9PredicateOyAdA09AggregateE10ExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA6ColumnC_AFtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA6ColumnC_SStF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA6ColumnC_SbtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA6ColumnC_SdtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA6ColumnC_SftF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA6ColumnC_SitF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA9ParameterV_AA25AggregateColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA9ParameterV_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA9ParameterV_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVAA9ParameterV_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSS_AA25AggregateColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSS_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSS_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSS_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSb_AA25AggregateColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSb_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSb_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSd_AA25AggregateColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSd_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSd_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSd_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSf_AA25AggregateColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSf_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSf_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSf_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSi_AA25AggregateColumnExpressionVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSi_AA6ColumnCtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSi_AA6SelectVtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2neoiAA6HavingVSi_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">!=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2aaoiAA6FilterVAD_ADtF">&amp;&amp;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2aaoiAA6HavingVAD_ADtF">&amp;&amp;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterV10Foundation4DateV_AA22ScalarColumnExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterV10Foundation4DateV_AA6ColumnCtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA22ScalarColumnExpressionV_10Foundation4DateVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA22ScalarColumnExpressionV_AA0E0CtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA22ScalarColumnExpressionV_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA22ScalarColumnExpressionV_AA9ParameterVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA22ScalarColumnExpressionV_AA9PredicateOyAdFGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA22ScalarColumnExpressionV_AFtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA22ScalarColumnExpressionV_SStF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA22ScalarColumnExpressionV_SdtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA22ScalarColumnExpressionV_SftF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA22ScalarColumnExpressionV_SitF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA6ColumnC_10Foundation4DateVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA6ColumnC_AA06ScalarD10ExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA6ColumnC_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA6ColumnC_AA9ParameterVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA6ColumnC_AA9PredicateOyAdA06ScalarD10ExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA6ColumnC_AFtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA6ColumnC_SStF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA6ColumnC_SdtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA6ColumnC_SftF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA6ColumnC_SitF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA9ParameterV_AA22ScalarColumnExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA9ParameterV_AA6ColumnCtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA9ParameterV_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVAA9ParameterV_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSS_AA22ScalarColumnExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSS_AA6ColumnCtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSS_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSS_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSb_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSd_AA22ScalarColumnExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSd_AA6ColumnCtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSd_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSd_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSf_AA22ScalarColumnExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSf_AA6ColumnCtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSf_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSf_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSi_AA22ScalarColumnExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSi_AA6ColumnCtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSi_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6FilterVSi_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingV10Foundation4DateV_AA25AggregateColumnExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingV10Foundation4DateV_AA6ColumnCtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA25AggregateColumnExpressionV_10Foundation4DateVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA25AggregateColumnExpressionV_AA0E0CtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA25AggregateColumnExpressionV_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA25AggregateColumnExpressionV_AA9ParameterVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA25AggregateColumnExpressionV_AA9PredicateOyAdFGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA25AggregateColumnExpressionV_AFtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA25AggregateColumnExpressionV_SStF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA25AggregateColumnExpressionV_SdtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA25AggregateColumnExpressionV_SftF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA25AggregateColumnExpressionV_SitF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA6ColumnC_10Foundation4DateVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA6ColumnC_AA09AggregateD10ExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA6ColumnC_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA6ColumnC_AA9ParameterVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA6ColumnC_AA9PredicateOyAdA09AggregateD10ExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA6ColumnC_AFtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA6ColumnC_SStF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA6ColumnC_SdtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA6ColumnC_SftF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA6ColumnC_SitF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA9ParameterV_AA25AggregateColumnExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA9ParameterV_AA6ColumnCtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA9ParameterV_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVAA9ParameterV_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSS_AA25AggregateColumnExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSS_AA6ColumnCtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSS_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSS_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSb_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSd_AA25AggregateColumnExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSd_AA6ColumnCtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSd_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSd_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSf_AA25AggregateColumnExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSf_AA6ColumnCtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSf_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSf_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSi_AA25AggregateColumnExpressionVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSi_AA6ColumnCtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSi_AA6SelectVtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1loiAA6HavingVSi_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&lt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterV10Foundation4DateV_AA22ScalarColumnExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterV10Foundation4DateV_AA6ColumnCtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA22ScalarColumnExpressionV_10Foundation4DateVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA22ScalarColumnExpressionV_AA0F0CtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA22ScalarColumnExpressionV_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA22ScalarColumnExpressionV_AA9ParameterVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA22ScalarColumnExpressionV_AA9PredicateOyAdFGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA22ScalarColumnExpressionV_AFtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA22ScalarColumnExpressionV_SStF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA22ScalarColumnExpressionV_SdtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA22ScalarColumnExpressionV_SftF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA22ScalarColumnExpressionV_SitF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA6ColumnC_10Foundation4DateVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA6ColumnC_AA06ScalarE10ExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA6ColumnC_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA6ColumnC_AA9ParameterVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA6ColumnC_AA9PredicateOyAdA06ScalarE10ExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA6ColumnC_AFtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA6ColumnC_SStF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA6ColumnC_SdtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA6ColumnC_SftF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA6ColumnC_SitF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA9ParameterV_AA22ScalarColumnExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA9ParameterV_AA6ColumnCtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA9ParameterV_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVAA9ParameterV_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSS_AA22ScalarColumnExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSS_AA6ColumnCtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSS_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSS_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSb_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSd_AA22ScalarColumnExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSd_AA6ColumnCtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSd_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSd_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSf_AA22ScalarColumnExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSf_AA6ColumnCtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSf_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSf_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSi_AA22ScalarColumnExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSi_AA6ColumnCtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSi_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6FilterVSi_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingV10Foundation4DateV_AA25AggregateColumnExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingV10Foundation4DateV_AA6ColumnCtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA25AggregateColumnExpressionV_10Foundation4DateVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA25AggregateColumnExpressionV_AA0F0CtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA25AggregateColumnExpressionV_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA25AggregateColumnExpressionV_AA9ParameterVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA25AggregateColumnExpressionV_AA9PredicateOyAdFGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA25AggregateColumnExpressionV_AFtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA25AggregateColumnExpressionV_SStF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA25AggregateColumnExpressionV_SdtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA25AggregateColumnExpressionV_SftF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA25AggregateColumnExpressionV_SitF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA6ColumnC_10Foundation4DateVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA6ColumnC_AA09AggregateE10ExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA6ColumnC_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA6ColumnC_AA9ParameterVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA6ColumnC_AA9PredicateOyAdA09AggregateE10ExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA6ColumnC_AFtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA6ColumnC_SStF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA6ColumnC_SdtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA6ColumnC_SftF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA6ColumnC_SitF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA9ParameterV_AA25AggregateColumnExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA9ParameterV_AA6ColumnCtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA9ParameterV_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVAA9ParameterV_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSS_AA25AggregateColumnExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSS_AA6ColumnCtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSS_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSS_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSb_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSd_AA25AggregateColumnExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSd_AA6ColumnCtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSd_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSd_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSf_AA25AggregateColumnExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSf_AA6ColumnCtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSf_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSf_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSi_AA25AggregateColumnExpressionVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSi_AA6ColumnCtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSi_AA6SelectVtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2leoiAA6HavingVSi_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&lt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterV10Foundation4DateV_AA22ScalarColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterV10Foundation4DateV_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA22ScalarColumnExpressionV_10Foundation4DateVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA22ScalarColumnExpressionV_AA0F0CtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA22ScalarColumnExpressionV_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA22ScalarColumnExpressionV_AA9ParameterVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA22ScalarColumnExpressionV_AA9PredicateOyAdFGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA22ScalarColumnExpressionV_AFtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA22ScalarColumnExpressionV_SStF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA22ScalarColumnExpressionV_SbtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA22ScalarColumnExpressionV_SdtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA22ScalarColumnExpressionV_SftF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA22ScalarColumnExpressionV_SitF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA6ColumnC_10Foundation4DateVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA6ColumnC_AA06ScalarE10ExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA6ColumnC_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA6ColumnC_AA9ParameterVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA6ColumnC_AA9PredicateOyAdA06ScalarE10ExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA6ColumnC_AFtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA6ColumnC_SStF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA6ColumnC_SbtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA6ColumnC_SdtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA6ColumnC_SftF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA6ColumnC_SitF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA9ParameterV_AA22ScalarColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA9ParameterV_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA9ParameterV_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVAA9ParameterV_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSS_AA22ScalarColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSS_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSS_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSS_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSb_AA22ScalarColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSb_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSb_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSd_AA22ScalarColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSd_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSd_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSd_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSf_AA22ScalarColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSf_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSf_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSf_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSi_AA22ScalarColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSi_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSi_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6FilterVSi_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingV10Foundation4DateV_AA25AggregateColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingV10Foundation4DateV_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA25AggregateColumnExpressionV_10Foundation4DateVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA25AggregateColumnExpressionV_AA0F0CtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA25AggregateColumnExpressionV_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA25AggregateColumnExpressionV_AA9ParameterVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA25AggregateColumnExpressionV_AA9PredicateOyAdFGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA25AggregateColumnExpressionV_AFtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA25AggregateColumnExpressionV_SStF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA25AggregateColumnExpressionV_SbtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA25AggregateColumnExpressionV_SdtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA25AggregateColumnExpressionV_SftF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA25AggregateColumnExpressionV_SitF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA6ColumnC_10Foundation4DateVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA6ColumnC_AA09AggregateE10ExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA6ColumnC_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA6ColumnC_AA9ParameterVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA6ColumnC_AA9PredicateOyAdA09AggregateE10ExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA6ColumnC_AFtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA6ColumnC_SStF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA6ColumnC_SbtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA6ColumnC_SdtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA6ColumnC_SftF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA6ColumnC_SitF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA9ParameterV_AA25AggregateColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA9ParameterV_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA9ParameterV_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVAA9ParameterV_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSS_AA25AggregateColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSS_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSS_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSS_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSb_AA25AggregateColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSb_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSb_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSd_AA25AggregateColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSd_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSd_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSd_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSf_AA25AggregateColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSf_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSf_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSf_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSi_AA25AggregateColumnExpressionVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSi_AA6ColumnCtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSi_AA6SelectVtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2eeoiAA6HavingVSi_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterV10Foundation4DateV_AA22ScalarColumnExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterV10Foundation4DateV_AA6ColumnCtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA22ScalarColumnExpressionV_10Foundation4DateVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA22ScalarColumnExpressionV_AA0E0CtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA22ScalarColumnExpressionV_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA22ScalarColumnExpressionV_AA9ParameterVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA22ScalarColumnExpressionV_AA9PredicateOyAdFGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA22ScalarColumnExpressionV_AFtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA22ScalarColumnExpressionV_SStF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA22ScalarColumnExpressionV_SdtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA22ScalarColumnExpressionV_SftF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA22ScalarColumnExpressionV_SitF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA6ColumnC_10Foundation4DateVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA6ColumnC_AA06ScalarD10ExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA6ColumnC_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA6ColumnC_AA9ParameterVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA6ColumnC_AA9PredicateOyAdA06ScalarD10ExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA6ColumnC_AFtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA6ColumnC_SStF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA6ColumnC_SdtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA6ColumnC_SftF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA6ColumnC_SitF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA9ParameterV_AA22ScalarColumnExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA9ParameterV_AA6ColumnCtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA9ParameterV_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVAA9ParameterV_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSS_AA22ScalarColumnExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSS_AA6ColumnCtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSS_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSS_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSb_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSd_AA22ScalarColumnExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSd_AA6ColumnCtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSd_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSd_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSf_AA22ScalarColumnExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSf_AA6ColumnCtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSf_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSf_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSi_AA22ScalarColumnExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSi_AA6ColumnCtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSi_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6FilterVSi_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingV10Foundation4DateV_AA25AggregateColumnExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingV10Foundation4DateV_AA6ColumnCtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA25AggregateColumnExpressionV_10Foundation4DateVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA25AggregateColumnExpressionV_AA0E0CtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA25AggregateColumnExpressionV_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA25AggregateColumnExpressionV_AA9ParameterVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA25AggregateColumnExpressionV_AA9PredicateOyAdFGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA25AggregateColumnExpressionV_AFtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA25AggregateColumnExpressionV_SStF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA25AggregateColumnExpressionV_SdtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA25AggregateColumnExpressionV_SftF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA25AggregateColumnExpressionV_SitF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA6ColumnC_10Foundation4DateVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA6ColumnC_AA09AggregateD10ExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA6ColumnC_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA6ColumnC_AA9ParameterVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA6ColumnC_AA9PredicateOyAdA09AggregateD10ExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA6ColumnC_AFtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA6ColumnC_SStF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA6ColumnC_SdtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA6ColumnC_SftF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA6ColumnC_SitF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA9ParameterV_AA25AggregateColumnExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA9ParameterV_AA6ColumnCtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA9ParameterV_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVAA9ParameterV_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSS_AA25AggregateColumnExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSS_AA6ColumnCtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSS_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSS_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSb_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSd_AA25AggregateColumnExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSd_AA6ColumnCtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSd_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSd_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSf_AA25AggregateColumnExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSf_AA6ColumnCtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSf_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSf_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSi_AA25AggregateColumnExpressionVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSi_AA6ColumnCtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSi_AA6SelectVtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery1goiAA6HavingVSi_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&gt;(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterV10Foundation4DateV_AA22ScalarColumnExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterV10Foundation4DateV_AA6ColumnCtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA22ScalarColumnExpressionV_10Foundation4DateVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA22ScalarColumnExpressionV_AA0F0CtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA22ScalarColumnExpressionV_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA22ScalarColumnExpressionV_AA9ParameterVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA22ScalarColumnExpressionV_AA9PredicateOyAdFGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA22ScalarColumnExpressionV_AFtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA22ScalarColumnExpressionV_SStF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA22ScalarColumnExpressionV_SdtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA22ScalarColumnExpressionV_SftF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA22ScalarColumnExpressionV_SitF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA6ColumnC_10Foundation4DateVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA6ColumnC_AA06ScalarE10ExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA6ColumnC_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA6ColumnC_AA9ParameterVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA6ColumnC_AA9PredicateOyAdA06ScalarE10ExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA6ColumnC_AFtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA6ColumnC_SStF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA6ColumnC_SdtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA6ColumnC_SftF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA6ColumnC_SitF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA9ParameterV_AA22ScalarColumnExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA9ParameterV_AA6ColumnCtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA9ParameterV_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVAA9ParameterV_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSS_AA22ScalarColumnExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSS_AA6ColumnCtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSS_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSS_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSb_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSd_AA22ScalarColumnExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSd_AA6ColumnCtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSd_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSd_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSf_AA22ScalarColumnExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSf_AA6ColumnCtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSf_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSf_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSi_AA22ScalarColumnExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSi_AA6ColumnCtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSi_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6FilterVSi_AA9PredicateOyAdA22ScalarColumnExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingV10Foundation4DateV_AA25AggregateColumnExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingV10Foundation4DateV_AA6ColumnCtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA25AggregateColumnExpressionV_10Foundation4DateVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA25AggregateColumnExpressionV_AA0F0CtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA25AggregateColumnExpressionV_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA25AggregateColumnExpressionV_AA9ParameterVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA25AggregateColumnExpressionV_AA9PredicateOyAdFGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA25AggregateColumnExpressionV_AFtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA25AggregateColumnExpressionV_SStF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA25AggregateColumnExpressionV_SdtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA25AggregateColumnExpressionV_SftF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA25AggregateColumnExpressionV_SitF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA6ColumnC_10Foundation4DateVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA6ColumnC_AA09AggregateE10ExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA6ColumnC_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA6ColumnC_AA9ParameterVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA6ColumnC_AA9PredicateOyAdA09AggregateE10ExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA6ColumnC_AFtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA6ColumnC_SStF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA6ColumnC_SdtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA6ColumnC_SftF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA6ColumnC_SitF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA9ParameterV_AA25AggregateColumnExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA9ParameterV_AA6ColumnCtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA9ParameterV_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVAA9ParameterV_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSS_AA25AggregateColumnExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSS_AA6ColumnCtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSS_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSS_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSb_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSd_AA25AggregateColumnExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSd_AA6ColumnCtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSd_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSd_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSf_AA25AggregateColumnExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSf_AA6ColumnCtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSf_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSf_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSi_AA25AggregateColumnExpressionVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSi_AA6ColumnCtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSi_AA6SelectVtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2geoiAA6HavingVSi_AA9PredicateOyAdA25AggregateColumnExpressionVGtF">&gt;=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3allAA9PredicateOyAA6FilterVAA22ScalarColumnExpressionVGAA6SelectVF">all(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3allAA9PredicateOyAA6HavingVAA25AggregateColumnExpressionVGAA6SelectVF">all(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3anyAA9PredicateOyAA6FilterVAA22ScalarColumnExpressionVGAA6SelectVF">any(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3anyAA9PredicateOyAA6HavingVAA25AggregateColumnExpressionVGAA6SelectVF">any(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3ascAA18IndexColumnOrderedOAA0E0CF">asc(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3avgAA25AggregateColumnExpressionVAA5Field_pF">avg(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery5countAA25AggregateColumnExpressionVAA5Field_pF">count(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery13countDistinctAA25AggregateColumnExpressionVAA5Field_pF">countDistinct(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery4descAA18IndexColumnOrderedOAA0E0CF">desc(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery6existsAA6FilterVAA6SelectVF">exists(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery6existsAA6HavingVAA6SelectVF">exists(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery5firstAA25AggregateColumnExpressionVAA5Field_pF">first(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery4lastAA25AggregateColumnExpressionVAA5Field_pF">last(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery5lcaseAA22ScalarColumnExpressionVAA0E0CF">lcase(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery5lcaseAA22ScalarColumnExpressionVADF">lcase(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery5lcaseAA25AggregateColumnExpressionVADF">lcase(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3lenAA22ScalarColumnExpressionVAA0E0CF">len(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3lenAA22ScalarColumnExpressionVADF">len(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3lenAA25AggregateColumnExpressionVADF">len(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3maxAA25AggregateColumnExpressionVAA5Field_pF">max(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3midAA22ScalarColumnExpressionVAA0E0C_Si5startSi6lengthtF">mid(_:start:length:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3midAA22ScalarColumnExpressionVAD_Si5startSi6lengthtF">mid(_:start:length:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3midAA25AggregateColumnExpressionVAD_Si5startSi6lengthtF">mid(_:start:length:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3minAA25AggregateColumnExpressionVAA5Field_pF">min(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery9notExistsAA6FilterVAA6SelectVF">notExists(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery9notExistsAA6HavingVAA6SelectVF">notExists(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3nowAA22ScalarColumnExpressionVyF">now()</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery5roundAA22ScalarColumnExpressionVAA0E0C_Si2totF">round(_:to:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery5roundAA22ScalarColumnExpressionVAD_Si2totF">round(_:to:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery5roundAA25AggregateColumnExpressionVAD_Si2totF">round(_:to:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery3sumAA25AggregateColumnExpressionVAA5Field_pF">sum(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery5ucaseAA22ScalarColumnExpressionVAA0E0CF">ucase(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery5ucaseAA22ScalarColumnExpressionVADF">ucase(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery5ucaseAA25AggregateColumnExpressionVADF">ucase(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery4withAA6DeleteVAA14AuxiliaryTableC_ADtF">with(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery4withAA6DeleteVSayAA14AuxiliaryTableCG_ADtF">with(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery4withAA6InsertVAA14AuxiliaryTableC_ADtF">with(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery4withAA6InsertVSayAA14AuxiliaryTableCG_ADtF">with(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery4withAA6SelectVAA14AuxiliaryTableC_ADtF">with(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery4withAA6SelectVSayAA14AuxiliaryTableCG_ADtF">with(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery4withAA6UpdateVAA14AuxiliaryTableC_ADtF">with(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery4withAA6UpdateVSayAA14AuxiliaryTableCG_ADtF">with(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2oooiAA6FilterVAD_ADtF">||(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:10SwiftKuery2oooiAA6HavingVAD_ADtF">||(_:_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Buildable.html">Buildable</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ConditionalClause.html">ConditionalClause</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Connection.html">Connection</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Field.html">Field</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/IndexColumn.html">IndexColumn</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:10SwiftKuery17PreparedStatementP">PreparedStatement</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/Query.html">Query</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:10SwiftKuery19QueryFilterProtocolP">QueryFilterProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:10SwiftKuery19QueryHavingProtocolP">QueryHavingProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols.html#/s:10SwiftKuery19QuerySuffixProtocolP">QuerySuffixProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ResultFetcher.html">ResultFetcher</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/SQLDataType.html">SQLDataType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/AggregateColumnExpression.html">AggregateColumnExpression</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/AggregateColumnExpression/AggregateFunction.html">– AggregateFunction</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Char.html">Char</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ConnectionPoolOptions.html">ConnectionPoolOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Delete.html">Delete</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Filter.html">Filter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Having.html">Having</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Index.html">Index</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Insert.html">Insert</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Parameter.html">Parameter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Raw.html">Raw</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/RawField.html">RawField</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ResultSet.html">ResultSet</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/RowSequence.html">RowSequence</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/SQLDate.html">SQLDate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ScalarColumnExpression.html">ScalarColumnExpression</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/ScalarColumnExpression/ScalarFunction.html">– ScalarFunction</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Select.html">Select</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Time.html">Time</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Timestamp.html">Timestamp</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Update.html">Update</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Varchar.html">Varchar</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>Table</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">Table</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Buildable.html">Buildable</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>Subclasses of the Table class are metadata describing a table in a relational database that you want to work with.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC7columnsSayAA6ColumnCGv"></a>
+                    <a name="//apple_ref/swift/Property/columns" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC7columnsSayAA6ColumnCGv">columns</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">columns</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC5aliasSSSgv"></a>
+                    <a name="//apple_ref/swift/Property/alias" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC5aliasSSSgv">alias</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The alias of the table.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private</span> <span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">alias</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC11nameInQuerySSv"></a>
+                    <a name="//apple_ref/swift/Property/nameInQuery" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC11nameInQuerySSv">nameInQuery</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The name of the table to be used inside a query, i.e., either its alias (if exists)
+or its name.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">nameInQuery</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableCACycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableCACycfc">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize an instance of Table.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableCACSS9tableName_SayAA6ColumnCG7columnstcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(tableName:columns:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableCACSS9tableName_SayAA6ColumnCG7columnstcfc">init(tableName:columns:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initialize an instance of Table with a table name
+and an array of Columns</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span class="nv">tableName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">columns</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC5buildSSAA12QueryBuilderC05queryF0_tKF"></a>
+                    <a name="//apple_ref/swift/Method/build(queryBuilder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC5buildSSAA12QueryBuilderC05queryF0_tKF">build(queryBuilder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Build the table using <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code>.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    QueryError.syntaxError if query build fails.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">build</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="kt"><a href="../Classes/QueryBuilder.html">QueryBuilder</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queryBuilder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The QueryBuilder to use.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A String representation of the table.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC2asACXDSSF"></a>
+                    <a name="//apple_ref/swift/Method/as(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC2asACXDSSF">as(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add alias to the table, i.e., implement the SQL AS operator.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="err">`</span><span class="k">as</span><span class="err">`</span><span class="p">(</span><span class="n">_</span> <span class="nv">newName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>newName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A String containing the alias for the table.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new Table instance with the alias.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC8truncateAA3RawVyF"></a>
+                    <a name="//apple_ref/swift/Method/truncate()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC8truncateAA3RawVyF">truncate()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Apply TRUNCATE TABLE query on the table.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">truncate</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Raw.html">Raw</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An instance of <code><a href="../Structs/Raw.html">Raw</a></code>.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC4dropAA3RawVyF"></a>
+                    <a name="//apple_ref/swift/Method/drop()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC4dropAA3RawVyF">drop()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Apply DROP TABLE query on the table.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">drop</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Raw.html">Raw</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An instance of <code><a href="../Structs/Raw.html">Raw</a></code>.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC6createyAA10Connection_p10connection_yAA11QueryResultOc12onCompletiontF"></a>
+                    <a name="//apple_ref/swift/Method/create(connection:onCompletion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC6createyAA10Connection_p10connection_yAA11QueryResultOc12onCompletiontF">create(connection:onCompletion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create the table in the database.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Connection.html">Connection</a></span><span class="p">,</span> <span class="nv">onCompletion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt"><a href="../Enums/QueryResult.html">QueryResult</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()))</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>connection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The connection to the database.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onCompletion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The function to be called when the execution of the query has completed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC10primaryKeyACXDSayAA6ColumnCGF"></a>
+                    <a name="//apple_ref/swift/Method/primaryKey(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC10primaryKeyACXDSayAA6ColumnCGF">primaryKey(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a primary key to the table.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">primaryKey</span><span class="p">(</span><span class="n">_</span> <span class="nv">columns</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>columns</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An Array of columns that constitute the primary key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new instance of <code>Table</code>.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC10primaryKeyACXDSayAA6ColumnCGd_tF"></a>
+                    <a name="//apple_ref/swift/Method/primaryKey(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC10primaryKeyACXDSayAA6ColumnCGd_tF">primaryKey(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a primary key to the table.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">primaryKey</span><span class="p">(</span><span class="n">_</span> <span class="nv">columns</span><span class="p">:</span> <span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>columns</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Columns that constitute the primary key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new instance of <code>Table</code>.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC10foreignKeyACXDSayAA6ColumnCG_AG10referencestF"></a>
+                    <a name="//apple_ref/swift/Method/foreignKey(_:references:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC10foreignKeyACXDSayAA6ColumnCG_AG10referencestF">foreignKey(_:references:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a foreign key to the table.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">foreignKey</span><span class="p">(</span><span class="n">_</span> <span class="nv">columns</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">],</span> <span class="nv">references</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>columns</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An Array of columns that constitute the foreign key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>references</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An Array of columns of the foreign table the foreign key references.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new instance of <code>Table</code>.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC10foreignKeyACXDAA6ColumnC_AF10referencestF"></a>
+                    <a name="//apple_ref/swift/Method/foreignKey(_:references:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC10foreignKeyACXDAA6ColumnC_AF10referencestF">foreignKey(_:references:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Add a foreign key to the table.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">foreignKey</span><span class="p">(</span><span class="n">_</span> <span class="nv">column</span><span class="p">:</span> <span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">,</span> <span class="nv">references</span><span class="p">:</span> <span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>columns</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A column that is the foreign key.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>references</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A column in the foreign table the foreign key references.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A new instance of <code>Table</code>.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery5TableC11descriptionSSAA10Connection_p10connection_tKF"></a>
+                    <a name="//apple_ref/swift/Method/description(connection:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableC11descriptionSSAA10Connection_p10connection_tKF">description(connection:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Return a String representation of the table create statement.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    QueryError.syntaxError if statement build fails.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">description</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Connection.html">Connection</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A String representation of the table create statement.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-13)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

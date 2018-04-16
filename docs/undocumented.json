@@ -1,1 +1,33 @@
-{"warnings":[{"file":"/Users/irar/workspace/kitura/Swift-Kuery/Sources/SwiftKuery/Connection.swift","line":158,"symbol":"execute(query:parameters:onCompletion:)","symbol_kind":"source.lang.swift.decl.function.method.instance","warning":"undocumented"},{"file":"/Users/irar/workspace/kitura/Swift-Kuery/Sources/SwiftKuery/IndexColumn.swift","line":27,"symbol":"table","symbol_kind":"source.lang.swift.decl.var.instance","warning":"undocumented"},{"file":"/Users/irar/workspace/kitura/Swift-Kuery/Sources/SwiftKuery/IndexColumnOrdered.swift","line":21,"symbol":"table","symbol_kind":"source.lang.swift.decl.var.instance","warning":"undocumented"}],"source_directory":"/Users/irar/workspace/kitura/Swift-Kuery"}
+{
+  "warnings": [
+    {
+      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/Connection.swift",
+      "line": 158,
+      "symbol": "Connection.execute(query:parameters:onCompletion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/IndexColumn.swift",
+      "line": 27,
+      "symbol": "IndexColumn.table",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/IndexColumnOrdered.swift",
+      "line": 21,
+      "symbol": "IndexColumnOrdered.table",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/Table.swift",
+      "line": 22,
+      "symbol": "Table.columns",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/travis/build/IBM-Swift/Swift-Kuery"
+}
