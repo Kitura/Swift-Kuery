@@ -57,6 +57,8 @@ public class QueryBuilder {
         case double
         /// The database type that corresponds to char.
         case char
+        /// The database type that corresponds to UUID. Accepts a string representation of UUID.
+        case uuid
         
         /// Last case, add new values before it.
         case namesCount
@@ -115,6 +117,7 @@ public class QueryBuilder {
         substitutions[QuerySubstitutionNames.float.rawValue] = "real"
         substitutions[QuerySubstitutionNames.double.rawValue] = "double"
         substitutions[QuerySubstitutionNames.char.rawValue] = "char"
+        substitutions[QuerySubstitutionNames.uuid.rawValue] = "varchar(36)"
 
         self.addNumbersToParameters = addNumbersToParameters
         self.anyOnSubquerySupported = anyOnSubquerySupported

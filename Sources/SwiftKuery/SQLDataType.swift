@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+import Foundation
+
 // MARK: SQLDataType protocol
 
 /// Defines the protocol for data types to be used as table column types.
@@ -147,6 +149,16 @@ extension Bool: SQLDataType {
     /// - Returns: A String representation of the type.
     public static func create(queryBuilder: QueryBuilder) -> String {
         return "boolean"
+    }
+}
+
+extension UUID: SQLDataType {
+    /// Return database specific representation of the UUID type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        return queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.uuid.rawValue]
     }
 }
 
