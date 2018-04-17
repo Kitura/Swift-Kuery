@@ -66,7 +66,7 @@ public class ConnectionPoolConnection: Connection {
     
     /// An indication whether there is a connection to the database.
     public var isConnected: Bool {
-        return connection != nil
+        return connection?.isConnected ?? false
     }
     
     /// Execute a query.
