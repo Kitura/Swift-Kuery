@@ -104,6 +104,63 @@ public class ConnectionPool {
         release()
     }
     
+    // Check to see whether the pool's capacity has fallen to zero, and if so, attempt
+    // to grow the pool so there is one item in it.
+    //
+    // Since the pool's capacity would only fall to zero when connectivity problems exist,
+    // it is possible that the generation of a new connection will fail and the pool will
+    // still have zero capacity.
+    //
+    // Returns true iff the pool has a non-zero capacity.
+    private func tryToEnsureNonZeroCapacity() -> Bool {
+        guard capacity == 0 else {
+            return true
+        }
+        lockPoolLock()
+        defer {
+            unlockPoolLock()
+        }
+        guard capacity == 0 else {
+            return true
+        }
+        return tryToGrowPool()
+    }
+ 
+    // Try to generate a new connection and append it to the pool. The generator can fail
+    // (for example, if the database cannot be reached), and if this occurs, a new connection
+    // is not added.
+    // This function does NOT lock the pool and should only be called from a locked context.
+    //
+    // Returns true iff a new connection was successfully added.
+    private func tryToGrowPool() -> Bool {
+        if let newItem = generateItem() {
+             pool.append(newItem)
+             semaphore.signal()
+             return true
+        }
+        return false
+    }
+ 
+    // Attempt to generate a new connection which will be part of the set of connections that
+    // are owned by the pool.  If successful, the pool's capacity is incremented.
+    // This function does NOT lock the pool and should only be called from a locked context.
+    // 
+    // Returns the new connection, if successful.
+    private func generateItem() -> Connection? {
+        if let newItem = generator() {
+             capacity += 1
+             return newItem
+        }
+        return nil
+    }
+ 
+    // Releases a connection and decrements the pool's capacity.
+    // This function does NOT lock the pool and should only be called from a locked context.
+    private func releaseItem(_ item: Connection) {
+            releaser(item)
+            capacity -= 1     
+    }
+ 
     // Take an item from the pool. The item will not magically rejoin the pool when no longer
     // needed, so MUST later be returned to the pool with give() if it is to be reused.
     // Items can therefore be borrowed or permanently removed with this method.
@@ -111,6 +168,14 @@ public class ConnectionPool {
     // This function will block until an item can be obtained from the pool. 
     private func take() -> Connection? {
         var item: Connection!
+     
+        // We must return early if the pool has zero capacity, because no-one will ever call
+        // give() to return a connection (and unblock the semaphore.wait below) in this
+        // situation. Try to seed the pool with a new connection so we can continue.
+        guard tryToEnsureNonZeroCapacity() else {
+            return nil
+        }
+     
         // Indicate that we are going to take an item from the pool. The semaphore will
         // block if there are currently no items to take, until one is returned via give()
         let result = semaphore.wait(timeout: (timeout == 0) ? .distantFuture : .now() + DispatchTimeInterval.milliseconds(timeout))
@@ -127,10 +192,8 @@ public class ConnectionPool {
         pool.removeFirst()
         // Check if the item is alive, and replace with a new one if it isn't
         if item.isConnected == false {
-            releaser(item)
-            capacity -= 1
-            if let replacementItem = generator() {
-                capacity += 1
+            releaseItem(item)
+            if let replacementItem = generateItem() {
                 item = replacementItem
             } else {
                 item = nil
@@ -138,11 +201,7 @@ public class ConnectionPool {
         }
         // If we took the last item, we can choose to grow the pool
         if (pool.count == 0 && capacity < limit) {
-            if let newItem = generator() {
-                capacity += 1
-                pool.append(newItem)
-                semaphore.signal()
-            }
+            _ = tryToGrowPool()
         }
         unlockPoolLock()
         return item
@@ -158,10 +217,11 @@ public class ConnectionPool {
         unlockPoolLock()
     }
     
+    // Remove all connections in the pool, calling releaser on each, leaving the pool empty.
     private func release() {
         lockPoolLock()
         for item in pool {
-            releaser(item)
+            releaseItem(item)
         }
         pool.removeAll()
         unlockPoolLock()
