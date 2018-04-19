@@ -112,7 +112,9 @@ public class ConnectionPool {
     // still have zero capacity.
     //
     // Returns true iff the pool has a non-zero capacity.
-    private func tryToEnsureNonZeroCapacity() -> Bool {
+    private func makeCapacityNonZero() -> Bool {
+        // Check capacity before locking, to avoid performance penalty in common case.
+        // We'll check again in a locked context for safety.
         guard capacity == 0 else {
             return true
         }
@@ -123,7 +125,7 @@ public class ConnectionPool {
         guard capacity == 0 else {
             return true
         }
-        return tryToGrowPool()
+        return growPool()
     }
  
     // Try to generate a new connection and append it to the pool. The generator can fail
@@ -132,7 +134,7 @@ public class ConnectionPool {
     // This function does NOT lock the pool and should only be called from a locked context.
     //
     // Returns true iff a new connection was successfully added.
-    private func tryToGrowPool() -> Bool {
+    private func growPool() -> Bool {
         if let newItem = generateItem() {
              pool.append(newItem)
              semaphore.signal()
@@ -172,7 +174,7 @@ public class ConnectionPool {
         // We must return early if the pool has zero capacity, because no-one will ever call
         // give() to return a connection (and unblock the semaphore.wait below) in this
         // situation. Try to seed the pool with a new connection so we can continue.
-        guard tryToEnsureNonZeroCapacity() else {
+        guard makeCapacityNonZero() else {
             return nil
         }
      
@@ -201,7 +203,7 @@ public class ConnectionPool {
         }
         // If we took the last item, we can choose to grow the pool
         if (pool.count == 0 && capacity < limit) {
-            _ = tryToGrowPool()
+            _ = growPool()
         }
         unlockPoolLock()
         return item
