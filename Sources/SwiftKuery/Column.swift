@@ -63,7 +63,7 @@ public class Column: Field, IndexColumn {
     /// An indication whether the column autoincrements.
     public let autoIncrement: Bool
     
-    /// A boolean expression constraint, which values inserted into of the column will be checked against.
+    /// A boolean expression constraint, which values inserted into the column will be checked against.
     public let checkExpression: String?
     
     /// The collation rule for the column.
@@ -80,7 +80,7 @@ public class Column: Field, IndexColumn {
      The initializer for the `Column` class. This creates an instance of `Column` using the provided parameters.
      Name must be provided, but all other fields will default to either nil or false if not given.
      ### Usage Example: ###
-     In this example, an instance of the `Column` class is created to match The person_id column of an SQL table.
+     In this example, an instance of the `Column` class is created to match the person_id column of an SQL table.
      To represent this a `Column` is initialised with name set to "person_id", type set as Int32.self (self is required to pass Int32 as the class) and primaryKey properties set to true.
      ```swift
      let person_id = Column("person_id", Int32.self, autoIncrement: true, primaryKey: true, notNull: true, unique: true)
@@ -94,7 +94,7 @@ public class Column: Field, IndexColumn {
      - Parameter notNull: An indication whether the column is not nullable. Defaults to false.
      - Parameter unique: An indication whether the column values have to be unique. Defaults to false.
      - Parameter defaultValue: The default value of the column. Defaults to nil.
-     - Parameter check: The expression to check for values inserted into of the column. Defaults to nil.
+     - Parameter check: The expression to check for values inserted into the column. Defaults to nil.
      - Parameter collate: The collation rule for the column. Defaults to nil.
      */
     public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, check: String? = nil, collate: String? = nil) {
@@ -114,8 +114,8 @@ public class Column: Field, IndexColumn {
     
     /**
      Function to build a String representation for referencing a `Column` instance.
-     A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
-     This function is required to obey the `Buildable` protocol.
+     A `QueryBuilder` is used to handle variances between the various database engines and produce a correct SQL description.
+     This function is required to conform to the `Buildable` protocol.
      ### Usage Example: ###
      In this example, `QueryBuilder` and a `PersonTable` (as defined at the top of this class) instances are initialized.
      The build function is then called to produce a String description and the results are printed.
@@ -145,7 +145,7 @@ public class Column: Field, IndexColumn {
     
     /**
      Function to build a String representation of the index of a `Column` instance.
-     A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
+     A `QueryBuilder` is used to handle variances between the various database engines and produce a correct SQL description.
      ### Usage Example: ###
      In this example, `QueryBuilder` and `PersonTable` (as defined at the top of this class) instances are initialized.
      The build function is then called to produce a String representation of the buildIndex and the results are printed.
@@ -166,7 +166,7 @@ public class Column: Field, IndexColumn {
 
     /**
      Function to create a String representation of a `Column` instance for use in an SQL CREATE TABLE query.
-     A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
+     A `QueryBuilder` is used to handle variances between the various database engines and produce a correct SQL description.
      ### Usage Example: ###
      In this example, `QueryBuilder` and a `PersonTable` (as defined at the top of this class) instances are initialized.
      The create function is then used to produce a String description of the `Column` and print the results.

@@ -196,7 +196,7 @@ public class ConnectionPoolConnection: Connection {
     
     /// Create a prepared statement from the passed in query.
     ///
-    /// - Parameter raw: A String with the query to the prepare statement for.
+    /// - Parameter raw: A String containing the query to prepare the statement for.
     /// - Returns: The prepared statement.
     /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare the statement.
     public func prepareStatement(_ raw: String) throws -> PreparedStatement {

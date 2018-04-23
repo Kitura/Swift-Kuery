@@ -23,8 +23,7 @@ import Foundation
  
  `QueryBuilder` is used in code dealing with variances between the various database engines. As
  different databases have different query syntax, sometimes changes need to be
- made when generating the actual SQL statement to run. Additional needed changes
- should be done by updating `QueryBuilder` substitutions array. Every query component
+ made when generating the actual SQL statement to run. Additional changes should be made by updating the `QueryBuilder` substitutions array. Every query component
  then builds its string representation using that array.
  ### Usage Example: ###
  In this example, a `QueryBuilder` for PostgreSQL is initialized.

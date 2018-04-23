@@ -107,11 +107,12 @@ open class Table: Buildable {
     // MARK: String Representation
     /**
      Function to build a String representation for referencing a `Table` instance.
-     A `QueryBuilder` is used handle variances between the various database engines and produce a correct SQL description.
+     A `QueryBuilder`  is used to handle variances between the various database engines and produce a correct SQL description.
      This function is required to conform to the `Buildable` protocol.
      ### Usage Example: ###
      In this example, `QueryBuilder` and `Table` instances are initialized. (`ToDoTable()` is defined in the class example).
      The build function is then called to produce a String description and print the results.
+     If the alias is set, this will return the format `tableName AS alias`
      ```swift
      let queryBuilder = QueryBuilder()
      let todotable = ToDoTable()
@@ -138,7 +139,7 @@ open class Table: Buildable {
         return result
     }
     
-    /// Function to create a String representation of a `Table` instance for use in an SQL CREATE TABLE query.
+    /// Function that returns the SQL CREATE TABLE query as a String for this TABLE.
     /// - Returns: A String representation of the table create statement.
     /// - Throws: QueryError.syntaxError if statement build fails.
     public func description(connection: Connection) throws -> String {
@@ -216,7 +217,7 @@ open class Table: Buildable {
     /**
      Function to return a `Raw` instance, which will execute a DROP TABLE query on the current `Table` instance.
      ### Usage Example: ###
-     In this example, a `Table` instance is created. The drop function is called to create a `Raw` instance of an String to execute the DROP TABLE SQL Query for todotable.
+     In this example, a `Table` instance is created. The drop function is called to create a `Raw` instance of a String to execute the DROP TABLE SQL Query for todotable.
      ```swift
      let todotable = ToDoTable()
      let dropRaw = todotable.drop()
@@ -295,7 +296,7 @@ open class Table: Buildable {
     }
     
     /**
-     Function to set a single `Column` instances` as a primary key, in the `Table` instance.
+     Function to set a single `Column` instance as a primary key, in the `Table` instance.
      This function calls the composite primaryKey function with a single column to create a single primary key.
      ### Usage Example: ###
      In this example, the primary key is set to the `id` column for the table `personTable`.
@@ -307,10 +308,10 @@ open class Table: Buildable {
         let lastName = Column("lastName", String.self, notNull: true)
      }
      var personTable = PersonTable()
-     personTable = personTable.primaryKey(idColumn)
+     personTable = personTable.primaryKey(id)
      ```
     
-     - Parameter columns: Single Column that constitute the primary key.
+     - Parameter columns: A single column that constitutes the primary key.
      - Returns: A new instance of `Table`.
     */
     public func primaryKey(_ columns: Column...) -> Self {
@@ -318,23 +319,26 @@ open class Table: Buildable {
     }
     
     /**
-     Function to set multiple `Column` instances, as a composite foreign key, in the `Table` instance.
-     This function calls the composite primaryKey function with a single column to create a single primary key.
+     Function to set a multiple `Column` instance, as a composite foreign key, in the `Table` instance referencing multiple column in another Table.
+     The function also validates the columns to ensure they belong to the table and do not conflict with the definition of a foreign key.
      ### Usage Example: ###
-     In this example, columns for first and last name are initialized and a `Table` instance called personTable is created. A "personTable" foreign key is then set to be a composite of firstColumn and lastColumn, which reference columns describing the persons salary.
+     In this example, `Table` instances called personTable and employeeTable are created. A "personTable" foreign key is then set to be a composite of firstColumn and lastColumn, which reference firstName and surname in employeeTable.
      ```swift
-     let firstColumn = Column("firstName", String.self, notNull: true)
-     let lastColumn = Column("lastName", String.self, notNull: true)
-     let monthlyPay = Column("monthlyPay", Int32.self)
-     let employeeBand = Column("employeeBand", String.self)
+     public class EmployeeTable: Table {
+         let tableName = "employeeTable"
+         let firstName = Column("firstName", String.self, notNull: true)
+         let surname = Column("surname", String.self, notNull: true)
+         let monthlyPay = Column("monthlyPay", Int32.self)
+     }
      public class PersonTable: Table {
         let tableName = "personTable"
-        let firstName = firstColumn
-        let lastName = lastColumn
+        let firstName = Column("firstName", String.self, notNull: true)
+        let lastName = Column("lastName", String.self, notNull: true)
         let dateOfBirth = Column("toDo_completed", String.self)
      }
      var personTable = PersonTable()
-     personTable = personTable.foreignKey([firstColumn, lastColumn], references: [monthlyPay, employeeBand])
+     var employeeTable = EmployeeTable()
+     personTable = personTable.foreignKey([personTable.firstName, personTable.lastName], references: [employeeTable.firstName, employeeTable.surname])
      ```
     
      - Parameter columns: An Array of columns that constitute the foreign key.
@@ -371,23 +375,25 @@ open class Table: Buildable {
     }
     
     /**
-     Function to set a single `Column` instances, as a composite foreign key, in the `Table` instance.
-     The function also validates the columns to ensure they belong to the table and do not conflict with the definition of a foreign key.
+     Function to set a single `Column` instance, as a foreign key, in the `Table` instance.
+     The function also validates the column to ensure it belongs to the table and do not conflict with the definition of a foreign key.
      ### Usage Example: ###
-     In this example, a column for id is initialized and a `Table` instance called "personTable" is created.
-     The personTable foreign key is then set to be firstColumn, referencing columns describing the persons salary.
+     In this example, `Table` instances called personTable and employeeTable are created. A "personTable" foreign key is then set to be id, which reference identifier in employeeTable.
      ```swift
-     let idColumn = Column("id", Int32.self, notNull: true)
-     let monthlyPay = Column("monthlyPay", Int32.self)
-     let employeeBand = Column("employeeBand", String.self)
+     public class EmployeeTable: Table {
+         let identifier = Column("identifier", Int32.self, notNull: true)
+         let monthlyPay = Column("monthlyPay", Int32.self)
+         let employeeBand = Column("employeeBand", String.self)
+     }
      public class PersonTable: Table {
         let tableName = "personTable"
-        let id = idColumn
+        let id = Column("id", Int32.self, notNull: true)
         let firstName = Column("firstName", String.self, notNull: true)
         let lastName = Column("lastName", String.self, notNull: true)
      }
      var personTable = PersonTable()
-     personTable = personTable.foreignKey(idColumn, references: [monthlyPay, employeeBand])
+     var employeeTable = EmployeeTable()
+     personTable = personTable.foreignKey(personTable.idColumn, references: employeeTable.identifier)
      ```
     
      - Parameter columns: A column that is the foreign key.

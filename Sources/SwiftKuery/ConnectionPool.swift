@@ -24,9 +24,9 @@ import Dispatch
 // MARK: ConnectionPool
 
 /**
- This class implements a first in first out connection pool. The pool maintains a cache of `ConnectionPoolConnection` instances, which can be reused for future requests, to enhance performance.
- ### Usage Example: ###
-This example shows how to create a ConnectionPool manually. Two closures to generate and release Connection instances are defined. A connection pool is then initialized with the defined closures and options. A single Connection is then retrieved from the pool.
+ This class implements a first in, first out connection pool. The pool maintains a cache of `ConnectionPoolConnection` instances, which can be reused for future requests, to enhance performance.
+### Usage Example: ###
+In most cases, you will create a connection pool using a plugin, such as SwiftKuery-postgreSQL, which implements this class. You would then call the specific plugin with the required options. If you wish to create the a ConnectionPool manually you can use this example. Two closures to generate and release Connection instances are defined. A connection pool is then initialized with the defined closures and options. A single Connection is then retrieved from the pool.
  ```swift
  let options = ConnectionPoolOptions(initialCapacity: 2, maxCapacity: 5, timeout: 1000)
  let connectionGenerator: () -> Connection? = {
@@ -37,7 +37,10 @@ This example shows how to create a ConnectionPool manually. Two closures to gene
     connection.closeConnection()
  }
  let connectionPool = ConnectionPool(options: options, connectionGenerator: connectionGenerator, connectionReleaser: connectionReleaser)
- let singleConnection = connectionPool.getConnection()
+ guard let singleConnection = connectionPool.getConnection() else {
+    // handle error
+    return
+ }
  ```
  */
 
@@ -90,7 +93,7 @@ public class ConnectionPool {
      let connectionPool = ConnectionPool(options: options, connectionGenerator: connectionGenerator, connectionReleaser: connectionReleaser)
      ```
     
-     - Parameter options: `ConnectionPoolOptions` describing pool configuration.
+     - Parameter options: `ConnectionPoolOptions` describing the pool configuration.
      - Parameter connectionGenerator: A closure that returns a new connection for the pool.
      - Parameter connectionReleaser: A closure to be used to release a connection from the pool.
     */
