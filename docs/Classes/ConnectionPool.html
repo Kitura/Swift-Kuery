@@ -411,9 +411,10 @@
 
                 </div>
               </div>
-            <p>This class implements a first in first out connection pool. The pool maintains a cache of <code><a href="../Classes/ConnectionPoolConnection.html">ConnectionPoolConnection</a></code> instances, which can be reused for future requests, to enhance performance.
- ### Usage Example: ###
-This example shows how to create a ConnectionPool manually. Two closures to generate and release Connection instances are defined. A connection pool is then initialized with the defined closures and options. A single Connection is then retrieved from the pool.</p>
+            <p>This class implements a first in, first out connection pool. The pool maintains a cache of <code><a href="../Classes/ConnectionPoolConnection.html">ConnectionPoolConnection</a></code> instances, which can be reused for future requests, to enhance performance.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In most cases, you will create a connection pool using a plugin, such as SwiftKuery-postgreSQL, which implements this class. You would then call the specific plugin with the required options. If you wish to create the a ConnectionPool manually you can use this example. Two closures to generate and release Connection instances are defined. A connection pool is then initialized with the defined closures and options. A single Connection is then retrieved from the pool.</p>
 <pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">options</span> <span class="o">=</span> <span class="kt">ConnectionPoolOptions</span><span class="p">(</span><span class="nv">initialCapacity</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nv">maxCapacity</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="nv">timeout</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
  <span class="k">let</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Connection</span><span class="p">?</span> <span class="o">=</span> <span class="p">{</span>
     <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="kt">PostgreSQLConnection</span><span class="p">(</span><span class="nv">host</span><span class="p">:</span> <span class="s">"localhost"</span><span class="p">,</span> <span class="nv">port</span><span class="p">:</span> <span class="mi">5432</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="nf">databaseName</span><span class="p">(</span><span class="s">"ExampleDatabase"</span><span class="p">)])</span>
@@ -423,7 +424,10 @@ This example shows how to create a ConnectionPool manually. Two closures to gene
     <span class="n">connection</span><span class="o">.</span><span class="nf">closeConnection</span><span class="p">()</span>
  <span class="p">}</span>
  <span class="k">let</span> <span class="nv">connectionPool</span> <span class="o">=</span> <span class="kt">ConnectionPool</span><span class="p">(</span><span class="nv">options</span><span class="p">:</span> <span class="n">options</span><span class="p">,</span> <span class="nv">connectionGenerator</span><span class="p">:</span> <span class="n">connectionGenerator</span><span class="p">,</span> <span class="nv">connectionReleaser</span><span class="p">:</span> <span class="n">connectionReleaser</span><span class="p">)</span>
- <span class="k">let</span> <span class="nv">singleConnection</span> <span class="o">=</span> <span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span>
+ <span class="k">guard</span> <span class="k">let</span> <span class="nv">singleConnection</span> <span class="o">=</span> <span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// handle error</span>
+    <span class="k">return</span>
+ <span class="p">}</span>
 </code></pre>
 
           </div>
@@ -453,8 +457,8 @@ This example shows how to create a ConnectionPool manually. Two closures to gene
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Creates an instance of <code>ConnectionPool</code> containing <code><a href="../Structs/ConnectionPoolOptions.html#/s:10SwiftKuery21ConnectionPoolOptionsV15initialCapacitySiv">ConnectionPoolOptions.initialCapacity</a></code> connections.
-The <code>connectionGenerator</code> will be invoked <code><a href="../Structs/ConnectionPoolOptions.html#/s:10SwiftKuery21ConnectionPoolOptionsV15initialCapacitySiv">ConnectionPoolOptions.initialCapacity</a></code> times to fill
+                        <p>Creates an instance of <code>ConnectionPool</code> containing <code><a href="../Structs/ConnectionPoolOptions.html#/s:10SwiftKuery21ConnectionPoolOptionsV15initialCapacitySivp">ConnectionPoolOptions.initialCapacity</a></code> connections.
+The <code>connectionGenerator</code> will be invoked <code><a href="../Structs/ConnectionPoolOptions.html#/s:10SwiftKuery21ConnectionPoolOptionsV15initialCapacitySivp">ConnectionPoolOptions.initialCapacity</a></code> times to fill
 the pool to the initial capacity.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
@@ -494,7 +498,7 @@ A connection pool is then initialized with the given <code>options</code>, the <
                               </td>
                               <td>
                                 <div>
-                                  <p><code><a href="../Structs/ConnectionPoolOptions.html">ConnectionPoolOptions</a></code> describing pool configuration.</p>
+                                  <p><code><a href="../Structs/ConnectionPoolOptions.html">ConnectionPoolOptions</a></code> describing the pool configuration.</p>
                                 </div>
                               </td>
                             </tr>
@@ -553,7 +557,7 @@ A connection pool is then initialized with the given <code>options</code>, the <
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Get a connection from the pool.
-This function will block until a connection can be obtained from the pool or for <code><a href="../Structs/ConnectionPoolOptions.html#/s:10SwiftKuery21ConnectionPoolOptionsV7timeoutSiv">ConnectionPoolOptions.timeout</a></code>.</p>
+This function will block until a connection can be obtained from the pool or for <code><a href="../Structs/ConnectionPoolOptions.html#/s:10SwiftKuery21ConnectionPoolOptionsV7timeoutSivp">ConnectionPoolOptions.timeout</a></code>.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <p>A <code><a href="../Protocols/Connection.html">Connection</a></code> instance is retrieved from a pool that was initialized previously.</p>
@@ -627,34 +631,8 @@ This function will block until a connection can be obtained from the pool or for
       </article>
     </div>
     <section class="footer">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-17)</p>
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-23)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
-=======
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-01-12)</p>
-=======
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-01-16)</p>
->>>>>>> table class Jazzy update
-=======
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-01-17)</p>
->>>>>>> Connection Pool Jazzy Update
-=======
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-02-19)</p>
->>>>>>> docs reviewed
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
->>>>>>> column docs updated
-=======
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-13)</p>
-=======
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-22)</p>
->>>>>>> refreshed jazzy docs
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
->>>>>>> show parameters in jazzy docs
     </section>
   </body>
 </div>

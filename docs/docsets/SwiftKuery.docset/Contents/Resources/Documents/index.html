@@ -405,7 +405,6 @@
           <div class="section-content">
             
             <p align="center">
-<<<<<<< HEAD
     <a href="http://kitura.io/">
         <img src="https://raw.githubusercontent.com/IBM-Swift/Kitura/master/Sources/Kitura/resources/kitura-bird.svg?sanitize=true" height="100" alt="Kitura">
     </a>
@@ -424,26 +423,6 @@
     <a href="http://swift-at-ibm-slack.mybluemix.net/">
     <img src="http://swift-at-ibm-slack.mybluemix.net/badge.svg" alt="Slack Status">
     </a>
-=======
-<a href="http://kitura.io/">
-<img src="https://raw.githubusercontent.com/IBM-Swift/Kitura/master/Sources/Kitura/resources/kitura-bird.svg?sanitize=true" height="100" alt="Kitura">
-</a>
-</p>
-
-<p align="center">
-<a href="http://www.kitura.io/">
-<img src="https://img.shields.io/badge/docs-kitura.io-1FBCE4.svg" alt="Docs">
-</a>
-<a href="https://travis-ci.org/IBM-Swift/Swift-Kuery">
-<img src="https://travis-ci.org/IBM-Swift/Swift-Kuery.svg?branch=master" alt="Build Status - Master">
-</a>
-<img src="https://img.shields.io/badge/os-macOS-green.svg?style=flat" alt="Mac OS X">
-<img src="https://img.shields.io/badge/os-linux-green.svg?style=flat" alt="Linux">
-<img src="https://img.shields.io/badge/license-Apache2-blue.svg?style=flat" alt="Apache 2">
-<a href="http://swift-at-ibm-slack.mybluemix.net/">
-<img src="http://swift-at-ibm-slack.mybluemix.net/badge.svg" alt="Slack Status">
-</a>
->>>>>>> column docs updated
 </p>
 <h1 id='swift-kuery' class='heading'>Swift-Kuery</h1>
 
@@ -454,19 +433,11 @@
 
 <p><a href="https://github.com/IBM-Swift/Swift-Kuery-ORM">Swift-Kuery-ORM</a> is an ORM, built on top of Swift-Kuery, which allows you to simplify the persistence of model objects with your server.</p>
 
-<p>Swift-Kuery is easy to learn, consumable framework that comes with a set of <a href="#list-of-plugins">implemented plugins</a>.</p>
+<p>Swift-Kuery is an easy to learn, consumable framework that comes with a set of <a href="#list-of-plugins">implemented plugins</a>.</p>
 <h2 id='table-of-contents' class='heading'>Table of Contents</h2>
 
 <ul>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<li><a href="#example">Example</a></li>
-=======
-<li><a href="#example">Examples</a></li>
->>>>>>> column docs updated
-=======
 <li><a href="#examples">Examples</a></li>
->>>>>>> docs reviewed
 <li><a href="#sql-injection-prevention-using-parameterization">SQL Injection Prevention using Parameterization</a></li>
 <li><a href="#prepared-statements">Prepared Statements</a></li>
 <li><a href="#schema-management">Schema Management</a></li>
@@ -474,41 +445,11 @@
 <li><a href="#list-of-plugins">List of plugins</a></li>
 <li><a href="#license">License</a></li>
 </ul>
-<<<<<<< HEAD
-<h2 id='example' class='heading'>Example</h2>
-=======
 <h2 id='examples' class='heading'>Examples</h2>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<p>A Swift-Kuery tutorial on adding a PostgreSQL database to a foodTracker app is available <a href="https://github.com/IBM/FoodTrackerBackend/blob/master/AddDatabase.md">here</a>.</p>
-
-<p>An example ToDo list application, implementing Swift-Kuery, is available <a href="https://github.com/IBM-Swift/iOSSampleKituraKit/tree/persistentiOSKituraKit">here</a>.</p>
->>>>>>> column docs updated
-
-<p>This example demonstrates how to execute an SQL query using Swift-Kuery and Swift-Kuery-PostgreSQL. It assumes there is a PostgreSQL server running on localhost:5432, that contains a table called Grades:</p>
-=======
-<p>This example demonstrates how to execute an SQL query using Swift-Kuery and Swift-Kuery-PostgreSQL. It assumes that there is a PostgreSQL server running on <code>localhost:5432</code> and a PostgreSQL database called <code>school</code> with the table <code>Grades</code> which contains the following data:</p>
->>>>>>> show parameters in jazzy docs
-<pre class="highlight plaintext"><code> id   |  course   | grade
-------+-----------+-------
-12345 | physics   |    82
-12345 | chemistry |    90
-12345 | history   |    98
-78901 | history   |   100
-78901 | chemistry |    94
-78901 | physics   |    90
-24680 | physics   |    74
-24680 | chemistry |    92
-24680 | history   |    90
-
-</code></pre>
-
-<p>First we import Swift-Kuery and Swift-Kuery-PostgreSQL:</p>
-=======
 <p>This example demonstrates how to execute an SQL query using Swift-Kuery with the <a href="https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL">Swift-Kuery-PostgreSQL</a> plugin.</p>
 
-<p>The starting point is a Swift project, created by <code>swift package init --type executable</code>.</p>
+<p>The starting point for this example is an existing Swift package. If you don&rsquo;t have one already, create and enter a directory named e.g. <code>SwiftKueryExample</code>. Now run the swift package&rsquo;s init command, to create an executable type, by running <code>swift package init --type executable</code>.</p>
 <h3 id='creating-a-postgresql-database' class='heading'>Creating A PostgreSQL Database</h3>
 
 <ol>
@@ -533,7 +474,7 @@ psql school
 </ol>
 <h3 id='update-your-package-swift-file' class='heading'>Update your Package.swift file</h3>
 
-<p>Add Swift-Kuery-PostgreSQL to your Package.swift. This will bring in Swift-Kuery as well.</p>
+<p>Add Swift-Kuery-PostgreSQL to your <code>Package.swift</code>. This will bring in Swift-Kuery as well.</p>
 <pre class="highlight swift"><code><span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
     <span class="o">...</span>
     <span class="c1">// Add this line</span>
@@ -542,17 +483,16 @@ psql school
   <span class="nv">targets</span><span class="p">:</span> <span class="p">[</span>
     <span class="o">.</span><span class="nf">target</span><span class="p">(</span>
       <span class="nv">name</span><span class="p">:</span> <span class="o">...</span>
-      <span class="c1">// Add this modules to your target(s)</span>
+      <span class="c1">// Add the module to your target(s)</span>
       <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="s">"SwiftKueryPostgreSQL"</span><span class="p">]),</span>
   <span class="p">]</span>
 </code></pre>
-<h3 id='send-sql-querys-to-the-database' class='heading'>Send SQL querys to the database</h3>
+<h3 id='executing-sql-queries' class='heading'>Executing SQL queries</h3>
 
-<p>Inside the <code>Main.swift</code> file:</p>
+<p>Inside the <code>main.swift</code> file:</p>
 
 <ol>
 <li><p>Add SwiftKuery and SwiftKueryPostgreSQL to your import statements:</p>
->>>>>>> refreshed jazzy docs
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftKuery</span>
 <span class="kd">import</span> <span class="kt">SwiftKueryPostgreSQL</span>
 </code></pre></li>
@@ -569,27 +509,33 @@ psql school
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pool</span> <span class="o">=</span> <span class="kt">PostgreSQLConnection</span><span class="o">.</span><span class="nf">createPool</span><span class="p">(</span><span class="nv">host</span><span class="p">:</span> <span class="s">"localhost"</span><span class="p">,</span> <span class="nv">port</span><span class="p">:</span> <span class="mi">5432</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="nf">databaseName</span><span class="p">(</span><span class="s">"school"</span><span class="p">)],</span> <span class="nv">poolOptions</span><span class="p">:</span> <span class="kt">ConnectionPoolOptions</span><span class="p">(</span><span class="nv">initialCapacity</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nv">maxCapacity</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="nv">timeout</span><span class="p">:</span> <span class="mi">10000</span><span class="p">))</span>
 </code></pre></li>
 <li><p>Create some example students:</p>
-<pre class="highlight plaintext"><code>let students: [[Any]] = [[0, "computing", 92], [1, "physics", 75], [2, "history", 83]]
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">students</span><span class="p">:</span> <span class="p">[[</span><span class="kt">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="s">"computing"</span><span class="p">,</span> <span class="mi">92</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s">"physics"</span><span class="p">,</span> <span class="mi">75</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s">"history"</span><span class="p">,</span> <span class="mi">83</span><span class="p">]]</span>
 </code></pre></li>
-<li><p>Connect to database and perform an SQL query:</p></li>
-</ol>
+<li><p>Connect to database and perform an SQL query:</p>
 <pre class="highlight swift"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="nv">insertQuery</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">grades</span><span class="p">,</span> <span class="nv">rows</span><span class="p">:</span> <span class="n">students</span><span class="p">)</span>
-    <span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">insertQuery</span><span class="p">)</span> <span class="p">{</span> <span class="n">insertResult</span> <span class="k">in</span>
-        <span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">grades</span><span class="p">))</span> <span class="p">{</span> <span class="n">selectResult</span> <span class="k">in</span>
-            <span class="k">if</span> <span class="k">let</span> <span class="nv">resultSet</span> <span class="o">=</span> <span class="n">selectResult</span><span class="o">.</span><span class="n">asResultSet</span> <span class="p">{</span>
-                <span class="k">for</span> <span class="n">row</span> <span class="k">in</span> <span class="n">resultSet</span><span class="o">.</span><span class="n">rows</span> <span class="p">{</span>
-                    <span class="nf">print</span><span class="p">(</span><span class="s">"Student </span><span class="se">\(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">??</span> <span class="s">""</span><span class="se">)</span><span class="s">, studying </span><span class="se">\(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">??</span> <span class="s">""</span><span class="se">)</span><span class="s">, scored </span><span class="se">\(</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">??</span> <span class="s">""</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
-                <span class="p">}</span>
+<span class="k">let</span> <span class="nv">insertQuery</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">grades</span><span class="p">,</span> <span class="nv">rows</span><span class="p">:</span> <span class="n">students</span><span class="p">)</span>
+<span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">insertQuery</span><span class="p">)</span> <span class="p">{</span> <span class="n">insertResult</span> <span class="k">in</span>
+    <span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">grades</span><span class="p">))</span> <span class="p">{</span> <span class="n">selectResult</span> <span class="k">in</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">resultSet</span> <span class="o">=</span> <span class="n">selectResult</span><span class="o">.</span><span class="n">asResultSet</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="k">in</span> <span class="n">resultSet</span><span class="o">.</span><span class="n">rows</span> <span class="p">{</span>
+                <span class="nf">print</span><span class="p">(</span><span class="s">"Student </span><span class="se">\(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">??</span> <span class="s">""</span><span class="se">)</span><span class="s">, studying </span><span class="se">\(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">??</span> <span class="s">""</span><span class="se">)</span><span class="s">, scored </span><span class="se">\(</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">??</span> <span class="s">""</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></li>
+<li><p>Save the <code>main.swift</code> file. Run <code>swift build</code> to build the executable.</p></li>
+<li><p>Run the executable <code>.build/debug/&lt;yourPackageName&gt;.</code></p></li>
+</ol>
+
+<p>This will print the <code>id</code>, <code>course</code> and <code>grade</code> for each student, which are queried from the database:</p>
+<pre class="highlight plaintext"><code>Student 0, studying computing, scored 92
+Student 1, studying physics, scored 75
+Student 2, studying history, scored 83
 </code></pre>
 
-<p>Save this file, run <code>swift build</code> and then run the created executable module.</p>
-
-<p>This will print the each students id, course and grade, which have been taken from the database. If you go to your database with <code>psql school</code> and enter <code>TABLE grades</code> you will see that the table has been populated with the students.</p>
+<p>If you go to your database with <code>psql school</code> and enter <code>TABLE grades;</code> you can see that the table has been populated with the student data.</p>
 <h2 id='sql-injection-prevention-using-parameterization' class='heading'>SQL Injection Prevention using Parameterization</h2>
 
 <p>Unsanitized data that is used in dynamic queries is one of the most common causes of SQL injection vulnerabilities. Parameterizing queries can help to prevent SQL injection attacks.</p>
@@ -649,13 +595,23 @@ psql school
 
 <p>Swift-Kuery enables you to create tables on the database server.</p>
 
-<p>Let&rsquo;s revisit the Grades table, which we used in our Example above, and add in two new columns containing the data type and constraints:</p>
+<p>Let&rsquo;s revisit the Grades table, which we used in our Example above:</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">Grades</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
     <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"Grades"</span>
-    <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span> <span class="kt">Char</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">length</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-    <span class="k">let</span> <span class="nv">course</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"course"</span><span class="p">,</span> <span class="kt">Varchar</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">length</span><span class="p">:</span> <span class="mi">50</span><span class="p">)</span>
-    <span class="k">let</span> <span class="nv">grade</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"grade"</span><span class="p">,</span> <span class="kt">Int16</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">check</span><span class="p">:</span> <span class="s">"grade &gt;= 0"</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">course</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"course"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">grade</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"grade"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
 <span class="p">}</span>
+</code></pre>
+
+<p>We will add a second table called <code>courses</code>:</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">Courses</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"Courses"</span>
+    <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"name"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">primaryKey</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">credit</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"credit"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">teacher</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"teacher"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">let</span> <span class="nv">courses</span> <span class="o">=</span> <span class="kt">Courses</span><span class="p">()</span>
 </code></pre>
 
 <p>We can add a foreign key to <code>Grades</code> that references a column in another table:</p>
@@ -668,7 +624,7 @@ psql school
 
 <p>Create the table in the database:</p>
 <pre class="highlight swift"><code>
-<span class="n">grades</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="n">connection</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
+<span class="n">courses</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="n">connection</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
      <span class="k">guard</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="k">else</span> <span class="p">{</span>
         <span class="nf">print</span><span class="p">(</span><span class="s">"Failed to create table: </span><span class="se">\(</span><span class="n">result</span><span class="o">.</span><span class="n">asError</span><span class="p">?</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
      <span class="p">}</span>
@@ -721,8 +677,10 @@ psql school
 </code></pre>
 <h2 id='query-examples' class='heading'>Query Examples</h2>
 
-<p>Let&rsquo;s see more examples of how to build and execute SQL queries using Swift-Kuery.</p>
+<p>In the following section, we will provide an example SQL query and show you how to build and execute the same query in Swift using Swift-Kuery.</p>
 <h4 id='classes-used-in-the-examples' class='heading'>Classes used in the examples:</h4>
+
+<p>These examples we will use the following two tables:</p>
 <pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">T1</span> <span class="p">{</span>
   <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"t1"</span>
   <span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"a"</span><span class="p">)</span>
@@ -739,46 +697,44 @@ psql school
 <p>&nbsp;</p>
 
 <p><strong>SELECT * FROM t1;</strong></p>
+
+<p>This query will select all results from the table. The example below shows this how to execute this query including the boilerplate code:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">t1</span> <span class="o">=</span> <span class="kt">T1</span><span class="p">()</span>
 
-<span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
 
 <span class="k">guard</span> <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span> <span class="k">else</span> <span class="p">{</span>
    <span class="c1">// Error</span>
 <span class="p">}</span>
 
-<span class="n">s</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span> <span class="p">{</span> <span class="n">queryResult</span> <span class="k">in</span>
+<span class="n">query</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span> <span class="p">{</span> <span class="n">queryResult</span> <span class="k">in</span>
   <span class="k">if</span> <span class="k">let</span> <span class="nv">resultSet</span> <span class="o">=</span> <span class="n">queryResult</span><span class="o">.</span><span class="n">asResultSet</span> <span class="p">{</span>
     <span class="k">for</span> <span class="n">title</span> <span class="k">in</span> <span class="n">resultSet</span><span class="o">.</span><span class="n">titles</span> <span class="p">{</span>
-      <span class="o">...</span>
+      <span class="c1">// Process titles</span>
     <span class="p">}</span>
     <span class="k">for</span> <span class="n">row</span> <span class="k">in</span> <span class="n">resultSet</span><span class="o">.</span><span class="n">rows</span> <span class="p">{</span>
       <span class="k">for</span> <span class="n">value</span> <span class="k">in</span> <span class="n">row</span> <span class="p">{</span>
-        <span class="o">...</span>
+        <span class="c1">// Process rows</span>
       <span class="p">}</span>
     <span class="p">}</span>
   <span class="p">}</span>
   <span class="k">else</span> <span class="k">if</span> <span class="k">let</span> <span class="nv">queryError</span> <span class="o">=</span> <span class="n">queryResult</span><span class="o">.</span><span class="n">asError</span> <span class="p">{</span>
-    <span class="o">...</span>
+    <span class="c1">// process error</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
 
-<p>&nbsp;</p>
+<p>The following examples show more complex queries, which can be substituted into the the above boilerplate.
+&nbsp;</p>
 
 <p><strong>SELECT a, b FROM t1<br>
    WHERE (a LIKE &lsquo;%b&rsquo; OR a = &lsquo;apple&rsquo;) AND b &gt; 5<br>
    ORDER BY b ASC, a DESC<br>
    OFFSET 5;</strong></p>
-<pre class="highlight swift"><code><span class="o">...</span>
-<span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">where</span><span class="p">((</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="nf">like</span><span class="p">(</span><span class="s">"b%"</span><span class="p">)</span> <span class="o">||</span> <span class="n">t1</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="s">"apple"</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">t1</span><span class="o">.</span><span class="n">b</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">order</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="o">.</span><span class="kt">ASC</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">),</span> <span class="o">.</span><span class="kt">DESC</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">))</span>
   <span class="o">.</span><span class="nf">offset</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-
-<span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span> <span class="n">queryResult</span> <span class="k">in</span>
-   <span class="o">...</span>
-<span class="p">}</span>
 </code></pre>
 
 <p>&nbsp;</p>
@@ -788,67 +744,47 @@ psql school
  GROUP BY a<br>
  HAVING SUM(b) &gt; 3<br>
  ORDER BY a DESC;</strong></p>
-<pre class="highlight swift"><code><span class="o">...</span>
-<span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nf">ucase</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"name"</span><span class="p">),</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nf">ucase</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"name"</span><span class="p">),</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">group</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">having</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">order</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="o">.</span><span class="kt">DESC</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">))</span>
-<span class="o">...</span>
 </code></pre>
 
 <p>&nbsp;</p>
 
 <p><strong>INSERT INTO t1<br>
 VALUES (&lsquo;apple&rsquo;, 10), (&lsquo;apricot&rsquo;, 3), (&lsquo;banana&rsquo;, 17);</strong></p>
-<pre class="highlight swift"><code><span class="o">...</span>
-<span class="k">let</span> <span class="nv">i</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span> <span class="nv">rows</span><span class="p">:</span> <span class="p">[[</span><span class="s">"apple"</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s">"apricot"</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s">"banana"</span><span class="p">,</span> <span class="mi">17</span><span class="p">]])</span>
-
-<span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="n">queryResult</span> <span class="k">in</span>
-  <span class="k">if</span> <span class="n">queryResult</span><span class="o">.</span><span class="n">success</span>  <span class="p">{</span>
-    <span class="o">...</span>
-  <span class="p">}</span>
-  <span class="k">else</span> <span class="k">if</span> <span class="k">let</span> <span class="nv">queryError</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">asError</span> <span class="p">{</span>
-    <span class="o">...</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span> <span class="nv">rows</span><span class="p">:</span> <span class="p">[[</span><span class="s">"apple"</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="s">"apricot"</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s">"banana"</span><span class="p">,</span> <span class="mi">17</span><span class="p">]])</span>
 </code></pre>
 
 <p>&nbsp;</p>
 
 <p><strong>INSERT INTO t1<br>
 VALUES (&lsquo;apple&rsquo;, 10);</strong></p>
-<pre class="highlight swift"><code><span class="o">...</span>
-<span class="k">let</span> <span class="nv">i</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span> <span class="nv">values</span><span class="p">:</span> <span class="s">"apple"</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="o">...</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span> <span class="nv">values</span><span class="p">:</span> <span class="s">"apple"</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 </code></pre>
 
 <p>&nbsp;</p>
 
 <p><strong>INSERT INTO t1 (a, b)<br>
 VALUES (&lsquo;apricot&rsquo;, &lsquo;3&rsquo;);</strong></p>
-<pre class="highlight swift"><code><span class="o">...</span>
-<span class="k">let</span> <span class="nv">i</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span> <span class="nv">valueTuples</span><span class="p">:</span> <span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="s">"apricot"</span><span class="p">),</span> <span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="s">"3"</span><span class="p">))</span>
-<span class="o">...</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span> <span class="nv">valueTuples</span><span class="p">:</span> <span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="s">"apricot"</span><span class="p">),</span> <span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="s">"3"</span><span class="p">))</span>
 </code></pre>
 
 <p>&nbsp;</p>
 
 <p><strong>INSERT INTO t1 (a, b)<br>
 VALUES (&lsquo;apricot&rsquo;, &lsquo;3&rsquo;);</strong></p>
-<pre class="highlight swift"><code><span class="o">...</span>
-<span class="k">let</span> <span class="nv">i</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span> <span class="nv">columns</span><span class="p">:</span> <span class="p">[</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">],</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="s">"apricot"</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="o">...</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span> <span class="nv">columns</span><span class="p">:</span> <span class="p">[</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">],</span> <span class="nv">values</span><span class="p">:</span> <span class="p">[</span><span class="s">"apricot"</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 </code></pre>
 
 <p>&nbsp;</p>
 
 <p><strong>UPDATE t1 SET a = &lsquo;peach&rsquo;, b = 2<br>
 WHERE a = &lsquo;banana&rsquo;;</strong></p>
-<pre class="highlight swift"><code><span class="o">...</span>
-<span class="k">let</span> <span class="nv">u</span> <span class="o">=</span> <span class="kt">Update</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="nv">set</span><span class="p">:</span> <span class="p">[(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="s">"peach"</span><span class="p">),</span> <span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Update</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="nv">set</span><span class="p">:</span> <span class="p">[(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="s">"peach"</span><span class="p">),</span> <span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
   <span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="s">"banana"</span><span class="p">)</span>
-<span class="o">...</span>
 </code></pre>
 
 <p>&nbsp;</p>
@@ -861,10 +797,9 @@ ON left.b = right.b;</strong></p>
 
 <span class="k">let</span> <span class="nv">leftTable</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"left"</span><span class="p">)</span>
 <span class="k">let</span> <span class="nv">rightTable</span> <span class="o">=</span> <span class="n">t2</span><span class="o">.</span><span class="nf">as</span><span class="p">(</span><span class="s">"right"</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">s2</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">leftTable</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">leftTable</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">leftJoin</span><span class="p">(</span><span class="n">rightTable</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">on</span><span class="p">(</span><span class="n">leftTable</span><span class="o">.</span><span class="n">b</span> <span class="o">==</span> <span class="n">rightTable</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
-<span class="o">...</span>
 </code></pre>
 
 <p>&nbsp;</p>
@@ -872,11 +807,9 @@ ON left.b = right.b;</strong></p>
 <p><strong>SELECT * FROM t1<br>
 JOIN t2<br>
 USING (b);</strong></p>
-<pre class="highlight swift"><code><span class="o">...</span>
-<span class="k">let</span> <span class="nv">s2</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">join</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">using</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">)</span>
-<span class="o">...</span>
 </code></pre>
 
 <p>&nbsp;</p>
@@ -886,10 +819,10 @@ USING (b);</strong></p>
 
 <p><strong>INSERT INTO t1<br>
 VALUES (@0,@1);</strong></p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">i</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span> <span class="nv">values</span><span class="p">:</span> <span class="kt">Parameter</span><span class="p">(),</span> <span class="kt">Parameter</span><span class="p">())</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span> <span class="nv">values</span><span class="p">:</span> <span class="kt">Parameter</span><span class="p">(),</span> <span class="kt">Parameter</span><span class="p">())</span>
 
-<span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">i1</span><span class="p">,</span> <span class="nv">parameters</span><span class="p">:</span> <span class="s">"banana"</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span> <span class="p">{</span> <span class="n">queryResult</span> <span class="k">in</span>
-  <span class="o">...</span>
+<span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">query</span><span class="p">,</span> <span class="nv">parameters</span><span class="p">:</span> <span class="s">"banana"</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span> <span class="p">{</span> <span class="n">queryResult</span> <span class="k">in</span>
+  <span class="c1">// Process result</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -897,10 +830,10 @@ VALUES (@0,@1);</strong></p>
 
 <p><strong>INSERT INTO t1<br>
 VALUES (@fruit,@number);</strong></p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">i</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span> <span class="nv">values</span><span class="p">:</span> <span class="kt">Parameter</span><span class="p">(</span><span class="s">"fruit"</span><span class="p">),</span> <span class="kt">Parameter</span><span class="p">(</span><span class="s">"number"</span><span class="p">))</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Insert</span><span class="p">(</span><span class="nv">into</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span> <span class="nv">values</span><span class="p">:</span> <span class="kt">Parameter</span><span class="p">(</span><span class="s">"fruit"</span><span class="p">),</span> <span class="kt">Parameter</span><span class="p">(</span><span class="s">"number"</span><span class="p">))</span>
 
-<span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">i1</span><span class="p">,</span> <span class="nv">parameters</span><span class="p">:</span> <span class="p">[</span><span class="s">"number"</span> <span class="p">:</span> <span class="mi">28</span><span class="p">,</span> <span class="s">"fruit"</span> <span class="p">:</span> <span class="s">"banana"</span><span class="p">])</span> <span class="p">{</span> <span class="n">queryResult</span> <span class="k">in</span>
-  <span class="o">...</span>
+<span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">query</span><span class="p">,</span> <span class="nv">parameters</span><span class="p">:</span> <span class="p">[</span><span class="s">"number"</span> <span class="p">:</span> <span class="mi">28</span><span class="p">,</span> <span class="s">"fruit"</span> <span class="p">:</span> <span class="s">"banana"</span><span class="p">])</span> <span class="p">{</span> <span class="n">queryResult</span> <span class="k">in</span>
+  <span class="c1">// Process result</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -908,8 +841,8 @@ VALUES (@fruit,@number);</strong></p>
 
 <p>It is possible to insert NULL values using parameters:
 &nbsp;</p>
-<pre class="highlight swift"><code><span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">i1</span><span class="p">,</span> <span class="nv">parameters</span><span class="p">:</span> <span class="p">[</span><span class="s">"number"</span> <span class="p">:</span> <span class="mi">28</span><span class="p">,</span> <span class="s">"fruit"</span> <span class="p">:</span> <span class="kc">nil</span><span class="p">])</span> <span class="p">{</span> <span class="n">queryResult</span> <span class="k">in</span>
-  <span class="o">...</span>
+<pre class="highlight swift"><code><span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="nv">query</span><span class="p">:</span> <span class="n">query</span><span class="p">,</span> <span class="nv">parameters</span><span class="p">:</span> <span class="p">[</span><span class="s">"number"</span> <span class="p">:</span> <span class="mi">28</span><span class="p">,</span> <span class="s">"fruit"</span> <span class="p">:</span> <span class="kc">nil</span><span class="p">])</span> <span class="p">{</span> <span class="n">queryResult</span> <span class="k">in</span>
+  <span class="c1">// Process result</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -917,7 +850,7 @@ VALUES (@fruit,@number);</strong></p>
 
 <p><strong>Raw query:</strong></p>
 <pre class="highlight swift"><code><span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="s">"CREATE TABLE myTable (a varchar(40), b integer)"</span><span class="p">)</span> <span class="p">{</span>  <span class="n">queryResult</span> <span class="k">in</span>
-  <span class="o">...</span>
+  <span class="c1">// Process result</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -928,33 +861,27 @@ VALUES (@fruit,@number);</strong></p>
  GROUP BY a<br>
  HAVING sum(b) &gt; 3<br>
  ORDER BY a DESC;</strong></p>
-<pre class="highlight swift"><code><span class="o">...</span>
-<span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="kt">RawField</span><span class="p">(</span><span class="s">"LEFT(a, 2) as raw"</span><span class="p">),</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="kt">RawField</span><span class="p">(</span><span class="s">"LEFT(a, 2) as raw"</span><span class="p">),</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="s">"b &gt;= 0"</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">group</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">having</span><span class="p">(</span><span class="s">"sum(b) &gt; 3"</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">order</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="o">.</span><span class="kt">DESC</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span><span class="p">))</span>
-<span class="o">...</span>
 </code></pre>
 
 <p>&nbsp;</p>
 
 <p><strong>SELECT * FROM t1<br>
 WHERE b &gt;= ANY (SELECT b FROM t2);</strong></p>
-<pre class="highlight swift"><code><span class="o">...</span>
-<span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span> <span class="o">&gt;=</span> <span class="nf">any</span><span class="p">(</span><span class="kt">Select</span><span class="p">(</span><span class="n">t2</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t2</span><span class="p">)))</span>
-<span class="o">...</span>
 </code></pre>
 
 <p>&nbsp;</p>
 
 <p><strong>SELECT * FROM t1<br>
 WHERE NOT EXISTS (SELECT * FROM t2 WHERE b &lt; 8);</strong></p>
-<pre class="highlight swift"><code><span class="o">...</span>
-<span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span>
   <span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="nf">notExists</span><span class="p">(</span><span class="kt">Select</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">t2</span><span class="p">)</span><span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="n">t2</span><span class="o">.</span><span class="n">b</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">)))</span>
-<span class="o">...</span>
 </code></pre>
 
 <p>&nbsp;</p>
@@ -962,11 +889,9 @@ WHERE NOT EXISTS (SELECT * FROM t2 WHERE b &lt; 8);</strong></p>
 <p><strong>SELECT c FROM t2
 GROUP BY c<br>
 HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = &lsquo;apple&rsquo;);</strong></p>
-<pre class="highlight swift"><code><span class="o">...</span>
-<span class="k">let</span> <span class="nv">s</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="n">t2</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t2</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="kt">Select</span><span class="p">(</span><span class="n">t2</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t2</span><span class="p">)</span>
     <span class="o">.</span><span class="nf">group</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="n">t2</span><span class="o">.</span><span class="n">c</span><span class="p">)</span>
     <span class="o">.</span><span class="nf">having</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="n">t2</span><span class="o">.</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="nf">notIn</span><span class="p">(</span><span class="kt">Select</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">t1</span><span class="p">)</span><span class="o">.</span><span class="nf">where</span><span class="p">(</span><span class="n">t1</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="s">"apple"</span><span class="p">)))</span>
-<span class="o">...</span>
 </code></pre>
 <h2 id='list-of-plugins' class='heading'>List of plugins:</h2>
 
@@ -986,34 +911,8 @@ HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = &lsquo;apple&rsquo;);</strong><
       </article>
     </div>
     <section class="footer">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-17)</p>
+      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-23)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
-=======
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-01-12)</p>
-=======
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-01-16)</p>
->>>>>>> table class Jazzy update
-=======
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-01-17)</p>
->>>>>>> Connection Pool Jazzy Update
-=======
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-02-19)</p>
->>>>>>> docs reviewed
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.4</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
->>>>>>> column docs updated
-=======
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-13)</p>
-=======
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-03-22)</p>
->>>>>>> refreshed jazzy docs
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
->>>>>>> show parameters in jazzy docs
     </section>
   </body>
 </div>

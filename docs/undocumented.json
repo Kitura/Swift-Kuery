@@ -1,56 +1,26 @@
 {
   "warnings": [
     {
-<<<<<<< HEAD
-      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/Connection.swift",
-=======
       "file": "/Users/andrewlees/git/Swift-Kuery/Sources/SwiftKuery/Connection.swift",
->>>>>>> column docs updated
       "line": 158,
       "symbol": "Connection.execute(query:parameters:onCompletion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-<<<<<<< HEAD
-      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/IndexColumn.swift",
-=======
       "file": "/Users/andrewlees/git/Swift-Kuery/Sources/SwiftKuery/IndexColumn.swift",
->>>>>>> column docs updated
       "line": 27,
       "symbol": "IndexColumn.table",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-<<<<<<< HEAD
-      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/IndexColumnOrdered.swift",
-=======
       "file": "/Users/andrewlees/git/Swift-Kuery/Sources/SwiftKuery/IndexColumnOrdered.swift",
->>>>>>> column docs updated
       "line": 21,
       "symbol": "IndexColumnOrdered.table",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
-<<<<<<< HEAD
-    },
-    {
-<<<<<<< HEAD
-      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/Table.swift",
-=======
-      "file": "/Users/andrewlees/git/Swift-Kuery/Sources/SwiftKuery/Table.swift",
->>>>>>> column docs updated
-      "line": 22,
-      "symbol": "Table.columns",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-=======
->>>>>>> table class Jazzy update
     }
   ],
-<<<<<<< HEAD
-  "source_directory": "/Users/travis/build/IBM-Swift/Swift-Kuery"
-=======
   "source_directory": "/Users/andrewlees/git/Swift-Kuery"
->>>>>>> column docs updated
 }
