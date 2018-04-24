@@ -260,7 +260,7 @@ open class Table: Buildable {
     // MARK: Assign Keys
     /**
      Function to set multiple `Column` instances, as a composite primary key, in the `Table` instance.
-     The function also validates the columns to ensure they belong to the table and does not conflict with the definition of a primary key.
+     The function also validates the columns to ensure they belong to the table and do not conflict with the definition of a primary key.
      ### Usage Example: ###
      In this example, columns for first and last name are initialized and a `Table` instance called personTable is created. The personTable primary key is then set to be a composite of firstColumn and lastColumn.
      ```swift
