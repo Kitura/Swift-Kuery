@@ -260,7 +260,7 @@ open class Table: Buildable {
     // MARK: Assign Keys
     /**
      Function to set multiple `Column` instances, as a composite primary key, in the `Table` instance.
-     The function also validates the columns to ensure they belong to the table and do not conflict with the definition of a primary key.
+     The function also validates the columns to ensure they belong to the table and does not conflict with the definition of a primary key.
      ### Usage Example: ###
      In this example, columns for first and last name are initialized and a `Table` instance called personTable is created. The personTable primary key is then set to be a composite of firstColumn and lastColumn.
      ```swift
@@ -308,7 +308,7 @@ open class Table: Buildable {
         let lastName = Column("lastName", String.self, notNull: true)
      }
      var personTable = PersonTable()
-     personTable = personTable.primaryKey(id)
+     personTable = personTable.primaryKey(personTable.id)
      ```
     
      - Parameter columns: A single column that constitutes the primary key.
@@ -320,7 +320,7 @@ open class Table: Buildable {
     
     /**
      Function to set a multiple `Column` instance, as a composite foreign key, in the `Table` instance referencing multiple column in another Table.
-     The function also validates the columns to ensure they belong to the table and do not conflict with the definition of a foreign key.
+     The function also validates the columns to ensure they belong to the table and does not conflict with the definition of a foreign key.
      ### Usage Example: ###
      In this example, `Table` instances called personTable and employeeTable are created. A "personTable" foreign key is then set to be a composite of firstColumn and lastColumn, which reference firstName and surname in employeeTable.
      ```swift
@@ -342,7 +342,7 @@ open class Table: Buildable {
      ```
     
      - Parameter columns: An Array of columns that constitute the foreign key.
-     - Parameter references: An Array of columns of the foreign table the foreign key references.
+     - Parameter references: An Array of columns from the foreign table that are referenced by the foreign key.
      - Returns: A new instance of `Table`.
     */
     public func foreignKey(_ columns: [Column], references: [Column]) -> Self {
@@ -393,7 +393,7 @@ open class Table: Buildable {
      }
      var personTable = PersonTable()
      var employeeTable = EmployeeTable()
-     personTable = personTable.foreignKey(personTable.idColumn, references: employeeTable.identifier)
+     personTable = personTable.foreignKey(personTable.id, references: employeeTable.identifier)
      ```
     
      - Parameter columns: A column that is the foreign key.

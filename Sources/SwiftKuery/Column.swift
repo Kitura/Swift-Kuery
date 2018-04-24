@@ -20,7 +20,7 @@
  The `Column` class is used to represent a single column in an SQL table in Swift.
  A combination of columns are used to construct a `Table` class which matches a specific table in an SQL database.
  The `Column` class details the column name, the table the column belongs to, any SQL keywords which apply to the column and the data type of the column.
- ### Usage Example: ###
+### Usage Example: ###
 In this example, a person `Table` class, containing three instances of the `Column` class, is defined.
  ```swift
  public class PersonTable : Table {
