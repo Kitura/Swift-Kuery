@@ -320,7 +320,7 @@ open class Table: Buildable {
     
     /**
      Function to set a multiple `Column` instance, as a composite foreign key, in the `Table` instance referencing multiple column in another Table.
-     The function also validates the columns to ensure they belong to the table and does not conflict with the definition of a foreign key.
+     The function also validates the columns to ensure they belong to the table and do not conflict with the definition of a foreign key.
      ### Usage Example: ###
      In this example, `Table` instances called personTable and employeeTable are created. A "personTable" foreign key is then set to be a composite of firstColumn and lastColumn, which reference firstName and surname in employeeTable.
      ```swift
@@ -376,7 +376,7 @@ open class Table: Buildable {
     
     /**
      Function to set a single `Column` instance, as a foreign key, in the `Table` instance.
-     The function also validates the column to ensure it belongs to the table and do not conflict with the definition of a foreign key.
+     The function also validates the column to ensure it belongs to the table and does not conflict with the definition of a foreign key.
      ### Usage Example: ###
      In this example, `Table` instances called personTable and employeeTable are created. A "personTable" foreign key is then set to be id, which reference identifier in employeeTable.
      ```swift
