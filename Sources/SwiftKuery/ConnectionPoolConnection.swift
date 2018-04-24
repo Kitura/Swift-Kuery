@@ -16,12 +16,27 @@
 
 // MARK: ConnectionPoolConnection
 
-/// A wrapper around actual `Connection`. Allows seemless release of the connection.
+/**
+ Note: This class is usually initialised by the `ConnectionPool` instance. Therefore, a standard user will not use this class unless they are creating their own SQL plugin.
+ 
+ This class uses a `Connection` instance and a `ConnectionPool` instance to implement a wrapper for the `Connection` class.
+ It implements the functions of the `Connection` protocol, in addition to the `closeConnection()` function
+ for releasing a `Connection` instance from the `ConnectionPool`.
+ ### Usage Example: ###
+ In this example, a `ConnectionPool` instance is initialized (parameters defined in docs for `ConnectionPool`).
+ A `ConnectionPoolConnection` instance is created by calling `connectionPool.getConnection()`. This connection is then released from the pool.
+ ```swift
+ let connectionPool = ConnectionPool(options: options, connectionGenerator: connectionGenerator, connectionReleaser: connectionReleaser)
+ let connection = connectionPool.getConnection()
+ connection.closeConnection()
+ ```
+ */
 public class ConnectionPoolConnection: Connection {
     
     private var connection: Connection?
     private weak var pool: ConnectionPool?
  
+    // MARK: QueryBuilder
     /// The `QueryBuilder` with connection specific substitutions.
     public var queryBuilder: QueryBuilder {
         return connection?.queryBuilder ?? QueryBuilder()
@@ -38,6 +53,7 @@ public class ConnectionPoolConnection: Connection {
         }
     }
     
+    // MARK: Connections
     /// Establish a connection with the database.
     ///
     /// - Parameter onCompletion: The function to be called when the connection is established.
@@ -56,7 +72,14 @@ public class ConnectionPoolConnection: Connection {
         }
     }
     
-    /// Close the connection to the database.
+    /**
+     Close the connection to the database.
+     ### Usage Example: ###
+     In this example, the `closeConnection()` function is called on a `ConnectionPoolConnection` instance to release it from its ConnectionPool instance.
+     ```swift
+     connection.closeConnection()
+     ```
+     */
     public func closeConnection() {
         if let connection = connection {
             pool?.release(connection: connection)
@@ -64,11 +87,23 @@ public class ConnectionPoolConnection: Connection {
         }
     }
     
-    /// An indication whether there is a connection to the database.
+    /**
+     An indication whether there is a connection to the database.
+     ### Usage Example: ###
+     In this example, the `isConnected()` function is called on a `ConnectionPoolConnection` instance called connection, this returns a true value that is then printed.
+     ```swift
+     let connected = connection.isConnected()
+     print(connected)
+     // Prints true
+     ```
+    
+     - Returns: A boolean value, for whether the connection is connected.
+    */
     public var isConnected: Bool {
         return connection?.isConnected ?? false
     }
     
+    // MARK: Execute Querys
     /// Execute a query.
     ///
     /// - Parameter query: The query to execute.
@@ -83,7 +118,7 @@ public class ConnectionPoolConnection: Connection {
     
     /// Execute a raw query.
     ///
-    /// - Parameter query: A String with the query to execute.
+    /// - Parameter query: A string that contains the query to execute.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func execute(_ raw: String, onCompletion: @escaping ((QueryResult) -> ())) {
         guard let connection = connection else {
@@ -108,7 +143,7 @@ public class ConnectionPoolConnection: Connection {
     
     /// Execute a raw query with parameters.
     ///
-    /// - Parameter query: A String with the query to execute.
+    /// - Parameter query: A string that contains the query to execute.
     /// - Parameter parameters: An array of the parameters.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func execute(_ raw: String, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ())) {
@@ -134,7 +169,7 @@ public class ConnectionPoolConnection: Connection {
     
     /// Execute a raw query with parameters.
     ///
-    /// - Parameter query: A String with the query to execute.
+    /// - Parameter query: A string that contains the query to execute.
     /// - Parameter parameters: A dictionary of the parameters with parameter names as the keys.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     public func execute(_ raw: String, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {
@@ -145,11 +180,13 @@ public class ConnectionPoolConnection: Connection {
         connection.execute(raw, parameters: parameters, onCompletion: onCompletion)
     }
     
-    /// Prepare statement.
+    // MARK: Prepared statements
+
+    /// Create a prepared statement from the passed in query.
     ///
-    /// - Parameter query: The query to prepare statement for.
+    /// - Parameter query: The query to prepare the statement for.
     /// - Returns: The prepared statement.
-    /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
+    /// - Throws: QueryError.syntaxError if the query build fails, or a database error if it fails to prepare statement.
     public func prepareStatement(_ query: Query) throws -> PreparedStatement {
         guard let connection = connection else {
             throw QueryError.connection("Connection is disconnected")
@@ -157,11 +194,11 @@ public class ConnectionPoolConnection: Connection {
         return try connection.prepareStatement(query)
     }
     
-    /// Prepare statement.
+    /// Create a prepared statement from the passed in query.
     ///
-    /// - Parameter raw: A String with the query to prepare statement for.
+    /// - Parameter raw: A String containing the query to prepare the statement for.
     /// - Returns: The prepared statement.
-    /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
+    /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare the statement.
     public func prepareStatement(_ raw: String) throws -> PreparedStatement {
         guard let connection = connection else {
             throw QueryError.connection("Connection is disconnected")
@@ -223,7 +260,7 @@ public class ConnectionPoolConnection: Connection {
     ///
     /// - Parameter query: The query.
     /// - Returns: A String representation of the query.
-    /// - Throws: QueryError.syntaxError if query build fails.
+    /// - Throws: QueryError.syntaxError if the query build fails.
     public func descriptionOf(query: Query) throws -> String {
         if let connection = connection {
             return try connection.descriptionOf(query: query)
@@ -233,9 +270,11 @@ public class ConnectionPoolConnection: Connection {
         }
     }
     
+    // MARK: Transactions
+
     /// Start a transaction.
     ///
-    /// - Parameter onCompletion: The function to be called when the execution of start transaction command has completed.
+    /// - Parameter onCompletion: The function to be called when the execution of the start transaction command has completed.
     public func startTransaction(onCompletion: @escaping ((QueryResult) -> ())) {
         guard let connection = connection else {
             onCompletion(.error(QueryError.connection("Connection is disconnected")))
@@ -246,7 +285,7 @@ public class ConnectionPoolConnection: Connection {
     
     /// Commit the current transaction.
     ///
-    /// - Parameter onCompletion: The function to be called when the execution of commit transaction command has completed.
+    /// - Parameter onCompletion: The function to be called when the execution of the commit transaction command has completed.
     public func commit(onCompletion: @escaping ((QueryResult) -> ())) {
         guard let connection = connection else {
             onCompletion(.error(QueryError.connection("Connection is disconnected")))
@@ -257,7 +296,7 @@ public class ConnectionPoolConnection: Connection {
     
     /// Rollback the current transaction.
     ///
-    /// - Parameter onCompletion: The function to be called when the execution of rolback transaction command has completed.
+    /// - Parameter onCompletion: The function to be called when the execution of the rollback transaction command has completed.
     public func rollback(onCompletion: @escaping ((QueryResult) -> ())) {
         guard let connection = connection else {
             onCompletion(.error(QueryError.connection("Connection is disconnected")))
@@ -269,7 +308,7 @@ public class ConnectionPoolConnection: Connection {
     /// Create a savepoint.
     ///
     /// - Parameter savepoint: The name to  be given to the created savepoint.
-    /// - Parameter onCompletion: The function to be called when the execution of create savepoint command has completed.
+    /// - Parameter onCompletion: The function to be called when the execution of the create savepoint command has completed.
     public func create(savepoint: String, onCompletion: @escaping ((QueryResult) -> ())) {
         guard let connection = connection else {
             onCompletion(.error(QueryError.connection("Connection is disconnected")))
@@ -281,7 +320,7 @@ public class ConnectionPoolConnection: Connection {
     /// Rollback the current transaction to the specified savepoint.
     ///
     /// - Parameter to savepoint: The name of the savepoint to rollback to.
-    /// - Parameter onCompletion: The function to be called when the execution of rolback transaction command has completed.
+    /// - Parameter onCompletion: The function to be called when the execution of the rollback transaction command has completed.
     public func rollback(to savepoint: String, onCompletion: @escaping ((QueryResult) -> ())) {
         guard let connection = connection else {
             onCompletion(.error(QueryError.connection("Connection is disconnected")))
@@ -293,7 +332,7 @@ public class ConnectionPoolConnection: Connection {
     /// Release a savepoint.
     ///
     /// - Parameter savepoint: The name of the savepoint to release.
-    /// - Parameter onCompletion: The function to be called when the execution of release savepoint command has completed.
+    /// - Parameter onCompletion: The function to be called when the execution of the release savepoint command has completed.
     public func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ())) {
         guard let connection = connection else {
             onCompletion(.error(QueryError.connection("Connection is disconnected")))

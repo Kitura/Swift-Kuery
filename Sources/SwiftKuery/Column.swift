@@ -16,8 +16,23 @@
 
 // MARK: Column
 
-/// Definition of table column.
+/**
+ The `Column` class is used to represent a single column in an SQL table in Swift.
+ A combination of columns are used to construct a `Table` class which matches a specific table in an SQL database.
+ The `Column` class details the column name, the table the column belongs to, any SQL keywords which apply to the column and the data type of the column.
+### Usage Example: ###
+In this example, a person `Table` class, containing three instances of the `Column` class, is defined.
+ ```swift
+ public class PersonTable : Table {
+     let tableName = "personTable"
+     let person_id = Column("person_id", Int32.self, autoIncrement: true, primaryKey: true, notNull: true, unique: true)
+     let name = Column("name", String.self, notNull: true)
+     let monthlyPay = Column("monthlyPay", Int32.self)
+ }
+ ```
+ */
 public class Column: Field, IndexColumn {
+    // MARK: Column Parameters
     /// The name of the column.
     public let name: String
     
@@ -48,7 +63,7 @@ public class Column: Field, IndexColumn {
     /// An indication whether the column autoincrements.
     public let autoIncrement: Bool
     
-    /// The expression to check for values inserted into of the column.
+    /// A boolean expression constraint, which values inserted into the column will be checked against.
     public let checkExpression: String?
     
     /// The collation rule for the column.
@@ -59,18 +74,29 @@ public class Column: Field, IndexColumn {
         return _table
     }
     
-    /// Initialize an instance of Column.
-    ///
-    /// - Parameter name: The name of the column.
-    /// - Parameter type: The type of the column.
-    /// - Parameter length: The length of the column values according to the type.
-    /// - Parameter autoIncrement: An indication whether the column autoincrements.
-    /// - Parameter primaryKey: An indication whether the column is the primary key of the table.
-    /// - Parameter notNull: An indication whether the column is not nullable.
-    /// - Parameter unique: An indication whether the column values have to be unique.
-    /// - Parameter defaultValue: The default value of the column.
-    /// - Parameter check: The expression to check for values inserted into of the column.
-    /// - Parameter collate: The collation rule for the column.
+    // MARK: Column Initializer
+    
+    /**
+     The initializer for the `Column` class. This creates an instance of `Column` using the provided parameters.
+     Name must be provided, but all other fields will default to either nil or false if not given.
+     ### Usage Example: ###
+     In this example, an instance of the `Column` class is created to match the person_id column of an SQL table.
+     To represent this a `Column` is initialised with name set to "person_id", type set as Int32.self (self is required to pass Int32 as the class) and primaryKey properties set to true.
+     ```swift
+     let person_id = Column("person_id", Int32.self, autoIncrement: true, primaryKey: true, notNull: true, unique: true)
+     ```
+ 
+     - Parameter name: The name of the column.
+     - Parameter type: The type of the column. Defaults to nil.
+     - Parameter length: The length of the column values according to the type. Defaults to nil.
+     - Parameter autoIncrement: An indication whether the column autoincrements. Defaults to false.
+     - Parameter primaryKey: An indication whether the column is the primary key of the table. Defaults to false.
+     - Parameter notNull: An indication whether the column is not nullable. Defaults to false.
+     - Parameter unique: An indication whether the column values have to be unique. Defaults to false.
+     - Parameter defaultValue: The default value of the column. Defaults to nil.
+     - Parameter check: The expression to check for values inserted into the column. Defaults to nil.
+     - Parameter collate: The collation rule for the column. Defaults to nil.
+     */
     public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, check: String? = nil, collate: String? = nil) {
         self.name = name
         self.type = type
@@ -84,11 +110,27 @@ public class Column: Field, IndexColumn {
         self.collate = collate
     }
     
-    /// Build the column using `QueryBuilder`.
-    ///
-    /// - Parameter queryBuilder: The QueryBuilder to use.
-    /// - Returns: A String representation of the column.
-    /// - Throws: QueryError.syntaxError if query build fails.
+    //MARK: Column Decription Functions
+    
+    /**
+     Function to build a String representation for referencing a `Column` instance.
+     A `QueryBuilder` is used to handle variances between the various database engines and produce a correct SQL description.
+     This function is required to conform to the `Buildable` protocol.
+     ### Usage Example: ###
+     In this example, `QueryBuilder` and a `PersonTable` (as defined at the top of this class) instances are initialized.
+     The build function is then called to produce a String description and the results are printed.
+     ```swift
+     let queryBuilder = QueryBuilder()
+     let personTable = PersonTable()
+     let description = try personTable.name.build(queryBuilder: queryBuilder)
+     print(description)
+     // Prints personTable.name
+     ```
+    
+     - Parameter queryBuilder: The QueryBuilder to use.
+     - Returns: A String representation of the column.
+     - Throws: QueryError.syntaxError if query build fails.
+    */
     public func build(queryBuilder: QueryBuilder) throws -> String {
         let tableName = Utils.packName(table.nameInQuery, queryBuilder: queryBuilder)
         if tableName == "" {
@@ -100,31 +142,46 @@ public class Column: Field, IndexColumn {
         }
         return result
     }
-
-    /// Build the index column using `QueryBuilder`.
-    ///
-    /// - Parameter queryBuilder: The QueryBuilder to use.
-    /// - Returns: A String representation of the index column.
+    
+    /**
+     Function to build a String representation of the index of a `Column` instance.
+     A `QueryBuilder` is used to handle variances between the various database engines and produce a correct SQL description.
+     ### Usage Example: ###
+     In this example, `QueryBuilder` and `PersonTable` (as defined at the top of this class) instances are initialized.
+     The build function is then called to produce a String representation of the buildIndex and the results are printed.
+     ```swift
+     let queryBuilder = QueryBuilder()
+     let personTable = PersonTable()
+     let description = personTable.name.buildIndex(queryBuilder: queryBuilder)
+     print(description)
+     // Prints name
+     ```
+    
+     - Parameter queryBuilder: The QueryBuilder to use.
+     - Returns: A String representation of the index column.
+    */
     public func buildIndex(queryBuilder: QueryBuilder) -> String {
         return Utils.packName(name, queryBuilder: queryBuilder)
     }
 
-    /// Add an alias to the column, i.e., implement the SQL AS operator.
-    ///
-    /// - Parameter newName: A String containing the alias for the column.
-    /// - Returns: A new Column instance with the alias.
-    public func `as`(_ newName: String) -> Column {
-        let new = Column(name, type, length: length, primaryKey: isPrimaryKey, notNull: isNotNullable, unique: isUnique, defaultValue: defaultValue, collate: collate)
-        new.alias = newName
-        new._table = table
-        return new
-    }
+    /**
+     Function to create a String representation of a `Column` instance for use in an SQL CREATE TABLE query.
+     A `QueryBuilder` is used to handle variances between the various database engines and produce a correct SQL description.
+     ### Usage Example: ###
+     In this example, `QueryBuilder` and a `PersonTable` (as defined at the top of this class) instances are initialized.
+     The create function is then used to produce a String description of the `Column` and print the results.
+     ```swift
+     let queryBuilder = QueryBuilder()
+     let personTable = PersonTable()
+     let description = try personTable.person_id.create(queryBuilder: queryBuilder)
+     print(description)
+     // Prints "person_id integer AUTO_INCREMENT PRIMARY KEY NOT NULL UNIQUE"
+     ```
     
-    /// Return database specific description of the column using `QueryBuilder` to be used in CREATE TABLE.
-    ///
-    /// - Parameter queryBuilder: The QueryBuilder to use.
-    /// - Returns: A String representation of the column.
-    /// - Throws: QueryError.syntaxError if column creation fails.
+     - Parameter queryBuilder: The QueryBuilder to use.
+     - Returns: A String representation of the column.
+     - Throws: QueryError.syntaxError if column creation fails.
+    */
     public func create(queryBuilder: QueryBuilder) throws -> String {
         guard let type = type else {
             throw QueryError.syntaxError("Column type not set for column \(name). ")
@@ -172,5 +229,31 @@ public class Column: Field, IndexColumn {
         }
         return result
     }
+    
+    //MARK: Column Expressions
+
+    /**
+     Function to return a copy of the current `Column` instance with the given name as its alias.
+     This is equivalent to the SQL AS operator.
+     ### Usage Example: ###
+     In this example, a `PersonTable` (as defined at the top of this class) instance is created which contains a `Column`.
+     An alias for this `Column` instance is then created and its alias printed. 
+     ```swift
+     let personTable = PersonTable()
+     let aliasColumn = personTable.name.as("new name")
+     print(String(describing: aliasColumn.alias))
+     // Prints Optional("new name")
+     ```
+    
+     - Parameter newName: A String containing the alias for the column.
+     - Returns: A new Column instance with the alias.
+    */
+    public func `as`(_ newName: String) -> Column {
+        let new = Column(name, type, length: length, primaryKey: isPrimaryKey, notNull: isNotNullable, unique: isUnique, defaultValue: defaultValue, collate: collate)
+        new.alias = newName
+        new._table = table
+        return new
+    }
+    
 }
 

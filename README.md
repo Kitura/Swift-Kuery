@@ -24,14 +24,14 @@
 SQL database abstraction layer
 
 ## Summary
-Swift-Kuery is a pluggable SQL database driver/SDK abstraction layer. Its main idea is to unify the APIs to the various relational databases, providing a Swifty yet SQL-like API.
+Swift-Kuery is a pluggable SQL database driver/SDK abstraction layer. Its main idea is to unify the APIs to the various relational databases, providing a Swifty yet SQL-like API. This allows easy switching between databases and forms the basis for an Object-Relational Mapping (ORM) framework.
 
-While Swift-Kuery is not an Object-Relational Mapping (ORM), it provides a great basis to build an ORM. It is also useful if you don't want to commit to a specific database, allowing easy switch between databases.
+[Swift-Kuery-ORM](https://github.com/IBM-Swift/Swift-Kuery-ORM) is an ORM, built on top of Swift-Kuery, which allows you to simplify the persistence of model objects with your server.
 
-Swift-Kuery is easy to learn, consumable framework that comes with a set of [implemented plugins](#list-of-plugins).
+Swift-Kuery is an easy to learn, consumable framework that comes with a set of [implemented plugins](#list-of-plugins).
 
 ## Table of Contents
-* [Example](#example)
+* [Examples](#examples)
 * [SQL Injection Prevention using Parameterization](#sql-injection-prevention-using-parameterization)
 * [Prepared Statements](#prepared-statements)
 * [Schema Management](#schema-management)
@@ -39,116 +39,114 @@ Swift-Kuery is easy to learn, consumable framework that comes with a set of [imp
 * [List of plugins](#list-of-plugins)
 * [License](#license)
 
-## Example
-This example demonstrates how to execute an SQL query using Swift-Kuery and Swift-Kuery-PostgreSQL. It assumes there is a PostgreSQL server running on localhost:5432, that contains a table called Grades:
+## Examples
+This example demonstrates how to execute an SQL query using Swift-Kuery with the [Swift-Kuery-PostgreSQL](https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL) plugin.
 
+The starting point for this example is an existing Swift package. If you don't have one already, create and enter a directory named e.g. `SwiftKueryExample`. Now run the swift package's init command, to create an executable type, by running `swift package init --type executable`.
+
+### Creating A PostgreSQL Database
+
+1. Install PostgreSQL
+#### Mac
+`brew install postgresql`
+#### Ubuntu Linux
+`sudo apt-get install postgresql postgresql-contrib`
+
+2. Create a `school` database
+    ```
+    createdb school
+    psql school
+    ```
+
+3. Create a `grades` table
+    ```
+    CREATE TABLE grades (
+        id varchar(100) PRIMARY KEY,
+        course text NOT NULL,
+        grade integer
+    );  
+    ```
+
+### Update your Package.swift file
+Add Swift-Kuery-PostgreSQL to your `Package.swift`. This will bring in Swift-Kuery as well.
+
+```swift
+dependencies: [
+    ...
+    // Add this line
+    .package(url: "https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL.git", from: "1.0.0"),
+  ],
+  targets: [
+    .target(
+      name: ...
+      // Add the module to your target(s)
+      dependencies: [..., "SwiftKueryPostgreSQL"]),
+  ]
 ```
- id   |  course   | grade
-------+-----------+-------
-12345 | physics   |    82
-12345 | chemistry |    90
-12345 | history   |    98
-78901 | history   |   100
-78901 | chemistry |    94
-78901 | physics   |    90
-24680 | physics   |    74
-24680 | chemistry |    92
-24680 | history   |    90
 
-```
+### Executing SQL queries
+Inside the `main.swift` file:
 
-First we import Swift-Kuery and Swift-Kuery-PostgreSQL:
-
+1. Add SwiftKuery and SwiftKueryPostgreSQL to your import statements:
 ```swift
 import SwiftKuery
 import SwiftKueryPostgreSQL
 ```
 
-Now we create a `Table` that corresponds to our Grades table in PostgreSQL - we set the table's name and its columns:
-
+2. Create a `Table` class, which matches the `grades` table you created in the database:
 ```swift
 class Grades: Table {
     let tableName = "Grades"
-    let id = Column("id")
-    let course = Column("course")
-    let grade = Column("grade")
+    let id = Column("id", Int32.self, primaryKey: true)
+    let course = Column("course", String.self)
+    let grade = Column("grade", Int32.self)
 }
 let grades = Grades()
 ```
 
-Next we create a pool of connections to PostgreSQL:
-
+3. Create a pool of connections to PostgreSQL:
 ```swift
-let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.userName("username"), .password("password")], poolOptions: ConnectionPoolOptions(initialCapacity: 10, maxCapacity: 50, timeout: 10000))
+let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.databaseName("school")], poolOptions: ConnectionPoolOptions(initialCapacity: 10, maxCapacity: 50, timeout: 10000))
 ```
 
-Every time we need a connection, we get it from the pool:
+4. Create some example students:
+```swift
+let students: [[Any]] = [[0, "computing", 92], [1, "physics", 75], [2, "history", 83]]
+```
 
+5. Connect to database and perform an SQL query:
 ```swift
 if let connection = pool.getConnection() {
-   // Build and execute your query here.
-}
-else {
-   print("Error: failed to get a connection.")
-}
-```
-
-Now lets build the query. Suppose we want to retrieve the average grades for courses with average greater than 90, and sort the results by the average ascending. Here is the SQL query we need to build:
-
-```SQL
-SELECT course, ROUND(AVG(grade), 1) AS "average" FROM grades
-GROUP BY course
-HAVING AVG(grade) > 90
-ORDER BY AVG(grade) ASC
-```
-Note, that we also round the average grades and alias this column in the result as "average".
-
-Here is how to create such query using Swift-Kuery:
-
-```swift
-let query = Select(grades.course, round(avg(grades.grade), to: 1).as("average"), from: grades)
-            .group(by: grades.course)
-            .having(avg(grades.grade) > 90)
-            .order(by: .ASC(avg(grades.grade)))
-```
-As you can see, it is very similar to the SQL query syntax.
-
-Now we execute the created query on our PostgreSQL connection:
-
-```swift
-guard let connection = pool.getConnection() else {
-   // Error
-}
-
-connection.execute(query: query) { queryResult in
-  if let resultSet = queryResult.asResultSet {
-    for title in resultSet.titles {
-      // The column names of the result.
+    let insertQuery = Insert(into: grades, rows: students)
+    connection.execute(query: insertQuery) { insertResult in
+        connection.execute(query: Select(from: grades)) { selectResult in
+            if let resultSet = selectResult.asResultSet {
+                for row in resultSet.rows {
+                    print("Student \(row[0] ?? ""), studying \(row[1] ?? ""), scored \(row[2] ?? "")")
+                }
+            }
+        }
     }
-    for row in resultSet.rows {
-      for value in row {
-        ...
-      }
-    }
-  }
-  else if let queryError = result.asError {
-      // Something went wrong.
-  }
 }
 ```
-The expected result is:
+6. Save the `main.swift` file. Run `swift build` to build the executable.
+7. Run the executable `.build/debug/<yourPackageName>.`
 
+
+
+This will print the `id`, `course` and `grade` for each student, which are queried from the database:
 ```
-course     average
-chemistry  92.0
-history    96.0
+Student 0, studying computing, scored 92
+Student 1, studying physics, scored 75
+Student 2, studying history, scored 83
 ```
+If you go to your database with `psql school` and enter `TABLE grades;` you can see that the table has been populated with the student data.
 
 ## SQL Injection Prevention using Parameterization
 
-Parameterize queries to prevent SQL Injection attacks by using Parameter() for untrusted input.
+Unsanitized data that is used in dynamic queries is one of the most common causes of SQL injection vulnerabilities. Parameterizing queries can help to prevent SQL injection attacks.
 
-For example, this is vulnerable to SQL Injection attacks if `supplied_key1` or `supplied_key2` is untrusted input:
+The following code is vulnerable to SQL injection if `supplied_key1` or `supplied_key2` contain untrusted data (that is, data which has not been validated):
 ```swift
 let query = Select(from: confidential)
   .where(confidential.key1 == supplied_key1 || confidential.key2 == supplied_key2)
@@ -158,7 +156,7 @@ connection.execute(query: query) { queryResult in
 }
 ```
 
-To guard against SQL Injection attacks, use the following Parameterized version instead:
+To guard against SQL Injection attacks, use the following parameterized version of the code:
 ```swift
 let query = Select(from: confidential)
   .where(confidential.key1 == Parameter() || confidential.key2 == Parameter())
@@ -170,9 +168,9 @@ connection.execute(query: query, parameters: supplied_key1, supplied_key2) { que
 
 ## Prepared Statements
 
-If your application executes some query multiple times with different parameters, you may want to improve the performance of the application by using a prepared statement for that query. I.e. send the query to the database in advance, and later use the returned handle to execute the query providing the parameters. This way the database server will process the query only once.
+If your application executes the same (or similar) SQL statements repeatedly with different parameters you may improve the performance of the application by using a prepared statement. Prepared statements can reduce parsing time as the database parses and compiles the statement template only once and then stores the result but doesn’t execute it. Later, the application supplies values for the parameters of the statement template and the database executes the statement.
 
-For example, suppose our application needs to retrieve the average grade for courses with an average above various values. We change our query to use a parameter instead of a preset value of 90: 
+For example, suppose our application needs to retrieve the average grade for courses with an average above a given value; a value which we want to vary. Let’s change our query to use a parameter instead of a predefined value:
 
 ```swift
 let query = Select(grades.course, round(avg(grades.grade), to: 1).as("average"), from: grades)
@@ -181,7 +179,7 @@ let query = Select(grades.course, round(avg(grades.grade), to: 1).as("average"),
             .order(by: .ASC(avg(grades.grade)))
 ```
 
-Now we prepare the statement:
+Now, prepare the statement:
 
 ```swift
 do {
@@ -194,7 +192,7 @@ catch {
 
 **Note**: `preparedStatement` is a plugin-specific handle for the prepared statement.
 
-Now we can use this handle to execute the query with different parameters without creating it every time:
+Now the application may execute the prepared statement as many times as it wants with different parameter values:
 
 ```swift
 connection.execute(preparedStatement: preparedStatement, parameters: [70]) { result in
@@ -204,7 +202,7 @@ connection.execute(preparedStatement: preparedStatement, parameters: [70]) { res
 
 Use the `release` function to free the prepared statement:
 ```swift
-connection.release(preparedStatement: preparedStatement) { result in 
+connection.release(preparedStatement: preparedStatement) { result in
   ...
 }
 ```
@@ -214,15 +212,26 @@ connection.release(preparedStatement: preparedStatement) { result in
 ### Table creation
 Swift-Kuery enables you to create tables on the database server.
 
-Let's rewrite our `Grades` table by adding columns type and constraints: 
+Let's revisit the Grades table, which we used in our Example above:
 
 ```swift
 class Grades: Table {
     let tableName = "Grades"
-    let id = Column("id", Char.self, length: 6, primaryKey: true)
-    let course = Column("course", Varchar.self, length: 50)
-    let grade = Column("grade", Int16.self, check: "grade >= 0")
+    let id = Column("id", Int32.self, primaryKey: true)
+    let course = Column("course", String.self)
+    let grade = Column("grade", Int32.self)
 }
+```
+
+We will add a second table called `courses`:
+```swift
+class Courses: Table {
+    let tableName = "Courses"
+    let name = Column("name", String.self, primaryKey: true)
+    let credit = Column("credit", Int32.self)
+    let teacher = Column("teacher", String.self)
+}
+let courses = Courses()
 ```
 
 We can add a foreign key to `Grades` that references a column in another table:
@@ -231,17 +240,17 @@ We can add a foreign key to `Grades` that references a column in another table:
 let grades = Grades().foreignKey(grades.course, references: courses.name)
 ```
 
-And create a multi-column primary key (if not set in the column as for `Grades.id`):
+Create a multi-column primary key (if not set in the column as for `Grades.id`)
 
 ```swift
 grades.primaryKey(grades.id, grades.course)
 ```
 
-To create the table in the database, do:
+Create the table in the database:
 
 ```swift
 
-grades.create(connection: connection) { result in
+courses.create(connection: connection) { result in
      guard result.success else {
         print("Failed to create table: \(result.asError?)")
      }
@@ -279,7 +288,7 @@ public class MyTable_v1: Table {
 }
 ```
 
-And use a typealias to refer to the current version of the table class in the application:
+Use a typealias to refer to the current version of the table class in the application:
 
 ```swift
 typealias MyTable = MyTable_v0
@@ -297,7 +306,7 @@ let migration0 = Migration(from: t0, to: t1, using: connection)
 migration0.alterTableAdd(column: t1.c) { result in ... }
 ```
 
-And raw alternations, if needed:
+You can also execute raw alterations, if needed:
 
 ```swift
 let dropColumnQuery = "ALTER TABLE " + t1.tableName + " DROP COLUMN " + t0.a.name
@@ -305,9 +314,10 @@ connection.execute(dropColumnQuery) { result in ... }
 ```
 
 ## Query Examples
-Let's see more examples of how to build and execute SQL queries using Swift-Kuery.
+In the following section, we will provide an example SQL query and show you how to build and execute the same query in Swift using Swift-Kuery.
 
 #### Classes used in the examples:
+These examples we will use the following two tables:
 
 ```swift
 class T1 {
@@ -327,32 +337,35 @@ class T2 {
 
 __SELECT * FROM t1;__
 
+This query will select all results from the table. The example below shows this how to execute this query including the boilerplate code:
+
 ```swift
 let t1 = T1()
 
-let s = Select(from: t1)
+let query = Select(from: t1)
 
 guard let connection = pool.getConnection() else {
    // Error
 }
 
-s.execute(connection) { queryResult in
+query.execute(connection) { queryResult in
   if let resultSet = queryResult.asResultSet {
     for title in resultSet.titles {
-      ...
+      // Process titles
     }
     for row in resultSet.rows {
       for value in row {
-        ...
+        // Process rows
       }
     }
   }
   else if let queryError = queryResult.asError {
-    ...
+    // process error
   }
 }
 ```
 
+The following examples show more complex queries, which can be substituted into the the above boilerplate.
 &nbsp;
 
 __SELECT a, b FROM t1      
@@ -361,15 +374,10 @@ __SELECT a, b FROM t1
    OFFSET 5;__
 
 ```swift
-...
-let s = Select(t1.a, t1.b, from: t1)
+let query = Select(t1.a, t1.b, from: t1)
   .where((t1.a.like("b%") || t1.a == "apple") && t1.b > 5)
   .order(by: .ASC(t1.b), .DESC(t1.a))
   .offset(5)
-
-connection.execute(query: s) { queryResult in
-   ...
-}
 ```
 
 &nbsp;
@@ -381,13 +389,11 @@ __SELECT UCASE(a) AS name FROM t1
  ORDER BY a DESC;__
 
 ```swift
-...
-let s = Select(ucase(t1.a).as("name"), from: t1)
+let query = Select(ucase(t1.a).as("name"), from: t1)
   .where(t1.b >= 0)
   .group(by: t1.a)
   .having(sum(t1.b) > 3)
   .order(by: .DESC(t1.a))
-...
 ```
 
 &nbsp;
@@ -396,17 +402,7 @@ __INSERT INTO t1
 VALUES ('apple', 10), ('apricot', 3), ('banana', 17);__
 
 ```swift
-...
-let i = Insert(into: t1, rows: [["apple", 10], ["apricot", 3], ["banana", 17]])
-
-connection.execute(query: i) { queryResult in
-  if queryResult.success  {
-    ...
-  }
-  else if let queryError = result.asError {
-    ...
-  }
-}
+let query = Insert(into: t1, rows: [["apple", 10], ["apricot", 3], ["banana", 17]])
 ```
 
 &nbsp;
@@ -415,9 +411,7 @@ __INSERT INTO t1
 VALUES ('apple', 10);__
 
 ```swift
-...
-let i = Insert(into: t1, values: "apple", 10)
-...
+let query = Insert(into: t1, values: "apple", 10)
 ```
 
 &nbsp;
@@ -427,9 +421,7 @@ __INSERT INTO t1 (a, b)
 VALUES ('apricot', '3');__
 
 ```swift
-...
-let i = Insert(into: t1, valueTuples: (t1.a, "apricot"), (t1.b, "3"))
-...
+let query = Insert(into: t1, valueTuples: (t1.a, "apricot"), (t1.b, "3"))
 ```
 
 &nbsp;
@@ -438,9 +430,7 @@ __INSERT INTO t1 (a, b)
 VALUES ('apricot', '3');__
 
 ```swift
-...
-let i = Insert(into: t1, columns: [t1.a, t1.b], values: ["apricot", 3])
-...
+let query = Insert(into: t1, columns: [t1.a, t1.b], values: ["apricot", 3])
 ```
 
 &nbsp;
@@ -449,10 +439,8 @@ __UPDATE t1 SET a = 'peach', b = 2
 WHERE a = 'banana';__
 
 ```swift
-...
-let u = Update(t1, set: [(t1.a, "peach"), (t1.b, 2)])
+let query = Update(t1, set: [(t1.a, "peach"), (t1.b, 2)])
   .where(t1.a == "banana")
-...
 ```
 
 &nbsp;
@@ -467,10 +455,9 @@ let t2 = T2()
 
 let leftTable = t1.as("left")
 let rightTable = t2.as("right")
-let s2 = Select(from: leftTable)
+let query = Select(from: leftTable)
   .leftJoin(rightTable)
   .on(leftTable.b == rightTable.b)
-...
 ```
 
 &nbsp;
@@ -480,11 +467,9 @@ JOIN t2
 USING (b);__
 
 ```swift
-...
-let s2 = Select(from: t1)
+let query = Select(from: t1)
   .join(t2)
   .using(t1.b)
-...
 ```
 
 &nbsp;
@@ -497,10 +482,10 @@ __INSERT INTO t1
 VALUES (@0,@1);__
 
 ```swift
-let i = Insert(into: t1, values: Parameter(), Parameter())
+let query = Insert(into: t1, values: Parameter(), Parameter())
 
-connection.execute(query: i1, parameters: "banana", 28) { queryResult in
-  ...
+connection.execute(query: query, parameters: "banana", 28) { queryResult in
+  // Process result
 }
 ```
 
@@ -510,10 +495,10 @@ __INSERT INTO t1
 VALUES (@fruit,@number);__
 
 ```swift
-let i = Insert(into: t1, values: Parameter("fruit"), Parameter("number"))
+let query = Insert(into: t1, values: Parameter("fruit"), Parameter("number"))
 
-connection.execute(query: i1, parameters: ["number" : 28, "fruit" : "banana"]) { queryResult in
-  ...
+connection.execute(query: query, parameters: ["number" : 28, "fruit" : "banana"]) { queryResult in
+  // Process result
 }
 ```
 
@@ -523,8 +508,8 @@ It is possible to insert NULL values using parameters:
 &nbsp;
 
 ```swift
-connection.execute(query: i1, parameters: ["number" : 28, "fruit" : nil]) { queryResult in
-  ...
+connection.execute(query: query, parameters: ["number" : 28, "fruit" : nil]) { queryResult in
+  // Process result
 }
 ```
 
@@ -534,7 +519,7 @@ __Raw query:__
 
 ```swift
 connection.execute("CREATE TABLE myTable (a varchar(40), b integer)") {  queryResult in
-  ...
+  // Process result
 }
 ```
 
@@ -547,13 +532,11 @@ __SELECT LEFT(a, 2) as raw FROM t1
  ORDER BY a DESC;__
 
 ```swift
-...
-let s = Select(RawField("LEFT(a, 2) as raw"), from: t1)
+let query = Select(RawField("LEFT(a, 2) as raw"), from: t1)
   .where("b >= 0")
   .group(by: t1.a)
   .having("sum(b) > 3")
   .order(by: .DESC(t1.a))
-...
 ```
 
 &nbsp;
@@ -562,10 +545,8 @@ __SELECT * FROM t1
 WHERE b >= ANY (SELECT b FROM t2);__
 
 ```swift
-...
-let s = Select(from: t1)
+let query = Select(from: t1)
   .where(t1.b >= any(Select(t2.b, from: t2)))
-...
 ```
 
 &nbsp;
@@ -574,10 +555,8 @@ __SELECT * FROM t1
 WHERE NOT EXISTS (SELECT * FROM t2 WHERE b < 8);__
 
 ```swift
-...
-let s = Select(from: t1)
+let query = Select(from: t1)
   .where(notExists(Select(from: t2).where(t2.b < 8)))
-...
 ```
 
 &nbsp;
@@ -587,11 +566,9 @@ GROUP BY c
 HAVING SUM(b) NOT IN (SELECT b FROM t1 WHERE a = 'apple');__
 
 ```swift
-...
-let s = Select(t2.c, from: t2)
+let query = Select(t2.c, from: t2)
     .group(by: t2.c)
     .having(sum(t2.b).notIn(Select(t1.b, from: t1).where(t1.a == "apple")))
-...
 ```
 
 ## List of plugins:
@@ -603,4 +580,4 @@ let s = Select(t2.c, from: t2)
 * [MySQL](https://github.com/IBM-Swift/SwiftKueryMySQL)
 
 ## License
-This library is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE.txt).
+This library is licensed under Apache 2.0. Full license text is available in [LICENSE](https://github.com/IBM-Swift/Swift-Kuery/blob/master/LICENSE.txt).
