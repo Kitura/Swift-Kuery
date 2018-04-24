@@ -149,7 +149,7 @@ public struct Select: Query {
             }
             
             if let using = item.using {
-                result += " USING (" + using.map { $0.name }.joined(separator: ", ") + ")"
+                result += " USING (" + using.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ") + ")"
             }
         }
         

@@ -77,12 +77,12 @@ class TestSchema: XCTestCase {
         
         var t1 = Table1()
         var createStmt = createTable(t1, connection: connection)
-        var expectedCreateStmt = "CREATE TABLE table1 (a text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", b integer AUTO_INCREMENT, c double DEFAULT 4.95 CHECK (c > 0))"
+        var expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" integer AUTO_INCREMENT, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
         
         let t2 = Table2()
         createStmt = createTable(t2, connection: connection)
-        expectedCreateStmt = "CREATE TABLE table2 (a varchar, b varchar(20) UNIQUE, c smallint NOT NULL, d integer, e date, f timestamp, g mySQLType(15))"
+        expectedCreateStmt = "CREATE TABLE \"table2\" (\"a\" varchar, \"b\" varchar(20) UNIQUE, \"c\" smallint NOT NULL, \"d\" integer, \"e\" date, \"f\" timestamp, \"g\" mySQLType(15))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
         
         let t3 = Table3()
@@ -95,12 +95,12 @@ class TestSchema: XCTestCase {
         XCTAssertEqual(error, expectedError)
 
         createStmt = createTable(t2.primaryKey([t2.b, t2.c]), connection: connection)
-        expectedCreateStmt = "CREATE TABLE table2 (a varchar, b varchar(20) UNIQUE, c smallint NOT NULL, d integer, e date, f timestamp, g mySQLType(15), PRIMARY KEY (b, c))"
+        expectedCreateStmt = "CREATE TABLE \"table2\" (\"a\" varchar, \"b\" varchar(20) UNIQUE, \"c\" smallint NOT NULL, \"d\" integer, \"e\" date, \"f\" timestamp, \"g\" mySQLType(15), PRIMARY KEY (\"b\", \"c\"))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
 
         var t4 = Table4()
         createStmt = createTable(t4.primaryKey(t4.b).foreignKey(t4.a, references: t2.b), connection: connection)
-        expectedCreateStmt = "CREATE TABLE table4 (a char(20), b bigint, c real, d boolean, e time, PRIMARY KEY (b), FOREIGN KEY (a) REFERENCES table2(b))"
+        expectedCreateStmt = "CREATE TABLE \"table4\" (\"a\" char(20), \"b\" bigint, \"c\" real, \"d\" boolean, \"e\" time, PRIMARY KEY (\"b\"), FOREIGN KEY (\"a\") REFERENCES \"table2\"(\"b\"))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
         
         t4 = Table4()
@@ -141,7 +141,7 @@ class TestSchema: XCTestCase {
         t1 = Table1()
         let connectionWithAutoIncrement = createConnection(createAutoIncrement: createAutoIncrement)
         createStmt = createTable(t1, connection: connectionWithAutoIncrement)
-        expectedCreateStmt = "CREATE TABLE table1 (a text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", b auto_increment, c double DEFAULT 4.95 CHECK (c > 0))"
+        expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" auto_increment, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
     }
     

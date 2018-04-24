@@ -55,8 +55,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a) == any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE UCASE(table.a) = ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE UCASE(table.a) = ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") = ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") = ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -64,8 +64,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where("peach" == all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 'peach' = ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 'peach' = ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'peach' = ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'peach' = ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -73,8 +73,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(t.a == any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE table.a = ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a = ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" = ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" = ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -82,8 +82,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(3 == any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 3 = ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 3 = ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3 = ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3 = ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -91,8 +91,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(Float(3.5) == any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 3.5 = ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 3.5 = ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.5 = ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.5 = ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -100,8 +100,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(-8.1 == any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE -8.1 = ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -8.1 = ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE -8.1 = ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE -8.1 = ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -109,8 +109,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(Parameter("fruit") == any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE @fruit = ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE @fruit = ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE @fruit = ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE @fruit = ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -118,8 +118,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(true == all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE true = ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE true = ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true = ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true = ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -127,8 +127,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(sum(t.a) == any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING SUM(table.a) = ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING SUM(table.a) = ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING SUM(\"table.a\") = ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING SUM(\"table.a\") = ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -136,8 +136,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having("peach" == all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 'peach' = ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 'peach' = ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'peach' = ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'peach' = ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -145,8 +145,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(t.a == any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING table.a = ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a = ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" = ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" = ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -154,8 +154,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(3 == any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 3 = ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 3 = ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3 = ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3 = ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -163,8 +163,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(Float(3.5) == any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 3.5 = ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 3.5 = ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.5 = ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.5 = ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -172,8 +172,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(-8.1 == any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING -8.1 = ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -8.1 = ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING -8.1 = ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING -8.1 = ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -181,8 +181,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(Parameter() == any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING ?1 = ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 = ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING ?1 = ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING ?1 = ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -190,8 +190,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(true == all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING true = ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING true = ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true = ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true = ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -199,8 +199,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a) >= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE UCASE(table.a) >= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE UCASE(table.a) >= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") >= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") >= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -208,8 +208,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where("peach" >= all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 'peach' >= ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 'peach' >= ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'peach' >= ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'peach' >= ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -217,8 +217,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(t.a >= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE table.a >= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a >= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" >= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" >= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -226,8 +226,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(3 >= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 3 >= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 3 >= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3 >= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3 >= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -235,8 +235,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(Float(3.5) >= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 3.5 >= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 3.5 >= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.5 >= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.5 >= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -244,8 +244,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(-8.1 >= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE -8.1 >= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -8.1 >= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE -8.1 >= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE -8.1 >= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -253,8 +253,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(Parameter("fruit") >= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE @fruit >= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE @fruit >= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE @fruit >= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE @fruit >= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -262,8 +262,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(true >= all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE true >= ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE true >= ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true >= ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true >= ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -271,8 +271,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(sum(t.a) >= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING SUM(table.a) >= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING SUM(table.a) >= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING SUM(\"table.a\") >= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING SUM(\"table.a\") >= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -280,8 +280,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having("peach" >= all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 'peach' >= ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 'peach' >= ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'peach' >= ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'peach' >= ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -289,8 +289,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(t.a >= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING table.a >= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a >= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" >= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" >= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -298,8 +298,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(3 >= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 3 >= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 3 >= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3 >= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3 >= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -307,8 +307,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(Float(3.5) >= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 3.5 >= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 3.5 >= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.5 >= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.5 >= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -316,8 +316,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(-8.1 >= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING -8.1 >= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -8.1 >= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING -8.1 >= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING -8.1 >= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -325,8 +325,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(Parameter() >= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING ?1 >= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 >= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING ?1 >= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING ?1 >= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -334,8 +334,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(true >= all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING true >= ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING true >= ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true >= ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true >= ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -343,8 +343,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a) > any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE UCASE(table.a) > ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE UCASE(table.a) > ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") > ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") > ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -352,8 +352,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where("peach" > all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 'peach' > ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 'peach' > ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'peach' > ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'peach' > ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -361,8 +361,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(t.a > any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE table.a > ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a > ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" > ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" > ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -370,8 +370,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(3 > any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 3 > ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 3 > ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3 > ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3 > ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -379,8 +379,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(Float(3.5) > any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 3.5 > ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 3.5 > ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.5 > ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.5 > ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -388,8 +388,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(-8.1 > any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE -8.1 > ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -8.1 > ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE -8.1 > ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE -8.1 > ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -397,8 +397,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(Parameter("fruit") > any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE @fruit > ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE @fruit > ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE @fruit > ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE @fruit > ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -406,8 +406,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(true > all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE true > ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE true > ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true > ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true > ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -415,8 +415,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(sum(t.a) > any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING SUM(table.a) > ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING SUM(table.a) > ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING SUM(\"table.a\") > ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING SUM(\"table.a\") > ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -424,8 +424,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having("peach" > all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 'peach' > ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 'peach' > ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'peach' > ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'peach' > ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -433,8 +433,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(t.a > any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING table.a > ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a > ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" > ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" > ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -442,8 +442,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(3 > any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 3 > ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 3 > ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3 > ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3 > ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -451,8 +451,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(Float(3.5) > any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 3.5 > ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 3.5 > ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.5 > ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.5 > ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -460,8 +460,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(-8.1 > any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING -8.1 > ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -8.1 > ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING -8.1 > ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING -8.1 > ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -469,8 +469,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(Parameter() > any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING ?1 > ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 > ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING ?1 > ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING ?1 > ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -478,8 +478,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(true > all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING true > ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING true > ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true > ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true > ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -487,8 +487,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a) <= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE UCASE(table.a) <= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE UCASE(table.a) <= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") <= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") <= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -496,8 +496,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where("peach" <= all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 'peach' <= ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 'peach' <= ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'peach' <= ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'peach' <= ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -505,8 +505,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(t.a <= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE table.a <= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a <= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" <= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" <= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -514,8 +514,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(3 <= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 3 <= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 3 <= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3 <= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3 <= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -523,8 +523,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(Float(3.5) <= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 3.5 <= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 3.5 <= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.5 <= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.5 <= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -532,8 +532,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(-8.1 <= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE -8.1 <= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -8.1 <= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE -8.1 <= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE -8.1 <= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -541,8 +541,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(Parameter("fruit") <= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE @fruit <= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE @fruit <= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE @fruit <= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE @fruit <= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -550,8 +550,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(true <= all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE true <= ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE true <= ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true <= ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true <= ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -559,8 +559,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(sum(t.a) <= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING SUM(table.a) <= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING SUM(table.a) <= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING SUM(\"table.a\") <= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING SUM(\"table.a\") <= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -568,8 +568,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having("peach" <= all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 'peach' <= ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 'peach' <= ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'peach' <= ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'peach' <= ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -577,8 +577,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(t.a <= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING table.a <= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a <= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" <= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" <= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -586,8 +586,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(3 <= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 3 <= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 3 <= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3 <= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3 <= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -595,8 +595,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(Float(3.5) <= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 3.5 <= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 3.5 <= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.5 <= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.5 <= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -604,8 +604,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(-8.1 <= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING -8.1 <= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -8.1 <= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING -8.1 <= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING -8.1 <= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -613,8 +613,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(Parameter() <= any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING ?1 <= ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 <= ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING ?1 <= ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING ?1 <= ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -622,8 +622,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(true <= all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING true <= ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING true <= ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true <= ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true <= ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -631,8 +631,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a) < any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE UCASE(table.a) < ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE UCASE(table.a) < ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") < ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") < ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -640,8 +640,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where("peach" < all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 'peach' < ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 'peach' < ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'peach' < ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'peach' < ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -649,8 +649,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(t.a < any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE table.a < ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a < ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" < ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" < ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -658,8 +658,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(3 < any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 3 < ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 3 < ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3 < ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3 < ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -667,8 +667,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(Float(3.5) < any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 3.5 < ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 3.5 < ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.5 < ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.5 < ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -676,8 +676,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(-8.1 < any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE -8.1 < ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -8.1 < ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE -8.1 < ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE -8.1 < ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -685,8 +685,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(Parameter("fruit") < any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE @fruit < ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE @fruit < ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE @fruit < ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE @fruit < ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -694,8 +694,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(true < all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE true < ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE true < ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true < ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true < ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -703,8 +703,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(sum(t.a) < any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING SUM(table.a) < ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING SUM(table.a) < ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING SUM(\"table.a\") < ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING SUM(\"table.a\") < ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -712,8 +712,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having("peach" < all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 'peach' < ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 'peach' < ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'peach' < ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'peach' < ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -721,8 +721,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(t.a < any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING table.a < ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a < ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" < ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" < ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -730,8 +730,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(3 < any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 3 < ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 3 < ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3 < ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3 < ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -739,8 +739,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(Float(3.5) < any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 3.5 < ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 3.5 < ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.5 < ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.5 < ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -748,8 +748,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(-8.1 < any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING -8.1 < ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -8.1 < ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING -8.1 < ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING -8.1 < ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -757,8 +757,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(Parameter() < any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING ?1 < ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 < ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING ?1 < ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING ?1 < ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -766,8 +766,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(true < all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING true < ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING true < ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true < ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true < ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -775,8 +775,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a) != any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE UCASE(table.a) <> ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE UCASE(table.a) <> ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") <> ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") <> ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -784,8 +784,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where("peach" != all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 'peach' <> ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 'peach' <> ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'peach' <> ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'peach' <> ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -793,8 +793,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(t.a != any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE table.a <> ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a <> ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" <> ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" <> ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -802,8 +802,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(3 != any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 3 <> ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 3 <> ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3 <> ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3 <> ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -811,8 +811,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(Float(3.5) != any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE 3.5 <> ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 3.5 <> ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.5 <> ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.5 <> ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -820,8 +820,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(-8.1 != any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE -8.1 <> ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -8.1 <> ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE -8.1 <> ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE -8.1 <> ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -829,8 +829,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(Parameter("fruit") != any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE @fruit <> ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE @fruit <> ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE @fruit <> ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE @fruit <> ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -838,8 +838,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .where(true != all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table WHERE true <> ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE true <> ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true <> ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true <> ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -847,8 +847,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(sum(t.a) != any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING SUM(table.a) <> ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING SUM(table.a) <> ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING SUM(\"table.a\") <> ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING SUM(\"table.a\") <> ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -856,8 +856,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having("peach" != all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 'peach' <> ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 'peach' <> ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'peach' <> ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'peach' <> ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -865,8 +865,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(t.a != any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING table.a <> ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a <> ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" <> ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" <> ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -874,8 +874,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(3 != any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 3 <> ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 3 <> ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3 <> ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3 <> ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -883,8 +883,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(Float(3.5) != any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING 3.5 <> ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 3.5 <> ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.5 <> ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.5 <> ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -892,8 +892,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(-8.1 != any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING -8.1 <> ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -8.1 <> ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING -8.1 <> ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING -8.1 <> ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -901,8 +901,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(Parameter() != any(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING ?1 <> ANY (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 <> ANY (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING ?1 <> ANY (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING ?1 <> ANY (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -910,8 +910,8 @@ class TestSubqueries: XCTestCase {
             .group(by: t.a)
             .having(true != all(Select(t2.c, from: t2)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT table.a FROM table HAVING true <> ALL (SELECT table2.c FROM table2) GROUP BY table.a"
-        queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING true <> ALL (SELECT table2.c FROM table2)"
+        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true <> ALL (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true <> ALL (SELECT \"table2.c\" FROM \"table2\")"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -919,8 +919,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(lcase(t.a).in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE LCASE(table.a) IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE LCASE(table.a) IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE LCASE(\"table.a\") IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE LCASE(\"table.a\") IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -928,8 +928,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(lcase(t.a).notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE LCASE(table.a) NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE LCASE(table.a) NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE LCASE(\"table.a\") NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE LCASE(\"table.a\") NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -937,8 +937,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where("plum".in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE 'plum' IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 'plum' IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'plum' IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'plum' IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -946,8 +946,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where("plum".notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE 'plum' NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 'plum' NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'plum' NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'plum' NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -955,8 +955,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(t.a.in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE table.a IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -964,8 +964,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(t.a.notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE table.a NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE table.a NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -973,8 +973,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(7.in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE 7 IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 7 IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 7 IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 7 IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -982,8 +982,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(7.notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE 7 NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 7 NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 7 NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 7 NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -991,8 +991,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(Float(7.8).in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE 7.8 IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 7.8 IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 7.8 IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 7.8 IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1000,8 +1000,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(Float(7.8).notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE 7.8 NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE 7.8 NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 7.8 NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 7.8 NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1009,8 +1009,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where((-0.9).in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE -0.9 IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -0.9 IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE -0.9 IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE -0.9 IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1018,8 +1018,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where((-0.9).notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE -0.9 NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE -0.9 NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE -0.9 NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE -0.9 NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1027,8 +1027,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(Parameter().in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE ?1 IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE ?1 IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE ?1 IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE ?1 IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1036,8 +1036,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(Parameter().notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE ?1 NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE ?1 NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE ?1 NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE ?1 NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1045,8 +1045,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(true.in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE true IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE true IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1054,8 +1054,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(true.notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE true NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE true NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1063,8 +1063,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(Date(timeIntervalSince1970: 0).in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 00:00:00 +0000' IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 00:00:00 +0000' IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE '1970-01-01 00:00:00 +0000' IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE '1970-01-01 00:00:00 +0000' IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1072,8 +1072,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .where(Date(timeIntervalSince1970: 0).notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table WHERE '1970-01-01 00:00:00 +0000' NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a WHERE '1970-01-01 00:00:00 +0000' NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE '1970-01-01 00:00:00 +0000' NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE '1970-01-01 00:00:00 +0000' NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1081,8 +1081,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(min(t.a).in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING MIN(table.a) IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING MIN(table.a) IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING MIN(\"table.a\") IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING MIN(\"table.a\") IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1090,8 +1090,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(min(t.a).notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING MIN(table.a) NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING MIN(table.a) NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING MIN(\"table.a\") NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING MIN(\"table.a\") NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1099,8 +1099,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having("plum".in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING 'plum' IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 'plum' IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'plum' IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'plum' IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1108,8 +1108,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having("plum".notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING 'plum' NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 'plum' NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'plum' NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'plum' NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1117,8 +1117,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(t.a.in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING table.a IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1126,8 +1126,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(t.a.notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING table.a NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING table.a NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1135,8 +1135,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(7.in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING 7 IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 7 IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 7 IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 7 IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1144,8 +1144,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(7.notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING 7 NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 7 NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 7 NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 7 NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1153,8 +1153,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(Float(7.8).in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING 7.8 IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 7.8 IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 7.8 IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 7.8 IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1162,8 +1162,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(Float(7.8).notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING 7.8 NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING 7.8 NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 7.8 NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 7.8 NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1171,8 +1171,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having((-0.9).in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING -0.9 IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -0.9 IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING -0.9 IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING -0.9 IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1180,8 +1180,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having((-0.9).notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING -0.9 NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING -0.9 NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING -0.9 NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING -0.9 NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1189,8 +1189,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(Parameter().in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING ?1 IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING ?1 IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING ?1 IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1198,8 +1198,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(Parameter().notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING ?1 NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING ?1 NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING ?1 NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING ?1 NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1207,8 +1207,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(false.in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING false IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING false IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING false IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING false IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1216,8 +1216,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(false.notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING false NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING false NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING false NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING false NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1225,8 +1225,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(Date(timeIntervalSince1970: 0).in(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 00:00:00 +0000' IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 00:00:00 +0000' IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING '1970-01-01 00:00:00 +0000' IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING '1970-01-01 00:00:00 +0000' IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                 "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1234,8 +1234,8 @@ class TestSubqueries: XCTestCase {
         .group(by: t.a)
         .having(Date(timeIntervalSince1970: 0).notIn(Select(t2.c, from: t2)))
     kuery = connection.descriptionOf(query: s)
-    queryWhere = "SELECT table.a FROM table HAVING '1970-01-01 00:00:00 +0000' NOT IN (SELECT table2.c FROM table2) GROUP BY table.a"
-    queryHaving = "SELECT table.a FROM table GROUP BY table.a HAVING '1970-01-01 00:00:00 +0000' NOT IN (SELECT table2.c FROM table2)"
+    queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING '1970-01-01 00:00:00 +0000' NOT IN (SELECT \"table2.c\" FROM \"table2\") GROUP BY \"table.a\""
+    queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING '1970-01-01 00:00:00 +0000' NOT IN (SELECT \"table2.c\" FROM \"table2\")"
     XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
   }

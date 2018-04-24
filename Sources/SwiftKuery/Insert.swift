@@ -153,7 +153,7 @@ public struct Insert: Query {
         
         result += try table.build(queryBuilder: queryBuilder) + " "
         if let columns = columns, columns.count != 0 {
-            result += "(\(columns.map { $0.name }.joined(separator: ", "))) "
+            result += "(\(columns.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", "))) "
         }
         if let values = values {
             result += "VALUES ("

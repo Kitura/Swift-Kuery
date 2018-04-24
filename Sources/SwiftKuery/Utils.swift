@@ -51,7 +51,7 @@ struct Utils {
     static func packName(_ name: String, queryBuilder: QueryBuilder) -> String {
         var result = name
         let identifierQuoteCharacter = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.identifierQuoteCharacter.rawValue]
-        if result.contains(" ") && !result.hasPrefix(identifierQuoteCharacter) {
+        if !result.hasPrefix(identifierQuoteCharacter) {
             result = identifierQuoteCharacter + result + identifierQuoteCharacter
         }
         return result

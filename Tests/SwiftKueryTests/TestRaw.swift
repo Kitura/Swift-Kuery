@@ -38,12 +38,12 @@ class TestRaw: XCTestCase {
         
         var r = Raw(query: "DROP TABLE", table: t)
         var kuery = connection.descriptionOf(query: r)
-        var query = "DROP TABLE tableRaw"
+        var query = "DROP TABLE \"tableRaw\""
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         r = Raw(query: "DROP TABLE", tables: [t])
         kuery = connection.descriptionOf(query: r)
-        query = "DROP TABLE tableRaw"
+        query = "DROP TABLE \"tableRaw\""
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
 }
