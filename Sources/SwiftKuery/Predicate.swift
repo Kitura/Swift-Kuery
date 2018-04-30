@@ -81,7 +81,7 @@ public indirect enum Predicate<ClauseType: Buildable, ColumnExpressionType: Fiel
         case .bool(let value):
             return try Utils.packType(value, queryBuilder: queryBuilder)
         case .date(let value):
-            return Utils.packType(value)
+            return try Utils.packType(value, queryBuilder: queryBuilder)
         case .column(let column):
             return try column.build(queryBuilder: queryBuilder)
         case .columnExpression(let columnExpression):
