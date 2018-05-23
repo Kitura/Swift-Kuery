@@ -177,7 +177,7 @@ open class Table: Buildable {
         }
 
         if !foreignKeys.isEmpty {
-            query += foreignKeys.map { $0.describe(queryBuilder: queryBuilder) }.joined(separator: "")
+            query += foreignKeys.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: "")
         }
 
         query += ")"

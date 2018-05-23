@@ -16,7 +16,7 @@
 
 import Foundation
 
-struct ForeignKey: Hashable {
+struct ForeignKey: Hashable, Buildable {
     var keyColumns: [Column]
     var refColumns: [Column]
     var keyNames: [String]
@@ -28,8 +28,8 @@ struct ForeignKey: Hashable {
         }
         keyColumns = keys
         refColumns = refs
-        keyNames = keyColumns.map { "\($0._table._name).\($0.name)"}
-        refNames = refColumns.map { "\($0._table._name).\($0.name)"}
+        keyNames = keyColumns.map { "\($0._table._name).\($0.name)" }
+        refNames = refColumns.map { "\($0._table._name).\($0.name)" }
     }
 
     static func validKey(_ keys: [Column], _ refs: [Column],_ tableName: String, _ errorString: inout String) -> Bool {
@@ -79,7 +79,7 @@ struct ForeignKey: Hashable {
         return true
     }
 
-    func describe(queryBuilder: QueryBuilder) -> String {
+    func build(queryBuilder: QueryBuilder) -> String {
         var append = ", FOREIGN KEY ("
         append += keyColumns.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ")
         append += ") REFERENCES "
