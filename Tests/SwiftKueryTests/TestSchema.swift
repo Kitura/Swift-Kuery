@@ -146,7 +146,7 @@ class TestSchema: XCTestCase {
     }
     
     
-    public func createAutoIncrement(_ type: String) -> String {
+    public func createAutoIncrement(_ type: String, _: Bool) -> String {
         switch type {
         case "smallint":
             return "small_auto_increment"
