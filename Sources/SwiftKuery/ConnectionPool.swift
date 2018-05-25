@@ -239,6 +239,7 @@ public class ConnectionPool {
         // We have permission to take an item - do so in a thread-safe way
         lockPoolLock()
         if (pool.count < 1) {
+            semaphore.signal()
             unlockPoolLock()
             return nil
         }
