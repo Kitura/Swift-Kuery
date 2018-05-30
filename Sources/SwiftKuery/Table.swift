@@ -45,16 +45,17 @@ open class Table: Buildable {
     public private (set) var alias: String?
     
     private var primaryKey: [Column]?
-    private var foreignKeyColumns: [Column]?
-    private var foreignKeyReferences: [Column]?
     private var syntaxError = ""
-    
+
+    // An array of foreign keys for the table
+    private var foreignKeys: [ForeignKey] = []
+
     /// The name of the table to be used inside a query, i.e., either its alias (if exists)
     /// or its name.
     public var nameInQuery: String {
         return alias ?? _name
     }
-    
+
     // MARK: Initializer
     /// Initialize an instance of Table.
     public required init() {
@@ -138,42 +139,51 @@ open class Table: Buildable {
         }
         return result
     }
-    
-    /// Function that returns the SQL CREATE TABLE query as a String for this TABLE.
-    /// - Returns: A String representation of the table create statement.
-    /// - Throws: QueryError.syntaxError if statement build fails.
+
+    /**
+     Function that returns the SQL CREATE TABLE statement for this table in string fromat.
+     ### Usage Example: ###
+     In this example we define a simple table named exampleTable and then print its description
+     ```swift
+     class ExampleTable: Table {
+         let tableName = "ExampleTable"
+         let name = Column("name", String.self)
+     }
+     let examples = ExampleTable()
+     let description = try examples.description(connection: getConnection(from: postgresPool))
+     print(description)
+     // Prints CREATE TABLE ExampleTable (name text)
+     ```
+     
+     - Returns: A String representation of the table create statement.
+     - Throws: QueryError.syntaxError if statement build fails.
+    */
     public func description(connection: Connection) throws -> String {
         if syntaxError != "" {
             throw QueryError.syntaxError(syntaxError)
         }
-        
+
         let queryBuilder = connection.queryBuilder
-        
+
         var query = "CREATE TABLE " + Utils.packName(_name, queryBuilder: queryBuilder)
         query +=  " ("
-        
+
         query += try columns.map { try $0.create(queryBuilder: queryBuilder) }.joined(separator: ", ")
-        
+
         if let primaryKey = primaryKey {
             query += ", PRIMARY KEY ("
             query += primaryKey.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ")
             query += ")"
         }
-        
-        if let foreignKeyColumns = foreignKeyColumns, let foreignKeyReferences = foreignKeyReferences {
-            query += ", FOREIGN KEY ("
-            query += foreignKeyColumns.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ")
-            query += ") REFERENCES "
-            let referencedTableName = foreignKeyReferences[0].table._name
-            query += Utils.packName(referencedTableName, queryBuilder: queryBuilder) + "("
-            query += foreignKeyReferences.map { Utils.packName($0.name, queryBuilder: queryBuilder) }.joined(separator: ", ")
-            query += ")"
+
+        if !foreignKeys.isEmpty {
+            query += foreignKeys.map { $0.build(queryBuilder: queryBuilder) }.joined(separator: "")
         }
-        
+
         query += ")"
         return query
     }
-    
+
     // MARK: Create Alias
     /**
      Function to return a copy of the current `Table` instance with the given name as its alias.
@@ -317,12 +327,12 @@ open class Table: Buildable {
     public func primaryKey(_ columns: Column...) -> Self {
         return primaryKey(columns)
     }
-    
+
     /**
-     Function to set a multiple `Column` instance, as a composite foreign key, in the `Table` instance referencing multiple column in another Table.
-     The function also validates the columns to ensure they belong to the table and do not conflict with the definition of a foreign key.
+     Function to set a multiple `Column` instance, as a composite foreign key, in the `Table` instance referencing multiple columns in another Table.
+     The function also validates the columns to ensure they belong to the table and do not conflict with the definition of an existing foreign key.
      ### Usage Example: ###
-     In this example, `Table` instances called personTable and employeeTable are created. A "personTable" foreign key is then set to be a composite of firstColumn and lastColumn, which reference firstName and surname in employeeTable.
+     In this example, `Table` instances called personTable and employeeTable are created. A composite primary key is created on "employeeTable". A "personTable" foreign key is then set to be a composite of firstColumn and lastColumn, which reference firstName and surname in employeeTable.
      ```swift
      public class EmployeeTable: Table {
          let tableName = "employeeTable"
@@ -331,54 +341,38 @@ open class Table: Buildable {
          let monthlyPay = Column("monthlyPay", Int32.self)
      }
      public class PersonTable: Table {
-        let tableName = "personTable"
-        let firstName = Column("firstName", String.self, notNull: true)
-        let lastName = Column("lastName", String.self, notNull: true)
-        let dateOfBirth = Column("toDo_completed", String.self)
+         let tableName = "personTable"
+         let firstName = Column("firstName", String.self, notNull: true)
+         let lastName = Column("lastName", String.self, notNull: true)
+         let dateOfBirth = Column("toDo_completed", String.self)
      }
      var personTable = PersonTable()
      var employeeTable = EmployeeTable()
+     employeeTable = employeeTable.primaryKey([employeeTable.firstname, employeeTable.surname])
      personTable = personTable.foreignKey([personTable.firstName, personTable.lastName], references: [employeeTable.firstName, employeeTable.surname])
      ```
-    
+
      - Parameter columns: An Array of columns that constitute the foreign key.
      - Parameter references: An Array of columns from the foreign table that are referenced by the foreign key.
      - Returns: A new instance of `Table`.
-    */
+     */
     public func foreignKey(_ columns: [Column], references: [Column]) -> Self {
-        if foreignKeyColumns != nil || foreignKeyReferences != nil {
-            syntaxError += "Conflicting definitions of foreign key. "
+        var errorString: String = ""
+        guard let newKey = ForeignKey(keys: columns, refs: references, self._name, &errorString) else {
+            syntaxError += errorString
+            return self
         }
-        else if columns.count == 0 || references.count == 0 || columns.count != references.count {
-            syntaxError += "Invalid definition of foreign key. "
-        }
-        else if !Table.columnsBelongTo(table: self, columns: columns) {
-            syntaxError += "Foreign key contains columns from another table. "
-        }
-        else if !Table.columnsBelongTo(table: references[0].table, columns: references) {
-            syntaxError += "Foreign key references columns from more than one table. "
-        }
-        else {
-            foreignKeyColumns = columns
-            foreignKeyReferences = references
+        if !foreignKeys.contains(newKey) {
+            foreignKeys.append(newKey)
         }
         return self
     }
-    
-    private static func columnsBelongTo(table: Table, columns: [Column]) -> Bool {
-        for column in columns {
-            if column.table._name != table._name {
-                return false
-            }
-        }
-        return true
-    }
-    
+
     /**
      Function to set a single `Column` instance, as a foreign key, in the `Table` instance.
-     The function also validates the column to ensure it belongs to the table and does not conflict with the definition of a foreign key.
+     The function also validates the column to ensure it belongs to the table and does not conflict with the definition of an existing foreign key.
      ### Usage Example: ###
-     In this example, `Table` instances called personTable and employeeTable are created. A "personTable" foreign key is then set to be id, which reference identifier in employeeTable.
+     In this example, `Table` instances called personTable and employeeTable are created. A "personTable" foreign key is then set to be id, which references identifier in employeeTable.
      ```swift
      public class EmployeeTable: Table {
          let identifier = Column("identifier", Int32.self, notNull: true)
@@ -386,21 +380,30 @@ open class Table: Buildable {
          let employeeBand = Column("employeeBand", String.self)
      }
      public class PersonTable: Table {
-        let tableName = "personTable"
-        let id = Column("id", Int32.self, notNull: true)
-        let firstName = Column("firstName", String.self, notNull: true)
-        let lastName = Column("lastName", String.self, notNull: true)
+         let tableName = "personTable"
+         let id = Column("id", Int32.self, notNull: true)
+         let firstName = Column("firstName", String.self, notNull: true)
+         let lastName = Column("lastName", String.self, notNull: true)
      }
      var personTable = PersonTable()
      var employeeTable = EmployeeTable()
      personTable = personTable.foreignKey(personTable.id, references: employeeTable.identifier)
      ```
-    
+
      - Parameter columns: A column that is the foreign key.
      - Parameter references: A column in the foreign table the foreign key references.
      - Returns: A new instance of `Table`.
     */
     public func foreignKey(_ column: Column, references: Column) -> Self {
         return foreignKey([column], references: [references])
+    }
+
+    private static func columnsBelongTo(table: Table, columns: [Column]) -> Bool {
+        for column in columns {
+            if column.table._name != table._name {
+                return false
+            }
+        }
+        return true
     }
 }
