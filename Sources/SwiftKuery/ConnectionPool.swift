@@ -20,6 +20,7 @@ import Dispatch
 #else
     import Darwin
 #endif
+import LoggerAPI
 
 // MARK: ConnectionPool
 
@@ -112,7 +113,14 @@ public class ConnectionPool {
             if let item = generator() {
                 pool.append(item)
             }
-            else {} // TODO: Handle generation failure.
+            else {}
+        }
+        // Handle generation failure
+        if pool.count < capacity {
+            Log.warning("Connection generation failed (\(pool.count) of \(capacity) connections created")
+            // Ensure capacity and pool.count are in sync. This enables us to recover
+            // in the future if the database becomes reachable again.
+            capacity = pool.count
         }
     }
     
