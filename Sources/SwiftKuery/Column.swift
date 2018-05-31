@@ -195,7 +195,7 @@ public class Column: Field, IndexColumn {
         }
         if autoIncrement {
             if let createAutoIncrement = queryBuilder.createAutoIncrement {
-                let autoIncrementString = createAutoIncrement(typeString)
+                let autoIncrementString = createAutoIncrement(typeString, isPrimaryKey)
                 guard autoIncrementString != "" else {
                     throw QueryError.syntaxError("Invalid autoincrement for column \(name). ")
                 }
@@ -208,7 +208,7 @@ public class Column: Field, IndexColumn {
         else {
             result += typeString
         }
-        
+
         if isPrimaryKey {
             result += " PRIMARY KEY"
         }

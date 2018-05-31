@@ -116,7 +116,7 @@ public class QueryBuilder {
     public let withUpdateRequiresFrom: Bool
     
     /// A function to create an autoincrement expression for the column, based on the column type.
-    public let createAutoIncrement: ((String) -> String)?
+    public let createAutoIncrement: ((String, Bool) -> String)?
 
     /// An indication whether the drop index syntax requires the `ON table.name` clause.
     public let dropIndexRequiresOnTableName: Bool
@@ -143,7 +143,7 @@ public class QueryBuilder {
      - Parameter dateFormatter: DateFormatter to convert between date and string instances.
     */
     public init(addNumbersToParameters: Bool = true, firstParameterIndex: Int = 1, anyOnSubquerySupported: Bool = true,
-                withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String) -> String)? = nil,
+                withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String, Bool) -> String)? = nil,
                 dropIndexRequiresOnTableName: Bool = false, dateFormatter: DateFormatter? = nil) {
         substitutions = Array(repeating: "", count: QuerySubstitutionNames.namesCount.rawValue)
         substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"
