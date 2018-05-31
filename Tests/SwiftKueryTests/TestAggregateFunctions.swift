@@ -46,90 +46,90 @@ class TestAggregateFunctions: XCTestCase {
             .group(by: t.a)
             .having(avg(t.b) > 3)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT table.a FROM table GROUP BY table.a HAVING AVG(table.b) > 3"
+        query = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING AVG(\"table.b\") > 3"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(max(t.b) > 3)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT table.a FROM table GROUP BY table.a HAVING MAX(table.b) > 3"
+        query = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING MAX(\"table.b\") > 3"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(min(t.b) > 3)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT table.a FROM table GROUP BY table.a HAVING MIN(table.b) > 3"
+        query = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING MIN(\"table.b\") > 3"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(sum(t.b) > 3)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT table.a FROM table GROUP BY table.a HAVING SUM(table.b) > 3"
+        query = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING SUM(\"table.b\") > 3"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(last(t.b) > 3)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT table.a FROM table GROUP BY table.a HAVING LAST(table.b) > 3"
+        query = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.b\") > 3"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(first(t.b) > 3)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT table.a FROM table GROUP BY table.a HAVING FIRST(table.b) > 3"
+        query = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING FIRST(\"table.b\") > 3"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(count(t.b) > 3)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT table.a FROM table GROUP BY table.a HAVING COUNT(table.b) > 3"
+        query = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING COUNT(\"table.b\") > 3"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(countDistinct(t.b) != 0)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT table.a FROM table GROUP BY table.a HAVING COUNT(DISTINCT(table.b)) <> 0"
+        query = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING COUNT(DISTINCT(\"table.b\")) <> 0"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(ucase(sum(t.b)) <= -1)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT table.a FROM table GROUP BY table.a HAVING UCASE(SUM(table.b)) <= -1"
+        query = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING UCASE(SUM(\"table.b\")) <= -1"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(lcase(sum(t.b)) <= -1)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT table.a FROM table GROUP BY table.a HAVING LCASE(SUM(table.b)) <= -1"
+        query = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LCASE(SUM(\"table.b\")) <= -1"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(len(sum(t.b)) <= -1)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT table.a FROM table GROUP BY table.a HAVING LEN(SUM(table.b)) <= -1"
+        query = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LEN(SUM(\"table.b\")) <= -1"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(round(sum(t.b), to: 2) >= 9.08)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT table.a FROM table GROUP BY table.a HAVING ROUND(SUM(table.b), 2) >= 9.08"
+        query = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING ROUND(SUM(\"table.b\"), 2) >= 9.08"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(mid(sum(t.b), start: 3, length: 6) <= -1)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT table.a FROM table GROUP BY table.a HAVING MID(SUM(table.b), 3, 6) <= -1"
+        query = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING MID(SUM(\"table.b\"), 3, 6) <= -1"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
   }
 }

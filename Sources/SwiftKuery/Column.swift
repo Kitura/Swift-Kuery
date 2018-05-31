@@ -132,11 +132,11 @@ public class Column: Field, IndexColumn {
      - Throws: QueryError.syntaxError if query build fails.
     */
     public func build(queryBuilder: QueryBuilder) throws -> String {
-        let tableName = Utils.packName(table.nameInQuery, queryBuilder: queryBuilder)
+        let tableName = table.nameInQuery
         if tableName == "" {
             throw QueryError.syntaxError("Table name not set. ")
         }
-        var result = tableName + "." + Utils.packName(name, queryBuilder: queryBuilder)
+        var result = tableName.contains(" ") ? tableName + "." + Utils.packName(name, queryBuilder: queryBuilder) : Utils.packName(tableName + "." + name, queryBuilder: queryBuilder)
         if let alias = alias {
             result += " AS " + Utils.packName(alias, queryBuilder: queryBuilder)
         }
@@ -222,7 +222,7 @@ public class Column: Field, IndexColumn {
             result += " DEFAULT " + Utils.packType(defaultValue)
         }
         if let checkExpression = checkExpression {
-            result += " CHECK (" + checkExpression + ")"
+            result += checkExpression.contains(name) ? " CHECK (" + checkExpression.replacingOccurrences(of: name, with: "\"\(name)\"") + ")" : " CHECK (" + checkExpression + ")"
         }
         if let collate = collate {
             result += " COLLATE \"" + collate + "\""

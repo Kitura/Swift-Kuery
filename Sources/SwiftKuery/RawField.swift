@@ -38,7 +38,7 @@ public struct RawField: Field {
     public func build(queryBuilder: QueryBuilder) -> String {
         var result = field
         if let alias = alias {
-            result += " AS " + alias
+            result += " AS " + Utils.packName(alias, queryBuilder: queryBuilder)
         }
         return result
     }
