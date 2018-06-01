@@ -80,7 +80,7 @@ class TestSchema: XCTestCase {
 
         // This tests a one to one foreign key
         var createStmt = createTable(t1.foreignKey(t1.a, references: t2.b), connection: connection)
-        var expectedCreateStmt = "CREATE TABLE table1 (a text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", b integer AUTO_INCREMENT, c double DEFAULT 4.95 CHECK (c > 0), FOREIGN KEY (a) REFERENCES table2(b))"
+        var expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" integer AUTO_INCREMENT, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0), FOREIGN KEY (\"a\") REFERENCES \"table2\"(\"b\"))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
 
         // Need to reset tables
@@ -89,7 +89,7 @@ class TestSchema: XCTestCase {
 
         // This tests that multiple foreign keys can be added for the one to one case
         createStmt = createTable(t1.foreignKey(t1.a, references: t2.b).foreignKey(t1.b, references: t2.a), connection: connection)
-        expectedCreateStmt = "CREATE TABLE table1 (a text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", b integer AUTO_INCREMENT, c double DEFAULT 4.95 CHECK (c > 0), FOREIGN KEY (a) REFERENCES table2(b), FOREIGN KEY (b) REFERENCES table2(a))"
+        expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" integer AUTO_INCREMENT, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0), FOREIGN KEY (\"a\") REFERENCES \"table2\"(\"b\"), FOREIGN KEY (\"b\") REFERENCES \"table2\"(\"a\"))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
 
         // Need to reset tables
@@ -98,7 +98,7 @@ class TestSchema: XCTestCase {
 
         // This tests that duplicate foreign keys are ignored for the one to one case
         createStmt = createTable(t1.foreignKey(t1.a, references: t2.b).foreignKey(t1.a, references: t2.b), connection: connection)
-        expectedCreateStmt = "CREATE TABLE table1 (a text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", b integer AUTO_INCREMENT, c double DEFAULT 4.95 CHECK (c > 0), FOREIGN KEY (a) REFERENCES table2(b))"
+        expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" integer AUTO_INCREMENT, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0), FOREIGN KEY (\"a\") REFERENCES \"table2\"(\"b\"))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
 
         // Need to reset tables
@@ -107,7 +107,7 @@ class TestSchema: XCTestCase {
 
         // This tests a many to many foreign key (composite keys do not support different reference tables)
         createStmt = createTable(t1.foreignKey([t1.a, t1.b], references: [t2.b, t2.a]), connection: connection)
-        expectedCreateStmt = "CREATE TABLE table1 (a text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", b integer AUTO_INCREMENT, c double DEFAULT 4.95 CHECK (c > 0), FOREIGN KEY (a, b) REFERENCES table2(b, a))"
+        expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" integer AUTO_INCREMENT, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0), FOREIGN KEY (\"a\", \"b\") REFERENCES \"table2\"(\"b\", \"a\"))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
 
         // Need to reset tables
@@ -116,7 +116,7 @@ class TestSchema: XCTestCase {
 
         // This tests mulitple foreign keys can be added for the many to many case
         createStmt = createTable(t1.foreignKey([t1.a, t1.b], references: [t2.b, t2.a]).foreignKey([t1.a, t1.c], references: [t2.b, t2.a]), connection: connection)
-        expectedCreateStmt = "CREATE TABLE table1 (a text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", b integer AUTO_INCREMENT, c double DEFAULT 4.95 CHECK (c > 0), FOREIGN KEY (a, b) REFERENCES table2(b, a), FOREIGN KEY (a, c) REFERENCES table2(b, a))"
+        expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" integer AUTO_INCREMENT, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0), FOREIGN KEY (\"a\", \"b\") REFERENCES \"table2\"(\"b\", \"a\"), FOREIGN KEY (\"a\", \"c\") REFERENCES \"table2\"(\"b\", \"a\"))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
 
         // Need to reset tables
@@ -125,7 +125,7 @@ class TestSchema: XCTestCase {
 
         // This tests that duplicate foreign keys are ignored for the many to many case
         createStmt = createTable(t1.foreignKey([t1.a, t1.b], references: [t2.b, t2.a]).foreignKey([t1.a, t1.b], references: [t2.b, t2.a]), connection: connection)
-        expectedCreateStmt = "CREATE TABLE table1 (a text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", b integer AUTO_INCREMENT, c double DEFAULT 4.95 CHECK (c > 0), FOREIGN KEY (a, b) REFERENCES table2(b, a))"
+        expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" integer AUTO_INCREMENT, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0), FOREIGN KEY (\"a\", \"b\") REFERENCES \"table2\"(\"b\", \"a\"))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
 
         // Need to reset tables
@@ -134,7 +134,7 @@ class TestSchema: XCTestCase {
 
         // This tests that duplicate foreign keys are ignored for the many to many case irrespective of key ordering
         createStmt = createTable(t1.foreignKey([t1.a, t1.b], references: [t2.b, t2.a]).foreignKey([t1.b, t1.a], references: [t2.b, t2.a]), connection: connection)
-        expectedCreateStmt = "CREATE TABLE table1 (a text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", b integer AUTO_INCREMENT, c double DEFAULT 4.95 CHECK (c > 0), FOREIGN KEY (a, b) REFERENCES table2(b, a))"
+        expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" integer AUTO_INCREMENT, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0), FOREIGN KEY (\"a\", \"b\") REFERENCES \"table2\"(\"b\", \"a\"))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
     }
     
