@@ -136,7 +136,7 @@ public class Column: Field, IndexColumn {
         if tableName == "" {
             throw QueryError.syntaxError("Table name not set. ")
         }
-        var result = tableName.contains(" ") ? tableName + "." + Utils.packName(name, queryBuilder: queryBuilder) : Utils.packName(tableName + "." + name, queryBuilder: queryBuilder)
+        var result = Utils.packName(tableName, queryBuilder: queryBuilder) + "." + Utils.packName(name, queryBuilder: queryBuilder)
         if let alias = alias {
             result += " AS " + Utils.packName(alias, queryBuilder: queryBuilder)
         }

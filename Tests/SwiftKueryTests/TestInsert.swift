@@ -75,7 +75,7 @@ class TestInsert: XCTestCase {
         i = Insert(into: t, columns: [t.a], Select(t2.a, from: t2))
             .suffix("RETURNING a")
         kuery = connection.descriptionOf(query: i)
-        query = "INSERT INTO \"tableInsert\" (\"a\") SELECT \"tableInsert2.a\" FROM \"tableInsert2\" RETURNING a"
+        query = "INSERT INTO \"tableInsert\" (\"a\") SELECT \"tableInsert2\".\"a\" FROM \"tableInsert2\" RETURNING a"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
     
@@ -95,7 +95,7 @@ class TestInsert: XCTestCase {
         var i = with(withTable,
                      Insert(into: t, columns: [t.a], insertSelect))
         let kuery = connection.descriptionOf(query: i)
-        let query = "WITH \"aux_table\" AS (SELECT \"tableInsert2.a\" AS \"c\" FROM \"tableInsert2\") INSERT INTO \"tableInsert\" (\"a\") SELECT \"aux_table.c\" FROM \"aux_table\""
+        let query = "WITH \"aux_table\" AS (SELECT \"tableInsert2\".\"a\" AS \"c\" FROM \"tableInsert2\") INSERT INTO \"tableInsert\" (\"a\") SELECT \"aux_table\".\"c\" FROM \"aux_table\""
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         withTable = AuxTable()

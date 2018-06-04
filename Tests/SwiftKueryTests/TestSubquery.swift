@@ -39,20 +39,20 @@ class TestSubquery: XCTestCase {
         var s = Select(from: t)
             .where(t.b == any(Select(t.b, from: t).where(t.b == 2)))
         var kuery = connection.descriptionOf(query: s)
-        var query = "SELECT * FROM \"tableSubquery\" WHERE \"tableSubquery.b\" = ANY (SELECT \"tableSubquery.b\" FROM \"tableSubquery\" WHERE \"tableSubquery.b\" = 2)"
+        var query = "SELECT * FROM \"tableSubquery\" WHERE \"tableSubquery\".\"b\" = ANY (SELECT \"tableSubquery\".\"b\" FROM \"tableSubquery\" WHERE \"tableSubquery\".\"b\" = 2)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(sum(t.b) == any(Select(t.b, from: t).where(t.b == 2)))
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT \"tableSubquery.a\" FROM \"tableSubquery\" GROUP BY \"tableSubquery.a\" HAVING SUM(\"tableSubquery.b\") = ANY (SELECT \"tableSubquery.b\" FROM \"tableSubquery\" WHERE \"tableSubquery.b\" = 2)"
+        query = "SELECT \"tableSubquery\".\"a\" FROM \"tableSubquery\" GROUP BY \"tableSubquery\".\"a\" HAVING SUM(\"tableSubquery\".\"b\") = ANY (SELECT \"tableSubquery\".\"b\" FROM \"tableSubquery\" WHERE \"tableSubquery\".\"b\" = 2)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: t)
             .where(exists(Select(t.b, from: t).where(t.b == 2)))
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM \"tableSubquery\" WHERE EXISTS (SELECT \"tableSubquery.b\" FROM \"tableSubquery\" WHERE \"tableSubquery.b\" = 2)"
+        query = "SELECT * FROM \"tableSubquery\" WHERE EXISTS (SELECT \"tableSubquery\".\"b\" FROM \"tableSubquery\" WHERE \"tableSubquery\".\"b\" = 2)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: t)
@@ -65,40 +65,40 @@ class TestSubquery: XCTestCase {
             .group(by: t.a)
             .having("apple".in("plum"))
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM \"tableSubquery\" GROUP BY \"tableSubquery.a\" HAVING 'apple' IN ('plum')"
+        query = "SELECT * FROM \"tableSubquery\" GROUP BY \"tableSubquery\".\"a\" HAVING 'apple' IN ('plum')"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: t)
             .where(8.in(Select(t.b, from: t).where(t.b == 8)))
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM \"tableSubquery\" WHERE 8 IN (SELECT \"tableSubquery.b\" FROM \"tableSubquery\" WHERE \"tableSubquery.b\" = 8)"
+        query = "SELECT * FROM \"tableSubquery\" WHERE 8 IN (SELECT \"tableSubquery\".\"b\" FROM \"tableSubquery\" WHERE \"tableSubquery\".\"b\" = 8)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(from: t)
             .group(by: t.a)
             .having(exists(Select(t.b, from: t).where(t.b == 8)))
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM \"tableSubquery\" GROUP BY \"tableSubquery.a\" HAVING EXISTS (SELECT \"tableSubquery.b\" FROM \"tableSubquery\" WHERE \"tableSubquery.b\" = 8)"
+        query = "SELECT * FROM \"tableSubquery\" GROUP BY \"tableSubquery\".\"a\" HAVING EXISTS (SELECT \"tableSubquery\".\"b\" FROM \"tableSubquery\" WHERE \"tableSubquery\".\"b\" = 8)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(from: t)
             .group(by: t.a)
             .having(notExists(Select(t.b, from: t).where(t.b == 8)) && sum(t.b) > 0)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM \"tableSubquery\" GROUP BY \"tableSubquery.a\" HAVING (NOT EXISTS (SELECT \"tableSubquery.b\" FROM \"tableSubquery\" WHERE \"tableSubquery.b\" = 8)) AND (SUM(\"tableSubquery.b\") > 0)"
+        query = "SELECT * FROM \"tableSubquery\" GROUP BY \"tableSubquery\".\"a\" HAVING (NOT EXISTS (SELECT \"tableSubquery\".\"b\" FROM \"tableSubquery\" WHERE \"tableSubquery\".\"b\" = 8)) AND (SUM(\"tableSubquery\".\"b\") > 0)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(from: t)
             .where(notExists(Select(t.b, from: t).where(t.b == 8)))
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM \"tableSubquery\" WHERE NOT EXISTS (SELECT \"tableSubquery.b\" FROM \"tableSubquery\" WHERE \"tableSubquery.b\" = 8)"
+        query = "SELECT * FROM \"tableSubquery\" WHERE NOT EXISTS (SELECT \"tableSubquery\".\"b\" FROM \"tableSubquery\" WHERE \"tableSubquery\".\"b\" = 8)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(from: t)
             .group(by: t.a)
             .having(Parameter().in(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM \"tableSubquery\" GROUP BY \"tableSubquery.a\" HAVING ?1 IN (?2, ?3)"
+        query = "SELECT * FROM \"tableSubquery\" GROUP BY \"tableSubquery\".\"a\" HAVING ?1 IN (?2, ?3)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(from: t)

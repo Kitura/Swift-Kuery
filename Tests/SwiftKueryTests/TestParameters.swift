@@ -44,18 +44,18 @@ class TestParameters: XCTestCase {
 
         var u = Update(t, set: [(t.a, Parameter()), (t.b, Parameter())], where: t.a == "banana")
         kuery = connection.descriptionOf(query: u)
-        query = "UPDATE \"tableParameters\" SET \"a\" = ?1, \"b\" = ?2 WHERE \"tableParameters.a\" = 'banana'"
+        query = "UPDATE \"tableParameters\" SET \"a\" = ?1, \"b\" = ?2 WHERE \"tableParameters\".\"a\" = 'banana'"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         u = Update(t, set: [(t.a, Parameter("name")), (t.b, Parameter())], where: t.a == "banana")
         kuery = connection.descriptionOf(query: u)
-        query = "UPDATE \"tableParameters\" SET \"a\" = @name, \"b\" = ?1 WHERE \"tableParameters.a\" = 'banana'"
+        query = "UPDATE \"tableParameters\" SET \"a\" = @name, \"b\" = ?1 WHERE \"tableParameters\".\"a\" = 'banana'"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         let d = Delete(from: t)
             .where(t.b == Parameter())
         kuery = connection.descriptionOf(query: d)
-        query = "DELETE FROM \"tableParameters\" WHERE \"tableParameters.b\" = ?1"
+        query = "DELETE FROM \"tableParameters\" WHERE \"tableParameters\".\"b\" = ?1"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         var s = Select(t.a, from: t)
@@ -64,13 +64,13 @@ class TestParameters: XCTestCase {
             .order(by: .DESC(t.a))
             .having(sum(t.b) < Parameter())
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT \"tableParameters.a\" FROM \"tableParameters\" WHERE \"tableParameters.b\" NOT BETWEEN ?1 AND ?2 GROUP BY \"tableParameters.a\" HAVING SUM(\"tableParameters.b\") < ?3 ORDER BY \"tableParameters.a\" DESC"
+        query = "SELECT \"tableParameters\".\"a\" FROM \"tableParameters\" WHERE \"tableParameters\".\"b\" NOT BETWEEN ?1 AND ?2 GROUP BY \"tableParameters\".\"a\" HAVING SUM(\"tableParameters\".\"b\") < ?3 ORDER BY \"tableParameters\".\"a\" DESC"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(t.a, from: t)
             .where(t.a.like(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT \"tableParameters.a\" FROM \"tableParameters\" WHERE \"tableParameters.a\" LIKE ?1"
+        query = "SELECT \"tableParameters\".\"a\" FROM \"tableParameters\" WHERE \"tableParameters\".\"a\" LIKE ?1"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
 }
