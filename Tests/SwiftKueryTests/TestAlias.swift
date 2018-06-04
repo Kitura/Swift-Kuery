@@ -39,7 +39,7 @@ class TestAlias: XCTestCase {
         
         var s = Select(t.a.as("\"fruit name\""), t.b.as("number"), from: t)
         var kuery = connection.descriptionOf(query: s)
-        var query = "SELECT \"tableAlias.a\" AS \"fruit name\", \"tableAlias.b\" AS \"number\" FROM \"tableAlias\""
+        var query = "SELECT \"tableAlias\".\"a\" AS \"fruit name\", \"tableAlias\".\"b\" AS \"number\" FROM \"tableAlias\""
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: t.as("new"))

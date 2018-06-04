@@ -57,7 +57,7 @@ class TestJoin: XCTestCase {
             .join(myTable2)
             .on(myTable1.b == myTable2.b)
         var kuery = connection.descriptionOf(query: s)
-        var query = "SELECT * FROM \"table1Join\" JOIN \"table2Join\" ON \"table1Join.b\" = \"table2Join.b\""
+        var query = "SELECT * FROM \"table1Join\" JOIN \"table2Join\" ON \"table1Join\".\"b\" = \"table2Join\".\"b\""
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: myTable1)
@@ -66,7 +66,7 @@ class TestJoin: XCTestCase {
             .rawJoin("NATURAL LEFT JOIN", myTable3)
             .on(myTable1.b == myTable3.b)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM \"table1Join\" NATURAL JOIN \"table2Join\" ON \"table1Join.b\" = \"table2Join.b\" NATURAL LEFT JOIN \"table3Join\" ON \"table1Join.b\" = \"table3Join.b\""
+        query = "SELECT * FROM \"table1Join\" NATURAL JOIN \"table2Join\" ON \"table1Join\".\"b\" = \"table2Join\".\"b\" NATURAL LEFT JOIN \"table3Join\" ON \"table1Join\".\"b\" = \"table3Join\".\"b\""
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         let t1 = myTable1.as("t1")
@@ -76,7 +76,7 @@ class TestJoin: XCTestCase {
             .crossJoin(t2)
             .on(t1.b == t2.b)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM \"table1Join\" AS \"t1\" CROSS JOIN \"table2Join\" AS \"t2\" ON \"t1.b\" = \"t2.b\""
+        query = "SELECT * FROM \"table1Join\" AS \"t1\" CROSS JOIN \"table2Join\" AS \"t2\" ON \"t1\".\"b\" = \"t2\".\"b\""
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: t1)
@@ -85,7 +85,7 @@ class TestJoin: XCTestCase {
             .join(t3)
             .on(t1.b == t3.b)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM \"table1Join\" AS \"t1\" JOIN \"table2Join\" AS \"t2\" ON \"t1.b\" = \"t2.b\" JOIN \"table3Join\" AS \"t3\" ON \"t1.b\" = \"t3.b\""
+        query = "SELECT * FROM \"table1Join\" AS \"t1\" JOIN \"table2Join\" AS \"t2\" ON \"t1\".\"b\" = \"t2\".\"b\" JOIN \"table3Join\" AS \"t3\" ON \"t1\".\"b\" = \"t3\".\"b\""
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(from: t1)
@@ -94,14 +94,14 @@ class TestJoin: XCTestCase {
             .rawJoin("NATURAL FULL JOIN", t3)
             .on(t1.b == t3.b)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM \"table1Join\" AS \"t1\" JOIN \"table2Join\" AS \"t2\" ON \"t1.b\" = \"t2.b\" NATURAL FULL JOIN \"table3Join\" AS \"t3\" ON \"t1.b\" = \"t3.b\""
+        query = "SELECT * FROM \"table1Join\" AS \"t1\" JOIN \"table2Join\" AS \"t2\" ON \"t1\".\"b\" = \"t2\".\"b\" NATURAL FULL JOIN \"table3Join\" AS \"t3\" ON \"t1\".\"b\" = \"t3\".\"b\""
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         s = Select(from: myTable1)
             .leftJoin(myTable2)
             .on(myTable1.a == myTable2.c)
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT * FROM \"table1Join\" LEFT JOIN \"table2Join\" ON \"table1Join.a\" = \"table2Join.c\""
+        query = "SELECT * FROM \"table1Join\" LEFT JOIN \"table2Join\" ON \"table1Join\".\"a\" = \"table2Join\".\"c\""
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         s = Select(from: t1)
@@ -122,7 +122,7 @@ class TestJoin: XCTestCase {
             .union(Select(myTable2.c, from: myTable2))
             .unionAll(Select(myTable3.d, from: myTable3))
         kuery = connection.descriptionOf(query: s)
-        query = "SELECT \"table1Join.a\" FROM \"table1Join\" UNION SELECT \"table2Join.c\" FROM \"table2Join\" UNION ALL SELECT \"table3Join.d\" FROM \"table3Join\""
+        query = "SELECT \"table1Join\".\"a\" FROM \"table1Join\" UNION SELECT \"table2Join\".\"c\" FROM \"table2Join\" UNION ALL SELECT \"table3Join\".\"d\" FROM \"table3Join\""
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
 }

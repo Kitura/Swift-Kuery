@@ -48,8 +48,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.notLike("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -57,16 +57,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.like("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(t.a.notLike("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -74,16 +74,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.like("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .where(t.a.notLike(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -91,16 +91,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.like(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(t.a.notLike(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -108,16 +108,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.like(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .where(ucase(t.a).notLike("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -125,16 +125,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).like("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(first(t.a).notLike("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING FIRST(\"table.a\") NOT LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING FIRST(\"table.a\") NOT LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING FIRST(\"table\".\"a\") NOT LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING FIRST(\"table\".\"a\") NOT LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -142,16 +142,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(first(t.a).like("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING FIRST(\"table.a\") LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING FIRST(\"table.a\") LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING FIRST(\"table\".\"a\") LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING FIRST(\"table\".\"a\") LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .where(ucase(t.a).notLike(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -159,16 +159,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).like(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(first(t.a).notLike(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING FIRST(\"table.a\") NOT LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING FIRST(\"table.a\") NOT LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING FIRST(\"table\".\"a\") NOT LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING FIRST(\"table\".\"a\") NOT LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -176,16 +176,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(first(t.a).like(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING FIRST(\"table.a\") LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING FIRST(\"table.a\") LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING FIRST(\"table\".\"a\") LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING FIRST(\"table\".\"a\") LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .where("swift-kuery".notLike("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'swift-kuery' NOT LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'swift-kuery' NOT LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 'swift-kuery' NOT LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 'swift-kuery' NOT LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -193,16 +193,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where("swift-kuery".like("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'swift-kuery' LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'swift-kuery' LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 'swift-kuery' LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 'swift-kuery' LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having("swift-kuery".notLike("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'swift-kuery' NOT LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'swift-kuery' NOT LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 'swift-kuery' NOT LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 'swift-kuery' NOT LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -210,16 +210,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having("swift-kuery".like("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'swift-kuery' LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'swift-kuery' LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 'swift-kuery' LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 'swift-kuery' LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .where("swift-kuery".notLike(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'swift-kuery' NOT LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'swift-kuery' NOT LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 'swift-kuery' NOT LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 'swift-kuery' NOT LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -227,16 +227,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where("swift-kuery".like(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'swift-kuery' LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'swift-kuery' LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 'swift-kuery' LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 'swift-kuery' LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having("swift-kuery".notLike(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'swift-kuery' NOT LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'swift-kuery' NOT LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 'swift-kuery' NOT LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 'swift-kuery' NOT LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -244,16 +244,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having("swift-kuery".like(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'swift-kuery' LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'swift-kuery' LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 'swift-kuery' LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 'swift-kuery' LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .where(Parameter().notLike("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE ?1 NOT LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE ?1 NOT LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE ?1 NOT LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE ?1 NOT LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -261,16 +261,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Parameter().like("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE ?1 LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE ?1 LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE ?1 LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE ?1 LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(Parameter("first").notLike("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING @first NOT LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING @first NOT LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING @first NOT LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING @first NOT LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -278,16 +278,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Parameter("first").like("%kuery%"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING @first LIKE '%kuery%' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING @first LIKE '%kuery%'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING @first LIKE '%kuery%' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING @first LIKE '%kuery%'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .where(Parameter("first").notLike(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE @first NOT LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE @first NOT LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE @first NOT LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE @first NOT LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -295,16 +295,16 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Parameter("first").like(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE @first LIKE ?1 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE @first LIKE ?1"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE @first LIKE ?1 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE @first LIKE ?1"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
         s = Select(t.a, from: t)
             .group(by: t.a)
             .having(Parameter().notLike(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING ?1 NOT LIKE ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING ?1 NOT LIKE ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING ?1 NOT LIKE ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING ?1 NOT LIKE ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -312,8 +312,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Parameter().like(Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING ?1 LIKE ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING ?1 LIKE ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING ?1 LIKE ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING ?1 LIKE ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -321,8 +321,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.between(true, and: false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" BETWEEN true AND false GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" BETWEEN true AND false"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" BETWEEN true AND false GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" BETWEEN true AND false"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -330,8 +330,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.notBetween(true, and: false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT BETWEEN true AND false GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT BETWEEN true AND false"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT BETWEEN true AND false GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT BETWEEN true AND false"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -339,8 +339,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.in(true, false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" IN (true, false) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" IN (true, false)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" IN (true, false) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" IN (true, false)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -348,8 +348,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.notIn(true, false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT IN (true, false) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT IN (true, false)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT IN (true, false) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT IN (true, false)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -357,8 +357,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.between(true, and: false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" BETWEEN true AND false GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" BETWEEN true AND false"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" BETWEEN true AND false GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" BETWEEN true AND false"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -366,8 +366,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.notBetween(true, and: false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT BETWEEN true AND false GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT BETWEEN true AND false"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT BETWEEN true AND false GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT BETWEEN true AND false"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -375,8 +375,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.in(true, false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" IN (true, false) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" IN (true, false)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" IN (true, false) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" IN (true, false)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -384,8 +384,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.notIn(true, false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT IN (true, false) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT IN (true, false)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT IN (true, false) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT IN (true, false)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -393,8 +393,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.between("apple", and: "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" BETWEEN 'apple' AND 'peach' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" BETWEEN 'apple' AND 'peach'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" BETWEEN 'apple' AND 'peach' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" BETWEEN 'apple' AND 'peach'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -402,8 +402,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.notBetween("apple", and: "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT BETWEEN 'apple' AND 'peach' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT BETWEEN 'apple' AND 'peach'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT BETWEEN 'apple' AND 'peach' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT BETWEEN 'apple' AND 'peach'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -411,8 +411,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.in("apple", "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" IN ('apple', 'peach') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" IN ('apple', 'peach')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" IN ('apple', 'peach') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" IN ('apple', 'peach')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -420,8 +420,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.notIn("apple", "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT IN ('apple', 'peach') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT IN ('apple', 'peach')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT IN ('apple', 'peach') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT IN ('apple', 'peach')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -429,8 +429,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.between("apple", and: "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" BETWEEN 'apple' AND 'peach' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" BETWEEN 'apple' AND 'peach'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" BETWEEN 'apple' AND 'peach' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" BETWEEN 'apple' AND 'peach'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -438,8 +438,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.notBetween("apple", and: "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT BETWEEN 'apple' AND 'peach' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT BETWEEN 'apple' AND 'peach'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT BETWEEN 'apple' AND 'peach' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT BETWEEN 'apple' AND 'peach'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -447,8 +447,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.in("apple", "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" IN ('apple', 'peach') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" IN ('apple', 'peach')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" IN ('apple', 'peach') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" IN ('apple', 'peach')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -456,8 +456,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.notIn("apple", "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT IN ('apple', 'peach') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT IN ('apple', 'peach')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT IN ('apple', 'peach') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT IN ('apple', 'peach')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -465,8 +465,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.between(3, and: 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" BETWEEN 3 AND 6 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" BETWEEN 3 AND 6"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" BETWEEN 3 AND 6 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" BETWEEN 3 AND 6"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -474,8 +474,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.notBetween(3, and: 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT BETWEEN 3 AND 6 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT BETWEEN 3 AND 6"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT BETWEEN 3 AND 6 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT BETWEEN 3 AND 6"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -483,8 +483,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.in(3, 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" IN (3, 6) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" IN (3, 6)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" IN (3, 6) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" IN (3, 6)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -492,8 +492,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.notIn(3, 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT IN (3, 6) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT IN (3, 6)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT IN (3, 6) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT IN (3, 6)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -501,8 +501,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.between(3, and: 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" BETWEEN 3 AND 6 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" BETWEEN 3 AND 6"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" BETWEEN 3 AND 6 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" BETWEEN 3 AND 6"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -510,8 +510,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.notBetween(3, and: 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT BETWEEN 3 AND 6 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT BETWEEN 3 AND 6"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT BETWEEN 3 AND 6 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT BETWEEN 3 AND 6"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -519,8 +519,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.in(3, 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" IN (3, 6) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" IN (3, 6)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" IN (3, 6) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" IN (3, 6)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -528,8 +528,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.notIn(3, 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT IN (3, 6) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT IN (3, 6)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT IN (3, 6) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT IN (3, 6)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -537,8 +537,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.between(2.71828, and: 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -546,8 +546,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.notBetween(2.71828, and: 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -555,8 +555,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.in(2.71828, 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -564,8 +564,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.notIn(2.71828, 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -573,8 +573,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.between(2.71828, and: 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -582,8 +582,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.notBetween(2.71828, and: 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -591,8 +591,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.in(2.71828, 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -600,8 +600,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.notIn(2.71828, 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -609,8 +609,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.between(Float(2.71828), and: Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -618,8 +618,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.notBetween(Float(2.71828), and: Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -627,8 +627,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.in(Float(2.71828), Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -636,8 +636,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.notIn(Float(2.71828), Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -645,8 +645,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.between(2.71828, and: 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -654,8 +654,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.notBetween(2.71828, and: 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -663,8 +663,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.in(2.71828, 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -672,8 +672,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.notIn(2.71828, 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -681,8 +681,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.between(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -690,8 +690,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.notBetween(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -699,8 +699,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.in(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -708,8 +708,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(t.a.notIn(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE \"table.a\" NOT IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE \"table.a\" NOT IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE \"table\".\"a\" NOT IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE \"table\".\"a\" NOT IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -717,8 +717,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.between(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -726,8 +726,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.notBetween(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -735,8 +735,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.in(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -744,8 +744,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(t.a.notIn(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING \"table.a\" NOT IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING \"table.a\" NOT IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING \"table\".\"a\" NOT IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING \"table\".\"a\" NOT IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -753,8 +753,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).between(true, and: false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") BETWEEN true AND false GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") BETWEEN true AND false"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") BETWEEN true AND false GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") BETWEEN true AND false"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -762,8 +762,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).notBetween(true, and: false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT BETWEEN true AND false GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT BETWEEN true AND false"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT BETWEEN true AND false GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT BETWEEN true AND false"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -771,8 +771,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).in(true, false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") IN (true, false) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") IN (true, false)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") IN (true, false) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") IN (true, false)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -780,8 +780,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).notIn(true, false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT IN (true, false) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT IN (true, false)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT IN (true, false) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT IN (true, false)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -789,8 +789,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).between(true, and: false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") BETWEEN true AND false GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") BETWEEN true AND false"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") BETWEEN true AND false GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") BETWEEN true AND false"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -798,8 +798,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).notBetween(true, and: false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") NOT BETWEEN true AND false GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") NOT BETWEEN true AND false"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") NOT BETWEEN true AND false GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") NOT BETWEEN true AND false"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -807,8 +807,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).in(true, false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") IN (true, false) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") IN (true, false)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") IN (true, false) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") IN (true, false)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -816,8 +816,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).notIn(true, false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") NOT IN (true, false) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") NOT IN (true, false)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") NOT IN (true, false) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") NOT IN (true, false)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -825,8 +825,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).between("apple", and: "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") BETWEEN 'apple' AND 'peach' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") BETWEEN 'apple' AND 'peach'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") BETWEEN 'apple' AND 'peach' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") BETWEEN 'apple' AND 'peach'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -834,8 +834,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).notBetween("apple", and: "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT BETWEEN 'apple' AND 'peach' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT BETWEEN 'apple' AND 'peach'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT BETWEEN 'apple' AND 'peach' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT BETWEEN 'apple' AND 'peach'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -843,8 +843,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).in("apple", "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") IN ('apple', 'peach') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") IN ('apple', 'peach')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") IN ('apple', 'peach') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") IN ('apple', 'peach')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -852,8 +852,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).notIn("apple", "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT IN ('apple', 'peach') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT IN ('apple', 'peach')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT IN ('apple', 'peach') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT IN ('apple', 'peach')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -861,8 +861,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).between("apple", and: "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") BETWEEN 'apple' AND 'peach' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") BETWEEN 'apple' AND 'peach'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") BETWEEN 'apple' AND 'peach' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") BETWEEN 'apple' AND 'peach'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -870,8 +870,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).notBetween("apple", and: "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") NOT BETWEEN 'apple' AND 'peach' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") NOT BETWEEN 'apple' AND 'peach'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") NOT BETWEEN 'apple' AND 'peach' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") NOT BETWEEN 'apple' AND 'peach'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -879,8 +879,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).in("apple", "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") IN ('apple', 'peach') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") IN ('apple', 'peach')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") IN ('apple', 'peach') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") IN ('apple', 'peach')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -888,8 +888,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).notIn("apple", "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") NOT IN ('apple', 'peach') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") NOT IN ('apple', 'peach')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") NOT IN ('apple', 'peach') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") NOT IN ('apple', 'peach')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -897,8 +897,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).between(3, and: 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") BETWEEN 3 AND 6 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") BETWEEN 3 AND 6"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") BETWEEN 3 AND 6 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") BETWEEN 3 AND 6"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -906,8 +906,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).notBetween(3, and: 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT BETWEEN 3 AND 6 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT BETWEEN 3 AND 6"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT BETWEEN 3 AND 6 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT BETWEEN 3 AND 6"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -915,8 +915,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).in(3, 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") IN (3, 6) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") IN (3, 6)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") IN (3, 6) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") IN (3, 6)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -924,8 +924,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).notIn(3, 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT IN (3, 6) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT IN (3, 6)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT IN (3, 6) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT IN (3, 6)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -933,8 +933,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).between(3, and: 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") BETWEEN 3 AND 6 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") BETWEEN 3 AND 6"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") BETWEEN 3 AND 6 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") BETWEEN 3 AND 6"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -942,8 +942,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).notBetween(3, and: 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") NOT BETWEEN 3 AND 6 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") NOT BETWEEN 3 AND 6"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") NOT BETWEEN 3 AND 6 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") NOT BETWEEN 3 AND 6"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -951,8 +951,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).in(3, 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") IN (3, 6) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") IN (3, 6)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") IN (3, 6) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") IN (3, 6)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -960,8 +960,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).notIn(3, 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") NOT IN (3, 6) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") NOT IN (3, 6)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") NOT IN (3, 6) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") NOT IN (3, 6)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -969,8 +969,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).between(2.71828, and: 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -978,8 +978,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).notBetween(2.71828, and: 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -987,8 +987,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).in(2.71828, 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -996,8 +996,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).notIn(2.71828, 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1005,8 +1005,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).between(2.71828, and: 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1014,8 +1014,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).notBetween(2.71828, and: 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") NOT BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") NOT BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1023,8 +1023,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).in(2.71828, 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1032,8 +1032,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).notIn(2.71828, 3.14159))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") NOT IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") NOT IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") NOT IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") NOT IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1041,8 +1041,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).between(Float(2.71828), and: Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1050,8 +1050,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).notBetween(Float(2.71828), and: Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1059,8 +1059,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).in(Float(2.71828), Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1068,8 +1068,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).notIn(Float(2.71828), Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1077,8 +1077,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).between(Float(2.71828), and: Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1086,8 +1086,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).notBetween(Float(2.71828), and: Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") NOT BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") NOT BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1095,8 +1095,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).in(Float(2.71828), Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1104,8 +1104,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).notIn(Float(2.71828), Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") NOT IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") NOT IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") NOT IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") NOT IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1113,8 +1113,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).between(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1122,8 +1122,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).notBetween(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1131,8 +1131,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).in(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1140,8 +1140,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(ucase(t.a).notIn(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE UCASE(\"table.a\") NOT IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE UCASE(\"table.a\") NOT IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE UCASE(\"table\".\"a\") NOT IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE UCASE(\"table\".\"a\") NOT IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1149,8 +1149,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).between(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1158,8 +1158,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).notBetween(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") NOT BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") NOT BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") NOT BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") NOT BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1167,8 +1167,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).in(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1176,8 +1176,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(last(t.a).notIn(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING LAST(\"table.a\") NOT IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING LAST(\"table.a\") NOT IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING LAST(\"table\".\"a\") NOT IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING LAST(\"table\".\"a\") NOT IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1185,8 +1185,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(true.between(true, and: false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true BETWEEN true AND false GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true BETWEEN true AND false"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE true BETWEEN true AND false GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE true BETWEEN true AND false"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1194,8 +1194,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(true.notBetween(true, and: false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true NOT BETWEEN true AND false GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true NOT BETWEEN true AND false"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE true NOT BETWEEN true AND false GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE true NOT BETWEEN true AND false"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1203,8 +1203,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(true.in(true, false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true IN (true, false) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true IN (true, false)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE true IN (true, false) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE true IN (true, false)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1212,8 +1212,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(true.notIn(true, false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true NOT IN (true, false) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true NOT IN (true, false)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE true NOT IN (true, false) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE true NOT IN (true, false)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1221,8 +1221,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(true.between(true, and: false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true BETWEEN true AND false GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true BETWEEN true AND false"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING true BETWEEN true AND false GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING true BETWEEN true AND false"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1230,8 +1230,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(true.notBetween(true, and: false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true NOT BETWEEN true AND false GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true NOT BETWEEN true AND false"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING true NOT BETWEEN true AND false GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING true NOT BETWEEN true AND false"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1239,8 +1239,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(true.in(true, false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true IN (true, false) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true IN (true, false)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING true IN (true, false) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING true IN (true, false)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1248,8 +1248,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(true.notIn(true, false))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true NOT IN (true, false) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true NOT IN (true, false)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING true NOT IN (true, false) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING true NOT IN (true, false)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1257,8 +1257,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(true.between(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE true BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE true BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1266,8 +1266,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(true.notBetween(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true NOT BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true NOT BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE true NOT BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE true NOT BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1275,8 +1275,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(true.in(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE true IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE true IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1284,8 +1284,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(true.notIn(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE true NOT IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE true NOT IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE true NOT IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE true NOT IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1293,8 +1293,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(true.between(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING true BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING true BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1302,8 +1302,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(true.notBetween(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true NOT BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true NOT BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING true NOT BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING true NOT BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1311,8 +1311,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(true.in(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING true IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING true IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1320,8 +1320,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(true.notIn(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING true NOT IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING true NOT IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING true NOT IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING true NOT IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1329,8 +1329,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where("banana".between("apple", and: "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'banana' BETWEEN 'apple' AND 'peach' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'banana' BETWEEN 'apple' AND 'peach'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 'banana' BETWEEN 'apple' AND 'peach' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 'banana' BETWEEN 'apple' AND 'peach'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1338,8 +1338,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where("banana".notBetween("apple", and: "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'banana' NOT BETWEEN 'apple' AND 'peach' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'banana' NOT BETWEEN 'apple' AND 'peach'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 'banana' NOT BETWEEN 'apple' AND 'peach' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 'banana' NOT BETWEEN 'apple' AND 'peach'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1347,8 +1347,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where("banana".in("apple", "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'banana' IN ('apple', 'peach') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'banana' IN ('apple', 'peach')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 'banana' IN ('apple', 'peach') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 'banana' IN ('apple', 'peach')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1356,8 +1356,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where("banana".notIn("apple", "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'banana' NOT IN ('apple', 'peach') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'banana' NOT IN ('apple', 'peach')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 'banana' NOT IN ('apple', 'peach') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 'banana' NOT IN ('apple', 'peach')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1365,8 +1365,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having("banana".between("apple", and: "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'banana' BETWEEN 'apple' AND 'peach' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'banana' BETWEEN 'apple' AND 'peach'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 'banana' BETWEEN 'apple' AND 'peach' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 'banana' BETWEEN 'apple' AND 'peach'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1374,8 +1374,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having("banana".notBetween("apple", and: "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'banana' NOT BETWEEN 'apple' AND 'peach' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'banana' NOT BETWEEN 'apple' AND 'peach'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 'banana' NOT BETWEEN 'apple' AND 'peach' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 'banana' NOT BETWEEN 'apple' AND 'peach'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1383,8 +1383,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having("banana".in("apple", "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'banana' IN ('apple', 'peach') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'banana' IN ('apple', 'peach')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 'banana' IN ('apple', 'peach') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 'banana' IN ('apple', 'peach')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1392,8 +1392,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having("banana".notIn("apple", "peach"))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'banana' NOT IN ('apple', 'peach') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'banana' NOT IN ('apple', 'peach')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 'banana' NOT IN ('apple', 'peach') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 'banana' NOT IN ('apple', 'peach')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1401,8 +1401,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where("banana".between(Parameter("first"), and: Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'banana' BETWEEN @first AND @second GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'banana' BETWEEN @first AND @second"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 'banana' BETWEEN @first AND @second GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 'banana' BETWEEN @first AND @second"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1410,8 +1410,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where("banana".notBetween(Parameter("first"), and: Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'banana' NOT BETWEEN @first AND @second GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'banana' NOT BETWEEN @first AND @second"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 'banana' NOT BETWEEN @first AND @second GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 'banana' NOT BETWEEN @first AND @second"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1419,8 +1419,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where("banana".in(Parameter("first"), Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'banana' IN (@first, @second) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'banana' IN (@first, @second)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 'banana' IN (@first, @second) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 'banana' IN (@first, @second)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1428,8 +1428,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where("banana".notIn(Parameter("first"), Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 'banana' NOT IN (@first, @second) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 'banana' NOT IN (@first, @second)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 'banana' NOT IN (@first, @second) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 'banana' NOT IN (@first, @second)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1437,8 +1437,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having("banana".between(Parameter("first"), and: Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'banana' BETWEEN @first AND @second GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'banana' BETWEEN @first AND @second"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 'banana' BETWEEN @first AND @second GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 'banana' BETWEEN @first AND @second"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1446,8 +1446,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having("banana".notBetween(Parameter("first"), and: Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'banana' NOT BETWEEN @first AND @second GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'banana' NOT BETWEEN @first AND @second"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 'banana' NOT BETWEEN @first AND @second GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 'banana' NOT BETWEEN @first AND @second"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1455,8 +1455,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having("banana".in(Parameter("first"), Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'banana' IN (@first, @second) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'banana' IN (@first, @second)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 'banana' IN (@first, @second) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 'banana' IN (@first, @second)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1464,8 +1464,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having("banana".notIn(Parameter("first"), Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 'banana' NOT IN (@first, @second) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 'banana' NOT IN (@first, @second)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 'banana' NOT IN (@first, @second) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 'banana' NOT IN (@first, @second)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1473,8 +1473,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(4.between(3, and: 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 4 BETWEEN 3 AND 6 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 4 BETWEEN 3 AND 6"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 4 BETWEEN 3 AND 6 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 4 BETWEEN 3 AND 6"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1482,8 +1482,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(4.notBetween(3, and: 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 4 NOT BETWEEN 3 AND 6 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 4 NOT BETWEEN 3 AND 6"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 4 NOT BETWEEN 3 AND 6 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 4 NOT BETWEEN 3 AND 6"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1491,8 +1491,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(4.in(3, 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 4 IN (3, 6) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 4 IN (3, 6)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 4 IN (3, 6) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 4 IN (3, 6)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1500,8 +1500,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(4.notIn(3, 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 4 NOT IN (3, 6) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 4 NOT IN (3, 6)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 4 NOT IN (3, 6) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 4 NOT IN (3, 6)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1509,8 +1509,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(4.between(3, and: 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 4 BETWEEN 3 AND 6 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 4 BETWEEN 3 AND 6"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 4 BETWEEN 3 AND 6 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 4 BETWEEN 3 AND 6"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1518,8 +1518,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(4.notBetween(3, and: 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 4 NOT BETWEEN 3 AND 6 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 4 NOT BETWEEN 3 AND 6"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 4 NOT BETWEEN 3 AND 6 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 4 NOT BETWEEN 3 AND 6"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1527,8 +1527,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(4.in(3, 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 4 IN (3, 6) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 4 IN (3, 6)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 4 IN (3, 6) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 4 IN (3, 6)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1536,8 +1536,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(4.notIn(3, 6))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 4 NOT IN (3, 6) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 4 NOT IN (3, 6)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 4 NOT IN (3, 6) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 4 NOT IN (3, 6)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1545,8 +1545,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(4.between(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 4 BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 4 BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 4 BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 4 BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1554,8 +1554,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(4.notBetween(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 4 NOT BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 4 NOT BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 4 NOT BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 4 NOT BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1563,8 +1563,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(4.in(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 4 IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 4 IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 4 IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 4 IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1572,8 +1572,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(4.notIn(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 4 NOT IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 4 NOT IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 4 NOT IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 4 NOT IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1581,8 +1581,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(4.between(Parameter("first"), and: Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 4 BETWEEN @first AND @second GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 4 BETWEEN @first AND @second"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 4 BETWEEN @first AND @second GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 4 BETWEEN @first AND @second"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1590,8 +1590,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(4.notBetween(Parameter("first"), and: Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 4 NOT BETWEEN @first AND @second GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 4 NOT BETWEEN @first AND @second"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 4 NOT BETWEEN @first AND @second GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 4 NOT BETWEEN @first AND @second"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1599,8 +1599,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(4.in(Parameter("first"), Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 4 IN (@first, @second) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 4 IN (@first, @second)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 4 IN (@first, @second) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 4 IN (@first, @second)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1608,8 +1608,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(4.notIn(Parameter("first"), Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 4 NOT IN (@first, @second) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 4 NOT IN (@first, @second)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 4 NOT IN (@first, @second) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 4 NOT IN (@first, @second)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1617,8 +1617,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Float(2.71828).between(Float(2.71828), and: Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 2.71828 BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 2.71828 BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 2.71828 BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 2.71828 BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1626,8 +1626,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Float(2.71828).notBetween(Float(2.71828), and: Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 2.71828 NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 2.71828 NOT BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 2.71828 NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 2.71828 NOT BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1635,8 +1635,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Float(2.71828).in(Float(2.71828), Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 2.71828 IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 2.71828 IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 2.71828 IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 2.71828 IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1644,8 +1644,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Float(2.71828).notIn(Float(2.71828), Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 2.71828 NOT IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 2.71828 NOT IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 2.71828 NOT IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 2.71828 NOT IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1653,8 +1653,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Float(2.71828).between(Float(2.71828), and: Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 2.71828 BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 2.71828 BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 2.71828 BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 2.71828 BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1662,8 +1662,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Float(2.71828).notBetween(Float(2.71828), and: Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 2.71828 NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 2.71828 NOT BETWEEN 2.71828 AND 3.14159"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 2.71828 NOT BETWEEN 2.71828 AND 3.14159 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 2.71828 NOT BETWEEN 2.71828 AND 3.14159"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1671,8 +1671,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Float(2.71828).in(Float(2.71828), Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 2.71828 IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 2.71828 IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 2.71828 IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 2.71828 IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1680,8 +1680,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Float(2.71828).notIn(Float(2.71828), Float(3.14159)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 2.71828 NOT IN (2.71828, 3.14159) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 2.71828 NOT IN (2.71828, 3.14159)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 2.71828 NOT IN (2.71828, 3.14159) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 2.71828 NOT IN (2.71828, 3.14159)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1689,8 +1689,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(3.001.between(3.14159, and: 2.71828))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.001 BETWEEN 3.14159 AND 2.71828 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.001 BETWEEN 3.14159 AND 2.71828"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 3.001 BETWEEN 3.14159 AND 2.71828 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 3.001 BETWEEN 3.14159 AND 2.71828"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1698,8 +1698,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(3.001.notBetween(3.14159, and: 2.71828))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.001 NOT BETWEEN 3.14159 AND 2.71828 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.001 NOT BETWEEN 3.14159 AND 2.71828"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 3.001 NOT BETWEEN 3.14159 AND 2.71828 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 3.001 NOT BETWEEN 3.14159 AND 2.71828"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1707,8 +1707,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(3.001.in(3.14159, 2.71828))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.001 IN (3.14159, 2.71828) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.001 IN (3.14159, 2.71828)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 3.001 IN (3.14159, 2.71828) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 3.001 IN (3.14159, 2.71828)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1716,8 +1716,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(3.001.notIn(3.14159, 2.71828))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.001 NOT IN (3.14159, 2.71828) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.001 NOT IN (3.14159, 2.71828)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 3.001 NOT IN (3.14159, 2.71828) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 3.001 NOT IN (3.14159, 2.71828)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1725,8 +1725,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(3.008.between(3.14159, and: 2.71828))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.008 BETWEEN 3.14159 AND 2.71828 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.008 BETWEEN 3.14159 AND 2.71828"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 3.008 BETWEEN 3.14159 AND 2.71828 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 3.008 BETWEEN 3.14159 AND 2.71828"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1734,8 +1734,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(3.008.notBetween(3.14159, and: 2.71828))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.008 NOT BETWEEN 3.14159 AND 2.71828 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.008 NOT BETWEEN 3.14159 AND 2.71828"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 3.008 NOT BETWEEN 3.14159 AND 2.71828 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 3.008 NOT BETWEEN 3.14159 AND 2.71828"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1743,8 +1743,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(3.008.in(3.14159, 2.71828))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.008 IN (3.14159, 2.71828) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.008 IN (3.14159, 2.71828)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 3.008 IN (3.14159, 2.71828) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 3.008 IN (3.14159, 2.71828)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1752,8 +1752,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(3.008.notIn(3.14159, 2.71828))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.008 NOT IN (3.14159, 2.71828) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.008 NOT IN (3.14159, 2.71828)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 3.008 NOT IN (3.14159, 2.71828) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 3.008 NOT IN (3.14159, 2.71828)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1761,8 +1761,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Float(2.71828).between(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 2.71828 BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 2.71828 BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 2.71828 BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 2.71828 BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1770,8 +1770,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Float(2.71828).notBetween(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 2.71828 NOT BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 2.71828 NOT BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 2.71828 NOT BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 2.71828 NOT BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1779,8 +1779,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Float(2.71828).in(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 2.71828 IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 2.71828 IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 2.71828 IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 2.71828 IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1788,8 +1788,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Float(2.71828).notIn(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 2.71828 NOT IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 2.71828 NOT IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 2.71828 NOT IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 2.71828 NOT IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1797,8 +1797,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Float(2.71828).between(Parameter("first"), and: Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 2.71828 BETWEEN @first AND @second GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 2.71828 BETWEEN @first AND @second"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 2.71828 BETWEEN @first AND @second GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 2.71828 BETWEEN @first AND @second"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1806,8 +1806,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Float(2.71828).notBetween(Parameter("first"), and: Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 2.71828 NOT BETWEEN @first AND @second GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 2.71828 NOT BETWEEN @first AND @second"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 2.71828 NOT BETWEEN @first AND @second GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 2.71828 NOT BETWEEN @first AND @second"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1815,8 +1815,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Float(2.71828).in(Parameter("first"), Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 2.71828 IN (@first, @second) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 2.71828 IN (@first, @second)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 2.71828 IN (@first, @second) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 2.71828 IN (@first, @second)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1824,8 +1824,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Float(2.71828).notIn(Parameter("first"), Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 2.71828 NOT IN (@first, @second) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 2.71828 NOT IN (@first, @second)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 2.71828 NOT IN (@first, @second) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 2.71828 NOT IN (@first, @second)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1833,8 +1833,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(3.001.between(Parameter("first"), and: Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.001 BETWEEN @first AND @second GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.001 BETWEEN @first AND @second"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 3.001 BETWEEN @first AND @second GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 3.001 BETWEEN @first AND @second"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1842,8 +1842,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(3.001.notBetween(Parameter("first"), and: Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.001 NOT BETWEEN @first AND @second GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.001 NOT BETWEEN @first AND @second"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 3.001 NOT BETWEEN @first AND @second GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 3.001 NOT BETWEEN @first AND @second"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1851,8 +1851,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(3.001.in(Parameter("first"), Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.001 IN (@first, @second) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.001 IN (@first, @second)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 3.001 IN (@first, @second) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 3.001 IN (@first, @second)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1860,8 +1860,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(3.001.notIn(Parameter("first"), Parameter("second")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE 3.001 NOT IN (@first, @second) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE 3.001 NOT IN (@first, @second)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE 3.001 NOT IN (@first, @second) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE 3.001 NOT IN (@first, @second)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1869,8 +1869,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(3.008.between(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.008 BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.008 BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 3.008 BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 3.008 BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1878,8 +1878,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(3.008.notBetween(Parameter(), and: Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.008 NOT BETWEEN ?1 AND ?2 GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.008 NOT BETWEEN ?1 AND ?2"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 3.008 NOT BETWEEN ?1 AND ?2 GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 3.008 NOT BETWEEN ?1 AND ?2"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1887,8 +1887,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(3.008.in(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.008 IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.008 IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 3.008 IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 3.008 IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1896,8 +1896,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(3.008.notIn(Parameter(), Parameter()))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING 3.008 NOT IN (?1, ?2) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING 3.008 NOT IN (?1, ?2)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING 3.008 NOT IN (?1, ?2) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING 3.008 NOT IN (?1, ?2)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1905,8 +1905,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Parameter("first").between(Parameter("second"), and: Parameter("third")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE @first BETWEEN @second AND @third GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE @first BETWEEN @second AND @third"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE @first BETWEEN @second AND @third GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE @first BETWEEN @second AND @third"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1914,8 +1914,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Parameter("first").notBetween(Parameter("second"), and: Parameter("third")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE @first NOT BETWEEN @second AND @third GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE @first NOT BETWEEN @second AND @third"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE @first NOT BETWEEN @second AND @third GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE @first NOT BETWEEN @second AND @third"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1923,8 +1923,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Parameter("first").in(Parameter("second"), Parameter("third")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE @first IN (@second, @third) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE @first IN (@second, @third)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE @first IN (@second, @third) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE @first IN (@second, @third)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1932,8 +1932,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Parameter("first").notIn(Parameter("second"), Parameter("third")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE @first NOT IN (@second, @third) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE @first NOT IN (@second, @third)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE @first NOT IN (@second, @third) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE @first NOT IN (@second, @third)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1941,8 +1941,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Parameter("first").between(Parameter("second"), and: Parameter("third")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING @first BETWEEN @second AND @third GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING @first BETWEEN @second AND @third"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING @first BETWEEN @second AND @third GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING @first BETWEEN @second AND @third"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1950,8 +1950,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Parameter("first").notBetween(Parameter("second"), and: Parameter("third")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING @first NOT BETWEEN @second AND @third GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING @first NOT BETWEEN @second AND @third"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING @first NOT BETWEEN @second AND @third GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING @first NOT BETWEEN @second AND @third"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1959,8 +1959,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Parameter("first").in(Parameter("second"), Parameter("third")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING @first IN (@second, @third) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING @first IN (@second, @third)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING @first IN (@second, @third) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING @first IN (@second, @third)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1968,8 +1968,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Parameter("first").notIn(Parameter("second"), Parameter("third")))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING @first NOT IN (@second, @third) GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING @first NOT IN (@second, @third)"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING @first NOT IN (@second, @third) GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING @first NOT IN (@second, @third)"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1977,8 +1977,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Date(timeIntervalSince1970: 50000).between(Date(timeIntervalSince1970: 50000), and: Date(timeIntervalSince1970: 0)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE '1970-01-01 13:53:20 +0000' BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE '1970-01-01 13:53:20 +0000' BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE '1970-01-01 13:53:20 +0000' BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE '1970-01-01 13:53:20 +0000' BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1986,8 +1986,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Date(timeIntervalSince1970: 50000).notBetween(Date(timeIntervalSince1970: 50000), and: Date(timeIntervalSince1970: 0)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE '1970-01-01 13:53:20 +0000' NOT BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE '1970-01-01 13:53:20 +0000' NOT BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE '1970-01-01 13:53:20 +0000' NOT BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE '1970-01-01 13:53:20 +0000' NOT BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -1995,8 +1995,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Date(timeIntervalSince1970: 50000).in(Date(timeIntervalSince1970: 50000), Date(timeIntervalSince1970: 0)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE '1970-01-01 13:53:20 +0000' IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE '1970-01-01 13:53:20 +0000' IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE '1970-01-01 13:53:20 +0000' IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE '1970-01-01 13:53:20 +0000' IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -2004,8 +2004,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .where(Date(timeIntervalSince1970: 50000).notIn(Date(timeIntervalSince1970: 50000), Date(timeIntervalSince1970: 0)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" WHERE '1970-01-01 13:53:20 +0000' NOT IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" WHERE '1970-01-01 13:53:20 +0000' NOT IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" WHERE '1970-01-01 13:53:20 +0000' NOT IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" WHERE '1970-01-01 13:53:20 +0000' NOT IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -2013,8 +2013,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Date(timeIntervalSince1970: 50000).between(Date(timeIntervalSince1970: 50000), and: Date(timeIntervalSince1970: 0)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING '1970-01-01 13:53:20 +0000' BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING '1970-01-01 13:53:20 +0000' BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING '1970-01-01 13:53:20 +0000' BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING '1970-01-01 13:53:20 +0000' BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -2022,8 +2022,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Date(timeIntervalSince1970: 50000).notBetween(Date(timeIntervalSince1970: 50000), and: Date(timeIntervalSince1970: 0)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING '1970-01-01 13:53:20 +0000' NOT BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000' GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING '1970-01-01 13:53:20 +0000' NOT BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000'"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING '1970-01-01 13:53:20 +0000' NOT BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000' GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING '1970-01-01 13:53:20 +0000' NOT BETWEEN '1970-01-01 13:53:20 +0000' AND '1970-01-01 00:00:00 +0000'"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -2031,8 +2031,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Date(timeIntervalSince1970: 50000).in(Date(timeIntervalSince1970: 50000), Date(timeIntervalSince1970: 0)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING '1970-01-01 13:53:20 +0000' IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING '1970-01-01 13:53:20 +0000' IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING '1970-01-01 13:53:20 +0000' IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING '1970-01-01 13:53:20 +0000' IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
 
@@ -2040,8 +2040,8 @@ class TestSpecialOperators: XCTestCase {
             .group(by: t.a)
             .having(Date(timeIntervalSince1970: 50000).notIn(Date(timeIntervalSince1970: 50000), Date(timeIntervalSince1970: 0)))
         kuery = connection.descriptionOf(query: s)
-        queryWhere = "SELECT \"table.a\" FROM \"table\" HAVING '1970-01-01 13:53:20 +0000' NOT IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000') GROUP BY \"table.a\""
-        queryHaving = "SELECT \"table.a\" FROM \"table\" GROUP BY \"table.a\" HAVING '1970-01-01 13:53:20 +0000' NOT IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000')"
+        queryWhere = "SELECT \"table\".\"a\" FROM \"table\" HAVING '1970-01-01 13:53:20 +0000' NOT IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000') GROUP BY \"table\".\"a\""
+        queryHaving = "SELECT \"table\".\"a\" FROM \"table\" GROUP BY \"table\".\"a\" HAVING '1970-01-01 13:53:20 +0000' NOT IN ('1970-01-01 13:53:20 +0000', '1970-01-01 00:00:00 +0000')"
         XCTAssert(kuery == queryWhere || kuery == queryHaving,
                     "\nError in query construction: \n\(kuery) \ninstead of \n\(queryWhere) \nor instead of \n\(queryHaving)")
   }

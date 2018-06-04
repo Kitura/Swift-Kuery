@@ -47,14 +47,14 @@ class TestUpdate: XCTestCase {
         var u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
             .where(t.a == "banana")
         var kuery = connection.descriptionOf(query: u)
-        var query = "UPDATE \"tableUpdate\" SET \"a\" = 'peach', \"b\" = 2 WHERE \"tableUpdate.a\" = 'banana'"
+        var query = "UPDATE \"tableUpdate\" SET \"a\" = 'peach', \"b\" = 2 WHERE \"tableUpdate\".\"a\" = 'banana'"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
  
         u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
             .where(t.a == "banana")
             .suffix("RETURNING *")
         kuery = connection.descriptionOf(query: u)
-        query = "UPDATE \"tableUpdate\" SET \"a\" = 'peach', \"b\" = 2 WHERE \"tableUpdate.a\" = 'banana' RETURNING *"
+        query = "UPDATE \"tableUpdate\" SET \"a\" = 'peach', \"b\" = 2 WHERE \"tableUpdate\".\"a\" = 'banana' RETURNING *"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
  
         u = Update(t, set: [(t.a, "peach"), (t.b, 2)])
@@ -72,7 +72,7 @@ class TestUpdate: XCTestCase {
         var d = Delete(from: t)
             .where(t.b == "2" && t.a.isNull())
         kuery = connection.descriptionOf(query: d)
-        query = "DELETE FROM \"tableUpdate\" WHERE (\"tableUpdate.b\" = '2') AND (\"tableUpdate.a\" IS NULL)"
+        query = "DELETE FROM \"tableUpdate\" WHERE (\"tableUpdate\".\"b\" = '2') AND (\"tableUpdate\".\"a\" IS NULL)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         d = Delete(from: t)
@@ -98,10 +98,10 @@ class TestUpdate: XCTestCase {
                      Update(t, set: [(t.a, "peach"), (t.b, 2)])
                         .where(t.a.in(Select(withTable.c, from: withTable))))
         var kuery = connection.descriptionOf(query: u)
-        var query = "WITH \"aux_table\" AS (SELECT \"tableUpdate2.a\" AS \"c\" FROM \"tableUpdate2\") UPDATE \"tableUpdate\" SET \"a\" = 'peach', \"b\" = 2 WHERE \"tableUpdate.a\" IN (SELECT \"aux_table.c\" FROM \"aux_table\")"
+        var query = "WITH \"aux_table\" AS (SELECT \"tableUpdate2\".\"a\" AS \"c\" FROM \"tableUpdate2\") UPDATE \"tableUpdate\" SET \"a\" = 'peach', \"b\" = 2 WHERE \"tableUpdate\".\"a\" IN (SELECT \"aux_table\".\"c\" FROM \"aux_table\")"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         kuery = connection2.descriptionOf(query: u)
-        query = "WITH \"aux_table\" AS (SELECT \"tableUpdate2.a\" AS \"c\" FROM \"tableUpdate2\") UPDATE \"tableUpdate\" SET \"a\" = 'peach', \"b\" = 2 FROM \"aux_table\" WHERE \"tableUpdate.a\" IN (SELECT \"aux_table.c\" FROM \"aux_table\")"
+        query = "WITH \"aux_table\" AS (SELECT \"tableUpdate2\".\"a\" AS \"c\" FROM \"tableUpdate2\") UPDATE \"tableUpdate\" SET \"a\" = 'peach', \"b\" = 2 FROM \"aux_table\" WHERE \"tableUpdate\".\"a\" IN (SELECT \"aux_table\".\"c\" FROM \"aux_table\")"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
         
@@ -109,10 +109,10 @@ class TestUpdate: XCTestCase {
                      Delete(from: t)
                         .where(t.b.in(Select(withTable.c, from: withTable))))
         kuery = connection.descriptionOf(query: d)
-        query = "WITH \"aux_table\" AS (SELECT \"tableUpdate2.a\" AS \"c\" FROM \"tableUpdate2\") DELETE FROM \"tableUpdate\" WHERE \"tableUpdate.b\" IN (SELECT \"aux_table.c\" FROM \"aux_table\")"
+        query = "WITH \"aux_table\" AS (SELECT \"tableUpdate2\".\"a\" AS \"c\" FROM \"tableUpdate2\") DELETE FROM \"tableUpdate\" WHERE \"tableUpdate\".\"b\" IN (SELECT \"aux_table\".\"c\" FROM \"aux_table\")"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         kuery = connection2.descriptionOf(query: d)
-        query = "WITH \"aux_table\" AS (SELECT \"tableUpdate2.a\" AS \"c\" FROM \"tableUpdate2\") DELETE FROM \"tableUpdate\" USING \"aux_table\" WHERE \"tableUpdate.b\" IN (SELECT \"aux_table.c\" FROM \"aux_table\")"
+        query = "WITH \"aux_table\" AS (SELECT \"tableUpdate2\".\"a\" AS \"c\" FROM \"tableUpdate2\") DELETE FROM \"tableUpdate\" USING \"aux_table\" WHERE \"tableUpdate\".\"b\" IN (SELECT \"aux_table\".\"c\" FROM \"aux_table\")"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         withTable = AuxTable()
