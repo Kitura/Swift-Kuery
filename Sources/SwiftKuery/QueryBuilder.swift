@@ -71,6 +71,8 @@ public class QueryBuilder {
         case len
         /// The SQL NOW scalar function to return the current date and time.
         case now
+        /// The SQL MID scalar function to return a portion of a string.
+        case mid
         /// The marker for the query numbered parameters.
         case numberedParameter
         /// The marker for the query named parameters.
@@ -150,6 +152,7 @@ public class QueryBuilder {
         substitutions[QuerySubstitutionNames.lcase.rawValue] = "LCASE"
         substitutions[QuerySubstitutionNames.len.rawValue] = "LEN"
         substitutions[QuerySubstitutionNames.now.rawValue] = "NOW()"
+        substitutions[QuerySubstitutionNames.mid.rawValue] = "MID"
         substitutions[QuerySubstitutionNames.numberedParameter.rawValue] = "?"
         substitutions[QuerySubstitutionNames.namedParameter.rawValue] = "@"
         substitutions[QuerySubstitutionNames.booleanTrue.rawValue] = "true"
