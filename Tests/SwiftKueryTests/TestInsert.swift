@@ -70,7 +70,12 @@ class TestInsert: XCTestCase {
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO \"tableInsert\" VALUES ('apple', 17), ('banana', -7), ('banana', 27)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
-        
+
+        i = Insert(into: t, values: "I'm you're", 30)
+        kuery = connection.descriptionOf(query: i)
+        query = "INSERT INTO \"tableInsert\" VALUES ('I''m you''re', 30)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
         let t2 = MyTable2()
         i = Insert(into: t, columns: [t.a], Select(t2.a, from: t2))
             .suffix("RETURNING a")
