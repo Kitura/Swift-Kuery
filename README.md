@@ -6,8 +6,8 @@
 
 
 <p align="center">
-    <a href="http://www.kitura.io/">
-    <img src="https://img.shields.io/badge/docs-kitura.io-1FBCE4.svg" alt="Docs">
+    <a href="https://ibm-swift.github.io/Swift-Kuery/index.html">
+    <img src="https://img.shields.io/badge/apidoc-SwiftKuery-1FBCE4.svg?style=flat" alt="APIDoc">
     </a>
     <a href="https://travis-ci.org/IBM-Swift/Swift-Kuery">
     <img src="https://travis-ci.org/IBM-Swift/Swift-Kuery.svg?branch=master" alt="Build Status - Master">
@@ -21,26 +21,26 @@
 </p>
 
 # Swift-Kuery
-SQL database abstraction layer
 
-## Summary
-Swift-Kuery is a pluggable SQL database driver/SDK abstraction layer. Its main idea is to unify the APIs to the various relational databases, providing a Swifty yet SQL-like API. This allows easy switching between databases and forms the basis for an Object-Relational Mapping (ORM) framework.
+`Swift-Kuery` is a pluggable SQL database driver/SDK abstraction layer. Its main idea is to unify the APIs to the various relational databases, providing a Swifty yet SQL-like API. This allows easy switching between databases and forms the basis for an Object-Relational Mapping (ORM) framework.
 
 [Swift-Kuery-ORM](https://github.com/IBM-Swift/Swift-Kuery-ORM) is an ORM, built on top of Swift-Kuery, which allows you to simplify the persistence of model objects with your server.
 
-Swift-Kuery is an easy to learn, consumable framework that comes with a set of [implemented plugins](#list-of-plugins).
+`Swift-Kuery` is an easy to learn, consumable framework that comes with a set of [implemented plugins](#list-of-plugins).
 
 ## Table of Contents
-* [Examples](#examples)
+* [Usage](#usage)
 * [SQL Injection Prevention using Parameterization](#sql-injection-prevention-using-parameterization)
 * [Prepared Statements](#prepared-statements)
 * [Schema Management](#schema-management)
 * [Query Examples](#query-examples)
 * [List of plugins](#list-of-plugins)
+* [API Reference](#api-reference)
+* [Community](#community)
 * [License](#license)
 
-## Examples
-This example demonstrates how to execute an SQL query using Swift-Kuery with the [Swift-Kuery-PostgreSQL](https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL) plugin.
+## Usage
+This example demonstrates how to execute an SQL query using `Swift-Kuery` with the [Swift-Kuery-PostgreSQL](https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL) plugin.
 
 The starting point for this example is an existing Swift package. If you don't have one already, create and enter a directory named e.g. `SwiftKueryExample`. Now run the swift package's init command, to create an executable type, by running `swift package init --type executable`.
 
@@ -68,13 +68,13 @@ The starting point for this example is an existing Swift package. If you don't h
     ```
 
 ### Update your Package.swift file
-Add Swift-Kuery-PostgreSQL to your `Package.swift`. This will bring in Swift-Kuery as well.
+Add Swift-Kuery-PostgreSQL to the dependencies within your application's `Package.swift` file, this will bring in Swift-Kuery as well. Substitute `"x.x.x"` with the latest `Swift-Kuery-PostgreSQL` [release](https://github.com/IBM-Swift/Swift-Kuery/releases).
 
 ```swift
 dependencies: [
     ...
     // Add this line
-    .package(url: "https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL.git", from: "1.0.0"),
+    .package(url: "https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL.git", from: "x.x.x"),
   ],
   targets: [
     .target(
@@ -571,13 +571,20 @@ let query = Select(t2.c, from: t2)
     .having(sum(t2.b).notIn(Select(t1.b, from: t1).where(t1.a == "apple")))
 ```
 
-## List of plugins:
+## List of plugins
 
 * [PostgreSQL](https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL)
 
 * [SQLite](https://github.com/IBM-Swift/Swift-Kuery-SQLite)
 
 * [MySQL](https://github.com/IBM-Swift/SwiftKueryMySQL)
+
+## API Documentation
+For more information visit our [API reference](https://ibm-swift.github.io/Swift-Kuery/index.html).
+
+## Community
+
+We love to talk server-side Swift, and Kitura. Join our [Slack](http://swift-at-ibm-slack.mybluemix.net/) to meet the team!
 
 ## License
 This library is licensed under Apache 2.0. Full license text is available in [LICENSE](https://github.com/IBM-Swift/Swift-Kuery/blob/master/LICENSE.txt).
