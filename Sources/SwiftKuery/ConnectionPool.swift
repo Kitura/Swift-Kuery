@@ -108,13 +108,13 @@ public class ConnectionPool {
         timeoutNs = Int64(timeout) * 1000000  // Convert ms to ns
         generator = connectionGenerator
         releaser = connectionReleaser
-        semaphore = DispatchSemaphore(value: capacity)
         for _ in 0 ..< capacity {
             if let item = generator() {
                 pool.append(item)
             }
             else {}
         }
+        semaphore = DispatchSemaphore(value: pool.count)
         // Handle generation failure
         if pool.count < capacity {
             Log.warning("Connection generation failed (\(pool.count) of \(capacity) connections created")
