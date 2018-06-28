@@ -47,7 +47,7 @@ In most cases, you will create a connection pool using a plugin, such as SwiftKu
 
 public class ConnectionPool {
     
-    private var pool = [Connection]()
+    private(set) var pool = [Connection]()
     
     // A serial dispatch queue used to ensure thread safety when accessing the pool
     // (at time of writing, serial is the default, and cannot be explicitly specified).
@@ -60,13 +60,13 @@ public class ConnectionPool {
     private let releaser: (Connection) -> ()
     
     // The maximum size of this pool.
-    private let limit: Int
+    let limit: Int
     
     // The initial size of this pool.
-    private var capacity: Int
+    private(set) var capacity: Int
     
     // A semaphore to enable take() to block when the pool is empty.
-    private var semaphore: DispatchSemaphore
+    private(set) var semaphore: DispatchSemaphore
     
     // A timeout value (in nanoseconds) to wait before returning nil from a take().
     private let timeoutNs: Int64
@@ -108,19 +108,20 @@ public class ConnectionPool {
         timeoutNs = Int64(timeout) * 1000000  // Convert ms to ns
         generator = connectionGenerator
         releaser = connectionReleaser
-        semaphore = DispatchSemaphore(value: capacity)
         for _ in 0 ..< capacity {
             if let item = generator() {
                 pool.append(item)
             }
             else {}
         }
+        semaphore = DispatchSemaphore(value: pool.count)
         // Handle generation failure
         if pool.count < capacity {
             Log.warning("Connection generation failed (\(pool.count) of \(capacity) connections created")
             // Ensure capacity and pool.count are in sync. This enables us to recover
             // in the future if the database becomes reachable again.
             capacity = pool.count
+            
         }
     }
     
