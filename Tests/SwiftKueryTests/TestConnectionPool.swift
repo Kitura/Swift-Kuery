@@ -17,11 +17,16 @@ class TestConnectionPool: XCTestCase {
         ]
     }
     
-    func createPool(initialCapacity: Int, maxCapacity: Int) -> ConnectionPool {
+    func createPool(initialCapacity: Int, maxCapacity: Int, databaseActive: Bool = true) -> ConnectionPool {
         let options = ConnectionPoolOptions(initialCapacity: initialCapacity, maxCapacity: maxCapacity, timeout: 1000)
         let connectionGenerator: () -> Connection? = {
             let connection = createConnection()
-            return connection
+            connection.isDatabaseReachable = databaseActive
+            if connection.isDatabaseReachable {
+                return connection
+            } else {
+                return nil
+            }
         }
         
         let connectionReleaser: (_ connection: Connection) -> () = { connection in
@@ -132,16 +137,40 @@ class TestConnectionPool: XCTestCase {
         XCTAssert(newConnection.isConnected)
     }
     
+    func testDatabaseNotReachableDuringInitialisation() {
+        let pool = createPool(initialCapacity: 1, maxCapacity: 3, databaseActive: false)
+        
+        let conn = pool.getConnection()
+        XCTAssertNil(conn)
+        
+        guard let testConn = conn as? SubTestConnection else {
+            XCTFail("")
+            return
+        }
+        
+        testConn.isDatabaseReachable = true
+        
+        let conn2 = pool.getConnection()
+        XCTAssertNotNil(conn2)
+    }
+    
+    #warning("Add test for database starting dead, then coming back online")
+    #warning("Add test for database dying mid use, then coming back online")
+    #warning("")
+    
     #warning("Is there a downside to this? Should it be allowed?")
     func testInitialCapacityLargerThanMaxCapacity() {
-        let pool = createPool(initialCapacity: 5, maxCapacity: 2)
+        let pool = createPool(initialCapacity: 2, maxCapacity: 1)
         
         print(pool.capacity)
         
-        let c = pool.getConnection()
+        var c = pool.getConnection()
+        var c2 = pool.getConnection()
         print(pool.capacity)
         c?.closeConnection()
-        
+        c = nil
+        var c3 = pool.getConnection()
+        print(pool.capacity)
     }
     
     //Is this expected behaviour?
@@ -163,16 +192,5 @@ class TestConnectionPool: XCTestCase {
         
         conn?.closeConnection()
         conn2?.closeConnection()
-    }
-    
-    #warning("Remove after shown to Dave")
-    func testSemaphore() {
-        let pool = createPool(initialCapacity: 3, maxCapacity: 6)
-        pool.semaphore.wait()
-        pool.semaphore.wait()
-        
-        pool.semaphore.signal()
-        pool.semaphore.signal()
-//        pool.semaphore.signal()
     }
 }

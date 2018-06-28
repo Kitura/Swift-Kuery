@@ -125,6 +125,14 @@ class TestConnection: Connection {
     func release(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}
 }
 
+class SubTestConnection: TestConnection {
+    var isDatabaseReachable = true
+    
+    override var isConnected: Bool {
+        return isDatabaseReachable
+    }
+}
+
 class TestResultFetcher: ResultFetcher {
     let numberOfRows: Int
     let rows = [["banana", 38, "apple"], ["apple", -8, "peach"], ["plum", 7, "plum"]]
@@ -152,12 +160,12 @@ class TestResultFetcher: ResultFetcher {
     }
 }
 
-func createConnection(_ result: TestConnection.Result) -> TestConnection {
-    return TestConnection(result: result)
+func createConnection(_ result: SubTestConnection.Result) -> SubTestConnection {
+    return SubTestConnection(result: result)
 }
 
-func createConnection(withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String, Bool) -> String)? = nil) -> TestConnection {
-    return TestConnection(result: .returnEmpty, withDeleteRequiresUsing: withDeleteRequiresUsing, withUpdateRequiresFrom: withUpdateRequiresFrom, createAutoIncrement: createAutoIncrement)
+func createConnection(withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String, Bool) -> String)? = nil) -> SubTestConnection {
+    return SubTestConnection(result: .returnEmpty, withDeleteRequiresUsing: withDeleteRequiresUsing, withUpdateRequiresFrom: withUpdateRequiresFrom, createAutoIncrement: createAutoIncrement)
 }
 
 // Dummy class for test framework
