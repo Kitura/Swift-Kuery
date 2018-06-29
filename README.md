@@ -29,6 +29,7 @@
 `Swift-Kuery` is an easy to learn, consumable framework that comes with a set of [implemented plugins](#list-of-plugins).
 
 ## Table of Contents
+* [Swift version](#swift-version)
 * [Usage](#usage)
 * [SQL Injection Prevention using Parameterization](#sql-injection-prevention-using-parameterization)
 * [Prepared Statements](#prepared-statements)
@@ -38,6 +39,9 @@
 * [API Reference](#api-reference)
 * [Community](#community)
 * [License](#license)
+
+## Swift version
+The latest version of Swift-Kuery requires **Swift 4.0** or newer. You can download this version of the Swift binaries by following this [link](https://swift.org/download/). Compatibility with other Swift versions is not guaranteed.
 
 ## Usage
 This example demonstrates how to execute an SQL query using `Swift-Kuery` with the [Swift-Kuery-PostgreSQL](https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL) plugin.
