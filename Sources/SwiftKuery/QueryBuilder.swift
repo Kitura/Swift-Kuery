@@ -120,6 +120,11 @@ public class QueryBuilder {
     /// A function to create an autoincrement expression for the column, based on the column type.
     public let createAutoIncrement: ((String, Bool) -> String)?
 
+    /// A function to create a primary key expression for the column based on
+    /// column type and auto-increment status. Return value should have a space
+    /// as the first character; e.g. " PRIMARY KEY" (or can be empty).
+    public let createSinglePrimaryKey: ((String, Bool) -> String)?
+
     /// An indication whether the drop index syntax requires the `ON table.name` clause.
     public let dropIndexRequiresOnTableName: Bool
 
@@ -145,7 +150,7 @@ public class QueryBuilder {
      - Parameter dateFormatter: DateFormatter to convert between date and string instances.
     */
     public init(addNumbersToParameters: Bool = true, firstParameterIndex: Int = 1, anyOnSubquerySupported: Bool = true,
-                withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String, Bool) -> String)? = nil,
+                withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String, Bool) -> String)? = nil, createSinglePrimaryKey: ((String, Bool) -> String)? = nil,
                 dropIndexRequiresOnTableName: Bool = false, dateFormatter: DateFormatter? = nil) {
         substitutions = Array(repeating: "", count: QuerySubstitutionNames.namesCount.rawValue)
         substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"
@@ -171,6 +176,7 @@ public class QueryBuilder {
         self.withDeleteRequiresUsing = withDeleteRequiresUsing
         self.withUpdateRequiresFrom = withUpdateRequiresFrom
         self.createAutoIncrement = createAutoIncrement
+        self.createSinglePrimaryKey = createSinglePrimaryKey
         self.dropIndexRequiresOnTableName = dropIndexRequiresOnTableName
         self.dateFormatter = dateFormatter
     }
