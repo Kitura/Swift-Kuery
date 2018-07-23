@@ -72,7 +72,7 @@ The starting point for this example is an existing Swift package. If you don't h
     ```
 
 ### Update your Package.swift file
-Add Swift-Kuery-PostgreSQL to the dependencies within your application's `Package.swift` file, this will bring in Swift-Kuery as well. Substitute `"x.x.x"` with the latest `Swift-Kuery-PostgreSQL` [release](https://github.com/IBM-Swift/Swift-Kuery/releases).
+Add Swift-Kuery-PostgreSQL to the dependencies within your application's `Package.swift` file, this will bring in Swift-Kuery as well. Substitute `"x.x.x"` with the latest `Swift-Kuery-PostgreSQL` [release](https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL/releases).
 
 ```swift
 dependencies: [
