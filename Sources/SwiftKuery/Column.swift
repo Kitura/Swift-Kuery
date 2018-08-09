@@ -210,7 +210,13 @@ public class Column: Field, IndexColumn {
         }
 
         if isPrimaryKey {
-            result += " PRIMARY KEY"
+            if let createSinglePrimaryKey = queryBuilder.createSinglePrimaryKey {
+                let pkString = createSinglePrimaryKey(typeString, autoIncrement)
+                result += pkString
+            }
+            else {
+                result += " PRIMARY KEY"
+            }
         }
         if isNotNullable {
             result += " NOT NULL"
