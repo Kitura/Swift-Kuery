@@ -264,6 +264,10 @@ class TestResultFetcher: ResultFetcher {
     func fetchTitles() -> [String] {
         return titles
     }
+
+    func done() {
+        return
+    }
 }
 
 func createConnection(_ result: TestConnection.Result) -> TestConnection {
