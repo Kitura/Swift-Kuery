@@ -50,5 +50,6 @@ public class ResultSet {
     /// Called to indicate no further operations will be called on the result set.
     public func done() {
         self.connectionPoolWrapper = nil
+        resultFetcher.done()
     }
 }

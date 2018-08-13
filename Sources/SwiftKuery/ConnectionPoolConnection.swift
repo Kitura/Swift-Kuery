@@ -134,7 +134,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.execute(query: query) { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -166,7 +166,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.execute(raw) { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -199,7 +199,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.execute(query: query, parameters: parameters) { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -233,7 +233,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.execute(raw, parameters: parameters) { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -267,7 +267,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.execute(query: query, parameters: parameters) { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -301,7 +301,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.execute(raw, parameters: parameters) { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -360,7 +360,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.execute(preparedStatement: preparedStatement) { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -393,7 +393,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.execute(preparedStatement: preparedStatement, parameters: parameters) { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -427,7 +427,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.execute(preparedStatement: preparedStatement, parameters: parameters) { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -460,7 +460,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.release(preparedStatement: preparedStatement) { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -507,7 +507,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.startTransaction() { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -537,7 +537,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.commit() { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -567,7 +567,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.rollback() { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -598,7 +598,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.create(savepoint: savepoint) { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -630,7 +630,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.rollback(to: savepoint) { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -662,7 +662,7 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.release(savepoint: savepoint) { result in
-            self.runCompletionHandler(result: result, onCompletion: onCompletion)
+            self.runCompletionHandlerKeepingSelfAlive(result: result, onCompletion: onCompletion)
         }
     }
 
@@ -687,7 +687,7 @@ public class ConnectionPoolConnection: Connection {
     // Offload the passed closure keeping self in scope
     // By calling this function to offload the passed closure we keep the connection wrapper in scope and prevent it being returned to the pool early by virtue of the fact self has to be captured in the calling closure.
     // The funxction also stores a reference to the wrapper on any ResultSet that is being returned which prevents a connection being returned to the pool until ResultSet.done() is called.
-    private func runCompletionHandler(result: QueryResult, onCompletion: @escaping ((QueryResult) -> ())) {
+    private func runCompletionHandlerKeepingSelfAlive(result: QueryResult, onCompletion: @escaping ((QueryResult) -> ())) {
         if let resultSet = result.asResultSet {
             resultSet.connectionPoolWrapper = self
         }
