@@ -20,7 +20,7 @@ import Dispatch
 
 /// Defines the protocol which all database plugins must implement.
 public protocol Connection : class {
-    
+
     /// The `QueryBuilder` with connection specific substitutions.
     var queryBuilder: QueryBuilder { get }
     
