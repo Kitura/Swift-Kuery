@@ -22,10 +22,14 @@
 
 import XCTest
 import Foundation
+import Dispatch
 
 import SwiftKuery
 
 class TestConnection: Connection {
+
+    var connectionPoolConnection: ConnectionPoolConnection?
+
     let queryBuilder: QueryBuilder
     let result: Result
 
@@ -42,34 +46,120 @@ class TestConnection: Connection {
         self.result = result
     }
     
-    func connect(onCompletion: (QueryError?) -> ()) {}
+    func connect(onCompletion: @escaping (QueryError?) -> ()) {}
+
+    func connectSync() -> QueryError? { return nil }
     
     public var isConnected: Bool { return true }
     
     func closeConnection() {}
-    
+
     func execute(query: Query, onCompletion: @escaping ((QueryResult) -> ())) {
         returnResult(onCompletion)
     }
-    
+
+    func executeSync(query: Query) -> QueryResult {
+        var result: QueryResult?
+        let semaphore = DispatchSemaphore(value: 0)
+        returnResult { res in
+            result = res
+            semaphore.signal()
+        }
+        semaphore.wait()
+        guard let resultUnwrapped = result else {
+            return .error(QueryError.noResult("No QueryResult from execute"))
+        }
+        return resultUnwrapped
+    }
+
     func execute(_ raw: String, onCompletion: @escaping ((QueryResult) -> ())) {
         returnResult(onCompletion)
     }
-    
+
+    func executeSync(_ raw: String) -> QueryResult {
+        var result: QueryResult?
+        let semaphore = DispatchSemaphore(value: 0)
+        returnResult { res in
+            result = res
+            semaphore.signal()
+        }
+        semaphore.wait()
+        guard let resultUnwrapped = result else {
+            return .error(QueryError.noResult("No QueryResult from execute"))
+        }
+        return resultUnwrapped
+    }
+
     func execute(query: Query, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ())) {
         returnResult(onCompletion)
     }
-    
+
+    func executeSync(query: Query, parameters: [Any?]) -> QueryResult {
+        var result: QueryResult?
+        let semaphore = DispatchSemaphore(value: 0)
+        returnResult { res in
+            result = res
+            semaphore.signal()
+        }
+        semaphore.wait()
+        guard let resultUnwrapped = result else {
+            return .error(QueryError.noResult("No QueryResult from execute"))
+        }
+        return resultUnwrapped
+    }
+
     func execute(_ raw: String, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ())) {
         returnResult(onCompletion)
     }
-    
+
+    func executeSync(_ raw: String, parameters: [Any?]) -> QueryResult {
+        var result: QueryResult?
+        let semaphore = DispatchSemaphore(value: 0)
+        returnResult { res in
+            result = res
+            semaphore.signal()
+        }
+        semaphore.wait()
+        guard let resultUnwrapped = result else {
+            return .error(QueryError.noResult("No QueryResult from execute"))
+        }
+        return resultUnwrapped
+    }
+
     func execute(query: Query, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {
         returnResult(onCompletion)
     }
-    
+
+    func executeSync(query: Query, parameters: [String:Any?]) -> QueryResult {
+        var result: QueryResult?
+        let semaphore = DispatchSemaphore(value: 0)
+        returnResult { res in
+            result = res
+            semaphore.signal()
+        }
+        semaphore.wait()
+        guard let resultUnwrapped = result else {
+            return .error(QueryError.noResult("No QueryResult from execute"))
+        }
+        return resultUnwrapped
+    }
+
     func execute(_ raw: String, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ()))  {
         returnResult(onCompletion)
+    }
+
+    func executeSync(_ raw: String, parameters: [String:Any?]) -> QueryResult {
+        var result: QueryResult?
+        let semaphore = DispatchSemaphore(value: 0)
+        returnResult { res in
+            result = res
+            semaphore.signal()
+        }
+        semaphore.wait()
+        guard let resultUnwrapped = result else {
+            return .error(QueryError.noResult("No QueryResult from execute"))
+        }
+        return resultUnwrapped
     }
 
     func descriptionOf(query: Query) -> String {
@@ -82,47 +172,71 @@ class TestConnection: Connection {
             return ""
         }
     }
-    
+
     private func returnResult(_ onCompletion: @escaping ((QueryResult) -> ())) {
-        switch result {
-        case .returnEmpty:
-            onCompletion(.successNoData)
-        case .returnOneRow:
-            onCompletion(.resultSet(ResultSet(TestResultFetcher(numberOfRows: 1))))
-        case .returnThreeRows:
-            onCompletion(.resultSet(ResultSet(TestResultFetcher(numberOfRows: 3))))
-        case .returnError:
-            onCompletion(.error(QueryError.noResult("Error in query execution.")))
-        case .returnValue:
-            onCompletion(.success(5))
+        DispatchQueue.global().async {
+            switch self.result {
+            case .returnEmpty:
+                onCompletion(.successNoData)
+            case .returnOneRow:
+                onCompletion(.resultSet(ResultSet(TestResultFetcher(numberOfRows: 1))))
+            case .returnThreeRows:
+                onCompletion(.resultSet(ResultSet(TestResultFetcher(numberOfRows: 3))))
+            case .returnError:
+                onCompletion(.error(QueryError.noResult("Error in query execution.")))
+            case .returnValue:
+                onCompletion(.success(5))
+            }
         }
     }
-    
+
     func startTransaction(onCompletion: @escaping ((QueryResult) -> ())) {}
-    
+
+    func startTransactionSync() -> QueryResult { return .successNoData }
+
     func commit(onCompletion: @escaping ((QueryResult) -> ())) {}
-    
+
+    func commitSync() -> QueryResult { return .successNoData }
+
     func rollback(onCompletion: @escaping ((QueryResult) -> ())) {}
-    
+
+    func rollbackSync() -> QueryResult { return .successNoData}
+
     func create(savepoint: String, onCompletion: @escaping ((QueryResult) -> ())) {}
-    
+
+    func createSync(savepoint: String) -> QueryResult { return .successNoData }
+
     func rollback(to savepoint: String, onCompletion: @escaping ((QueryResult) -> ())) {}
-    
+
+    func rollbackSync(to savepoint: String) -> QueryResult { return .successNoData }
+
     func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ())) {}
-    
+
+    func releaseSync(savepoint: String) -> QueryResult { return .successNoData }
+
     struct TestPreparedStatement: PreparedStatement {}
-    
+
     func prepareStatement(_ query: Query) throws -> PreparedStatement { return TestPreparedStatement() }
-    
+
     func prepareStatement(_ raw: String) throws -> PreparedStatement { return TestPreparedStatement() }
-    
+
     func execute(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}
-    
+
+    func executeSync(preparedStatement: PreparedStatement) -> QueryResult {return .successNoData}
+
     func execute(preparedStatement: PreparedStatement, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ())) {}
-    
+
+    func executeSync(preparedStatement: PreparedStatement, parameters: [Any?]) -> QueryResult {return .successNoData}
+
     func execute(preparedStatement: PreparedStatement, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {}
-    
+
+    func executeSync(preparedStatement: PreparedStatement, parameters: [String:Any?]) -> QueryResult {return .successNoData}
+
     func release(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}
+
+    func releaseSync(preparedStatement: PreparedStatement) -> QueryResult {return .successNoData}
+
+    func setConnectionPoolWrapper(to wrapper: ConnectionPoolConnection?) {}
 }
 
 class TestResultFetcher: ResultFetcher {
@@ -130,11 +244,11 @@ class TestResultFetcher: ResultFetcher {
     let rows = [["banana", 38, "apple"], ["apple", -8, "peach"], ["plum", 7, "plum"]]
     let titles = ["fruit", "number", "fruit"]
     var fetched = 0
-    
+
     init(numberOfRows: Int) {
         self.numberOfRows = numberOfRows
     }
-    
+
     func fetchNext() -> [Any?]? {
         if fetched < numberOfRows {
             fetched += 1
@@ -142,11 +256,11 @@ class TestResultFetcher: ResultFetcher {
         }
         return nil
     }
-    
+
     func fetchNext(callback: ([Any?]?) ->()) {
         callback(fetchNext())
     }
-    
+
     func fetchTitles() -> [String] {
         return titles
     }

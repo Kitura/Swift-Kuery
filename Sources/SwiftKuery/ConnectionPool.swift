@@ -46,9 +46,9 @@ In most cases, you will create a connection pool using a plugin, such as SwiftKu
  */
 
 public class ConnectionPool {
-    
+
     private var pool = [Connection]()
-    
+
     // A serial dispatch queue used to ensure thread safety when accessing the pool
     // (at time of writing, serial is the default, and cannot be explicitly specified).
     private var poolLock = DispatchSemaphore(value: 1)
@@ -228,7 +228,7 @@ public class ConnectionPool {
     // Items can therefore be borrowed or permanently removed with this method.
     //
     // This function will block until an item can be obtained from the pool. 
-    private func take() -> Connection? {
+    internal func take() -> Connection? {
         var item: Connection!
      
         // We must return early if the pool has zero capacity, because no-one will ever call

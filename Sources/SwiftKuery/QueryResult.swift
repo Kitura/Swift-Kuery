@@ -92,6 +92,7 @@ public enum QueryResult {
                 }
                 return dictionary
             }
+            resultSet.done()
             return arrayOfDictionaries
         default:
             return nil
