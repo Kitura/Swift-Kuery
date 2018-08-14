@@ -34,7 +34,7 @@ public protocol ResultFetcher {
     /// - Returns: An array of column titles of type String.
     func fetchTitles() -> [String]
 
-    /// Closes and underlying database connections and releases system resources
+    /// Closes any underlying database connections and releases system resources synchronously
     ///
     func done()
 }

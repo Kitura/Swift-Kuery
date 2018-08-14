@@ -60,18 +60,14 @@ public class ConnectionPoolConnection: Connection {
     ///
     /// - Parameter onCompletion: The function to be called when the connection is established.
     public func connect(onCompletion: @escaping (QueryError?) -> ()) {
-        if let _ = self.connection {
-            onCompletion(nil)
+        if self.connection != nil {
+            return onCompletion(nil)
         }
-        else {
-            if let newConnection = self.pool?.take() {
-                self.connection = newConnection
-                onCompletion(nil)
-            }
-            else {
-                onCompletion(.connection("Failed to get connection"))
-            }
+        guard let connection = self.pool?.take() else {
+           return onCompletion(.connection("Failed to get connection"))
         }
+        self.connection = connection
+        onCompletion(nil)
     }
     
     /// Establish a connection with the database.
@@ -85,11 +81,8 @@ public class ConnectionPoolConnection: Connection {
             semaphore.signal()
         }
         semaphore.wait()
-        guard let errorUnwrapped = error else {
-            // Everything worked
-            return nil
-        }
-        return errorUnwrapped
+        // error will be nil if the connection attempt was succesful
+        return error
     }
 
     /**

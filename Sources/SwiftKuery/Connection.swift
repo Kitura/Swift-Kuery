@@ -19,7 +19,7 @@ import Dispatch
 // MARK: Connection protocol
 
 /// Defines the protocol which all database plugins must implement.
-public protocol Connection : class {
+public protocol Connection: AnyObject {
 
     /// The `QueryBuilder` with connection specific substitutions.
     var queryBuilder: QueryBuilder { get }
@@ -276,14 +276,13 @@ public extension Connection {
                     }
                     else {
                         onCompletion(.error(QueryError.syntaxError("Failed to map parameters.")))
+                        return
                     }
                 }
                 self.execute(convertedQuery, parameters: numberedParameters, onCompletion: onCompletion)
-            }
-            catch  QueryError.syntaxError(let error) {
+            } catch  QueryError.syntaxError(let error) {
                 onCompletion(.error(QueryError.syntaxError(error)))
-            }
-            catch {
+            } catch {
                 onCompletion(.error(QueryError.syntaxError("Failed to build the query.")))
             }
         }

@@ -235,8 +235,6 @@ class TestConnection: Connection {
     func release(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}
 
     func releaseSync(preparedStatement: PreparedStatement) -> QueryResult {return .successNoData}
-
-    func setConnectionPoolWrapper(to wrapper: ConnectionPoolConnection?) {}
 }
 
 class TestResultFetcher: ResultFetcher {
