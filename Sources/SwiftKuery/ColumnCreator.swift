@@ -25,5 +25,5 @@ public protocol ColumnCreator {
     ///
     /// - Parameter column: The column being built
     /// - Returns: A string representation of the column for the implementing database or nil if it cannot be built
-    func buildColumn(for column: Column) -> String?
+    func buildColumn(for column: Column, using queryBuilder: QueryBuilder) -> String?
 }

@@ -343,7 +343,7 @@ public class ConnectionPoolConnection: Connection {
 }
 
 public class DummyColumBuilder : ColumnCreator {
-    public func buildColumn(for column: Column) -> String? {
+    public func buildColumn(for column: Column, using queryBuilder: QueryBuilder) -> String? {
         return nil
     }
 }

@@ -183,7 +183,7 @@ public class Column: Field, IndexColumn {
      - Throws: QueryError.syntaxError if column creation fails.
     */
     public func create(queryBuilder: QueryBuilder) throws -> String {
-        guard let result = queryBuilder.columnBuilder.buildColumn(for: self) else {
+        guard let result = queryBuilder.columnBuilder.buildColumn(for: self, using: queryBuilder) else {
             throw QueryError.syntaxError("Invalid column attributes for column \(name). ")
         }
         return result

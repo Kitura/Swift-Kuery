@@ -202,13 +202,13 @@ class TestSchema: XCTestCase {
 
         let t5 = Table5()
         error = createBadTable(t5, connection: connection)
-        expectedError = "Column type not set for column b. "
+        expectedError = "Invalid column attributes for column b. "
         XCTAssertEqual(error, expectedError)
 
         t1 = Table1()
         let connectionWithAutoIncrement = createConnection(createAutoIncrement: createAutoIncrement)
         createStmt = createTable(t1, connection: connectionWithAutoIncrement)
-        expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" auto_increment, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0))"
+        expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" integer AUTO_INCREMENT, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
     }
     
