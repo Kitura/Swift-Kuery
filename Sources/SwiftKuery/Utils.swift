@@ -21,18 +21,18 @@ struct Utils {
     static func packType(_ item: Any) -> String {
         switch item {
         case let val as String:
-            return "'" + Utils.escapeApos(val) + "'"
+            return "'" + Utils.escapeApostrophes(val) + "'"
         case let value as Date:
-            return "'" + Utils.escapeApos(String(describing: value)) + "'"
+            return "'" + Utils.escapeApostrophes(String(describing: value)) + "'"
         default:
-            return Utils.escapeApos(String(describing: item))
+            return Utils.escapeApostrophes(String(describing: item))
         }
     }
     
     static func packType(_ item: Any, queryBuilder: QueryBuilder) throws -> String {
         switch item {
         case let val as String:
-            return "'" + Utils.escapeApos(val) + "'"
+            return "'" + Utils.escapeApostrophes(val) + "'"
         case let val as Bool:
             return val ? queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.booleanTrue.rawValue]
                 : queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.booleanFalse.rawValue]
@@ -40,11 +40,11 @@ struct Utils {
             return try val.build(queryBuilder: queryBuilder)
         case let value as Date:
             if let dateFormatter = queryBuilder.dateFormatter {
-                return Utils.escapeApos(dateFormatter.string(from: value))
+                return Utils.escapeApostrophes(dateFormatter.string(from: value))
             }
-            return "'" + Utils.escapeApos(String(describing: value)) + "'"
+            return "'" + Utils.escapeApostrophes(String(describing: value)) + "'"
         default:
-            return Utils.escapeApos(String(describing: item))
+            return Utils.escapeApostrophes(String(describing: item))
         }
     }
         
@@ -118,7 +118,7 @@ struct Utils {
     /// - Parameter value: The SQL string fragment in which to escape
     ///   apostrophes.
     /// - Returns: A string with apostrophes escaped by doubling them.
-    static func escapeApos(_ value: String) -> String {
+    static func escapeApostrophes(_ value: String) -> String {
         return value.replacingOccurrences(of: "'", with: "''")
     }
 }
