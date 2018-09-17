@@ -4,6 +4,7 @@
 branches:
   only:
     - master
+    - next
     - /^issue.*$/
 
 # the matrix of builds should cover each combination of Swift version
