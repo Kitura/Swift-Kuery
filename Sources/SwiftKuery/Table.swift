@@ -58,7 +58,8 @@ open class Table: Buildable {
 
     // MARK: Initializer
     /// Initialize an instance of Table.
-    public required init() {
+    /// - Parameter name: The name of the table (Optional).
+    public required init(name: String? = nil) {
         columns = [Column]()
         let mirror = Mirror(reflecting: self)
         for child in mirror.children {
@@ -68,11 +69,15 @@ open class Table: Buildable {
                 if column.isPrimaryKey {
                     columnsWithPrimaryKeyProperty += 1
                 }
-            }
-            else if let label = child.label, label == "tableName" {
+            } else if let label = child.label, label == "tableName", name == nil {
                 _name = child.value as! String
             }
         }
+
+        if let name = name {
+            _name = name
+        }
+
         verifyTableProperties()
     }
 
