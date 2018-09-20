@@ -237,23 +237,25 @@ public class Column: Field, IndexColumn {
      This is equivalent to the SQL AS operator.
      ### Usage Example: ###
      In this example, a `PersonTable` (as defined at the top of this class) instance is created which contains a `Column`.
-     An alias for this `Column` instance is then created and its alias printed. 
+     An alias for this `Column` instance is then created and its alias printed.
      ```swift
      let personTable = PersonTable()
      let aliasColumn = personTable.name.as("new name")
      print(String(describing: aliasColumn.alias))
      // Prints Optional("new name")
      ```
-    
+
      - Parameter newName: A String containing the alias for the column.
      - Returns: A new Column instance with the alias.
     */
     public func `as`(_ newName: String) -> Column {
-        let new = Column(name, type, length: length, primaryKey: isPrimaryKey, notNull: isNotNullable, unique: isUnique, defaultValue: defaultValue, collate: collate)
+        let new = Column(name, type, length: length, autoIncrement: autoIncrement,
+                         primaryKey: isPrimaryKey, notNull: isNotNullable, unique: isUnique,
+                         defaultValue: defaultValue, check: checkExpression, collate: collate)
         new.alias = newName
         new._table = table
         return new
     }
-    
+
 }
 
