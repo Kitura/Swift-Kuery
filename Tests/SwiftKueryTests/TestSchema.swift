@@ -137,25 +137,30 @@ class TestSchema: XCTestCase {
         expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" integer AUTO_INCREMENT, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0), FOREIGN KEY (\"a\", \"b\") REFERENCES \"table2\"(\"b\", \"a\"))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
     }
-    
+
     func testCreateTable () {
         let connection = createConnection()
-        
+
         var t1 = Table1()
         var createStmt = createTable(t1, connection: connection)
         var expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" integer AUTO_INCREMENT, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
-        
+
+        t1 = Table1(name: "foobar")
+        createStmt = createTable(t1, connection: connection)
+        expectedCreateStmt = "CREATE TABLE \"foobar\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" integer AUTO_INCREMENT, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0))"
+        XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
+
         let t2 = Table2()
         createStmt = createTable(t2, connection: connection)
         expectedCreateStmt = "CREATE TABLE \"table2\" (\"a\" varchar, \"b\" varchar(20) UNIQUE, \"c\" smallint NOT NULL, \"d\" integer, \"e\" date, \"f\" timestamp, \"g\" mySQLType(15))"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
-        
+
         let t3 = Table3()
         var error = createBadTable(t3, connection: connection)
         var expectedError = "Conflicting definitions of primary key. "
         XCTAssertEqual(error, expectedError)
-        
+
         error = createBadTable(t1.primaryKey(t1.b, t1.c), connection: connection)
         expectedError = "Conflicting definitions of primary key. "
         XCTAssertEqual(error, expectedError)
