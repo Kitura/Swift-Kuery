@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016, 2017
+ Copyright IBM Corporation 2016, 2017, 2018
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -183,49 +183,8 @@ public class Column: Field, IndexColumn {
      - Throws: QueryError.syntaxError if column creation fails.
     */
     public func create(queryBuilder: QueryBuilder) throws -> String {
-        guard let type = type else {
-            throw QueryError.syntaxError("Column type not set for column \(name). ")
-        }
-        
-        var result = Utils.packName(name, queryBuilder: queryBuilder) + " "
-        
-        var typeString = type.create(queryBuilder: queryBuilder)
-        if let length = length {
-            typeString += "(\(length))"
-        }
-        if autoIncrement {
-            if let createAutoIncrement = queryBuilder.createAutoIncrement {
-                let autoIncrementString = createAutoIncrement(typeString, isPrimaryKey)
-                guard autoIncrementString != "" else {
-                    throw QueryError.syntaxError("Invalid autoincrement for column \(name). ")
-                }
-                result += autoIncrementString
-            }
-            else {
-                result += typeString + " AUTO_INCREMENT"
-            }
-        }
-        else {
-            result += typeString
-        }
-
-        if isPrimaryKey {
-            result += " PRIMARY KEY"
-        }
-        if isNotNullable {
-            result += " NOT NULL"
-        }
-        if isUnique {
-            result += " UNIQUE"
-        }
-        if let defaultValue = defaultValue {
-            result += " DEFAULT " + Utils.packType(defaultValue)
-        }
-        if let checkExpression = checkExpression {
-            result += checkExpression.contains(name) ? " CHECK (" + checkExpression.replacingOccurrences(of: name, with: "\"\(name)\"") + ")" : " CHECK (" + checkExpression + ")"
-        }
-        if let collate = collate {
-            result += " COLLATE \"" + collate + "\""
+        guard let result = queryBuilder.columnBuilder.buildColumn(for: self, using: queryBuilder) else {
+            throw QueryError.syntaxError("Invalid column attributes for column \(name). ")
         }
         return result
     }
