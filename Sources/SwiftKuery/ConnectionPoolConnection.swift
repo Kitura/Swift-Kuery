@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2017
+ Copyright IBM Corporation 2017, 2018
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ public class ConnectionPoolConnection: Connection {
     // MARK: QueryBuilder
     /// The `QueryBuilder` with connection specific substitutions.
     public var queryBuilder: QueryBuilder {
-        return connection?.queryBuilder ?? QueryBuilder()
+        return connection?.queryBuilder ?? QueryBuilder(columnBuilder: DummyColumBuilder())
     }
 
     init(connection: Connection, pool: ConnectionPool) {
@@ -339,5 +339,11 @@ public class ConnectionPoolConnection: Connection {
             return
         }
         connection.release(savepoint: savepoint, onCompletion: onCompletion)
+    }
+}
+
+public class DummyColumBuilder : ColumnCreator {
+    public func buildColumn(for column: Column, using queryBuilder: QueryBuilder) -> String? {
+        return nil
     }
 }
