@@ -24,7 +24,7 @@ import XCTest
 import Foundation
 import Dispatch
 
-import SwiftKuery
+@testable import SwiftKuery
 
 class TestConnection: Connection {
 
@@ -42,7 +42,7 @@ class TestConnection: Connection {
     }
 
     init(result: Result, withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String, Bool) -> String)? = nil) {
-        self.queryBuilder = QueryBuilder(withDeleteRequiresUsing: withDeleteRequiresUsing, withUpdateRequiresFrom: withUpdateRequiresFrom, createAutoIncrement: createAutoIncrement)
+        self.queryBuilder = QueryBuilder(withDeleteRequiresUsing: withDeleteRequiresUsing, withUpdateRequiresFrom: withUpdateRequiresFrom, columnBuilder: TestColumnBuilder())
         self.result = result
     }
     
@@ -278,3 +278,43 @@ func createConnection(withDeleteRequiresUsing: Bool = false, withUpdateRequiresF
 
 // Dummy class for test framework
 class CommonUtils { }
+
+class TestColumnBuilder : ColumnCreator {
+    public func buildColumn(for column: Column, using queryBuilder: QueryBuilder) -> String? {
+        guard let type = column.type else {
+            return nil
+        }
+
+        var result = Utils.packName(column.name, queryBuilder: queryBuilder) + " "
+
+        var typeString = type.create(queryBuilder: queryBuilder)
+        if let length = column.length {
+            typeString += "(\(length))"
+        }
+        if column.autoIncrement {
+            result += typeString + " AUTO_INCREMENT"
+        } else {
+            result += typeString
+        }
+
+        if column.isPrimaryKey {
+            result += " PRIMARY KEY"
+        }
+        if column.isNotNullable {
+            result += " NOT NULL"
+        }
+        if column.isUnique {
+            result += " UNIQUE"
+        }
+        if let defaultValue = column.defaultValue {
+            result += " DEFAULT " + Utils.packType(defaultValue)
+        }
+        if let checkExpression = column.checkExpression {
+            result += checkExpression.contains(column.name) ? " CHECK (" + checkExpression.replacingOccurrences(of: column.name, with: "\"\(column.name)\"") + ")" : " CHECK (" + checkExpression + ")"
+        }
+        if let collate = column.collate {
+            result += " COLLATE \"" + collate + "\""
+        }
+        return result
+    }
+}

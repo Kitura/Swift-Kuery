@@ -9,6 +9,7 @@
 branches:
   only:
     - master
+    - next
     - /^issue.*$/
     - /^issue_*$/
 
