@@ -73,7 +73,7 @@ public struct ScalarColumnExpression: Field {
             case .round(let field, let decimal):
                 return try "ROUND(" + field.build(queryBuilder: queryBuilder) + ", \(decimal))"
             case .mid(let field, let start, let length):
-                return try "MID(" + field.build(queryBuilder: queryBuilder) + ", \(start), \(length))"
+                return try queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.mid.rawValue] + "(" + field.build(queryBuilder: queryBuilder) + ", \(start), \(length))"
             case .len(let field):
                 return try "LEN(" + field.build(queryBuilder: queryBuilder) + ")"
             }
