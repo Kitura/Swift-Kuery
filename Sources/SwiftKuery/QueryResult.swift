@@ -92,6 +92,7 @@ public enum QueryResult {
                 }
                 return dictionary
             }
+            // As this function consumes the entire result set we can explicitly close it
             resultSet.done()
             return arrayOfDictionaries
         default:
