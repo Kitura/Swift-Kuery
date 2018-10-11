@@ -395,6 +395,7 @@ public class ConnectionPoolConnection: Connection {
             // Beacuase ResultSet is a class this is an assignment to the current object rather than an assignment to a copy of the object.
             resultSet.connectionPoolWrapper = self
         }
+        // This offload is necessary while we do not have an asynchronous API to work with query results.
         DispatchQueue.global().async {
             onCompletion(result)
         }
