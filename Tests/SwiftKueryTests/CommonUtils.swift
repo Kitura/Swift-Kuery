@@ -120,9 +120,13 @@ class TestConnection: Connection {
 
     struct TestPreparedStatement: PreparedStatement {}
 
-    func prepareStatement(_ query: Query) throws -> PreparedStatement { return TestPreparedStatement() }
+    func prepareStatement(_ query: Query, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ())) {
+        onCompletion(TestPreparedStatement(), nil)
+    }
 
-    func prepareStatement(_ raw: String) throws -> PreparedStatement { return TestPreparedStatement() }
+    func prepareStatement(_ raw: String, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ())) {
+        onCompletion(TestPreparedStatement(), nil)
+    }
 
     func execute(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}
 

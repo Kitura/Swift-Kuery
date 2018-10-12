@@ -85,14 +85,16 @@ public protocol Connection: AnyObject {
     /// - Parameter query: The query to prepare statement for.
     /// - Returns: The prepared statement.
     /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
-    func prepareStatement(_ query: Query) throws -> PreparedStatement
+    //func prepareStatement(_ query: Query) throws -> PreparedStatement
+    func prepareStatement(_ query: Query, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ()))
 
     /// Prepare statement.
     ///
     /// - Parameter raw: A String with the query to prepare statement for.
     /// - Returns: The prepared statement.
     /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
-    func prepareStatement(_ raw: String) throws -> PreparedStatement
+    //func prepareStatement(_ raw: String) throws -> PreparedStatement
+    func prepareStatement(_ raw: String, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ()))
 
     /// Execute a prepared statement.
     ///
@@ -196,6 +198,12 @@ public extension Connection {
     func runCompletionHandler(_ error: QueryError?, onCompletion: @escaping ((QueryError?) -> ())) {
         DispatchQueue.global().async {
             onCompletion(error)
+        }
+    }
+
+    func runCompletionHandler(_ statement: PreparedStatement?, _ error: QueryError?, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ())) {
+        DispatchQueue.global().async {
+            onCompletion(statement, error)
         }
     }
 }

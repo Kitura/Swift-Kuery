@@ -211,25 +211,50 @@ public class ConnectionPoolConnection: Connection {
     /// Create a prepared statement from the passed in query.
     ///
     /// - Parameter query: The query to prepare the statement for.
-    /// - Returns: The prepared statement.
-    /// - Throws: QueryError.syntaxError if the query build fails, or a database error if it fails to prepare statement.
-    public func prepareStatement(_ query: Query) throws -> PreparedStatement {
-        guard let connection = connection else {
-            throw QueryError.connection("Connection is disconnected")
+    /// - Parameter onCompletion: The function to be called when the preparation has completed.
+    public func prepareStatement(_ query: Query, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ())) {
+        guard let connection = self.connection else {
+            runCompletionHandler(nil, QueryError.connection("Connection is disconnected"), onCompletion: onCompletion)
+            return
         }
-        return try connection.prepareStatement(query)
+        // I am pretty sure that in doing this the connection is going to go out of scope when we offload in the plugin. If a user wants to reuse the connection then they would have to have captured it in the completion handler so I am also not sure it matters!! Discuss with Dave.
+        connection.prepareStatement(query) { stmt, error in
+            guard let statement = stmt else {
+                // Did not create a prepared statement, return error
+                guard let error = error else {
+                    self.runCompletionHandler(nil, QueryError.databaseError("Unable to generate prepared statement"), onCompletion: onCompletion)
+                    return
+                }
+                let errorMessage = error.localizedDescription
+                self.runCompletionHandler(nil, QueryError.databaseError("Unable to generate prepared statement: \(errorMessage)"), onCompletion: onCompletion)
+                return
+            }
+            self.runCompletionHandler(statement, nil, onCompletion: onCompletion)
+        }
     }
 
     /// Create a prepared statement from the passed in query.
     ///
     /// - Parameter raw: A String containing the query to prepare the statement for.
-    /// - Returns: The prepared statement.
-    /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare the statement.
-    public func prepareStatement(_ raw: String) throws -> PreparedStatement {
-        guard let connection = connection else {
-            throw QueryError.connection("Connection is disconnected")
+    /// - Parameter onCompletion: The function to be called when the preparation has completed.
+    public func prepareStatement(_ raw: String, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ())) {
+        guard let connection = self.connection else {
+            runCompletionHandler(nil, QueryError.connection("Connection is disconnected"), onCompletion: onCompletion)
+            return
         }
-        return try connection.prepareStatement(raw)
+        connection.prepareStatement(raw) { stmt, error in
+            guard let statement = stmt else {
+                // Did not create a prepared statement, return error
+                guard let error = error else {
+                    self.runCompletionHandler(nil, QueryError.databaseError("Unable to generate prepared statement"), onCompletion: onCompletion)
+                    return
+                }
+                let errorMessage = error.localizedDescription
+                self.runCompletionHandler(nil, QueryError.databaseError("Unable to generate prepared statement: \(errorMessage)"), onCompletion: onCompletion)
+                return
+            }
+            self.runCompletionHandler(statement, nil, onCompletion: onCompletion)
+        }
     }
 
     /// Execute a prepared statement.
