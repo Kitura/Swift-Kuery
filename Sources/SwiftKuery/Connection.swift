@@ -83,17 +83,13 @@ public protocol Connection: AnyObject {
     /// Prepare statement.
     ///
     /// - Parameter query: The query to prepare statement for.
-    /// - Returns: The prepared statement.
-    /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
-    //func prepareStatement(_ query: Query) throws -> PreparedStatement
+    /// - Parameter onCompletion: The function to be called when the statement has been prepared.
     func prepareStatement(_ query: Query, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ()))
 
     /// Prepare statement.
     ///
     /// - Parameter raw: A String with the query to prepare statement for.
-    /// - Returns: The prepared statement.
-    /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
-    //func prepareStatement(_ raw: String) throws -> PreparedStatement
+    /// - Parameter onCompletion: The function to be called when the statement has been prepared.
     func prepareStatement(_ raw: String, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ()))
 
     /// Execute a prepared statement.
@@ -167,8 +163,8 @@ public extension Connection {
 
     func execute(query: Query, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {
         do {
-            let databaseQuery = try query.build(queryBuilder: self.queryBuilder)
-            let (convertedQuery, namedToNumbered, count) = Utils.convertNamedParametersToNumbered(query: databaseQuery, queryBuilder: self.queryBuilder)
+            let databaseQuery = try query.build(queryBuilder: queryBuilder)
+            let (convertedQuery, namedToNumbered, count) = Utils.convertNamedParametersToNumbered(query: databaseQuery, queryBuilder: queryBuilder)
             var numberedParameters: [Any?] = Array(repeating: nil, count: count)
             for (parameterName, parameterValue) in parameters {
                 if let numbers = namedToNumbered[parameterName] {
@@ -181,7 +177,7 @@ public extension Connection {
                     return
                 }
             }
-            self.execute(convertedQuery, parameters: numberedParameters, onCompletion: onCompletion)
+            execute(convertedQuery, parameters: numberedParameters, onCompletion: onCompletion)
         } catch  QueryError.syntaxError(let error) {
             runCompletionHandler(.error(QueryError.syntaxError(error)), onCompletion: onCompletion)
         } catch {
