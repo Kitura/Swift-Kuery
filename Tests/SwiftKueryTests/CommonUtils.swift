@@ -46,9 +46,9 @@ class TestConnection: Connection {
         self.result = result
     }
     
-    func connect(onCompletion: @escaping (QueryError?) -> ()) {}
+    func connect(onCompletion: @escaping (QueryResult) -> ()) {}
 
-    func connectSync() -> QueryError? { return nil }
+    func connectSync() -> QueryResult { return .successNoData }
     
     public var isConnected: Bool { return true }
     
@@ -120,12 +120,12 @@ class TestConnection: Connection {
 
     struct TestPreparedStatement: PreparedStatement {}
 
-    func prepareStatement(_ query: Query, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ())) {
-        onCompletion(TestPreparedStatement(), nil)
+    func prepareStatement(_ query: Query, onCompletion: @escaping ((QueryResult) -> ())) {
+        onCompletion(.success(TestPreparedStatement()))
     }
 
-    func prepareStatement(_ raw: String, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ())) {
-        onCompletion(TestPreparedStatement(), nil)
+    func prepareStatement(_ raw: String, onCompletion: @escaping ((QueryResult) -> ())) {
+        onCompletion(.success(TestPreparedStatement()))
     }
 
     func execute(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}

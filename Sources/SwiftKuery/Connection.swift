@@ -26,13 +26,13 @@ public protocol Connection: AnyObject {
     
     /// Establish a connection with the database.
     ///
-    /// - Parameter onCompletion: The function to be called when the connection is established.
-    func connect(onCompletion: @escaping (QueryError?) -> ())
+    /// - Parameter onCompletion: The function to be called when the connection call completes.
+    func connect(onCompletion: @escaping (QueryResult) -> ())
 
     /// Establish a connection with the database.
     ///
-    /// - Returns: A QueryError if the connection cannot connect, otherwise nil
-    func connectSync() -> QueryError?
+    /// - Returns: A QueryResult indicating success or error.
+    func connectSync() -> QueryResult
 
     /// Close the connection to the database.
     func closeConnection()
@@ -84,13 +84,13 @@ public protocol Connection: AnyObject {
     ///
     /// - Parameter query: The query to prepare statement for.
     /// - Parameter onCompletion: The function to be called when the statement has been prepared.
-    func prepareStatement(_ query: Query, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ()))
+    func prepareStatement(_ query: Query, onCompletion: @escaping ((QueryResult) -> ()))
 
     /// Prepare statement.
     ///
     /// - Parameter raw: A String with the query to prepare statement for.
     /// - Parameter onCompletion: The function to be called when the statement has been prepared.
-    func prepareStatement(_ raw: String, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ()))
+    func prepareStatement(_ raw: String, onCompletion: @escaping ((QueryResult) -> ()))
 
     /// Execute a prepared statement.
     ///
@@ -188,18 +188,6 @@ public extension Connection {
     func runCompletionHandler(_ result: QueryResult, onCompletion: @escaping ((QueryResult) -> ())) {
         DispatchQueue.global().async {
             onCompletion(result)
-        }
-    }
-    
-    func runCompletionHandler(_ error: QueryError?, onCompletion: @escaping ((QueryError?) -> ())) {
-        DispatchQueue.global().async {
-            onCompletion(error)
-        }
-    }
-
-    func runCompletionHandler(_ statement: PreparedStatement?, _ error: QueryError?, onCompletion: @escaping ((PreparedStatement?, QueryError?) -> ())) {
-        DispatchQueue.global().async {
-            onCompletion(statement, error)
         }
     }
 }

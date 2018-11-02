@@ -47,6 +47,19 @@ public enum QueryResult {
         }
     }
     
+    /// Data eceived from the query execution represented as a `PreparedStatement`.
+    public var asPreparedStatement: PreparedStatement? {
+        switch self {
+        case .success(let value):
+            if let statement = value as? PreparedStatement {
+                return statement
+            }
+            return nil
+        default:
+            return nil
+        }
+    }
+
     /// The error that occurred during query execution.
     public var asError: Error? {
         switch self {
