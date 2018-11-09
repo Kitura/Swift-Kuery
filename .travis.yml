@@ -22,7 +22,7 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      env: SWIFT_SNAPSHOT=4.1
+      env: SWIFT_SNAPSHOT=4.1.3
     - os: linux
       dist: trusty
       sudo: required
