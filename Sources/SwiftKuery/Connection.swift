@@ -186,8 +186,16 @@ public extension Connection {
     }
     
     func runCompletionHandler(_ result: QueryResult, onCompletion: @escaping ((QueryResult) -> ())) {
-        DispatchQueue.global().async {
-            onCompletion(result)
+        onCompletion(result)
+    }
+
+    // Call users completion handler but keep self in scope
+    // The function stores a reference to the connection wrapper on any ResultSet that is being returned which prevents a connection being returned to the pool until ResultSet.done() is called. This is necessary as a user completion handler could offload the handling of the result set.
+    func runCompletionHandlerRetainingConnection(result: QueryResult, onCompletion: @escaping ((QueryResult) -> ())) {
+        if let resultSet = result.asResultSet {
+            // Beacuase ResultSet is a class this is an assignment to the current object rather than an assignment to a copy of the object.
+            resultSet.connection = self
         }
+        onCompletion(result)
     }
 }

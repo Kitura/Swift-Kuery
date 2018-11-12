@@ -20,7 +20,7 @@
 public class ResultSet {
     private var resultFetcher: ResultFetcher
     
-    internal (set) var connectionPoolWrapper: ConnectionPoolConnection? = nil
+    internal (set) var connection: Connection? = nil
 
     /// The query result as a Sequence of rows. This API is blocking.
     public private (set) var rows: RowSequence
@@ -49,7 +49,7 @@ public class ResultSet {
 
     /// Called to indicate no further operations will be called on the result set.
     public func done() {
-        self.connectionPoolWrapper = nil
+        self.connection = nil
         resultFetcher.done()
     }
 }

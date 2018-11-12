@@ -387,20 +387,6 @@ public class ConnectionPoolConnection: Connection {
             self.runCompletionHandlerRetainingConnection(result: result, onCompletion: onCompletion)
         }
     }
-
-    // Offload the passed closure keeping self in scope
-    // By calling this function to offload the passed closure we keep the connection wrapper in scope and prevent it being returned to the pool early by virtue of the fact self has to be captured in the calling closure.
-    // The funxction also stores a reference to the wrapper on any ResultSet that is being returned which prevents a connection being returned to the pool until ResultSet.done() is called.
-    private func runCompletionHandlerRetainingConnection(result: QueryResult, onCompletion: @escaping ((QueryResult) -> ())) {
-        if let resultSet = result.asResultSet {
-            // Beacuase ResultSet is a class this is an assignment to the current object rather than an assignment to a copy of the object.
-            resultSet.connectionPoolWrapper = self
-        }
-        // This offload is necessary while we do not have an asynchronous API to work with query results.
-        DispatchQueue.global().async {
-            onCompletion(result)
-        }
-    }
 }
 
 public class DummyColumBuilder : ColumnCreator {
