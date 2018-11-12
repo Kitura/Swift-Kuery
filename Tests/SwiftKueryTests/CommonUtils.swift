@@ -95,9 +95,9 @@ class TestConnection: Connection {
             case .returnEmpty:
                 onCompletion(.successNoData)
             case .returnOneRow:
-                onCompletion(.resultSet(ResultSet(TestResultFetcher(numberOfRows: 1))))
+                onCompletion(.resultSet(ResultSet(TestResultFetcher(numberOfRows: 1), connection: TestConnection(result: .returnOneRow))))
             case .returnThreeRows:
-                onCompletion(.resultSet(ResultSet(TestResultFetcher(numberOfRows: 3))))
+                onCompletion(.resultSet(ResultSet(TestResultFetcher(numberOfRows: 3), connection: TestConnection(result: .returnThreeRows))))
             case .returnError:
                 onCompletion(.error(QueryError.noResult("Error in query execution.")))
             case .returnValue:

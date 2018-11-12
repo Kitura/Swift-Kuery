@@ -28,8 +28,9 @@ public class ResultSet {
     /// Instantiate an instance of ResultSet.
     ///
     /// - Parameter resultFetcher: An implementation of `ResultFetcher` protocol to fetch the query results.
-    public init(_ resultFetcher: ResultFetcher) {
+    public init(_ resultFetcher: ResultFetcher, connection: Connection) {
         self.resultFetcher = resultFetcher
+        self.connection = connection
         rows = RowSequence(resultFetcher)
     }
     
