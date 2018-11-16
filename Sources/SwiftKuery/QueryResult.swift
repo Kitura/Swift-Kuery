@@ -47,7 +47,7 @@ public enum QueryResult {
         }
     }
     
-    /// Data eceived from the query execution represented as a `PreparedStatement`.
+    /// Data received from the query execution represented as a `PreparedStatement`.
     public var asPreparedStatement: PreparedStatement? {
         switch self {
         case .success(let value):
@@ -84,6 +84,8 @@ public enum QueryResult {
     /// Each entry in the array repersents a row in the result with column titles as the keys.
     /// In case there are columns with the same title, we add indices to the keys: for example if
     /// the result contains three columns named 'a', the dictionary will contain the keys: a, a.1 and a.2.
+    /// This function will consume the entire set of results and then call done against the result set which will allow the underlying connection to be reused.
+    /// When asRows is called a user does not need to explicitly invoke the done method on the result set.
     public var asRows: [[String:Any?]]? {
         switch self {
         case .resultSet(let resultSet):

@@ -49,6 +49,8 @@ public class ResultSet {
     }
 
     /// Called to indicate no further operations will be called on the result set.
+    /// A ResultSet will keep a connection alive until this method is called.
+    /// When called this method enables the underlying connection to be released and in the case where a connection pool is used, returned to the pool for reuse.
     public func done() {
         // Nil connection reference once result fetcher cleanup is complete.
         resultFetcher.done()
