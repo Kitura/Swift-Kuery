@@ -50,7 +50,8 @@ public class ResultSet {
 
     /// Called to indicate no further operations will be called on the result set.
     public func done() {
-        self.connection = nil
+        // Nil connection reference once result fetcher cleanup is complete.
         resultFetcher.done()
+        self.connection = nil
     }
 }
