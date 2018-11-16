@@ -105,7 +105,7 @@ public enum QueryResult {
                 }
                 return dictionary
             }
-            // As this function consumes the entire result set we can explicitly close it
+            // As this function consumes the entire result set we can explicitly close the result set allowing the release of the underlying connection.
             resultSet.done()
             return arrayOfDictionaries
         default:

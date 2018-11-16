@@ -61,7 +61,7 @@ public class ConnectionPoolConnection: Connection {
     /// - Parameter onCompletion: The function to be called when the connection is established.
     public func connect(onCompletion: @escaping (QueryResult) -> ()) {
         if self.connection != nil {
-            return onCompletion(.successNoData)
+            return runCompletionHandler(.successNoData, onCompletion: onCompletion)
         }
         guard let connection = self.pool?.take() else {
             return runCompletionHandler(.error(QueryError.connection("Failed to get connection")), onCompletion: onCompletion)

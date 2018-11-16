@@ -14,8 +14,6 @@
  limitations under the License.
  */
 
-import Dispatch
-
 // MARK: Connection protocol
 
 /// Defines the protocol which all database plugins must implement.
@@ -185,6 +183,14 @@ public extension Connection {
         }
     }
     
+    /* The utility functions below should be used by Kuery plugins to invoke the users completiton handler.
+       - runCompletionHandler will pass the QueryResult directly to the users handler and should be used whenever a result occurs that does not require further interaction with the database on the current connection, for example on Insert, Update or Create queuries.
+       - runCompletionHandlerRetainingConnection will cache the current connection within the Result set and should be used if processing the result set will require further interaction with the database on the current connection. For example on Select queries.
+    */
+
+    // Call the users completion handler
+    // This is a useful utility function that is called from within the Kuery plugins when the users callback needs invoking.
+    // Having a utility function for this is not strictly necessary but does provide a convienient way to choose to offload user code in future with minimal code changes.
     func runCompletionHandler(_ result: QueryResult, onCompletion: @escaping ((QueryResult) -> ())) {
         onCompletion(result)
     }
