@@ -34,6 +34,11 @@ public protocol ResultFetcher {
     /// - Returns: An array of column titles of type String.
     func fetchTitles() -> [String]
 
+    /// Fetch the titles of the query result. This function is non-blocking.
+    ///
+    /// - Parameter callback: A callback to call when the column titles of the query result are ready.
+    func fetchTitles(callback: (_ titles: [String?]?) -> ())
+
     /// Closes any underlying database connections and releases system resources synchronously
     ///
     func done()
