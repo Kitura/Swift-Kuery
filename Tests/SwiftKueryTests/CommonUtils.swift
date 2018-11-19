@@ -155,7 +155,7 @@ class TestResultFetcher: ResultFetcher {
         return nil
     }
 
-    func fetchNext(callback: ([Any?]?) ->()) {
+    func fetchNext(callback: @escaping ([Any?]?) ->()) {
         callback(fetchNext())
     }
 
@@ -167,7 +167,7 @@ class TestResultFetcher: ResultFetcher {
         return
     }
 
-    func fetchTitles(callback: ([String?]?) -> ()) {
+    func fetchTitles(callback: @escaping ([String?]?) -> ()) {
         callback(fetchTitles())
     }
 }

@@ -37,7 +37,7 @@ public class ResultSet {
     /// Fetch the next row of the query result. This function is non-blocking.
     ///
     /// - Parameter callback: A callback to call when the next row of the query result is ready.
-    public func nextRow(callback: (_ row: [Any?]?) ->()) {
+    public func nextRow(callback: @escaping (_ row: [Any?]?) ->()) {
         resultFetcher.fetchNext { row in
             callback(row)
         }
@@ -49,7 +49,7 @@ public class ResultSet {
     }
 
     /// Fetch the column titles of the query resul. This function is non-blocking
-    public func getColumnTitles( callback: (_ titles: [String?]?) -> ()) {
+    public func getColumnTitles( callback: @escaping (_ titles: [String?]?) -> ()) {
         resultFetcher.fetchTitles(callback: callback)
     }
 
