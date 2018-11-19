@@ -147,20 +147,12 @@ class TestResultFetcher: ResultFetcher {
         self.numberOfRows = numberOfRows
     }
 
-    func fetchNext() -> [Any?]? {
+    func fetchNext(callback: @escaping ([Any?]?) ->()) {
         if fetched < numberOfRows {
             fetched += 1
-            return rows[fetched - 1]
+            callback(rows[fetched - 1])
         }
-        return nil
-    }
-
-    func fetchNext(callback: @escaping ([Any?]?) ->()) {
-        callback(fetchNext())
-    }
-
-    func fetchTitles() -> [String] {
-        return titles
+        callback(nil)
     }
 
     func done() {
@@ -168,7 +160,7 @@ class TestResultFetcher: ResultFetcher {
     }
 
     func fetchTitles(callback: @escaping ([String?]?) -> ()) {
-        callback(fetchTitles())
+        callback(titles)
     }
 }
 
