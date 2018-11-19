@@ -166,6 +166,10 @@ class TestResultFetcher: ResultFetcher {
     func done() {
         return
     }
+
+    func fetchTitles(callback: ([String?]?) -> ()) {
+        callback(fetchTitles())
+    }
 }
 
 func createConnection(_ result: TestConnection.Result) -> TestConnection {
