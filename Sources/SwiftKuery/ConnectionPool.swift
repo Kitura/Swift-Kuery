@@ -71,7 +71,15 @@ public class ConnectionPool {
     // A timeout value (in nanoseconds) to wait before returning nil from a take().
     private let timeoutNs: Int64
     private let timeout: Int
-    
+
+    // An array of requests to run when a connection is available
+    // The array is used to store user requests when no connection is available in the pool. Before a connection is released back to the pool any requests in the backlog will be processed.
+    public typealias connectionPoolTask = ((ConnectionPoolConnection?, QueryError?) -> ())
+    private var taskBacklog = [connectionPoolTask]()
+
+    // A semaphore to prevent concurrent access to the backlog of user requests
+    private let taskBacklogSemaphore: DispatchSemaphore = DispatchSemaphore(value: 1)
+
     // MARK: Initializer
     /**
      Creates an instance of `ConnectionPool` containing `ConnectionPoolOptions.initialCapacity` connections.
@@ -147,10 +155,85 @@ public class ConnectionPool {
         return nil
     }
     
+    /**
+     Get a connection from the pool.
+     This function does not block, if a connection is not available the handler will be added to a queue to be process when a connection becomes available.
+     ### Usage Example: ###
+     A `Connection` instance is retrieved from a pool that was initialized previously.
+     ```swift
+     connectionPool.getConnection() { connection, error in
+         guard let connection = connection else {
+            guard let error = error else {
+                // log unspecified error
+            }
+            // log returned error
+         }
+         // use connection
+         connection.execute(.....) {}
+     }
+     ```
+     - Parameter poolTask: A closure to execute when a connection is available.
+     - Returns: A `Connection` or nil if the wait for a free connection timed out.
+     */
+    public func getConnection(poolTask: @escaping connectionPoolTask) {
+        var item: Connection!
+
+        // If there has been a connectivity problem the pool capacity can reach 0. The method below will attempt to generate a new connection which will allow the pool to repopulate with new connections.
+        guard makeCapacityNonZero() else {
+            clearRequestBacklog()
+            return poolTask(nil, QueryError.connection("Unable to get connection to database"))
+        }
+
+        lockPoolLock()
+        // make below a guard
+        if (pool.count < 1) {
+            unlockPoolLock()
+            return addToTaskBacklog(task: poolTask)
+        }
+        item = pool[0]
+        pool.removeFirst()
+        // Check if the item is alive, and replace with a new one if it isn't
+        if item.isConnected == false {
+            releaseItem(item)
+            if let replacementItem = generateItem() {
+                item = replacementItem
+            } else {
+                item = nil
+            }
+        }
+        // If we took the last item, we can choose to grow the pool
+        if (pool.count == 0 && capacity < limit) {
+            _ = growPool()
+        }
+        unlockPoolLock()
+        guard let connection = item else {
+            // We do not clear the request backlog here as it will be done by the first thread to detect zero capacity.
+            return addToTaskBacklog(task: poolTask)
+        }
+        return poolTask(ConnectionPoolConnection(connection: connection, pool: self), nil)
+    }
+
+    private func addToTaskBacklog(task: @escaping connectionPoolTask) {
+        lockTaskLock()
+        taskBacklog.append(task)
+        unlockTaskLock()
+    }
+
+    private func clearRequestBacklog() {
+        lockTaskLock()
+        for requestHandler in taskBacklog {
+            DispatchQueue.global().async {
+                requestHandler(nil, QueryError.connection("Unable to get connection from database"))
+            }
+        }
+        taskBacklog = [connectionPoolTask]()
+        unlockTaskLock()
+    }
+
     func release(connection: Connection) {
         give(connection)
     }
-    
+
     // MARK: Disconnect Pool
     /**
      Removes all the connections from the pool and calls the `connectionReleaser` closure on each.
@@ -269,10 +352,11 @@ public class ConnectionPool {
         unlockPoolLock()
         return item
     }
-    
+
     // Give an item back to the pool. Whilst this item would normally be one that was earlier
     // take()n from the pool, a new item could be added to the pool via this method.
     private func give(_ item: Connection) {
+        // We need to check if there are task in the backlog and if so offload execution of one and return.
         lockPoolLock()
         pool.append(item)
         // Signal that an item is now available
@@ -297,5 +381,12 @@ public class ConnectionPool {
     private func unlockPoolLock() {
         poolLock.signal()
     }
-    
+
+    private func lockTaskLock() {
+        _ = taskBacklogSemaphore.wait(timeout: DispatchTime.distantFuture)
+    }
+
+    private func unlockTaskLock() {
+        taskBacklogSemaphore.signal()
+    }
 }
