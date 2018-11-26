@@ -281,12 +281,13 @@ public class ConnectionPool {
 
     // Give an item back to the pool. Whilst this item would normally be one that was earlier
     // take()n from the pool, a new item could be added to the pool via this method.
+    // Items will only be rturned to the pool once the taskBacklog is empty
     private func give(_ item: Connection) {
         // We need to check if there are task in the backlog and if so offload execution of one and return.
         lockPoolLock()
         guard taskBacklog.count == 0 else {
-            let defferedTask = taskBacklog.removeFirst()
-            runDeferedPoolTask(task: defferedTask, connection: item)
+            let deferredTask = taskBacklog.removeFirst()
+            runDeferredPoolTask(task: deferredTask, connection: item)
             return unlockPoolLock()
         }
         pool.append(item)
@@ -295,7 +296,8 @@ public class ConnectionPool {
         return unlockPoolLock()
     }
 
-    private func runDeferedPoolTask(task: @escaping connectionPoolTask, connection: Connection) {
+    // Offload execution of a deferred poolTask to another thread.
+    private func runDeferredPoolTask(task: @escaping connectionPoolTask, connection: Connection) {
         DispatchQueue.global().async {
             task(ConnectionPoolConnection(connection: connection, pool: self), nil)
         }
