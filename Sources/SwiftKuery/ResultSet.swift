@@ -42,13 +42,8 @@ public class ResultSet {
             callback(row)
         }
     }
-    
-    /// The column titles of the query result. This function is blocking.
-    public var titles: [String] {
-        return resultFetcher.fetchTitles()
-    }
 
-    /// Fetch the column titles of the query resul. This function is non-blocking
+    /// Fetch the column titles of the query result. This function is non-blocking
     public func getColumnTitles( callback: @escaping (_ titles: [String?]?) -> ()) {
         resultFetcher.fetchTitles(callback: callback)
     }
