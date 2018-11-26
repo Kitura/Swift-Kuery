@@ -63,11 +63,16 @@ public class ConnectionPoolConnection: Connection {
         if self.connection != nil {
             return runCompletionHandler(.successNoData, onCompletion: onCompletion)
         }
-        guard let connection = self.pool?.take() else {
-            return runCompletionHandler(.error(QueryError.connection("Failed to get connection")), onCompletion: onCompletion)
+        self.pool?.getConnection() { poolConnection, error in
+            guard let connection = poolConnection else {
+                guard let error = error else {
+                    return self.runCompletionHandler(.error(QueryError.connection("Failed to get connection")), onCompletion: onCompletion)
+                }
+                return self.runCompletionHandler(.error(error), onCompletion: onCompletion)
+            }
+            self.connection = connection
+            return self.runCompletionHandler(.successNoData, onCompletion: onCompletion)
         }
-        self.connection = connection
-        runCompletionHandler(.successNoData, onCompletion: onCompletion)
     }
     
     /// Establish a connection with the database.
