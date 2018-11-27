@@ -40,7 +40,7 @@ public class ResultSet {
     }
 
     /// Fetch the column titles of the query result. This function is non-blocking
-    public func getColumnTitles( callback: @escaping ((titles: [String]?, Error?)) -> ()) {
+    public func getColumnTitles( callback: @escaping (([String]?, Error?)) -> ()) {
         resultFetcher.fetchTitles(callback: callback)
     }
 

@@ -41,7 +41,7 @@ class TestQueryResult: XCTestCase {
         connection.execute(query: query) { queryResult in
             XCTAssertTrue(queryResult.success, "Query result should be \"success\"")
             XCTAssertNil(queryResult.asResultSet, "Query result should be empty")
-            XCTAssertNil(queryResult.asRows, "Query result should be empty")
+            XCTAssertNil(CommonUtils.getRows(queryResult: queryResult), "Query result should be empty")
             XCTAssertNil(queryResult.asValue, "Query result should be empty")
             XCTAssertNil(queryResult.asError, "Query result should be empty")
         }
@@ -51,7 +51,7 @@ class TestQueryResult: XCTestCase {
             XCTAssertNotNil(queryResult.asError, "Query result should be error")
             XCTAssertFalse(queryResult.success, "Query result should be error")
             XCTAssertNil(queryResult.asResultSet, "Query result should be error")
-            XCTAssertNil(queryResult.asRows, "Query result should be error")
+            XCTAssertNil(CommonUtils.getRows(queryResult: queryResult), "Query result should be empty")
             XCTAssertNil(queryResult.asValue, "Query result should be error")
         }
         
@@ -59,7 +59,7 @@ class TestQueryResult: XCTestCase {
         connection.execute(query: query) { queryResult in
             XCTAssertTrue(queryResult.success, "Query result should be \"success\"")
             XCTAssertNil(queryResult.asResultSet, "Query result should be a value")
-            XCTAssertNil(queryResult.asRows, "Query result should be a value")
+            XCTAssertNil(CommonUtils.getRows(queryResult: queryResult), "Query result should be empty")
             XCTAssertNotNil(queryResult.asValue, "Query result should be a value")
             XCTAssertEqual(queryResult.asValue! as! Int, 5, "Query result should be 5")
             XCTAssertNil(queryResult.asError, "Query result should be  a value")
@@ -71,25 +71,25 @@ class TestQueryResult: XCTestCase {
             XCTAssertTrue(queryResult.success, "Query result should be one row")
             XCTAssertNotNil(queryResult.asResultSet, "Query result should be one row")
             let resultSet = queryResult.asResultSet!
-            let titles = resultSet.titles
+            let titles = CommonUtils.getTitles(resultSet: resultSet)
             XCTAssertEqual(titles, ["fruit", "number", "fruit"])
-            let rows = resultSet.rows
+            let rows = CommonUtils.getRows(queryResult: queryResult)!
             for (index, row) in rows.enumerated() {
                 XCTAssertEqual(index, 0, "Query should return only one row")
-                XCTAssertEqual(row[0]! as! String, "banana", "Query returned wrong data")
-                XCTAssertEqual(row[1]! as! Int, 38, "Query returned wrong data")
-                XCTAssertEqual(row[2]! as! String, "apple", "Query returned wrong data")
+                XCTAssertEqual(row["fruit"] as! String, "banana", "Query returned wrong data")
+                XCTAssertEqual(row["number"] as! Int, 38, "Query returned wrong data")
+                XCTAssertEqual(row["fruit.1"] as! String, "apple", "Query returned wrong data")
             }
             XCTAssertNotNil(queryResult.asRows, "Query result should be one row")
             XCTAssertNil(queryResult.asValue, "Query result should be one row")
         }
         connection.execute(query: query) { queryResult in
-            let rows = queryResult.asRows
+            let rows = CommonUtils.getRows(queryResult: queryResult)!
             XCTAssertNotNil(rows, "Query result should be one row")
-            XCTAssertEqual(rows?.count, 1, "Wrong number of rows")
-            XCTAssertEqual(rows![0]["fruit"] as! String, "banana", "Query returned wrong data")
-            XCTAssertEqual(rows![0]["number"] as! Int, 38, "Query returned wrong data")
-            XCTAssertEqual(rows![0]["fruit.1"] as! String, "apple", "Query returned wrong data")
+            XCTAssertEqual(rows.count, 1, "Wrong number of rows")
+            XCTAssertEqual(rows[0]["fruit"] as! String, "banana", "Query returned wrong data")
+            XCTAssertEqual(rows[0]["number"] as! Int, 38, "Query returned wrong data")
+            XCTAssertEqual(rows[0]["fruit.1"] as! String, "apple", "Query returned wrong data")
         }
 
         connection = createConnection(.returnThreeRows)
@@ -98,25 +98,25 @@ class TestQueryResult: XCTestCase {
             XCTAssertTrue(queryResult.success, "Query result should be three rows")
             XCTAssertNotNil(queryResult.asResultSet, "Query result should be three rows")
             let resultSet = queryResult.asResultSet!
-            let titles = resultSet.titles
+            let titles = CommonUtils.getTitles(resultSet: resultSet)
             XCTAssertEqual(titles, ["fruit", "number", "fruit"])
-            let rows = resultSet.rows
+            let rows = CommonUtils.getRows(queryResult: queryResult)!
             for (index, row) in rows.enumerated() {
                 XCTAssertTrue(index < 3, "Query should return only one row")
                 if index == 0 {
-                    XCTAssertEqual(row[0]! as! String, "banana", "Query returned wrong data")
-                    XCTAssertEqual(row[1]! as! Int, 38, "Query returned wrong data")
-                    XCTAssertEqual(row[2]! as! String, "apple", "Query returned wrong data")
+                    XCTAssertEqual(row["fruit"]! as! String, "banana", "Query returned wrong data")
+                    XCTAssertEqual(row["number"]! as! Int, 38, "Query returned wrong data")
+                    XCTAssertEqual(row["fruit.1"]! as! String, "apple", "Query returned wrong data")
                 }
                 else if index == 1 {
-                    XCTAssertEqual(row[0]! as! String, "apple", "Query returned wrong data")
-                    XCTAssertEqual(row[1]! as! Int, -8, "Query returned wrong data")
-                    XCTAssertEqual(row[2]! as! String, "peach", "Query returned wrong data")
+                    XCTAssertEqual(row["fruit"]! as! String, "apple", "Query returned wrong data")
+                    XCTAssertEqual(row["number"]! as! Int, -8, "Query returned wrong data")
+                    XCTAssertEqual(row["fruit.1"]! as! String, "peach", "Query returned wrong data")
                 }
                 else if index == 2 {
-                    XCTAssertEqual(row[0]! as! String, "plum", "Query returned wrong data")
-                    XCTAssertEqual(row[1]! as! Int, 7, "Query returned wrong data")
-                    XCTAssertEqual(row[2]! as! String, "plum", "Query returned wrong data")
+                    XCTAssertEqual(row["fruit"]! as! String, "plum", "Query returned wrong data")
+                    XCTAssertEqual(row["number"]! as! Int, 7, "Query returned wrong data")
+                    XCTAssertEqual(row["fruit.1"]! as! String, "plum", "Query returned wrong data")
                 }
             }
             XCTAssertNotNil(queryResult.asRows, "Query result should be one row")
@@ -125,26 +125,29 @@ class TestQueryResult: XCTestCase {
         connection.execute(query: query) { queryResult in
             XCTAssertNotNil(queryResult.asResultSet, "Query result should be three rows")
             let resultSet = queryResult.asResultSet!
-            resultSet.nextRow { row in
+            resultSet.nextRow { row, error in
+                guard let row = row else {
+                    return
+                }
                 XCTAssertNotNil(row, "Failed to fetch next row")
-                XCTAssertEqual(row![0]! as! String, "banana", "Query returned wrong data")
-                XCTAssertEqual(row![1]! as! Int, 38, "Query returned wrong data")
-                XCTAssertEqual(row![2]! as! String, "apple", "Query returned wrong data")
+                XCTAssertEqual(row[0] as! String, "banana", "Query returned wrong data")
+                XCTAssertEqual(row[1] as! Int, 38, "Query returned wrong data")
+                XCTAssertEqual(row[2] as! String, "apple", "Query returned wrong data")
             }
         }
         connection.execute(query: query) { queryResult in
-            let rows = queryResult.asRows
+            let rows = CommonUtils.getRows(queryResult: queryResult)!
             XCTAssertNotNil(rows, "Query result should be three rows")
-            XCTAssertEqual(rows?.count, 3, "Wrong number of rows")
-            XCTAssertEqual(rows![0]["fruit"] as! String, "banana", "Query returned wrong data")
-            XCTAssertEqual(rows![0]["number"] as! Int, 38, "Query returned wrong data")
-            XCTAssertEqual(rows![0]["fruit.1"] as! String, "apple", "Query returned wrong data")
-            XCTAssertEqual(rows![1]["fruit"] as! String, "apple", "Query returned wrong data")
-            XCTAssertEqual(rows![1]["number"] as! Int, -8, "Query returned wrong data")
-            XCTAssertEqual(rows![1]["fruit.1"] as! String, "peach", "Query returned wrong data")
-            XCTAssertEqual(rows![2]["fruit"] as! String, "plum", "Query returned wrong data")
-            XCTAssertEqual(rows![2]["number"] as! Int, 7, "Query returned wrong data")
-            XCTAssertEqual(rows![2]["fruit.1"] as! String, "plum", "Query returned wrong data")
+            XCTAssertEqual(rows.count, 3, "Wrong number of rows")
+            XCTAssertEqual(rows[0]["fruit"] as! String, "banana", "Query returned wrong data")
+            XCTAssertEqual(rows[0]["number"] as! Int, 38, "Query returned wrong data")
+            XCTAssertEqual(rows[0]["fruit.1"] as! String, "apple", "Query returned wrong data")
+            XCTAssertEqual(rows[1]["fruit"] as! String, "apple", "Query returned wrong data")
+            XCTAssertEqual(rows[1]["number"] as! Int, -8, "Query returned wrong data")
+            XCTAssertEqual(rows[1]["fruit.1"] as! String, "peach", "Query returned wrong data")
+            XCTAssertEqual(rows[2]["fruit"] as! String, "plum", "Query returned wrong data")
+            XCTAssertEqual(rows[2]["number"] as! Int, 7, "Query returned wrong data")
+            XCTAssertEqual(rows[2]["fruit.1"] as! String, "plum", "Query returned wrong data")
         }
     }
 }
