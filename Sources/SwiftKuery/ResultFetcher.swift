@@ -22,12 +22,12 @@ public protocol ResultFetcher {
     /// Fetch the next row of the query result. This function is non-blocking.
     ///
     /// - Parameter callback: A callback to call when the next row of the query result is ready.
-    func fetchNext(callback: @escaping ([Any?]?) ->())
+    func fetchNext(callback: @escaping (([Any?]?, Error?)) ->())
 
     /// Fetch the titles of the query result. This function is non-blocking.
     ///
     /// - Parameter callback: A callback to call when the column titles of the query result are ready.
-    func fetchTitles(callback: @escaping (_ titles: [String?]?) -> ())
+    func fetchTitles(callback: @escaping (([String]?, Error?)) -> ())
 
     /// Closes any underlying database connections and releases system resources synchronously
     ///

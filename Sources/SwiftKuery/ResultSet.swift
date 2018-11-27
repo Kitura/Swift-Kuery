@@ -19,32 +19,28 @@
 /// Represents a query result set. The rows are accessable either in a blocking fashion using a `RowSequence` or in a non-blocking fashion using nextRow() function.
 public class ResultSet {
     private var resultFetcher: ResultFetcher
-    
+
     var connection: Connection? = nil
 
-    /// The query result as a Sequence of rows. This API is blocking.
-    public private (set) var rows: RowSequence
-    
     /// Instantiate an instance of ResultSet.
     ///
     /// - Parameter resultFetcher: An implementation of `ResultFetcher` protocol to fetch the query results.
     public init(_ resultFetcher: ResultFetcher, connection: Connection) {
         self.resultFetcher = resultFetcher
         self.connection = connection
-        rows = RowSequence(resultFetcher)
     }
     
     /// Fetch the next row of the query result. This function is non-blocking.
     ///
     /// - Parameter callback: A callback to call when the next row of the query result is ready.
-    public func nextRow(callback: @escaping (_ row: [Any?]?) ->()) {
-        resultFetcher.fetchNext { row in
-            callback(row)
+    public func nextRow(callback: @escaping (([Any?]?, Error?)) ->()) {
+        resultFetcher.fetchNext { row, error in
+            callback((row, error))
         }
     }
 
     /// Fetch the column titles of the query result. This function is non-blocking
-    public func getColumnTitles( callback: @escaping (_ titles: [String?]?) -> ()) {
+    public func getColumnTitles( callback: @escaping ((titles: [String]?, Error?)) -> ()) {
         resultFetcher.fetchTitles(callback: callback)
     }
 
