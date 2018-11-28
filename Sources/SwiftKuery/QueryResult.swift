@@ -118,6 +118,7 @@ public enum QueryResult {
                 // Column titles and value counts do not match
                 return onCompletion((nil, QueryError.noResult("Number of titles does not match number of values for row, unable to retrieve rows.")))
             }
+            // myTitles will be updated with new column titles when a title collision occurs, for example if a JOIN results in columns from different table with the same name being included in the results. myTitles is then passed into the recursive call of processRows meaning we will only ever run collision handling when processing the first row of the results.
             var myTitles = titles
             var dictionary = [String:Any?]()
             var index = 0

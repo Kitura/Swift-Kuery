@@ -179,6 +179,7 @@ func createConnection(withDeleteRequiresUsing: Bool = false, withUpdateRequiresF
 // Dummy class for test framework
 class CommonUtils {
 
+    // Utility method that returns the column titles from a ResultSet in a synchronous manner
     static func getTitles(resultSet: ResultSet) -> [String] {
         var titles = [String]()
         let waitLock = DispatchSemaphore(value: 0)
@@ -195,6 +196,7 @@ class CommonUtils {
         return titles
     }
 
+    // Utility method that returns all rows of a ResultSet in a synchronous manner
     static func getRows(queryResult: QueryResult) -> [[String: Any?]]? {
         var rows: [[String: Any?]]? = nil
         guard let _ = queryResult.asResultSet else {
