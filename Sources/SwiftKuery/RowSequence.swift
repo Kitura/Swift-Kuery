@@ -14,6 +14,8 @@
  limitations under the License.
  */
 
+import Dispatch
+
 // MARK: RowSequence
 
 /// A query result as a Sequence of rows.
@@ -28,6 +30,18 @@ public struct RowSequence: Sequence, IteratorProtocol  {
     ///
     /// - Returns: An array of values of type Any? representing the next row from the query result set.
     public mutating func next() -> [Any?]? {
-        return resultFetcher.fetchNext()
+        var nextRow: [Any?]? = nil
+        let semaphore = DispatchSemaphore(value: 0)
+        resultFetcher.fetchNext() { row, error in
+            guard let row = row else {
+                semaphore.signal()
+                return
+            }
+            nextRow = row
+            semaphore.signal()
+            return
+        }
+        semaphore.wait()
+        return nextRow
     }
 }
