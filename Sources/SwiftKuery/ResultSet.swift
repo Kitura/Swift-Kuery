@@ -29,7 +29,7 @@ public class ResultSet {
         self.resultFetcher = resultFetcher
         self.connection = connection
     }
-    
+
     /// Fetch the next row of the query result. This function is non-blocking.
     ///
     /// - Parameter callback: A callback to call when the next row of the query result is ready.
