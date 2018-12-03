@@ -52,4 +52,33 @@ public class ResultSet {
         resultFetcher.done()
         self.connection = nil
     }
+
+    /// Type alias for closures to be passed to the forEach method
+    public typealias RowOperation = ([Any?]?, Error?) -> Void
+
+    /// Type alias for closures to be passed to the forEach method which allows asynchronous opertions.
+    public typealias RowOperationWithNext = ([Any?]?, Error?, () -> Void) -> Void
+
+    /// Execute the supplied RowOperation against each row returned from the database
+    ///
+    /// - Parameter operation: A callback to be executed against each row in the result set.
+    public func forEach(operation: @escaping RowOperation) {
+        resultFetcher.fetchNext { row, error in
+            operation(row, error)
+            if row != nil {
+                self.forEach(operation: operation)
+            }
+        }
+    }
+
+    /// Execute the supplied RowOperation against each row returned from the database
+    ///
+    /// - Parameter operation: A callback to be executed against each row in the result set.
+    public func forEach(operation: @escaping RowOperationWithNext) {
+        resultFetcher.fetchNext { row, error in
+            operation(row, error, {
+                self.forEach(operation: operation)
+            })
+        }
+    }
 }
