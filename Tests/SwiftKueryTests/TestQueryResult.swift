@@ -73,15 +73,19 @@ class TestQueryResult: XCTestCase {
             let resultSet = queryResult.asResultSet!
             let titles = CommonUtils.getTitles(resultSet: resultSet)
             XCTAssertEqual(titles, ["fruit", "number", "fruit"])
-            let rows = resultSet.rows
-            for (index, row) in rows.enumerated() {
-                XCTAssertEqual(index, 0, "Query should return only one row")
+            var index = 0
+            resultSet.forEach() { row, error in
+                guard let row = row else {
+                    XCTAssertEqual(index, 1, "Query should return only one row")
+                    XCTAssertNotNil(queryResult.asRows, "Query result should be one row")
+                    XCTAssertNil(queryResult.asValue, "Query result should be one row")
+                    return
+                }
                 XCTAssertEqual(row[0] as! String, "banana", "Query returned wrong data")
                 XCTAssertEqual(row[1] as! Int, 38, "Query returned wrong data")
                 XCTAssertEqual(row[2] as! String, "apple", "Query returned wrong data")
+                index += 1
             }
-            XCTAssertNotNil(queryResult.asRows, "Query result should be one row")
-            XCTAssertNil(queryResult.asValue, "Query result should be one row")
         }
         connection.execute(query: query) { queryResult in
             let rows = CommonUtils.getRows(queryResult: queryResult)!
@@ -100,27 +104,31 @@ class TestQueryResult: XCTestCase {
             let resultSet = queryResult.asResultSet!
             let titles = CommonUtils.getTitles(resultSet: resultSet)
             XCTAssertEqual(titles, ["fruit", "number", "fruit"])
-            let rows = resultSet.rows
-            for (index, row) in rows.enumerated() {
-                XCTAssertTrue(index < 3, "Query should return only one row")
+            var index = 0
+            resultSet.forEach() { row, error in
+                guard let row = row else {
+                    XCTAssertEqual(index, 3, "Query should return only one row")
+                    XCTAssertNotNil(queryResult.asRows, "Query result should be one row")
+                    XCTAssertNil(queryResult.asValue, "Query result should be one row")
+                    return
+                }
                 if index == 0 {
-                    XCTAssertEqual(row[0]! as! String, "banana", "Query returned wrong data")
-                    XCTAssertEqual(row[1]! as! Int, 38, "Query returned wrong data")
-                    XCTAssertEqual(row[2]! as! String, "apple", "Query returned wrong data")
+                    XCTAssertEqual(row[0] as! String, "banana", "Query returned wrong data")
+                    XCTAssertEqual(row[1] as! Int, 38, "Query returned wrong data")
+                    XCTAssertEqual(row[2] as! String, "apple", "Query returned wrong data")
                 }
                 else if index == 1 {
-                    XCTAssertEqual(row[0]! as! String, "apple", "Query returned wrong data")
-                    XCTAssertEqual(row[1]! as! Int, -8, "Query returned wrong data")
-                    XCTAssertEqual(row[2]! as! String, "peach", "Query returned wrong data")
+                    XCTAssertEqual(row[0] as! String, "apple", "Query returned wrong data")
+                    XCTAssertEqual(row[1] as! Int, -8, "Query returned wrong data")
+                    XCTAssertEqual(row[2] as! String, "peach", "Query returned wrong data")
                 }
                 else if index == 2 {
-                    XCTAssertEqual(row[0]! as! String, "plum", "Query returned wrong data")
-                    XCTAssertEqual(row[1]! as! Int, 7, "Query returned wrong data")
-                    XCTAssertEqual(row[2]! as! String, "plum", "Query returned wrong data")
+                    XCTAssertEqual(row[0] as! String, "plum", "Query returned wrong data")
+                    XCTAssertEqual(row[1] as! Int, 7, "Query returned wrong data")
+                    XCTAssertEqual(row[2] as! String, "plum", "Query returned wrong data")
                 }
+                index += 1
             }
-            XCTAssertNotNil(queryResult.asRows, "Query result should be one row")
-            XCTAssertNil(queryResult.asValue, "Query result should be one row")
         }
         connection.execute(query: query) { queryResult in
             XCTAssertNotNil(queryResult.asResultSet, "Query result should be three rows")
