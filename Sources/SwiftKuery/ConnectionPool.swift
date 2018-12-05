@@ -46,9 +46,9 @@ In most cases, you will create a connection pool using a plugin, such as SwiftKu
  */
 
 public class ConnectionPool {
-    
+
     private var pool = [Connection]()
-    
+
     // A serial dispatch queue used to ensure thread safety when accessing the pool
     // (at time of writing, serial is the default, and cannot be explicitly specified).
     private var poolLock = DispatchSemaphore(value: 1)
@@ -71,7 +71,12 @@ public class ConnectionPool {
     // A timeout value (in nanoseconds) to wait before returning nil from a take().
     private let timeoutNs: Int64
     private let timeout: Int
-    
+
+    // An array of requests to run when a connection is available
+    // The array is used to store user requests when no connection is available in the pool. Before a connection is released back to the pool any requests in the backlog will be processed.
+    public typealias connectionPoolTask = ((ConnectionPoolConnection?, QueryError?) -> ())
+    private var taskBacklog = [connectionPoolTask]()
+
     // MARK: Initializer
     /**
      Creates an instance of `ConnectionPool` containing `ConnectionPoolOptions.initialCapacity` connections.
@@ -127,30 +132,81 @@ public class ConnectionPool {
     deinit {
         disconnect()
     }
-    
-    // MARK: Retrieve Connection
+
     /**
      Get a connection from the pool.
-     This function will block until a connection can be obtained from the pool or for `ConnectionPoolOptions.timeout`.
+     This function does not block, if a connection is not available the handler will be added to a queue to be process when a connection becomes available.
      ### Usage Example: ###
      A `Connection` instance is retrieved from a pool that was initialized previously.
      ```swift
-     let connection = connectionPool.getConnection()
+     connectionPool.getConnection() { connection, error in
+         guard let connection = connection else {
+            guard let error = error else {
+                // log unspecified error
+            }
+            // log returned error
+         }
+         // use connection
+         connection.execute(.....) {}
+     }
      ```
-    
+     - Parameter poolTask: A closure to execute when a connection is available.
      - Returns: A `Connection` or nil if the wait for a free connection timed out.
-    */
-    public func getConnection() -> Connection? {
-        if let connection = take() {
-            return ConnectionPoolConnection(connection: connection, pool: self)
+     */
+    public func getConnection(poolTask: @escaping connectionPoolTask) {
+        var item: Connection!
+
+        // If there has been a connectivity problem the pool capacity can reach 0. The method below will attempt to generate a new connection which will allow the pool to repopulate with new connections.
+        guard makeCapacityNonZero() else {
+            clearRequestBacklog()
+            return poolTask(nil, QueryError.connection("Unable to get connection to database"))
         }
-        return nil
+
+        lockPoolLock()
+        // make below a guard
+        if (pool.count < 1) {
+            taskBacklog.append(poolTask)
+            return unlockPoolLock()
+        }
+        item = pool[0]
+        pool.removeFirst()
+        // Check if the item is alive, and replace with a new one if it isn't
+        if item.isConnected == false {
+            releaseItem(item)
+            if let replacementItem = generateItem() {
+                item = replacementItem
+            } else {
+                item = nil
+            }
+        }
+        // If we took the last item, we can choose to grow the pool
+        if (pool.count == 0 && capacity < limit) {
+            _ = growPool()
+        }
+        guard let connection = item else {
+            // We do not clear the request backlog here as it will be done by the first thread to detect zero capacity.
+            taskBacklog.append(poolTask)
+            return unlockPoolLock()
+        }
+        unlockPoolLock()
+        return poolTask(ConnectionPoolConnection(connection: connection, pool: self), nil)
     }
-    
+
+    private func clearRequestBacklog() {
+        lockPoolLock()
+        for requestHandler in taskBacklog {
+            DispatchQueue.global().async {
+                requestHandler(nil, QueryError.connection("Unable to get connection from database"))
+            }
+        }
+        taskBacklog = [connectionPoolTask]()
+        unlockPoolLock()
+    }
+
     func release(connection: Connection) {
         give(connection)
     }
-    
+
     // MARK: Disconnect Pool
     /**
      Removes all the connections from the pool and calls the `connectionReleaser` closure on each.
@@ -222,62 +278,29 @@ public class ConnectionPool {
             releaser(item)
             capacity -= 1     
     }
- 
-    // Take an item from the pool. The item will not magically rejoin the pool when no longer
-    // needed, so MUST later be returned to the pool with give() if it is to be reused.
-    // Items can therefore be borrowed or permanently removed with this method.
-    //
-    // This function will block until an item can be obtained from the pool. 
-    private func take() -> Connection? {
-        var item: Connection!
-     
-        // We must return early if the pool has zero capacity, because no-one will ever call
-        // give() to return a connection (and unblock the semaphore.wait below) in this
-        // situation. Try to seed the pool with a new connection so we can continue.
-        guard makeCapacityNonZero() else {
-            return nil
-        }
-     
-        // Indicate that we are going to take an item from the pool. The semaphore will
-        // block if there are currently no items to take, until one is returned via give()
-        let result = semaphore.wait(timeout: (timeout == 0) ? .distantFuture : .now() + DispatchTimeInterval.milliseconds(timeout))
-        if result == DispatchTimeoutResult.timedOut {
-            return nil
-        }
-        // We have permission to take an item - do so in a thread-safe way
-        lockPoolLock()
-        if (pool.count < 1) {
-            semaphore.signal()
-            unlockPoolLock()
-            return nil
-        }
-        item = pool[0]
-        pool.removeFirst()
-        // Check if the item is alive, and replace with a new one if it isn't
-        if item.isConnected == false {
-            releaseItem(item)
-            if let replacementItem = generateItem() {
-                item = replacementItem
-            } else {
-                item = nil
-            }
-        }
-        // If we took the last item, we can choose to grow the pool
-        if (pool.count == 0 && capacity < limit) {
-            _ = growPool()
-        }
-        unlockPoolLock()
-        return item
-    }
-    
+
     // Give an item back to the pool. Whilst this item would normally be one that was earlier
     // take()n from the pool, a new item could be added to the pool via this method.
+    // Items will only be rturned to the pool once the taskBacklog is empty
     private func give(_ item: Connection) {
+        // We need to check if there are task in the backlog and if so offload execution of one and return.
         lockPoolLock()
+        guard taskBacklog.count == 0 else {
+            let deferredTask = taskBacklog.removeFirst()
+            runDeferredPoolTask(task: deferredTask, connection: item)
+            return unlockPoolLock()
+        }
         pool.append(item)
         // Signal that an item is now available
         semaphore.signal()
-        unlockPoolLock()
+        return unlockPoolLock()
+    }
+
+    // Offload execution of a deferred poolTask to another thread.
+    private func runDeferredPoolTask(task: @escaping connectionPoolTask, connection: Connection) {
+        DispatchQueue.global().async {
+            task(ConnectionPoolConnection(connection: connection, pool: self), nil)
+        }
     }
     
     // Remove all connections in the pool, calling releaser on each, leaving the pool empty.
@@ -297,5 +320,4 @@ public class ConnectionPool {
     private func unlockPoolLock() {
         poolLock.signal()
     }
-    
 }

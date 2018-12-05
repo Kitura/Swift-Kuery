@@ -17,17 +17,20 @@
 // MARK: ResultSet
 
 /// Represents a query result set. The rows are accessable either in a blocking fashion using a `RowSequence` or in a non-blocking fashion using nextRow() function.
-public struct ResultSet {
+public class ResultSet {
     private var resultFetcher: ResultFetcher
     
+    internal (set) var connection: Connection? = nil
+
     /// The query result as a Sequence of rows. This API is blocking.
     public private (set) var rows: RowSequence
     
     /// Instantiate an instance of ResultSet.
     ///
     /// - Parameter resultFetcher: An implementation of `ResultFetcher` protocol to fetch the query results.
-    public init(_ resultFetcher: ResultFetcher) {
+    public init(_ resultFetcher: ResultFetcher, connection: Connection) {
         self.resultFetcher = resultFetcher
+        self.connection = connection
         rows = RowSequence(resultFetcher)
     }
     
@@ -43,5 +46,14 @@ public struct ResultSet {
     /// The column titles of the query result. This function is blocking.
     public var titles: [String] {
         return resultFetcher.fetchTitles()
+    }
+
+    /// Called to indicate no further operations will be called on the result set.
+    /// A ResultSet will keep a connection alive until this method is called.
+    /// When called this method enables the underlying connection to be released and in the case where a connection pool is used, returned to the pool for reuse.
+    public func done() {
+        // Nil connection reference once result fetcher cleanup is complete.
+        resultFetcher.done()
+        self.connection = nil
     }
 }
