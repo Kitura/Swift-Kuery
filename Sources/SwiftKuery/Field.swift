@@ -30,7 +30,7 @@ public protocol Field: Buildable {
     func `as`(_ newName: String) -> Field
 }
 
-public extension Field {
+extension Field {
     /// Add an alias to the field, i.e., implement the SQL AS operator.
     ///
     /// - Parameter newName: A String containing the alias for the field.

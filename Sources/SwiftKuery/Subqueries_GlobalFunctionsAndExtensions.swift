@@ -1072,7 +1072,7 @@ public func !=(lhs: Bool, rhs: Predicate<Having,AggregateColumnExpression>) -> H
     return Having(lhs: .bool(lhs), rhs: rhs, condition: .notEqual)
 }
 
-public extension ScalarColumnExpression {
+extension ScalarColumnExpression {
 
     /// Create a `Filter` clause using the `in` operator for subquery.
     ///
@@ -1090,7 +1090,7 @@ public extension ScalarColumnExpression {
         return Filter(lhs: .columnExpression(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension String {
+extension String {
 
     /// Create a `Filter` clause using the `in` operator for subquery.
     ///
@@ -1108,7 +1108,7 @@ public extension String {
         return Filter(lhs: .string(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Column {
+extension Column {
 
     /// Create a `Filter` clause using the `in` operator for subquery.
     ///
@@ -1126,7 +1126,7 @@ public extension Column {
         return Filter(lhs: .column(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Int {
+extension Int {
 
     /// Create a `Filter` clause using the `in` operator for subquery.
     ///
@@ -1144,7 +1144,7 @@ public extension Int {
         return Filter(lhs: .int(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Float {
+extension Float {
 
     /// Create a `Filter` clause using the `in` operator for subquery.
     ///
@@ -1162,7 +1162,7 @@ public extension Float {
         return Filter(lhs: .float(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Double {
+extension Double {
 
     /// Create a `Filter` clause using the `in` operator for subquery.
     ///
@@ -1180,7 +1180,7 @@ public extension Double {
         return Filter(lhs: .double(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Parameter {
+extension Parameter {
 
     /// Create a `Filter` clause using the `in` operator for subquery.
     ///
@@ -1198,7 +1198,7 @@ public extension Parameter {
         return Filter(lhs: .parameter(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Bool {
+extension Bool {
 
     /// Create a `Filter` clause using the `in` operator for subquery.
     ///
@@ -1216,7 +1216,7 @@ public extension Bool {
         return Filter(lhs: .bool(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Date {
+extension Date {
 
     /// Create a `Filter` clause using the `in` operator for subquery.
     ///
@@ -1234,7 +1234,7 @@ public extension Date {
         return Filter(lhs: .date(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension AggregateColumnExpression {
+extension AggregateColumnExpression {
 
     /// Create a `Having` clause using the `in` operator for subquery.
     ///
@@ -1252,7 +1252,7 @@ public extension AggregateColumnExpression {
         return Having(lhs: .columnExpression(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension String {
+extension String {
 
     /// Create a `Having` clause using the `in` operator for subquery.
     ///
@@ -1270,7 +1270,7 @@ public extension String {
         return Having(lhs: .string(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Column {
+extension Column {
 
     /// Create a `Having` clause using the `in` operator for subquery.
     ///
@@ -1288,7 +1288,7 @@ public extension Column {
         return Having(lhs: .column(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Int {
+extension Int {
 
     /// Create a `Having` clause using the `in` operator for subquery.
     ///
@@ -1306,7 +1306,7 @@ public extension Int {
         return Having(lhs: .int(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Float {
+extension Float {
 
     /// Create a `Having` clause using the `in` operator for subquery.
     ///
@@ -1324,7 +1324,7 @@ public extension Float {
         return Having(lhs: .float(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Double {
+extension Double {
 
     /// Create a `Having` clause using the `in` operator for subquery.
     ///
@@ -1342,7 +1342,7 @@ public extension Double {
         return Having(lhs: .double(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Parameter {
+extension Parameter {
 
     /// Create a `Having` clause using the `in` operator for subquery.
     ///
@@ -1360,7 +1360,7 @@ public extension Parameter {
         return Having(lhs: .parameter(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Bool {
+extension Bool {
 
     /// Create a `Having` clause using the `in` operator for subquery.
     ///
@@ -1378,7 +1378,7 @@ public extension Bool {
         return Having(lhs: .bool(self), rhs: .select(query), condition: .notIn)
     }
 }
-public extension Date {
+extension Date {
 
     /// Create a `Having` clause using the `in` operator for subquery.
     ///
