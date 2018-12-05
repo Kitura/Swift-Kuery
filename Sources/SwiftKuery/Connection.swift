@@ -17,22 +17,27 @@
 // MARK: Connection protocol
 
 /// Defines the protocol which all database plugins must implement.
-public protocol Connection {
-  
+public protocol Connection: AnyObject {
+
     /// The `QueryBuilder` with connection specific substitutions.
     var queryBuilder: QueryBuilder { get }
     
     /// Establish a connection with the database.
     ///
-    /// - Parameter onCompletion: The function to be called when the connection is established.
-    func connect(onCompletion: (QueryError?) -> ())
+    /// - Parameter onCompletion: The function to be called when the connection call completes.
+    func connect(onCompletion: @escaping (QueryResult) -> ())
+
+    /// Establish a connection with the database.
+    ///
+    /// - Returns: A QueryResult indicating success or error.
+    func connectSync() -> QueryResult
 
     /// Close the connection to the database.
     func closeConnection()
-    
+
     /// An indication whether there is a connection to the database.
     var isConnected: Bool { get }
-    
+
     /// Execute a query.
     ///
     /// - Parameter query: The query to execute.
@@ -41,7 +46,7 @@ public protocol Connection {
     
     /// Execute a raw query.
     ///
-    /// - Parameter query: A String with the query to execute.
+    /// - Parameter raw: A String with the query to execute.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     func execute(_ raw: String, onCompletion: @escaping ((QueryResult) -> ()))
     
@@ -54,7 +59,7 @@ public protocol Connection {
     
     /// Execute a raw query with parameters.
     ///
-    /// - Parameter query: A String with the query to execute.
+    /// - Parameter raw: A String with the query to execute.
     /// - Parameter parameters: An array of the parameters.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     func execute(_ raw: String, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ()))
@@ -68,7 +73,7 @@ public protocol Connection {
     
     /// Execute a raw query with parameters.
     ///
-    /// - Parameter query: A String with the query to execute.
+    /// - Parameter raw: A String with the query to execute.
     /// - Parameter parameters: A dictionary of the parameters with parameter names as the keys.
     /// - Parameter onCompletion: The function to be called when the execution of the query has completed.
     func execute(_ raw: String, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ()))
@@ -76,16 +81,14 @@ public protocol Connection {
     /// Prepare statement.
     ///
     /// - Parameter query: The query to prepare statement for.
-    /// - Returns: The prepared statement.
-    /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
-    func prepareStatement(_ query: Query) throws -> PreparedStatement
+    /// - Parameter onCompletion: The function to be called when the statement has been prepared.
+    func prepareStatement(_ query: Query, onCompletion: @escaping ((QueryResult) -> ()))
 
     /// Prepare statement.
     ///
     /// - Parameter raw: A String with the query to prepare statement for.
-    /// - Returns: The prepared statement.
-    /// - Throws: QueryError.syntaxError if query build fails, or a database error if it fails to prepare statement.
-    func prepareStatement(_ raw: String) throws -> PreparedStatement
+    /// - Parameter onCompletion: The function to be called when the statement has been prepared.
+    func prepareStatement(_ raw: String, onCompletion: @escaping ((QueryResult) -> ()))
 
     /// Execute a prepared statement.
     ///
@@ -151,10 +154,11 @@ public protocol Connection {
     ///
     /// - Parameter savepoint: The name of the savepoint to release.
     /// - Parameter onCompletion: The function to be called when the execution of release savepoint command has completed.
-    func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ()))    
+    func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ()))
 }
 
 public extension Connection {
+
     func execute(query: Query, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {
         do {
             let databaseQuery = try query.build(queryBuilder: queryBuilder)
@@ -167,16 +171,37 @@ public extension Connection {
                     }
                 }
                 else {
-                    onCompletion(.error(QueryError.syntaxError("Failed to map parameters.")))
+                    runCompletionHandler(.error(QueryError.syntaxError("Failed to map parameters.")), onCompletion: onCompletion)
+                    return
                 }
             }
             execute(convertedQuery, parameters: numberedParameters, onCompletion: onCompletion)
+        } catch  QueryError.syntaxError(let error) {
+            runCompletionHandler(.error(QueryError.syntaxError(error)), onCompletion: onCompletion)
+        } catch {
+            runCompletionHandler(.error(QueryError.syntaxError("Failed to build the query.")), onCompletion: onCompletion)
         }
-        catch  QueryError.syntaxError(let error) {
-            onCompletion(.error(QueryError.syntaxError(error)))
+    }
+    
+    /* The utility functions below should be used by Kuery plugins to invoke the users completiton handler.
+       - runCompletionHandler will pass the QueryResult directly to the users handler and should be used whenever a result occurs that does not require further interaction with the database on the current connection, for example on Insert, Update or Create queuries.
+       - runCompletionHandlerRetainingConnection will cache the current connection within the Result set and should be used if processing the result set will require further interaction with the database on the current connection. For example on Select queries.
+    */
+
+    // Call the users completion handler
+    // This is a useful utility function that is called from within the Kuery plugins when the users callback needs invoking.
+    // Having a utility function for this is not strictly necessary but does provide a convienient way to choose to offload user code in future with minimal code changes.
+    func runCompletionHandler(_ result: QueryResult, onCompletion: @escaping ((QueryResult) -> ())) {
+        onCompletion(result)
+    }
+
+    // Call users completion handler but keep self in scope
+    // The function stores a reference to the connection wrapper on any ResultSet that is being returned which prevents a connection being returned to the pool until ResultSet.done() is called. This is necessary as a user completion handler could offload the handling of the result set.
+    func runCompletionHandlerRetainingConnection(result: QueryResult, onCompletion: @escaping ((QueryResult) -> ())) {
+        if let resultSet = result.asResultSet {
+            // Beacuase ResultSet is a class this is an assignment to the current object rather than an assignment to a copy of the object.
+            resultSet.connection = self
         }
-        catch {
-            onCompletion(.error(QueryError.syntaxError("Failed to build the query.")))
-        }
+        onCompletion(result)
     }
 }
