@@ -17,7 +17,7 @@
 import Foundation
 
 
-public extension ScalarColumnExpression {
+extension ScalarColumnExpression {
     /// Create a `Filter` clause using the like operator.
     ///
     /// - Parameter pattern: The pattern to use in the like expression.
@@ -446,7 +446,7 @@ public extension ScalarColumnExpression {
 
 }
 
-public extension Column {
+extension Column {
     /// Create a `Filter` clause using the like operator.
     ///
     /// - Parameter pattern: The pattern to use in the like expression.
@@ -875,7 +875,7 @@ public extension Column {
 
 }
 
-public extension AggregateColumnExpression {
+extension AggregateColumnExpression {
     /// Create a `Having` clause using the like operator.
     ///
     /// - Parameter pattern: The pattern to use in the like expression.
@@ -1304,7 +1304,7 @@ public extension AggregateColumnExpression {
 
 }
 
-public extension Column {
+extension Column {
     /// Create a `Having` clause using the like operator.
     ///
     /// - Parameter pattern: The pattern to use in the like expression.

@@ -38,7 +38,7 @@ public protocol ConditionalClause: Buildable {
 }
 
 /// An extension of `ConditionalClause` with implementation of `Buildable` protocol.
-public extension ConditionalClause {
+extension ConditionalClause {
     /// Build the clause using `QueryBuilder`.
     ///
     /// - Parameter queryBuilder: The QueryBuilder to use.

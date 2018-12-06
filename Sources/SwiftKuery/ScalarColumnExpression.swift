@@ -45,7 +45,7 @@ public struct ScalarColumnExpression: Field {
     /// An enumeration of the supported scalar functions that can applied on a column.
     public enum ScalarFunction: Buildable {
         /// The SQL NOW function.
-        case now()
+        case now
         /// The SQL UCASE function.
         case ucase(field: Field)
         /// The SQL LCASE function.
@@ -87,7 +87,7 @@ public struct ScalarColumnExpression: Field {
 ///
 /// - Returns: An instance of `ScalarColumnExpression`.
 public func now() -> ScalarColumnExpression {
-    return ScalarColumnExpression(.now())
+    return ScalarColumnExpression(.now)
 }
 
 /// Create a `ScalarColumnExpression` using the LEN function.

@@ -20,7 +20,7 @@
 public protocol Query: Buildable {
 }
 
-public extension Query {
+extension Query {
     /// Execute the query.
     ///
     /// - Parameter connection: The plugin that implements the Connection protocol and executes the query.

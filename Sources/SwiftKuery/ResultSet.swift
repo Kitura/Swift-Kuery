@@ -20,7 +20,7 @@
 public class ResultSet {
     private var resultFetcher: ResultFetcher
     
-    internal (set) var connection: Connection? = nil
+    var connection: Connection? = nil
 
     /// The query result as a Sequence of rows. This API is blocking.
     public private (set) var rows: RowSequence

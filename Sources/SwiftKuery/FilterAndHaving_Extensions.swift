@@ -14,7 +14,7 @@
 * limitations under the License.
 **/
 
-public extension Filter {
+extension Filter {
 
     /// Create a `Filter` clause using the isNull operator.
     ///
@@ -30,7 +30,7 @@ public extension Filter {
         return Filter(lhs: .clause(self), condition: .isNotNull)
     }
 }
-public extension Having {
+extension Having {
 
     /// Create a `Having` clause using the isNull operator.
     ///
