@@ -17,7 +17,7 @@
 import Foundation
 
 
-public extension Bool {
+extension Bool {
 
     /// Create a `Filter` clause using the `in` operator.
     ///
@@ -244,7 +244,7 @@ public extension Bool {
     }
 }
 
-public extension String {
+extension String {
 
     /// Create a `Filter` clause using the `in` operator.
     ///
@@ -471,7 +471,7 @@ public extension String {
     }
 }
 
-public extension Int {
+extension Int {
 
     /// Create a `Filter` clause using the `in` operator.
     ///
@@ -698,7 +698,7 @@ public extension Int {
     }
 }
 
-public extension Float {
+extension Float {
 
     /// Create a `Filter` clause using the `in` operator.
     ///
@@ -925,7 +925,7 @@ public extension Float {
     }
 }
 
-public extension Double {
+extension Double {
 
     /// Create a `Filter` clause using the `in` operator.
     ///
@@ -1152,7 +1152,7 @@ public extension Double {
     }
 }
 
-public extension Parameter {
+extension Parameter {
 
     /// Create a `Filter` clause using the `in` operator.
     ///
@@ -1267,7 +1267,7 @@ public extension Parameter {
     }
 }
 
-public extension Date {
+extension Date {
 
     /// Create a `Filter` clause using the `in` operator.
     ///
@@ -1493,7 +1493,7 @@ public extension Date {
         return Having(lhs: .date(self), rhs: .arrayOfParameter(array), condition: .notBetween)
     }
 }
-public extension String {
+extension String {
     /// Create a `Filter` clause using the like operator.
     ///
     /// - Parameter pattern: The pattern to use in the like expression.
@@ -1559,7 +1559,7 @@ public extension String {
     }
 
 }
-public extension Parameter {
+extension Parameter {
     /// Create a `Filter` clause using the like operator.
     ///
     /// - Parameter pattern: The pattern to use in the like expression.
