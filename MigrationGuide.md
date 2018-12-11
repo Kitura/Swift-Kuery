@@ -28,7 +28,39 @@ Each change in the API is broken down and examples are provided for it's usage b
 
 ## Using the asynchronous API
 
-TODO - Provide example of non-nested API usage that no longer works. Highlight how API should be used.
+While the Swift Kuery API has always been asynchronous in style the underlying implementation was synchronous. With this release the underlying implementation will behave in an asynchronous manner. This change will cause any application using the API in a non-asynchronous fashion to behave in an unpredictable manner.
+
+Below is an example of usage that would have worked prior to these changes but is now likely to cause an application to error:
+
+```
+let query = Select(from: myTable)
+connection.execute(query: query) { result in
+    //Handle result
+}
+let newQuery = Select(from: otherTable)
+connection.execute(query: newQuery) { result in
+    //Handle result
+}
+```
+
+Because the execute API now behaves asynchronously the code will immediately return from the first call to connection.execute resulting in two concurrent operations on the same connection, those being executing query and executing newQuery.
+
+To do this properly you would need to nest the calls as in the example below:
+
+```
+let query = Select(from: myTable)
+connection.execute(query: query) { result in
+    //Handle result
+    let newQuery = Select(from: otherTable)
+    connection.execute(query: newQuery) { result in
+        //Handle result
+    }
+}
+```
+
+In this case the second connection.execute call is run after the first call has completed by virtue of it being part of the callback from the first call.
+
+This principal applies equally to all the asynchronous API’s in Swift Kuery and is important for the project as it will allow easier adoption of an alternative database driver in future, for example one which uses the asynchronous c api’s or perhaps a pure swift driver.
 
 ## Getting a database connection
 
