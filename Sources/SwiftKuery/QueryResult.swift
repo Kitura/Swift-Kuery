@@ -100,10 +100,10 @@ public enum QueryResult {
             }
             return
         case .successNoData:
-            return onCompletion((nil, QueryError.noResult("Operation was succesful but no results returned.")))
+            return onCompletion((nil, QueryError.noResult("Operation was successful but no results returned.")))
         case .error(let error):
             return onCompletion((nil, QueryError.noResult("Result is an error: \(error.localizedDescription)")))
-        default:
+        case .success:
             return onCompletion((nil, QueryError.noResult("Result not a result set, cannot retrieve rows.")))
         }
     }
