@@ -99,11 +99,17 @@ public enum QueryResult {
                 return self.processRows(resultSet, titles: columnTitles, result: nil, onCompletion: onCompletion)
             }
             return
+        case .successNoData:
+            return onCompletion((nil, QueryError.noResult("Operation was succesful but no results returned.")))
+        case .error(let error):
+            return onCompletion((nil, QueryError.noResult("Result is an error: \(error.localizedDescription)")))
         default:
             return onCompletion((nil, QueryError.noResult("Result not a result set, cannot retrieve rows.")))
         }
     }
 
+    // This function will recursively iterate the rows in the result set and generate a dictionary of tilese:values for each.
+    // These dictionaries are appended to to an array which is passed to the users completion handler once all rows have been processed.
     private func processRows(_ resultSet: ResultSet, titles: [String], result: [[String:Any?]]?, onCompletion: @escaping (([[String:Any?]]?, Error?)) -> ()) {
         resultSet.nextRow() { row, error in
             guard let row = row else {
