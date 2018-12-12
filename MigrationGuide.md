@@ -64,7 +64,58 @@ This principal applies equally to all the asynchronous API’s in Swift Kuery an
 
 ## Getting a database connection
 
-TODO - Discuss API changes and sync function. Provide an example of how the old API would be used and then examples of the new API.
+The connection protocol’s connect method has been updated to accept a callback which will be called in an asynchronous fashion, previously the call would have behaved synchronously. The updated method will pass a QueryResult to the callback that will indicate whether the connection was successfully made or not.
+
+Prior to this change your code for creating and using a connection would have looked similar to the example below:
+
+```
+let connection = PostgreSQLConnection(….)
+// Connect the connection
+connection.connect { error in
+    if let error = error {
+        // Connection not established - handle and return
+     }
+     // Connection established
+     connection.execute(….) { result in
+         // Handle result
+    }
+}
+```
+
+With the new method your code will need to be updated to handle the change in return type in a manner similar to that in the example below:
+
+```
+let connection = PostgreSQLConnection(….)
+// Connect the connection
+connection.connect { queryResult in
+    guard let _ = queryResult.success else {
+        // Connection not established, call queryResult.asError to get error.
+        return
+    }
+     // Connection established
+     connection.execute(….) { result in
+         // Handle result
+    }
+}
+```
+
+The connection protocol has also been updated to include a connectSync method. As suggested by it’s name this function is synchronous in nature, An example of its usage is below:
+
+```
+let connection = PostgreSQLConnection(….)
+// Connect the connection
+let queryResult = connection.connectSync()
+guard let _ = queryResult.success else {
+    // Connection not established, call queryResult.asError to get error.
+    return
+}
+// Connection established
+connection.execute(….) { result in
+    // Handle result
+}
+```
+
+It is recommended that the connectSync method is used only during application initialisation due to it’s blocking nature.
 
 ## Using a connection pool
 
