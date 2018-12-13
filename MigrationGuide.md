@@ -160,7 +160,7 @@ Pool.getConnection() { connection, error in
 }
 ```
 
-A connection from the pool will automatically be returned to the pool when it is no longer required. An exception to this is when a query has been executed that returns a result set, se the section below on retrieving results for more details.
+A connection from the pool will automatically be returned to the pool when it is no longer required. An exception to this is when a query has been executed that returns a result set, see the section below on retrieving results for more details.
 
 ## Preparing Statements
 
