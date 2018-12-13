@@ -164,7 +164,53 @@ A connection from the pool will automatically be returned to the pool when it is
 
 ## Preparing Statements
 
-TODO - Discuss changes arounf preparing statements, to include QueryResult helper method. Provide example of previous usage and new usage.
+The Connection protocols prepareStatement function has also seen a signature update to make it asynchronous in style and behaviour, the function will also now return a QueryResult on which you can call a new helper function, asPreparedStatement, to retrieve the prepared statement.
+
+Previous usage of the API would have looked similar to the example below:
+
+```swift
+let connection = PostgreSQLConnection(….)
+// Connect the connection
+connection.connect { error in
+    if let error = error {
+        // Connection not established - handle and return
+     }
+    // Create a prepared statement
+    let select = SELECT(from: myTable)
+    do {
+        try let statement = connection.prepareStatement(select)
+        connection.execute(statement: statement) { result in
+            // Handle result
+        }
+    } catch {
+        // Handle thrown error
+    }
+}
+```
+
+With the changes usage of the API is aligned with the other functions on the Connection protocol and will look similar to:
+
+```swift
+let connection = PostgreSQLConnection(….)
+// Connect the connection
+connection.connect { error in
+    if let error = error {
+        // Connection not established - handle and return
+     }
+    // Create a prepared statement
+    let select = SELECT(from: myTable)
+    connection.prepareStatement(select) { result in
+        guard let statement = result.asPreparedStatement else {
+            // Handle error
+            Return
+        }
+        // Execute the statement
+        connection.execute(statement: statement) { result in
+            // Handle result
+        }
+    }
+}
+```
 
 ## Protocol changes for QueryBuilder
 
