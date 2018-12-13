@@ -26,18 +26,13 @@ public struct ConnectionPoolOptions {
     /// this limit. If not specified, or `maxCapacity` <= `initialCapacity`, the pool cannot grow.
     public let maxCapacity: Int
     
-    /// Maximum wait (in milliseconds) to receive a connection before returning nil. If set to 0 (default), there will be
-    /// no timeout, i.e., the wait may block forever.
-    public let timeout: Int
-    
     /// Initialize an instance of `ConnectionPoolOptions`.
     ///
     /// - Parameter initialCapacity: The initial number of connections in the pool.
     /// - Parameter maxCapacity: The maximum number of connections in the pool
     /// - Parameter timeout: Maximum wait (in milliseconds) to receive a connection before returning nil.
-    public init(initialCapacity: Int, maxCapacity: Int = 0, timeout: Int = 0) {
+    public init(initialCapacity: Int, maxCapacity: Int = 0) {
         self.initialCapacity = initialCapacity
         self.maxCapacity = maxCapacity
-        self.timeout = timeout
     }
 }

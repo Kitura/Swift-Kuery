@@ -67,10 +67,6 @@ public class ConnectionPool {
     
     // A semaphore to enable take() to block when the pool is empty.
     private var semaphore: DispatchSemaphore
-    
-    // A timeout value (in nanoseconds) to wait before returning nil from a take().
-    private let timeoutNs: Int64
-    private let timeout: Int
 
     // An array of requests to run when a connection is available
     // The array is used to store user requests when no connection is available in the pool. Before a connection is released back to the pool any requests in the backlog will be processed.
@@ -109,8 +105,6 @@ public class ConnectionPool {
             capacity = 1
         }
         limit = options.maxCapacity
-        timeout = options.timeout
-        timeoutNs = Int64(timeout) * 1000000  // Convert ms to ns
         generator = connectionGenerator
         releaser = connectionReleaser
         for _ in 0 ..< capacity {
