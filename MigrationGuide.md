@@ -32,7 +32,7 @@ While the Swift Kuery API has always been asynchronous in style the underlying i
 
 Below is an example of usage that would have worked prior to these changes but is now likely to cause an application to error:
 
-```
+```swift
 let query = Select(from: myTable)
 connection.execute(query: query) { result in
     //Handle result
@@ -47,7 +47,7 @@ Because the execute API now behaves asynchronously the code will immediately ret
 
 To do this properly you would need to nest the calls as in the example below:
 
-```
+```swift
 let query = Select(from: myTable)
 connection.execute(query: query) { result in
     //Handle result
@@ -68,7 +68,7 @@ The connection protocol’s connect method has been updated to accept a callback
 
 Prior to this change your code for creating and using a connection would have looked similar to the example below:
 
-```
+```swift
 let connection = PostgreSQLConnection(….)
 // Connect the connection
 connection.connect { error in
@@ -84,7 +84,7 @@ connection.connect { error in
 
 With the new method your code will need to be updated to handle the change in return type in a manner similar to that in the example below:
 
-```
+```swift
 let connection = PostgreSQLConnection(….)
 // Connect the connection
 connection.connect { queryResult in
@@ -101,7 +101,7 @@ connection.connect { queryResult in
 
 The connection protocol has also been updated to include a connectSync method. As suggested by it’s name this function is synchronous in nature, An example of its usage is below:
 
-```
+```swift
 let connection = PostgreSQLConnection(….)
 // Connect the connection
 let queryResult = connection.connectSync()
@@ -123,7 +123,7 @@ The Swift Kuery ConnectionPool has also seen some rework in this release with th
 
 Prior to these changes you code would look similar to:
 
-```
+```swift
 let pool = PostgreSQLConnectionPool(….)
 // Get connection from pool
 let connection = pool.getConnection()
