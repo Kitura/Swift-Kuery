@@ -119,7 +119,48 @@ It is recommended that the connectSync method is used only during application in
 
 ## Using a connection pool
 
-TODO - Discuss connection pool changes including closure signature for tasks. Provide example of old API and exampele of new usage
+The Swift Kuery ConnectionPool has also seen some rework in this release with the previously synchronous getConnection function now updated to accept a connectionPoolTask that will be executed once a connection is available. This change removes the ability to timeout while waiting for a database connection.
+
+Prior to these changes you code would look similar to:
+
+```
+let pool = PostgreSQLConnectionPool(….)
+// Get connection from pool
+let connection = pool.getConnection()
+guard let connection = connection else {
+    // Unable to get connection from pool
+    return
+}
+connection.execute(….) { result in
+    // Handle result
+}
+// Optionally release the connection
+pool.release(connection: connection)
+```
+
+With the new release you will define a connectionPoolTask that is passed to the getConnection call. If a connection is available in the pool the task will execute immediately, if a connection is not available from the pool the task is added to a queue to be processed when a connection becomes available. When a connection taken from the pool is eligible to return to the pool it will first be used to execute any outstanding tasks on the backlog. Once the backlog is empty the connection will be returned to the pool. An example of using the updated API is below along with the signature of a connectionPoolTask:
+
+```
+// connectionPoolTask is a typealias for a closure with the following signature
+public typealias connectionPoolTask = ((ConnectionPoolConnection?, QueryError?) -> ())
+
+// Usage of the API should now look similar to…
+let pool = PostgreSQLConnectionPool(….)
+// Get connection passing task to execute
+Pool.getConnection() { connection, error in
+    guard let connection = connection else {
+        // Handle error case
+        Return
+    }
+    Connection.execute() { result in
+        // Handle result
+        // Optionally release connection
+        pool.release(connection: connection)
+    }
+}
+```
+
+A connection from the pool will automatically be returned to the pool when it is no longer required. An exception to this is when a query has been executed that returns a result set, se the section below on retrieving results for more details.
 
 ## Preparing Statements
 
