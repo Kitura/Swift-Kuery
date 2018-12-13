@@ -140,7 +140,7 @@ pool.release(connection: connection)
 
 With the new release you will define a connectionPoolTask that is passed to the getConnection call. If a connection is available in the pool the task will execute immediately, if a connection is not available from the pool the task is added to a queue to be processed when a connection becomes available. When a connection taken from the pool is eligible to return to the pool it will first be used to execute any outstanding tasks on the backlog. Once the backlog is empty the connection will be returned to the pool. An example of using the updated API is below along with the signature of a connectionPoolTask:
 
-```
+```swift
 // connectionPoolTask is a typealias for a closure with the following signature
 public typealias connectionPoolTask = ((ConnectionPoolConnection?, QueryError?) -> ())
 
