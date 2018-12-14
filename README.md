@@ -120,7 +120,13 @@ let students: [[Any]] = [[0, "computing", 92], [1, "physics", 75], [2, "history"
 
 5. Connect to database and perform an SQL query:
 ```swift
-if let connection = pool.getConnection() {
+pool.getConnection() { connection, error in
+    guard let connection = connection else {
+        guard let error = error else {
+            return print("Unknow error")
+        }
+        return print("Error when getting connection from pool: \(error.localizedDescription)")
+    }
     let insertQuery = Insert(into: grades, rows: students)
     connection.execute(query: insertQuery) { insertResult in
         connection.execute(query: Select(from: grades)) { selectResult in
