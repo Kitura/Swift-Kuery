@@ -110,7 +110,7 @@ let grades = Grades()
 
 3. Create a pool of connections to PostgreSQL:
 ```swift
-let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.databaseName("school")], poolOptions: ConnectionPoolOptions(initialCapacity: 10, maxCapacity: 50, timeout: 10000))
+let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.databaseName("school")], poolOptions: ConnectionPoolOptions(initialCapacity: 10, maxCapacity: 50))
 ```
 
 4. Create some example students:
