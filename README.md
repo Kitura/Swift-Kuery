@@ -64,7 +64,7 @@ The starting point for this example is an existing Swift package. If you don't h
 
 3. Create a `grades` table
     ```
-    CREATE TABLE grades (
+    CREATE TABLE "Grades" (
         id varchar(100) PRIMARY KEY,
         course text NOT NULL,
         grade integer
@@ -135,7 +135,7 @@ pool.getConnection() { connection, error in
             }
             resultSet.forEach() { row, error in
                 guard let row = row else {
-                    //Handle error
+                    // Processed all results
                     return
                 }
                 print("Student \(row[0] ?? ""), studying \(row[1] ?? ""), scored \(row[2] ?? "")")
