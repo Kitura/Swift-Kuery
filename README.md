@@ -144,10 +144,28 @@ pool.getConnection() { connection, error in
     }
 }
 ```
-6. Save the `main.swift` file. Run `swift build` to build the executable.
-7. Run the executable `.build/debug/<yourPackageName>.`
+6. If you were to run the application at this point it would execute immediately because the SwiftKuery API behaves asynchronously. In the case of this simple executable you can add a Dispatch Semaphore to force the application to wait for the asynchronous callbacks to complete:
+```swift
+// Add the following after the existing imports:
+import Dispatch
+let waitSemaphore = DispatchSemaphore(value: 0)
 
+// Update the forEach callback to look like:
+resultSet.forEach() { row, error in
+    guard let row = row else {
+        // Processed all results
+        waitSemaphore.signal()
+        return
+    }
+    print("Student \(row[0] ?? ""), studying \(row[1] ?? ""), scored \(row[2] ?? "")")
+}
 
+// Add the following line at the end of the main.swift file
+waitSemaphore.wait()
+```
+            
+7. Save the `main.swift` file. Run `swift build` to build the executable.
+8. Run the executable `.build/debug/<yourPackageName>.`
 
 This will print the `id`, `course` and `grade` for each student, which are queried from the database:
 ```
