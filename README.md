@@ -365,32 +365,41 @@ class T2 {
 
 __SELECT * FROM t1;__
 
-This query will select all results from the table. The example below shows this how to execute this query including the boilerplate code:
+This query will select all results from the table. The example below shows how to execute this query including the boilerplate code:
 
 ```swift
 let t1 = T1()
 
 let query = Select(from: t1)
 
-guard let connection = pool.getConnection() else {
-   // Error
+pool.getConnection() { connection, error in
+    guard let connection = connection else {
+        // Handle error
+        return
+    }
+    query.execute(connection) { queryResult in
+        guard let resultSet = queryResult.asResultSet else {
+            // Handle error
+            return
+        }
+        resultSet.getColumnTitles() { titles, error in
+            guard let titles = titles else {
+                // Handle error
+                return
+            }
+            //Process titles
+            resultSet.forEach() { row, error in
+                guard let row = row else {
+                    // Processed all results
+                    return
+                }
+                // Process row
+            }
+        }
+    }
 }
 
-query.execute(connection) { queryResult in
-  if let resultSet = queryResult.asResultSet {
-    for title in resultSet.titles {
-      // Process titles
-    }
-    for row in resultSet.rows {
-      for value in row {
-        // Process rows
-      }
-    }
-  }
-  else if let queryError = queryResult.asError {
-    // process error
-  }
-}
+
 ```
 
 The following examples show more complex queries, which can be substituted into the the above boilerplate.
