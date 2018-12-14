@@ -130,10 +130,15 @@ pool.getConnection() { connection, error in
     let insertQuery = Insert(into: grades, rows: students)
     connection.execute(query: insertQuery) { insertResult in
         connection.execute(query: Select(from: grades)) { selectResult in
-            if let resultSet = selectResult.asResultSet {
-                for row in resultSet.rows {
-                    print("Student \(row[0] ?? ""), studying \(row[1] ?? ""), scored \(row[2] ?? "")")
+            guard let resultSet = selectResult.asResultSet else {
+                return print("No result set returned from query")
+            }
+            resultSet.forEach() { row, error in
+                guard let row = row else {
+                    //Handle error
+                    return
                 }
+                print("Student \(row[0] ?? ""), studying \(row[1] ?? ""), scored \(row[2] ?? "")")
             }
         }
     }
