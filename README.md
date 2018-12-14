@@ -212,33 +212,28 @@ let query = Select(grades.course, round(avg(grades.grade), to: 1).as("average"),
             .order(by: .ASC(avg(grades.grade)))
 ```
 
-Now, prepare the statement:
+Now, prepare the statement and execute as many times as required with different parameter values. Use the `release` function to free the prepared statement:
 
 ```swift
-do {
-   let preparedStatement = try connection.prepareStatement(query)
-}
-catch {
-   // Error.
+connection.prepareStatement(query) { result in
+    guard let statement = result.asPreparedStatement else {
+        // Handle error
+        return
+    }
+    // Execute the statement
+    connection.execute(preparedStatement: preparedStatement, parameters: [70]) { result in
+        ...
+        connection.execute(preparedStatement: preparedStatement, parameters: [25]) { result in
+            ...
+            connection.release(preparedStatement: preparedStatement) { result in
+                ...
+            }
+        }
+    }
 }
 ```
 
 **Note**: `preparedStatement` is a plugin-specific handle for the prepared statement.
-
-Now the application may execute the prepared statement as many times as it wants with different parameter values:
-
-```swift
-connection.execute(preparedStatement: preparedStatement, parameters: [70]) { result in
-   ...
-}
-```
-
-Use the `release` function to free the prepared statement:
-```swift
-connection.release(preparedStatement: preparedStatement) { result in
-  ...
-}
-```
 
 ## Schema Management
 
