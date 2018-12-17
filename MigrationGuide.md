@@ -213,10 +213,6 @@ connection.connect { error in
 ```
 
 ## Fetching results asynchronously / Releasing connections to the pool.
-
-```swift
-TODO - Discuss changes in ResultSet and new requirement to call done() once finished with result sets. Discuss result fetcher changes. Add examples.
-
 This release also gives the Swift Kuery result API an overhaul, the API is now asynchronous in style and behaviour bringing it in line with the rest of the Swift Kuery API.
 
 ### QueryResult changes
