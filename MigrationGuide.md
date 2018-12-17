@@ -212,13 +212,204 @@ connection.connect { error in
 }
 ```
 
+## Fetching results asynchronously / Releasing connections to the pool.
+
+```swift
+TODO - Discuss changes in ResultSet and new requirement to call done() once finished with result sets. Discuss result fetcher changes. Add examples.
+
+This release also gives the Swift Kuery result API an overhaul, the API is now asynchronous in style and behaviour bringing it in line with the rest of the Swift Kuery API.
+
+### QueryResult changes
+The asRows function on QueryResult has been updated to now accept a closure that will be called back with an optional array of dictionaries and optional error, rather than simply returning the array of dictionaries as it would have done prior to the change. Another important point to note regarding this API is that it will consume the whole result set and close it before making the callback to the passed closure.
+
+Previous usage of the API would have looked similar to the example below:
+
+```swift
+connection.execute(query: query) { result in
+    let rows = result.asRows()
+     // Process rows
+}
+```
+
+Usage of the new API should look similar to the example below”
+
+```swift
+connection.execute(query: query) { result in
+    result.asRows() { rows, error in
+        guard let rows = rows else {
+            // Handle error
+            return
+        }
+        // Process rows
+    }
+}
+```
+
+### ResultSet changes
+The biggest overhaul in the result API is of ResultSet. The nextRow method has seen a small update to its signature, new functions for retrieving column titles and closing the result set have been added and a new mechanism for iterating the rows is has replaced the previous sequence variable.
+
+The first of these changes is the smallest and has been made to expose any errors encountered when retrieving results from the database to the caller. The updated signature now passes an optional array of results as before but also an optional error. Previous usage of the API would be similar to:
+
+```swift
+connection.execute(query: query) { result in
+    guard let resultSet = result.asResultSet() {
+        //Handle other case
+        return
+    }
+    resultSet.nextRow() { row in
+        guard let row = row else {
+            // Unknown error
+            return
+        }
+        // Process row
+}
+```
+
+Following the update the API is used in the same manner, however we can now expose the error that was encountered when retrieving the row as follows:
+
+```swift
+connection.execute(query: query) { result in
+    guard let resultSet = result.asResultSet() {
+        //Handle other case
+        return
+    }
+    resultSet.nextRow() { row, error in
+        guard let row = row else {
+            guard let error = error else {
+                // No Further rows
+                return
+            }
+            print("Error getting row: \(error)”)
+            return
+        }
+        // Process row
+}
+```
+
+Column titles are now retrieved via a function rather than the previous variable. This change aligns retrieving titles with the rest of the API and allows more flexibility with respect to future changes to underlying behaviour. Previously you could retrieve the titles using code similar to:
+
+```swift
+connection.execute(query: query) { result in
+    guard let resultSet = result.asResultSet() {
+        //Handle other case
+        return
+    }
+    // Get the titles.
+    let titles = resultSet.titles
+}
+```
+
+Following the update your code to retrieve the column titles will look similar to:
+
+```swift
+connection.execute(query: query) { result in
+    guard let resultSet = result.asResultSet() {
+        //Handle other case
+        return
+    }
+    // Get the titles.
+    resultSet.getColumnTitles() { titles, error in
+        guard let titles = titles else {
+            // Handle error case
+            return
+        }
+        // Use titles
+    }
+}
+```
+
+This release add’s the done function to the ResultSet API. The done function can be called to indicate that no further processing will be carried out on the result set and make resources associated with it available for re-use. Below is an example of using the new API.
+
+```swift
+connection.execute(query: query) { result in
+    guard let resultSet = result.asResultSet() {
+        //Handle other case
+        return
+    }
+    resultSet.nextRow() { row, error in
+        guard let row = row else {
+            guard let error = error else {
+                // No Further rows
+                return
+            }
+            print("Error getting row: \(error)”)
+            return
+        }
+        // Process row
+        // No further processing needed so call done to release partially consumed result.
+        resultSet.done()
+}
+```
+
+The final change within ResultSet is the introduction of the forEach functions which replace the rows variable. The forEach functions allow you to run a specific operations against each row returned from your query. One function will autonomously iterate the rows in the result set, the other provides the user a next method to call when they are ready to process the next row which allows the caller to make use of other asynchronous API. Examples for using each of the variants are below including the definition of the RowOperation types:
+
+```swift
+// Type alias for closures to be passed to the forEach method
+public typealias RowOperation = ([Any?]?, Error?) -> Void
+
+// Type alias for closures to be passed to the forEach method which allows asynchronous operations.
+public typealias RowOperationWithNext = ([Any?]?, Error?, () -> Void) -> Void
+
+// Example usage for iterating all rows to count them
+connection.execute(query: query) { result in
+    guard let resultSet = result.asResultSet() {
+        //Handle other case
+        return
+    }
+    var rowCount = 0
+    resultSet.forEach() { row, error in
+        guard let row = row else {
+            guard let error = error else {
+                // No rows remaining
+                return rowCount
+            }
+            // Handle error
+            return
+        }
+        rowCount += 1
+     }
+}
+
+// Example of performing asynchronous work on each row
+connection.execute(query: query) { result in
+    guard let resultSet = result.asResultSet() {
+        //Handle other case
+        return
+    }
+    resultSet.forEach() { row, error, next in
+        guard let row = row else {
+            guard let error = error else {
+                // No rows remaining
+                return
+            }
+            // Handle error
+            return
+        }
+        anAsyncCall(row) { result in
+            // Do stuff
+            // Call next to invoke operation on next row in the result set.
+            next()
+     }
+}
+```
+
+### ResultFetcher changes
+The ResultFetcher protocol has also seen a small update in this release. If you implement a class conforming to ResultFetcher please note the updated signatures on the fetchNext and fetchTitles functions:
+
+```swift
+func fetchNext(callback: @escaping (([Any?]?, Error?)) ->())
+
+func fetchTitles(callback: @escaping (([String]?, Error?)) -> ())
+```
+Accompanying these updates the protocol also now requires a done function. This function should close any underlying database connection and release associated
+System resources:
+
+```swift
+// Closes any underlying database connections and releases system resources synchronously
+func done()
+```
+
 ## Protocol changes for QueryBuilder
 
 TODO - Discuss QueryBuilder protocol changes. Provide examples of new requirements.
-
-## Fetching results asynchronously / Releasing connections to the pool.
-
-TODO - Discuss changes in ResultSet and new requirement to call done() once finished with result sets. Discuss result fetcher changes. Add examples.
-
-
 
