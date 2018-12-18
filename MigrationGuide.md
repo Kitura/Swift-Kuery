@@ -96,12 +96,8 @@ Below is an example of the 3.0 API, using the QueryResult to check for an error:
 let connection = PostgreSQLConnection(….)
 // Connect the connection
 connection.connect { queryResult in
-    guard let _ = queryResult.success else {
-        if let error = queryResult.asError {
-            return Log.error("Connection failed: \(error)")`
-        }
-        // Unknown error
-        return
+    if let error = queryResult.asError {
+        return Log.error("Connection failed: \(error)")`
     }
      // Connection established
      connection.execute(….) { result in
@@ -116,9 +112,8 @@ The connection protocol has also been updated to include a `connectSync` functio
 let connection = PostgreSQLConnection(….)
 // Connect the connection
 let queryResult = connection.connectSync()
-guard let _ = queryResult.success else {
-    // Connection not established, call queryResult.asError to get error.
-    return
+if let error = queryResult.asError {
+    return Log.error("Connection failed: \(error)")`
 }
 // Connection established
 connection.execute(….) { result in
