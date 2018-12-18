@@ -64,7 +64,7 @@ The starting point for this example is an existing Swift package. If you don't h
 
 3. Create a `grades` table
     ```
-    CREATE TABLE grades (
+    CREATE TABLE "Grades" (
         id varchar(100) PRIMARY KEY,
         course text NOT NULL,
         grade integer
@@ -110,7 +110,7 @@ let grades = Grades()
 
 3. Create a pool of connections to PostgreSQL:
 ```swift
-let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.databaseName("school")], poolOptions: ConnectionPoolOptions(initialCapacity: 10, maxCapacity: 50, timeout: 10000))
+let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.databaseName("school")], poolOptions: ConnectionPoolOptions(initialCapacity: 10, maxCapacity: 50))
 ```
 
 4. Create some example students:
@@ -120,23 +120,60 @@ let students: [[Any]] = [[0, "computing", 92], [1, "physics", 75], [2, "history"
 
 5. Connect to database and perform an SQL query:
 ```swift
-if let connection = pool.getConnection() {
+pool.getConnection() { connection, error in
+    guard let connection = connection else {
+        guard let error = error else {
+            return print("Unknown error")
+        }
+        return print("Error when getting connection from pool: \(error.localizedDescription)")
+    }
     let insertQuery = Insert(into: grades, rows: students)
     connection.execute(query: insertQuery) { insertResult in
         connection.execute(query: Select(from: grades)) { selectResult in
-            if let resultSet = selectResult.asResultSet {
-                for row in resultSet.rows {
-                    print("Student \(row[0] ?? ""), studying \(row[1] ?? ""), scored \(row[2] ?? "")")
+            guard let resultSet = selectResult.asResultSet else {
+                return print("No result set returned from query")
+            }
+            resultSet.forEach() { row, error in
+                guard let row = row else {
+                    guard let error = error else {
+                        // Processed all results
+                        return
+                    }
+                    // Handle error
+                    return
                 }
+                guard row.count == 3 else {
+                    // Expecting three elements per row
+                    return print("Row has wrong number of elements. Expecting 3, returned: \(row.count)")
+                }
+                print("Student \(row[0] ?? ""), studying \(row[1] ?? ""), scored \(row[2] ?? "")")
             }
         }
     }
 }
 ```
-6. Save the `main.swift` file. Run `swift build` to build the executable.
-7. Run the executable `.build/debug/<yourPackageName>.`
+6. If you were to run the application at this point it would execute immediately because the SwiftKuery API behaves asynchronously. In the case of this simple executable you can add a Dispatch Semaphore to force the application to wait for the asynchronous callbacks to complete:
+```swift
+// Add the following after the existing imports:
+import Dispatch
+let waitSemaphore = DispatchSemaphore(value: 0)
 
+// Update the forEach callback to look like:
+resultSet.forEach() { row, error in
+    guard let row = row else {
+        // Processed all results
+        waitSemaphore.signal()
+        return
+    }
+    print("Student \(row[0] ?? ""), studying \(row[1] ?? ""), scored \(row[2] ?? "")")
+}
 
+// Add the following line at the end of the main.swift file
+waitSemaphore.wait()
+```
+            
+7. Save the `main.swift` file. Run `swift build` to build the executable.
+8. Run the executable `.build/debug/<yourPackageName>.`
 
 This will print the `id`, `course` and `grade` for each student, which are queried from the database:
 ```
@@ -183,33 +220,28 @@ let query = Select(grades.course, round(avg(grades.grade), to: 1).as("average"),
             .order(by: .ASC(avg(grades.grade)))
 ```
 
-Now, prepare the statement:
+Now, prepare the statement and execute as many times as required with different parameter values. Use the `release` function to free the prepared statement:
 
 ```swift
-do {
-   let preparedStatement = try connection.prepareStatement(query)
-}
-catch {
-   // Error.
+connection.prepareStatement(query) { result in
+    guard let statement = result.asPreparedStatement else {
+        // Handle error
+        return
+    }
+    // Execute the statement
+    connection.execute(preparedStatement: preparedStatement, parameters: [70]) { result in
+        ...
+        connection.execute(preparedStatement: preparedStatement, parameters: [25]) { result in
+            ...
+            connection.release(preparedStatement: preparedStatement) { result in
+                ...
+            }
+        }
+    }
 }
 ```
 
 **Note**: `preparedStatement` is a plugin-specific handle for the prepared statement.
-
-Now the application may execute the prepared statement as many times as it wants with different parameter values:
-
-```swift
-connection.execute(preparedStatement: preparedStatement, parameters: [70]) { result in
-   ...
-}
-```
-
-Use the `release` function to free the prepared statement:
-```swift
-connection.release(preparedStatement: preparedStatement) { result in
-  ...
-}
-```
 
 ## Schema Management
 
@@ -341,32 +373,41 @@ class T2 {
 
 __SELECT * FROM t1;__
 
-This query will select all results from the table. The example below shows this how to execute this query including the boilerplate code:
+This query will select all results from the table. The example below shows how to execute this query including the boilerplate code:
 
 ```swift
 let t1 = T1()
 
 let query = Select(from: t1)
 
-guard let connection = pool.getConnection() else {
-   // Error
+pool.getConnection() { connection, error in
+    guard let connection = connection else {
+        // Handle error
+        return
+    }
+    query.execute(connection) { queryResult in
+        guard let resultSet = queryResult.asResultSet else {
+            // Handle error
+            return
+        }
+        resultSet.getColumnTitles() { titles, error in
+            guard let titles = titles else {
+                // Handle error
+                return
+            }
+            //Process titles
+            resultSet.forEach() { row, error in
+                guard let row = row else {
+                    // Processed all results
+                    return
+                }
+                // Process row
+            }
+        }
+    }
 }
 
-query.execute(connection) { queryResult in
-  if let resultSet = queryResult.asResultSet {
-    for title in resultSet.titles {
-      // Process titles
-    }
-    for row in resultSet.rows {
-      for value in row {
-        // Process rows
-      }
-    }
-  }
-  else if let queryError = queryResult.asError {
-    // process error
-  }
-}
+
 ```
 
 The following examples show more complex queries, which can be substituted into the the above boilerplate.
