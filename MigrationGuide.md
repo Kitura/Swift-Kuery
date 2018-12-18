@@ -72,7 +72,7 @@ This principal applies equally to all the asynchronous API’s in Swift Kuery.
 
 ## Getting a database connection
 
-The Connection protocol's connect() method now accepts a completion handler that will be invoked asychronously. Previously, the call would block while a connection was established. The completion handler receives a QueryResult that indicates whether the connection was successful.
+The Connection protocol's `connect()` function now accepts a completion handler that will be invoked asychronously. Previously, the call would block while a connection was established. The completion handler receives a QueryResult that indicates whether the connection was successful.
 
 Prior to this change your code for creating and using a connection would have looked similar to the example below:
 
@@ -110,7 +110,7 @@ connection.connect { queryResult in
 }
 ```
 
-The connection protocol has also been updated to include a `connectSync` method. As suggested by it’s name this function is synchronous in nature, An example of its usage is below:
+The connection protocol has also been updated to include a `connectSync` function. As suggested by it’s name this function is synchronous in nature, An example of its usage is below:
 
 ```swift
 let connection = PostgreSQLConnection(….)
@@ -126,7 +126,7 @@ connection.execute(….) { result in
 }
 ```
 
-It is recommended that the `connectSync` method is used only during application initialisation due to it’s blocking nature.
+It is recommended that the `connectSync` function is used only during application initialisation due to it’s blocking nature.
 
 ## Using a connection pool
 
@@ -227,7 +227,7 @@ connection.connect { error in
 This release also gives the Swift Kuery result API an overhaul, the API is now asynchronous in style and behaviour bringing it in line with the rest of the Swift Kuery API.
 
 ### QueryResult changes
-The asRows function on QueryResult has been updated to now accept a closure that will be called back with an optional array of dictionaries and optional error, rather than simply returning the array of dictionaries as it would have done prior to the change. Another important point to note regarding this API is that it will consume the whole result set and close it before making the callback to the passed closure.
+The `asRows` function on QueryResult has been updated to now accept a closure that will be called back with an optional array of dictionaries and optional error, rather than simply returning the array of dictionaries as it would have done prior to the change. Another important point to note regarding this API is that it will consume the whole result set and close it before making the callback to the passed closure.
 
 Previous usage of the API would have looked similar to the example below:
 
@@ -253,7 +253,7 @@ connection.execute(query: query) { result in
 ```
 
 ### ResultSet changes
-The biggest overhaul in the result API is of ResultSet. The nextRow method has seen a small update to its signature, new functions for retrieving column titles and closing the result set have been added and a new mechanism for iterating the rows is has replaced the previous sequence variable.
+The biggest overhaul in the result API is of ResultSet. The `nextRow` function has seen a small update to its signature, new functions for retrieving column titles and closing the result set have been added and a new mechanism for iterating the rows is has replaced the previous sequence variable.
 
 The first of these changes is the smallest and has been made to expose any errors encountered when retrieving results from the database to the caller. The updated signature now passes an optional array of results as before but also an optional error. Previous usage of the API would be similar to:
 
@@ -325,7 +325,7 @@ connection.execute(query: query) { result in
 }
 ```
 
-This release add’s the done function to the ResultSet API. The done function can be called to indicate that no further processing will be carried out on the result set and make resources associated with it available for re-use. Below is an example of using the new API.
+This release adds the `done` function to the ResultSet API. The `done` function can be called to indicate that no further processing will be carried out on the result set and make resources associated with it available for re-use. Below is an example of using the new API.
 
 ```swift
 connection.execute(query: query) { result in
@@ -348,7 +348,7 @@ connection.execute(query: query) { result in
 }
 ```
 
-The final change within ResultSet is the introduction of the forEach functions which replace the rows variable. The forEach functions allow you to run a specific operations against each row returned from your query. One function will autonomously iterate the rows in the result set, the other provides the user a next method to call when they are ready to process the next row which allows the caller to make use of other asynchronous API. Examples for using each of the variants are below including the definition of the RowOperation types:
+The final change within ResultSet is the introduction of the `forEach` functions which replace the `rows` variable. The `forEach` functions allow you to run a specific operations against each row returned from your query. One function will autonomously iterate the rows in the result set, the other provides the user a `next` function to call when they are ready to process the next row which allows the caller to make use of other asynchronous API. Examples for using each of the variants are below including the definition of the `RowOperation` types:
 
 ```swift
 // Type alias for closures to be passed to the forEach method
@@ -401,15 +401,14 @@ connection.execute(query: query) { result in
 ```
 
 ### ResultFetcher changes
-The ResultFetcher protocol has also seen a small update in this release. If you implement a class conforming to ResultFetcher please note the updated signatures on the fetchNext and fetchTitles functions:
+The ResultFetcher protocol has also seen a small update in this release. If you implement a class conforming to ResultFetcher please note the updated signatures on the `fetchNext` and `fetchTitles` functions:
 
 ```swift
 func fetchNext(callback: @escaping (([Any?]?, Error?)) ->())
 
 func fetchTitles(callback: @escaping (([String]?, Error?)) -> ())
 ```
-Accompanying these updates the protocol also now requires a done function. This function should close any underlying database connection and release associated
-System resources:
+Accompanying these updates the protocol also now requires a `done` function. This function should close any underlying database connection and release associated System resources:
 
 ```swift
 // Closes any underlying database connections and releases system resources synchronously
@@ -420,4 +419,4 @@ func done()
 
 One of the changes in SwiftKuery 3.0 is that the logic for building the description of Columns is being moved out of Kuery and into the database plugin. Each database plugin has different requirements regarding the syntax for specifying a column, while this logic was in SwiftKuery it had to be aware of each plugins requirements and the resulting code was complex.
 
-To simplify the interface between SwiftKuery and the plugins we have updated the QueryBuilder protocol to include a requirement for a class conforming to a new protocol ColumnCreator. The ColumnCreator protocol requires a single function named buildColumn, this function accepts a SwiftKuery Column and instance of QueryBuilder and returns an optional String representing the description of the column that the implementing plugin will accept. SwiftKueryPostgreSQL, SwiftKueryMySQL and SwiftKuerySQLite all have implementations of the protocol you can use for reference.
+To simplify the interface between SwiftKuery and the plugins we have updated the QueryBuilder protocol to include a requirement for a class conforming to a new protocol `ColumnCreator`. The `ColumnCreator` protocol requires a single function named `buildColumn`, this function accepts a SwiftKuery `Column` and instance of `QueryBuilder` and returns an optional String representing the description of the column that the implementing plugin will accept. SwiftKueryPostgreSQL, SwiftKueryMySQL and SwiftKuerySQLite all have implementations of the protocol you can use for reference.
