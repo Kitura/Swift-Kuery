@@ -22,13 +22,20 @@
 
 # Migrating to Swift Kuery 3.0
 
-This migration guide will highlight the changes in Swift Kuery 3.0 that will affect existing code and is intended to help consumers during their adoption of this release.
+This guide introduces the changes in version 3.0 that affect existing code, to assist consumers during the adoption of this release.
 
-Each change in the API is broken down and examples are provided for it's usage before and after.
+For each change to the API, an example of its usage before and after is provided.
 
 ## Using the asynchronous API
 
-While the Swift Kuery API has always been asynchronous in style the underlying implementation was synchronous. With this release the underlying implementation will behave in an asynchronous manner. This change will cause any application using the API in a non-asynchronous fashion to behave in an unpredictable manner.
+While the Swift Kuery API has always been asynchronous in style, the underlying implementation invoked the completion handlers synchronously. This allowed for implementations to make incorrect assumptions about the ordering of execution.
+
+In the 3.0 release, completion handlers are invoked asynchronously, which has several benefits:
+* Independent database operations can easily be run in parallel, by executing each operation on a separate connection. Because the calls no longer block, operations can be expressed sequentially but will execute in parallel.
+* Operations that require a connection from a ConnectionPool can be safely nested without the risk of exhausting the pool and causing deadlock.
+* Kuery can adopt more scalable, non-blocking database connectors in the future without affecting the behaviour of applications built on top of it.
+
+However, applications that rely on the synchronous execution of completion handlers are likely to require changes, as these assumptions no longer hold.
 
 Below is an example of usage that would have worked prior to these changes but is now likely to cause an application to error:
 
@@ -43,9 +50,9 @@ connection.execute(query: newQuery) { result in
 }
 ```
 
-Because the execute API now behaves asynchronously the code will immediately return from the first call to connection.execute resulting in two concurrent operations on the same connection, those being executing query and executing newQuery.
+As the completion handler for execute() is now invoked asynchronously, the code will immediately continue on to the second call to execute(), resulting in an attempt to perform two parallel operations on the same connection.
 
-To do this properly you would need to nest the calls as in the example below:
+Dependent operations should instead be nested as per the example below:
 
 ```swift
 let query = Select(from: myTable)
@@ -57,14 +64,15 @@ connection.execute(query: query) { result in
     }
 }
 ```
+The second connection.execute() is run only once the first has completed. By doing so, you can safely access the results of the first query before issuing subsequent operations that depend on them.
 
-In this case the second connection.execute call is run after the first call has completed by virtue of it being part of the callback from the first call.
+Alternatively, if the two queries are genuinely independent, you can improve the responsiveness of your application by executing them in parallel using two connections.
 
-This principal applies equally to all the asynchronous API’s in Swift Kuery and is important for the project as it will allow easier adoption of an alternative database driver in future, for example one which uses the asynchronous c api’s or perhaps a pure swift driver.
+This principal applies equally to all the asynchronous API’s in Swift Kuery.
 
 ## Getting a database connection
 
-The connection protocol’s connect method has been updated to accept a callback which will be called in an asynchronous fashion, previously the call would have behaved synchronously. The updated method will pass a QueryResult to the callback that will indicate whether the connection was successfully made or not.
+The Connection protocol's connect() method now accepts a completion handler that will be invoked asychronously. Previously, the call would block while a connection was established. The completion handler receives a QueryResult that indicates whether the connection was successful.
 
 Prior to this change your code for creating and using a connection would have looked similar to the example below:
 
@@ -82,14 +90,17 @@ connection.connect { error in
 }
 ```
 
-With the new method your code will need to be updated to handle the change in return type in a manner similar to that in the example below:
+Below is an example of the 3.0 API, using the QueryResult to check for an error:
 
 ```swift
 let connection = PostgreSQLConnection(….)
 // Connect the connection
 connection.connect { queryResult in
     guard let _ = queryResult.success else {
-        // Connection not established, call queryResult.asError to get error.
+        if let error = queryResult.asError {
+            return Log.error("Connection failed: \(error)")`
+        }
+        // Unknown error
         return
     }
      // Connection established
@@ -99,7 +110,7 @@ connection.connect { queryResult in
 }
 ```
 
-The connection protocol has also been updated to include a connectSync method. As suggested by it’s name this function is synchronous in nature, An example of its usage is below:
+The connection protocol has also been updated to include a `connectSync` method. As suggested by it’s name this function is synchronous in nature, An example of its usage is below:
 
 ```swift
 let connection = PostgreSQLConnection(….)
