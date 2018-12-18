@@ -19,20 +19,15 @@
 /// A protocol for retrieving query results. All database plugins must implement this protocol.
 public protocol ResultFetcher {
     
-    /// Fetch the next row of the query result. This function is blocking.
-    ///
-    /// - Returns: An array of values of type Any? representing the next row from the query result.
-    func fetchNext() -> [Any?]?
-    
     /// Fetch the next row of the query result. This function is non-blocking.
     ///
     /// - Parameter callback: A callback to call when the next row of the query result is ready.
-    func fetchNext(callback: ([Any?]?) ->())
-    
-    /// Fetch the titles of the query result. This function is blocking.
+    func fetchNext(callback: @escaping (([Any?]?, Error?)) ->())
+
+    /// Fetch the titles of the query result. This function is non-blocking.
     ///
-    /// - Returns: An array of column titles of type String.
-    func fetchTitles() -> [String]
+    /// - Parameter callback: A callback to call when the column titles of the query result are ready.
+    func fetchTitles(callback: @escaping (([String]?, Error?)) -> ())
 
     /// Closes any underlying database connections and releases system resources synchronously
     ///

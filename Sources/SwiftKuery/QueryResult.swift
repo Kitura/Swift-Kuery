@@ -80,38 +80,72 @@ public enum QueryResult {
         }
     }
     
-    /// Data received from the query execution represented as an array of dictionaries.
+    /// Passes data received from the query execution represented as an array of dictionaries to a user defined completion handler.
     /// Each entry in the array repersents a row in the result with column titles as the keys.
     /// In case there are columns with the same title, we add indices to the keys: for example if
     /// the result contains three columns named 'a', the dictionary will contain the keys: a, a.1 and a.2.
     /// This function will consume the entire set of results and then call done against the result set which will allow the underlying connection to be reused.
     /// When asRows is called a user does not need to explicitly invoke the done method on the result set.
-    public var asRows: [[String:Any?]]? {
+    public func asRows(onCompletion: @escaping (([[String:Any?]]?, Error?)) -> ()) {
         switch self {
         case .resultSet(let resultSet):
-            let z = resultSet.rows.map { zip(resultSet.titles, $0) }
-            let arrayOfDictionaries = z.map { row -> [String:Any?] in
-                var dictionary = [String:Any?]()
-                for (title, value) in row {
-                    if dictionary[title] == nil {
-                        dictionary[title] = value
+            resultSet.getColumnTitles() { titles, error in
+                guard let columnTitles = titles else {
+                    guard let error = error else {
+                        return onCompletion((nil, QueryError.noResult("Unable to retrieve Column titles")))
                     }
-                    else {
-                        // In case we have a collision on key names.
-                        var i = 1
-                        while (dictionary[title + ".\(i)"] != nil) {
-                            i = i + 1
-                        }
-                        dictionary[title + ".\(i)"] = value
-                    }
+                    return onCompletion((nil, QueryError.noResult(error.localizedDescription)))
                 }
-                return dictionary
+                return self.processRows(resultSet, titles: columnTitles, result: nil, onCompletion: onCompletion)
             }
-            // As this function consumes the entire result set we can explicitly close the result set allowing the release of the underlying connection.
-            resultSet.done()
-            return arrayOfDictionaries
-        default:
-            return nil
+            return
+        case .successNoData:
+            return onCompletion((nil, QueryError.noResult("Operation was successful but no results returned.")))
+        case .error(let error):
+            return onCompletion((nil, QueryError.noResult("Result is an error: \(error.localizedDescription)")))
+        case .success:
+            return onCompletion((nil, QueryError.noResult("Result not a result set, cannot retrieve rows.")))
+        }
+    }
+
+    // This function will recursively iterate the rows in the result set and generate a dictionary of tilese:values for each.
+    // These dictionaries are appended to to an array which is passed to the users completion handler once all rows have been processed.
+    private func processRows(_ resultSet: ResultSet, titles: [String], result: [[String:Any?]]?, onCompletion: @escaping (([[String:Any?]]?, Error?)) -> ()) {
+        resultSet.nextRow() { row, error in
+            guard let row = row else {
+                guard let error = error else {
+                    // We have run out of rows so need to return the results and explicitly close the result set allowing the release of the underlying connection.
+                    resultSet.done()
+                    return onCompletion((result, nil))
+                }
+                return onCompletion((nil, QueryError.noResult("Error fetching row: \(error.localizedDescription)")))
+            }
+            guard row.count == titles.count else {
+                // Column titles and value counts do not match
+                return onCompletion((nil, QueryError.noResult("Number of titles does not match number of values for row, unable to retrieve rows.")))
+            }
+            // myTitles will be updated with new column titles when a title collision occurs, for example if a JOIN results in columns from different table with the same name being included in the results. myTitles is then passed into the recursive call of processRows meaning we will only ever run collision handling when processing the first row of the results.
+            var myTitles = titles
+            var dictionary = [String:Any?]()
+            var index = 0
+            for title in titles {
+                if dictionary[title] == nil {
+                    dictionary[title] = row[index]
+                } else {
+                    // In case we have a collision on key names.
+                    var i = 1
+                    while (dictionary[title + ".\(i)"] != nil) {
+                        i = i + 1
+                    }
+                    let newTitle = title + ".\(i)"
+                    dictionary[newTitle] = row[index]
+                    myTitles[index] = newTitle
+                }
+                index += 1
+            }
+            var newResult = result != nil ? result : [[String:Any?]]()
+            newResult?.append(dictionary)
+            return self.processRows(resultSet, titles: myTitles, result: newResult, onCompletion: onCompletion)
         }
     }
 }

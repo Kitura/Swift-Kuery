@@ -19,33 +19,29 @@
 /// Represents a query result set. The rows are accessable either in a blocking fashion using a `RowSequence` or in a non-blocking fashion using nextRow() function.
 public class ResultSet {
     private var resultFetcher: ResultFetcher
-    
+
     var connection: Connection? = nil
 
-    /// The query result as a Sequence of rows. This API is blocking.
-    public private (set) var rows: RowSequence
-    
     /// Instantiate an instance of ResultSet.
     ///
     /// - Parameter resultFetcher: An implementation of `ResultFetcher` protocol to fetch the query results.
     public init(_ resultFetcher: ResultFetcher, connection: Connection) {
         self.resultFetcher = resultFetcher
         self.connection = connection
-        rows = RowSequence(resultFetcher)
     }
-    
+
     /// Fetch the next row of the query result. This function is non-blocking.
     ///
     /// - Parameter callback: A callback to call when the next row of the query result is ready.
-    public func nextRow(callback: (_ row: [Any?]?) ->()) {
-        resultFetcher.fetchNext { row in
-            callback(row)
+    public func nextRow(callback: @escaping (([Any?]?, Error?)) ->()) {
+        resultFetcher.fetchNext { row, error in
+            callback((row, error))
         }
     }
-    
-    /// The column titles of the query result. This function is blocking.
-    public var titles: [String] {
-        return resultFetcher.fetchTitles()
+
+    /// Fetch the column titles of the query result. This function is non-blocking
+    public func getColumnTitles( callback: @escaping (([String]?, Error?)) -> ()) {
+        resultFetcher.fetchTitles(callback: callback)
     }
 
     /// Called to indicate no further operations will be called on the result set.
@@ -55,5 +51,34 @@ public class ResultSet {
         // Nil connection reference once result fetcher cleanup is complete.
         resultFetcher.done()
         self.connection = nil
+    }
+
+    /// Type alias for closures to be passed to the forEach method
+    public typealias RowOperation = ([Any?]?, Error?) -> Void
+
+    /// Type alias for closures to be passed to the forEach method which allows asynchronous opertions.
+    public typealias RowOperationWithNext = ([Any?]?, Error?, () -> Void) -> Void
+
+    /// Execute the supplied RowOperation against each row returned from the database
+    ///
+    /// - Parameter operation: A callback to be executed against each row in the result set.
+    public func forEach(operation: @escaping RowOperation) {
+        resultFetcher.fetchNext { row, error in
+            operation(row, error)
+            if row != nil {
+                self.forEach(operation: operation)
+            }
+        }
+    }
+
+    /// Execute the supplied RowOperation against each row returned from the database
+    ///
+    /// - Parameter operation: A callback to be executed against each row in the result set.
+    public func forEach(operation: @escaping RowOperationWithNext) {
+        resultFetcher.fetchNext { row, error in
+            operation(row, error, {
+                self.forEach(operation: operation)
+            })
+        }
     }
 }

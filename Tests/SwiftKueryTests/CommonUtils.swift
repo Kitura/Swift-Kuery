@@ -147,24 +147,24 @@ class TestResultFetcher: ResultFetcher {
         self.numberOfRows = numberOfRows
     }
 
-    func fetchNext() -> [Any?]? {
-        if fetched < numberOfRows {
-            fetched += 1
-            return rows[fetched - 1]
+    func fetchNext(callback: @escaping (([Any?]?, Error?)) -> ()) {
+        DispatchQueue.global().async {
+            if self.fetched < self.numberOfRows {
+                self.fetched += 1
+                return callback((self.rows[self.fetched - 1], nil))
+            }
+            return callback((nil,nil))
         }
-        return nil
-    }
-
-    func fetchNext(callback: ([Any?]?) ->()) {
-        callback(fetchNext())
-    }
-
-    func fetchTitles() -> [String] {
-        return titles
     }
 
     func done() {
         return
+    }
+
+    func fetchTitles(callback: @escaping (([String]?, Error?)) -> ()) {
+        DispatchQueue.global().async {
+            callback((self.titles, nil))
+        }
     }
 }
 
@@ -177,7 +177,45 @@ func createConnection(withDeleteRequiresUsing: Bool = false, withUpdateRequiresF
 }
 
 // Dummy class for test framework
-class CommonUtils { }
+class CommonUtils {
+
+    // Utility method that returns the column titles from a ResultSet in a synchronous manner
+    static func getTitles(resultSet: ResultSet) -> [String] {
+        var titles = [String]()
+        let waitLock = DispatchSemaphore(value: 0)
+        resultSet.getColumnTitles() { columnTitles, error in
+            guard let columnTitles = columnTitles else {
+                waitLock.signal()
+                return
+            }
+            titles = columnTitles
+            waitLock.signal()
+            return
+        }
+        waitLock.wait()
+        return titles
+    }
+
+    // Utility method that returns all rows of a ResultSet in a synchronous manner
+    static func getRows(queryResult: QueryResult) -> [[String: Any?]]? {
+        var rows: [[String: Any?]]? = nil
+        guard let _ = queryResult.asResultSet else {
+            return rows
+        }
+        let waitLock = DispatchSemaphore(value: 0)
+        queryResult.asRows() { result, error in
+            guard let result = result else {
+                waitLock.signal()
+                return
+            }
+            rows = result
+            waitLock.signal()
+            return
+        }
+        waitLock.wait()
+        return rows
+    }
+}
 
 class TestColumnBuilder : ColumnCreator {
     public func buildColumn(for column: Column, using queryBuilder: QueryBuilder) -> String? {
