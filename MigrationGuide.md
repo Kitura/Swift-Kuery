@@ -407,5 +407,6 @@ func done()
 
 ## Protocol changes for QueryBuilder
 
-TODO - Discuss QueryBuilder protocol changes. Provide examples of new requirements.
+One of the changes in SwiftKuery 3.0 is that the logic for building the description of Columns is being moved out of Kuery and into the database plugin. Each database plugin has different requirements regarding the syntax for specifying a column, while this logic was in SwiftKuery it had to be aware of each plugins requirements and the resulting code was complex.
 
+To simplify the interface between SwiftKuery and the plugins we have updated the QueryBuilder protocol to include a requirement for a class conforming to a new protocol ColumnCreator. The ColumnCreator protocol requires a single function named buildColumn, this function accepts a SwiftKuery Column and instance of QueryBuilder and returns an optional String representing the description of the column that the implementing plugin will accept. SwiftKueryPostgreSQL, SwiftKueryMySQL and SwiftKuerySQLite all have implementations of the protocol you can use for reference.
