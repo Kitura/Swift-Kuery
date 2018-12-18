@@ -123,7 +123,7 @@ let students: [[Any]] = [[0, "computing", 92], [1, "physics", 75], [2, "history"
 pool.getConnection() { connection, error in
     guard let connection = connection else {
         guard let error = error else {
-            return print("Unknow error")
+            return print("Unknown error")
         }
         return print("Error when getting connection from pool: \(error.localizedDescription)")
     }
@@ -135,8 +135,16 @@ pool.getConnection() { connection, error in
             }
             resultSet.forEach() { row, error in
                 guard let row = row else {
-                    // Processed all results
+                    guard let error = error else {
+                        // Processed all results
+                        return
+                    }
+                    // Handle error
                     return
+                }
+                guard row.count == 3 else {
+                    // Expecting three elements per row
+                    return print("Row has wrong number of elements. Expecting 3, returned: \(row.count)")
                 }
                 print("Student \(row[0] ?? ""), studying \(row[1] ?? ""), scored \(row[2] ?? "")")
             }
