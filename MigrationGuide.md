@@ -126,11 +126,11 @@ connection.execute(….) { result in
 }
 ```
 
-It is recommended that the connectSync method is used only during application initialisation due to it’s blocking nature.
+It is recommended that the `connectSync` method is used only during application initialisation due to it’s blocking nature.
 
 ## Using a connection pool
 
-The Swift Kuery ConnectionPool has also seen some rework in this release with the previously synchronous getConnection function now updated to accept a connectionPoolTask that will be executed once a connection is available. This change removes the ability to timeout while waiting for a database connection.
+The Swift Kuery ConnectionPool has also seen some rework in this release with the previously synchronous `getConnection` function now updated to accept a `connectionPoolTask` that will be executed once a connection is available. This change removes the ability to timeout while waiting for a database connection.
 
 Prior to these changes you code would look similar to:
 
@@ -149,7 +149,7 @@ connection.execute(….) { result in
 pool.release(connection: connection)
 ```
 
-With the new release you will define a connectionPoolTask that is passed to the getConnection call. If a connection is available in the pool the task will execute immediately, if a connection is not available from the pool the task is added to a queue to be processed when a connection becomes available. When a connection taken from the pool is eligible to return to the pool it will first be used to execute any outstanding tasks on the backlog. Once the backlog is empty the connection will be returned to the pool. An example of using the updated API is below along with the signature of a connectionPoolTask:
+For Swift Kuery 3.0 you will define a connectionPoolTask that is passed to the `getConnection` call. If a connection is available in the pool the task will execute immediately, if a connection is not available from the pool the task is added to a queue to be processed when a connection becomes available. When a connection taken from the pool is eligible to return to the pool it will first be used to execute any outstanding tasks on the backlog. Once the backlog is empty the connection will be returned to the pool. Below is an example of the 3.0 API, along with the signature of a connectionPoolTask:
 
 ```swift
 // connectionPoolTask is a typealias for a closure with the following signature
@@ -171,13 +171,13 @@ Pool.getConnection() { connection, error in
 }
 ```
 
-A connection from the pool will automatically be returned to the pool when it is no longer required. An exception to this is when a query has been executed that returns a result set, see the section below on retrieving results for more details.
+A connection will automatically be returned to the pool when it is no longer required. An exception to this is when a query has been executed that returns a result set, see the section below on retrieving results for more details.
 
 ## Preparing Statements
 
-The Connection protocols prepareStatement function has also seen a signature update to make it asynchronous in style and behaviour, the function will also now return a QueryResult on which you can call a new helper function, asPreparedStatement, to retrieve the prepared statement.
+The Connection protocols `prepareStatement` function has been updated to accept a completion handler that will be invoked asynchronously. The completion handler receives a `QueryResult` on which you can call a new helper function, `asPreparedStatement`, to retrieve the prepared statement.
 
-Previous usage of the API would have looked similar to the example below:
+Usage of the 2.0 API would have looked similar to the example below:
 
 ```swift
 let connection = PostgreSQLConnection(….)
@@ -199,7 +199,7 @@ connection.connect { error in
 }
 ```
 
-With the changes usage of the API is aligned with the other functions on the Connection protocol and will look similar to:
+With the changes usage of the API is aligned with the other functions on the Connection protocol, an example of using the 3.0 API is below:
 
 ```swift
 let connection = PostgreSQLConnection(….)
