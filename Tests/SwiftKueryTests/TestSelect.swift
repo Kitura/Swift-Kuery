@@ -170,6 +170,12 @@ class TestSelect: XCTestCase {
         kuery = connection.descriptionOf(query: s)
         query = "SELECT \"tableSelect\".\"a\" FROM \"tableSelect\" WHERE (LEN(\"tableSelect\".\"a\") >= ROUND(LEN(\"tableSelect\".\"b\"), 2)) AND (MID(UCASE(\"tableSelect\".\"b\"), 3, 2) = \"tableSelect\".\"a\")"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        s = Select(from: t)
+            .where(t.a == "I'm you're")
+        kuery = connection.descriptionOf(query: s)
+        query = "SELECT * FROM \"tableSelect\" WHERE \"tableSelect\".\"a\" = 'I''m you''re'"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
     
     func testSelectWith() {
