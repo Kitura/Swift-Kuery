@@ -66,6 +66,9 @@
                 <a class="nav-group-task-link" href="../Classes/ConnectionPoolConnection.html">ConnectionPoolConnection</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/DummyColumBuilder.html">DummyColumBuilder</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Migration.html">Migration</a>
               </li>
               <li class="nav-group-task">
@@ -73,6 +76,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/QueryBuilder/QuerySubstitutionNames.html">– QuerySubstitutionNames</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ResultSet.html">ResultSet</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Table.html">Table</a>
@@ -293,6 +299,9 @@
                 <a class="nav-group-task-link" href="../Protocols/Buildable.html">Buildable</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ColumnCreator.html">ColumnCreator</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ConditionalClause.html">ConditionalClause</a>
               </li>
               <li class="nav-group-task">
@@ -365,12 +374,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/RawField.html">RawField</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/ResultSet.html">ResultSet</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/RowSequence.html">RowSequence</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/SQLDate.html">SQLDate</a>
@@ -454,9 +457,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10SwiftKuery11QueryResultO9resultSetAcA0dF0VcACmF"></a>
+                    <a name="/s:10SwiftKuery11QueryResultO9resultSetAcA0dF0CcACmF"></a>
                     <a name="//apple_ref/swift/Element/resultSet" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10SwiftKuery11QueryResultO9resultSetAcA0dF0VcACmF">resultSet</a>
+                    <a class="token" href="#/s:10SwiftKuery11QueryResultO9resultSetAcA0dF0CcACmF">resultSet</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -464,14 +467,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The result of the query execution as an a <code><a href="../Structs/ResultSet.html">ResultSet</a></code>.</p>
+                        <p>The result of the query execution as an a <code><a href="../Classes/ResultSet.html">ResultSet</a></code>.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">resultSet</span><span class="p">(</span><span class="kt"><a href="../Structs/ResultSet.html">ResultSet</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">resultSet</span><span class="p">(</span><span class="kt"><a href="../Classes/ResultSet.html">ResultSet</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -574,9 +577,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10SwiftKuery11QueryResultO02asD3SetAA0dF0VSgvp"></a>
+                    <a name="/s:10SwiftKuery11QueryResultO02asD3SetAA0dF0CSgvp"></a>
                     <a name="//apple_ref/swift/Property/asResultSet" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10SwiftKuery11QueryResultO02asD3SetAA0dF0VSgvp">asResultSet</a>
+                    <a class="token" href="#/s:10SwiftKuery11QueryResultO02asD3SetAA0dF0CSgvp">asResultSet</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -584,14 +587,41 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Data received from the query execution represented as a <code><a href="../Structs/ResultSet.html">ResultSet</a></code>.</p>
+                        <p>Data received from the query execution represented as a <code><a href="../Classes/ResultSet.html">ResultSet</a></code>.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">asResultSet</span><span class="p">:</span> <span class="kt"><a href="../Structs/ResultSet.html">ResultSet</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">asResultSet</span><span class="p">:</span> <span class="kt"><a href="../Classes/ResultSet.html">ResultSet</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery11QueryResultO19asPreparedStatementAA0fG0_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/asPreparedStatement" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery11QueryResultO19asPreparedStatementAA0fG0_pSgvp">asPreparedStatement</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Data received from the query execution represented as a <code><a href="../Protocols.html#/s:10SwiftKuery17PreparedStatementP">PreparedStatement</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">asPreparedStatement</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:10SwiftKuery17PreparedStatementP">PreparedStatement</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -655,9 +685,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10SwiftKuery11QueryResultO6asRowsSays10DictionaryVySSypSgGGSgvp"></a>
-                    <a name="//apple_ref/swift/Property/asRows" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10SwiftKuery11QueryResultO6asRowsSays10DictionaryVySSypSgGGSgvp">asRows</a>
+                    <a name="/s:10SwiftKuery11QueryResultO6asRowsyySays10DictionaryVySSypSgGGSg_s5Error_pSgt_tc12onCompletion_tF"></a>
+                    <a name="//apple_ref/swift/Method/asRows(onCompletion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery11QueryResultO6asRowsyySays10DictionaryVySSypSgGGSg_s5Error_pSgt_tc12onCompletion_tF">asRows(onCompletion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -665,17 +695,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Data received from the query execution represented as an array of dictionaries.
+                        <p>Passes data received from the query execution represented as an array of dictionaries to a user defined completion handler.
 Each entry in the array repersents a row in the result with column titles as the keys.
 In case there are columns with the same title, we add indices to the keys: for example if
-the result contains three columns named &lsquo;a&rsquo;, the dictionary will contain the keys: a, a.1 and a.2.</p>
+the result contains three columns named &lsquo;a&rsquo;, the dictionary will contain the keys: a, a.1 and a.2.
+This function will consume the entire set of results and then call done against the result set which will allow the underlying connection to be reused.
+When asRows is called a user does not need to explicitly invoke the done method on the result set.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">asRows</span><span class="p">:</span> <span class="p">[[</span><span class="kt">String</span><span class="p">:</span><span class="kt">Any</span><span class="p">?]]?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">asRows</span><span class="p">(</span><span class="nv">onCompletion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(([[</span><span class="kt">String</span><span class="p">:</span><span class="kt">Any</span><span class="p">?]]?,</span> <span class="kt">Error</span><span class="p">?))</span> <span class="o">-&gt;</span> <span class="p">())</span></code></pre>
 
                         </div>
                       </div>
@@ -690,7 +722,7 @@ the result contains three columns named &lsquo;a&rsquo;, the dictionary will con
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-24)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2019-01-07)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

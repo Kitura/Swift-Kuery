@@ -1,26 +1,54 @@
 {
   "warnings": [
     {
-      "file": "/Users/andrewlees/git/Swift-Kuery/Sources/SwiftKuery/Connection.swift",
-      "line": 158,
+      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/Connection.swift",
+      "line": 162,
       "symbol": "Connection.execute(query:parameters:onCompletion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/andrewlees/git/Swift-Kuery/Sources/SwiftKuery/IndexColumn.swift",
+      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/Connection.swift",
+      "line": 194,
+      "symbol": "Connection.runCompletionHandler(_:onCompletion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/Connection.swift",
+      "line": 200,
+      "symbol": "Connection.runCompletionHandlerRetainingConnection(result:onCompletion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/ConnectionPool.swift",
+      "line": 73,
+      "symbol": "ConnectionPool.connectionPoolTask",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/ConnectionPoolConnection.swift",
+      "line": 397,
+      "symbol": "DummyColumBuilder",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/IndexColumn.swift",
       "line": 27,
       "symbol": "IndexColumn.table",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/andrewlees/git/Swift-Kuery/Sources/SwiftKuery/IndexColumnOrdered.swift",
+      "file": "/Users/travis/build/IBM-Swift/Swift-Kuery/Sources/SwiftKuery/IndexColumnOrdered.swift",
       "line": 21,
       "symbol": "IndexColumnOrdered.table",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/andrewlees/git/Swift-Kuery"
+  "source_directory": "/Users/travis/build/IBM-Swift/Swift-Kuery"
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Int64 Extension Reference</title>
+    <title>ColumnCreator Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Extension/Int64" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Protocol/ColumnCreator" class="dashAnchor"></a>
 
-    <a title="Int64 Extension Reference"></a>
+    <a title="ColumnCreator Protocol Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">SwiftKuery Reference</a>
       <img class="carat" src="../img/carat.png" />
-      Int64 Extension Reference
+      ColumnCreator Protocol Reference
     </p>
 
     <div class="content-wrapper">
@@ -407,14 +407,15 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>Int64</h1>
+            <h1>ColumnCreator</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Int64</span> <span class="p">:</span> <span class="kt">FixedWidthInteger</span><span class="p">,</span> <span class="kt">SignedInteger</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">ColumnCreator</span></code></pre>
 
                 </div>
               </div>
-            
+            <p>A protocol defining functions database plugins must implement to build a string representation of a Column</p>
+
           </div>
         </section>
 
@@ -425,9 +426,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:s5Int64V10SwiftKueryE6createSSAC12QueryBuilderC05queryF0_tFZ"></a>
-                    <a name="//apple_ref/swift/Method/create(queryBuilder:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:s5Int64V10SwiftKueryE6createSSAC12QueryBuilderC05queryF0_tFZ">create(queryBuilder:)</a>
+                    <a name="/s:10SwiftKuery13ColumnCreatorP05buildC0SSSgAA0C0C3for_AA12QueryBuilderC5usingtF"></a>
+                    <a name="//apple_ref/swift/Method/buildColumn(for:using:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery13ColumnCreatorP05buildC0SSSgAA0C0C3for_AA12QueryBuilderC5usingtF">buildColumn(for:using:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -435,14 +436,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Return database specific representation of the int32 type using <code><a href="../Classes/QueryBuilder.html">QueryBuilder</a></code>.</p>
+                        <p>Build a string representation of the column</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">create</span><span class="p">(</span><span class="nv">queryBuilder</span><span class="p">:</span> <span class="kt"><a href="../Classes/QueryBuilder.html">QueryBuilder</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">buildColumn</span><span class="p">(</span><span class="k">for</span> <span class="nv">column</span><span class="p">:</span> <span class="kt"><a href="../Classes/Column.html">Column</a></span><span class="p">,</span> <span class="n">using</span> <span class="nv">queryBuilder</span><span class="p">:</span> <span class="kt"><a href="../Classes/QueryBuilder.html">QueryBuilder</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -453,12 +454,12 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>queryBuilder</em>
+                                <em>column</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The QueryBuilder to use.</p>
+                                  <p>The column being built</p>
                                 </div>
                               </td>
                             </tr>
@@ -467,7 +468,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>A String representation of the type.</p>
+                        <p>A string representation of the column for the implementing database or nil if it cannot be built</p>
                       </div>
                     </section>
                   </div>

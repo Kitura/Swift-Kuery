@@ -66,6 +66,9 @@
                 <a class="nav-group-task-link" href="../Classes/ConnectionPoolConnection.html">ConnectionPoolConnection</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/DummyColumBuilder.html">DummyColumBuilder</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Migration.html">Migration</a>
               </li>
               <li class="nav-group-task">
@@ -73,6 +76,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/QueryBuilder/QuerySubstitutionNames.html">– QuerySubstitutionNames</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ResultSet.html">ResultSet</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Table.html">Table</a>
@@ -293,6 +299,9 @@
                 <a class="nav-group-task-link" href="../Protocols/Buildable.html">Buildable</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ColumnCreator.html">ColumnCreator</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ConditionalClause.html">ConditionalClause</a>
               </li>
               <li class="nav-group-task">
@@ -365,12 +374,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/RawField.html">RawField</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/ResultSet.html">ResultSet</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/RowSequence.html">RowSequence</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/SQLDate.html">SQLDate</a>
@@ -480,9 +483,9 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10SwiftKuery014ConnectionPoolC0C7connectyyAA10QueryErrorOSgc12onCompletion_tF"></a>
+                    <a name="/s:10SwiftKuery014ConnectionPoolC0C7connectyyAA11QueryResultOc12onCompletion_tF"></a>
                     <a name="//apple_ref/swift/Method/connect(onCompletion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10SwiftKuery014ConnectionPoolC0C7connectyyAA10QueryErrorOSgc12onCompletion_tF">connect(onCompletion:)</a>
+                    <a class="token" href="#/s:10SwiftKuery014ConnectionPoolC0C7connectyyAA11QueryResultOc12onCompletion_tF">connect(onCompletion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -497,7 +500,7 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">connect</span><span class="p">(</span><span class="nv">onCompletion</span><span class="p">:</span> <span class="p">(</span><span class="kt"><a href="../Enums/QueryError.html">QueryError</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">())</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">connect</span><span class="p">(</span><span class="nv">onCompletion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt"><a href="../Enums/QueryResult.html">QueryResult</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">())</span></code></pre>
 
                         </div>
                       </div>
@@ -519,6 +522,37 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery014ConnectionPoolC0C11connectSyncAA11QueryResultOyF"></a>
+                    <a name="//apple_ref/swift/Method/connectSync()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery014ConnectionPoolC0C11connectSyncAA11QueryResultOyF">connectSync()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Establish a connection with the database.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">connectSync</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/QueryResult.html">QueryResult</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A QueryError if the connection cannot connect, otherwise nil</p>
                       </div>
                     </section>
                   </div>
@@ -693,7 +727,7 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
                             <tr>
                               <td>
                                 <code>
-                                <em>query</em>
+                                <em>raw</em>
                                 </code>
                               </td>
                               <td>
@@ -821,7 +855,7 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
                             <tr>
                               <td>
                                 <code>
-                                <em>query</em>
+                                <em>raw</em>
                                 </code>
                               </td>
                               <td>
@@ -961,7 +995,7 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
                             <tr>
                               <td>
                                 <code>
-                                <em>query</em>
+                                <em>raw</em>
                                 </code>
                               </td>
                               <td>
@@ -1014,9 +1048,9 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10SwiftKuery014ConnectionPoolC0C16prepareStatementAA08PreparedF0_pAA5Query_pKF"></a>
-                    <a name="//apple_ref/swift/Method/prepareStatement(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10SwiftKuery014ConnectionPoolC0C16prepareStatementAA08PreparedF0_pAA5Query_pKF">prepareStatement(_:)</a>
+                    <a name="/s:10SwiftKuery014ConnectionPoolC0C16prepareStatementyAA5Query_p_yAA0G6ResultOc12onCompletiontF"></a>
+                    <a name="//apple_ref/swift/Method/prepareStatement(_:onCompletion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery014ConnectionPoolC0C16prepareStatementyAA5Query_p_yAA0G6ResultOc12onCompletiontF">prepareStatement(_:onCompletion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1025,18 +1059,13 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Create a prepared statement from the passed in query.</p>
-<div class="aside aside-throws">
-    <p class="aside-title">Throws</p>
-    QueryError.syntaxError if the query build fails, or a database error if it fails to prepare statement.
-
-</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">prepareStatement</span><span class="p">(</span><span class="n">_</span> <span class="nv">query</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Query.html">Query</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols.html#/s:10SwiftKuery17PreparedStatementP">PreparedStatement</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">prepareStatement</span><span class="p">(</span><span class="n">_</span> <span class="nv">query</span><span class="p">:</span> <span class="kt"><a href="../Protocols/Query.html">Query</a></span><span class="p">,</span> <span class="nv">onCompletion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt"><a href="../Enums/QueryResult.html">QueryResult</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()))</span></code></pre>
 
                         </div>
                       </div>
@@ -1056,12 +1085,20 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onCompletion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The function to be called when the preparation has completed.</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>The prepared statement.</p>
                       </div>
                     </section>
                   </div>
@@ -1069,9 +1106,9 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10SwiftKuery014ConnectionPoolC0C16prepareStatementAA08PreparedF0_pSSKF"></a>
-                    <a name="//apple_ref/swift/Method/prepareStatement(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10SwiftKuery014ConnectionPoolC0C16prepareStatementAA08PreparedF0_pSSKF">prepareStatement(_:)</a>
+                    <a name="/s:10SwiftKuery014ConnectionPoolC0C16prepareStatementySS_yAA11QueryResultOc12onCompletiontF"></a>
+                    <a name="//apple_ref/swift/Method/prepareStatement(_:onCompletion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery014ConnectionPoolC0C16prepareStatementySS_yAA11QueryResultOc12onCompletiontF">prepareStatement(_:onCompletion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1080,18 +1117,13 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Create a prepared statement from the passed in query.</p>
-<div class="aside aside-throws">
-    <p class="aside-title">Throws</p>
-    QueryError.syntaxError if query build fails, or a database error if it fails to prepare the statement.
-
-</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">prepareStatement</span><span class="p">(</span><span class="n">_</span> <span class="nv">raw</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols.html#/s:10SwiftKuery17PreparedStatementP">PreparedStatement</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">prepareStatement</span><span class="p">(</span><span class="n">_</span> <span class="nv">raw</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">onCompletion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt"><a href="../Enums/QueryResult.html">QueryResult</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()))</span></code></pre>
 
                         </div>
                       </div>
@@ -1111,12 +1143,20 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>onCompletion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The function to be called when the preparation has completed.</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>The prepared statement.</p>
                       </div>
                     </section>
                   </div>
@@ -1751,7 +1791,7 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-24)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2019-01-07)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
