@@ -66,6 +66,9 @@
                 <a class="nav-group-task-link" href="../Classes/ConnectionPoolConnection.html">ConnectionPoolConnection</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/DummyColumBuilder.html">DummyColumBuilder</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Migration.html">Migration</a>
               </li>
               <li class="nav-group-task">
@@ -73,6 +76,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/QueryBuilder/QuerySubstitutionNames.html">– QuerySubstitutionNames</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ResultSet.html">ResultSet</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Table.html">Table</a>
@@ -293,6 +299,9 @@
                 <a class="nav-group-task-link" href="../Protocols/Buildable.html">Buildable</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ColumnCreator.html">ColumnCreator</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ConditionalClause.html">ConditionalClause</a>
               </li>
               <li class="nav-group-task">
@@ -365,12 +374,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/RawField.html">RawField</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/ResultSet.html">ResultSet</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/RowSequence.html">RowSequence</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/SQLDate.html">SQLDate</a>
@@ -538,9 +541,9 @@ or its name.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10SwiftKuery5TableCACycfc"></a>
-                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10SwiftKuery5TableCACycfc">init()</a>
+                    <a name="/s:10SwiftKuery5TableCACSSSg4name_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(name:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery5TableCACSSSg4name_tcfc">init(name:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -555,9 +558,28 @@ or its name.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the table (Optional).</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -713,7 +735,19 @@ If the alias is set, this will return the format <code>tableName AS alias</code>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Function that returns the SQL CREATE TABLE query as a String for this TABLE.</p>
+                        <p>Function that returns the SQL CREATE TABLE statement for this table in string fromat.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+
+<p>In this example we define a simple table named exampleTable and then print its description</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">ExampleTable</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"ExampleTable"</span>
+    <span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"name"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">let</span> <span class="nv">examples</span> <span class="o">=</span> <span class="kt">ExampleTable</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">description</span> <span class="o">=</span> <span class="k">try</span> <span class="n">examples</span><span class="o">.</span><span class="nf">description</span><span class="p">(</span><span class="nv">connection</span><span class="p">:</span> <span class="nf">getConnection</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">postgresPool</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
+<span class="c1">// Prints CREATE TABLE ExampleTable (name text)</span>
+</code></pre>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
     QueryError.syntaxError if statement build fails.
@@ -1117,11 +1151,11 @@ This function calls the composite primaryKey function with a single column to cr
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Function to set a multiple <code><a href="../Classes/Column.html">Column</a></code> instance, as a composite foreign key, in the <code>Table</code> instance referencing multiple column in another Table.
-The function also validates the columns to ensure they belong to the table and do not conflict with the definition of a foreign key.</p>
+                        <p>Function to set a multiple <code><a href="../Classes/Column.html">Column</a></code> instance, as a composite foreign key, in the <code>Table</code> instance referencing multiple columns in another Table.
+The function also validates the columns to ensure they belong to the table and do not conflict with the definition of an existing foreign key.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, <code>Table</code> instances called personTable and employeeTable are created. A <q>personTable</q> foreign key is then set to be a composite of firstColumn and lastColumn, which reference firstName and surname in employeeTable.</p>
+<p>In this example, <code>Table</code> instances called personTable and employeeTable are created. A composite primary key is created on <q>employeeTable</q>. A <q>personTable</q> foreign key is then set to be a composite of firstColumn and lastColumn, which reference firstName and surname in employeeTable.</p>
 <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">EmployeeTable</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
     <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"employeeTable"</span>
     <span class="k">let</span> <span class="nv">firstName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
@@ -1129,13 +1163,14 @@ The function also validates the columns to ensure they belong to the table and d
     <span class="k">let</span> <span class="nv">monthlyPay</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"monthlyPay"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
-   <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
-   <span class="k">let</span> <span class="nv">firstName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-   <span class="k">let</span> <span class="nv">lastName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"lastName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-   <span class="k">let</span> <span class="nv">dateOfBirth</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_completed"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
+    <span class="k">let</span> <span class="nv">firstName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">lastName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"lastName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">dateOfBirth</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"toDo_completed"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="k">var</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>
 <span class="k">var</span> <span class="nv">employeeTable</span> <span class="o">=</span> <span class="kt">EmployeeTable</span><span class="p">()</span>
+<span class="n">employeeTable</span> <span class="o">=</span> <span class="n">employeeTable</span><span class="o">.</span><span class="nf">primaryKey</span><span class="p">([</span><span class="n">employeeTable</span><span class="o">.</span><span class="n">firstname</span><span class="p">,</span> <span class="n">employeeTable</span><span class="o">.</span><span class="n">surname</span><span class="p">])</span>
 <span class="n">personTable</span> <span class="o">=</span> <span class="n">personTable</span><span class="o">.</span><span class="nf">foreignKey</span><span class="p">([</span><span class="n">personTable</span><span class="o">.</span><span class="n">firstName</span><span class="p">,</span> <span class="n">personTable</span><span class="o">.</span><span class="n">lastName</span><span class="p">],</span> <span class="nv">references</span><span class="p">:</span> <span class="p">[</span><span class="n">employeeTable</span><span class="o">.</span><span class="n">firstName</span><span class="p">,</span> <span class="n">employeeTable</span><span class="o">.</span><span class="n">surname</span><span class="p">])</span>
 </code></pre>
 
@@ -1200,20 +1235,20 @@ The function also validates the columns to ensure they belong to the table and d
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Function to set a single <code><a href="../Classes/Column.html">Column</a></code> instance, as a foreign key, in the <code>Table</code> instance.
-The function also validates the column to ensure it belongs to the table and does not conflict with the definition of a foreign key.</p>
+The function also validates the column to ensure it belongs to the table and does not conflict with the definition of an existing foreign key.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
-<p>In this example, <code>Table</code> instances called personTable and employeeTable are created. A <q>personTable</q> foreign key is then set to be id, which reference identifier in employeeTable.</p>
+<p>In this example, <code>Table</code> instances called personTable and employeeTable are created. A <q>personTable</q> foreign key is then set to be id, which references identifier in employeeTable.</p>
 <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">EmployeeTable</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
     <span class="k">let</span> <span class="nv">identifier</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"identifier"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
     <span class="k">let</span> <span class="nv">monthlyPay</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"monthlyPay"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
     <span class="k">let</span> <span class="nv">employeeBand</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"employeeBand"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonTable</span><span class="p">:</span> <span class="kt">Table</span> <span class="p">{</span>
-   <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
-   <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-   <span class="k">let</span> <span class="nv">firstName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-   <span class="k">let</span> <span class="nv">lastName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"lastName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">tableName</span> <span class="o">=</span> <span class="s">"personTable"</span>
+    <span class="k">let</span> <span class="nv">id</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span> <span class="kt">Int32</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">firstName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"firstName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="k">let</span> <span class="nv">lastName</span> <span class="o">=</span> <span class="kt">Column</span><span class="p">(</span><span class="s">"lastName"</span><span class="p">,</span> <span class="kt">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">notNull</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="k">var</span> <span class="nv">personTable</span> <span class="o">=</span> <span class="kt">PersonTable</span><span class="p">()</span>
 <span class="k">var</span> <span class="nv">employeeTable</span> <span class="o">=</span> <span class="kt">EmployeeTable</span><span class="p">()</span>
@@ -1275,7 +1310,7 @@ The function also validates the column to ensure it belongs to the table and doe
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-24)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2019-01-07)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

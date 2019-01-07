@@ -66,6 +66,9 @@
                 <a class="nav-group-task-link" href="../Classes/ConnectionPoolConnection.html">ConnectionPoolConnection</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/DummyColumBuilder.html">DummyColumBuilder</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Migration.html">Migration</a>
               </li>
               <li class="nav-group-task">
@@ -73,6 +76,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/QueryBuilder/QuerySubstitutionNames.html">– QuerySubstitutionNames</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ResultSet.html">ResultSet</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Table.html">Table</a>
@@ -293,6 +299,9 @@
                 <a class="nav-group-task-link" href="../Protocols/Buildable.html">Buildable</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ColumnCreator.html">ColumnCreator</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ConditionalClause.html">ConditionalClause</a>
               </li>
               <li class="nav-group-task">
@@ -367,12 +376,6 @@
                 <a class="nav-group-task-link" href="../Structs/RawField.html">RawField</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/ResultSet.html">ResultSet</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/RowSequence.html">RowSequence</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/SQLDate.html">SQLDate</a>
               </li>
               <li class="nav-group-task">
@@ -435,6 +438,37 @@
 
         <section class="section">
           <div class="section-content">
+            <div class="task-group">
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery14ConnectionPoolC010connectionD4Taska"></a>
+                    <a name="//apple_ref/swift/Alias/connectionPoolTask" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery14ConnectionPoolC010connectionD4Taska">connectionPoolTask</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="n">connectionPoolTask</span> <span class="o">=</span> <span class="p">((</span><span class="kt"><a href="../Classes/ConnectionPoolConnection.html">ConnectionPoolConnection</a></span><span class="p">?,</span> <span class="kt"><a href="../Enums/QueryError.html">QueryError</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">())</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
             <div class="task-group">
               <div class="task-name-container">
                 <a name="/Initializer"></a>
@@ -532,23 +566,12 @@ A connection pool is then initialized with the given <code>options</code>, the <
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Retrieve%20Connection"></a>
-                <a name="//apple_ref/swift/Section/Retrieve Connection" class="dashAnchor"></a>
-                <a href="#/Retrieve%20Connection">
-                  <h3 class="section-name">Retrieve Connection</h3>
-                </a>
-              </div>
-              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10SwiftKuery14ConnectionPoolC03getC0AA0C0_pSgyF"></a>
-                    <a name="//apple_ref/swift/Method/getConnection()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10SwiftKuery14ConnectionPoolC03getC0AA0C0_pSgyF">getConnection()</a>
+                    <a name="/s:10SwiftKuery14ConnectionPoolC03getC0yyAA0cdC0CSg_AA10QueryErrorOSgtc8poolTask_tF"></a>
+                    <a name="//apple_ref/swift/Method/getConnection(poolTask:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery14ConnectionPoolC03getC0yyAA0cdC0CSg_AA10QueryErrorOSgtc8poolTask_tF">getConnection(poolTask:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -557,11 +580,20 @@ A connection pool is then initialized with the given <code>options</code>, the <
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Get a connection from the pool.
-This function will block until a connection can be obtained from the pool or for <code><a href="../Structs/ConnectionPoolOptions.html#/s:10SwiftKuery21ConnectionPoolOptionsV7timeoutSivp">ConnectionPoolOptions.timeout</a></code>.</p>
+This function does not block, if a connection is not available the handler will be added to a queue to be process when a connection becomes available.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <p>A <code><a href="../Protocols/Connection.html">Connection</a></code> instance is retrieved from a pool that was initialized previously.</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span>
+<pre class="highlight swift"><code><span class="n">connectionPool</span><span class="o">.</span><span class="nf">getConnection</span><span class="p">()</span> <span class="p">{</span> <span class="n">connection</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">connection</span> <span class="o">=</span> <span class="n">connection</span> <span class="k">else</span> <span class="p">{</span>
+       <span class="k">guard</span> <span class="k">let</span> <span class="nv">error</span> <span class="o">=</span> <span class="n">error</span> <span class="k">else</span> <span class="p">{</span>
+           <span class="c1">// log unspecified error</span>
+       <span class="p">}</span>
+       <span class="c1">// log returned error</span>
+    <span class="p">}</span>
+    <span class="c1">// use connection</span>
+    <span class="n">connection</span><span class="o">.</span><span class="nf">execute</span><span class="p">(</span><span class="o">.....</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
 </code></pre>
 
                       </div>
@@ -569,9 +601,28 @@ This function will block until a connection can be obtained from the pool or for
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getConnection</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/Connection.html">Connection</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getConnection</span><span class="p">(</span><span class="nv">poolTask</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="n"><a href="../Classes/ConnectionPool.html#/s:10SwiftKuery14ConnectionPoolC010connectionD4Taska">connectionPoolTask</a></span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>poolTask</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to execute when a connection is available.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                       <div>
                         <h4>Return Value</h4>
@@ -631,7 +682,7 @@ This function will block until a connection can be obtained from the pool or for
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-24)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2019-01-07)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

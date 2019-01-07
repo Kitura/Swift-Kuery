@@ -66,6 +66,9 @@
                 <a class="nav-group-task-link" href="../Classes/ConnectionPoolConnection.html">ConnectionPoolConnection</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/DummyColumBuilder.html">DummyColumBuilder</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Migration.html">Migration</a>
               </li>
               <li class="nav-group-task">
@@ -73,6 +76,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/QueryBuilder/QuerySubstitutionNames.html">– QuerySubstitutionNames</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/ResultSet.html">ResultSet</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Table.html">Table</a>
@@ -293,6 +299,9 @@
                 <a class="nav-group-task-link" href="../Protocols/Buildable.html">Buildable</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ColumnCreator.html">ColumnCreator</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/ConditionalClause.html">ConditionalClause</a>
               </li>
               <li class="nav-group-task">
@@ -365,12 +374,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/RawField.html">RawField</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/ResultSet.html">ResultSet</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/RowSequence.html">RowSequence</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/SQLDate.html">SQLDate</a>
@@ -665,9 +668,9 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10SwiftKuery12QueryBuilderC19createAutoIncrementS2ScSgvp"></a>
-                    <a name="//apple_ref/swift/Property/createAutoIncrement" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10SwiftKuery12QueryBuilderC19createAutoIncrementS2ScSgvp">createAutoIncrement</a>
+                    <a name="/s:10SwiftKuery12QueryBuilderC06columnD0AA13ColumnCreator_pvp"></a>
+                    <a name="//apple_ref/swift/Property/columnBuilder" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery12QueryBuilderC06columnD0AA13ColumnCreator_pvp">columnBuilder</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -675,14 +678,14 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A function to create an autoincrement expression for the column, based on the column type.</p>
+                        <p>An implementer of the ColumnCreator protocol that provides methods to build a string representation of a column.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">createAutoIncrement</span><span class="p">:</span> <span class="p">((</span><span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">)?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">columnBuilder</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ColumnCreator.html">ColumnCreator</a></span></code></pre>
 
                         </div>
                       </div>
@@ -757,9 +760,9 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10SwiftKuery12QueryBuilderCACSb22addNumbersToParameters_Si19firstParameterIndexSb22anyOnSubquerySupportedSb23withDeleteRequiresUsingSb0p6UpdateR4FromS2ScSg19createAutoIncrementSb04dropkrM9TableNameSo13DateFormatterCSg13dateFormattertcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(addNumbersToParameters:firstParameterIndex:anyOnSubquerySupported:withDeleteRequiresUsing:withUpdateRequiresFrom:createAutoIncrement:dropIndexRequiresOnTableName:dateFormatter:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10SwiftKuery12QueryBuilderCACSb22addNumbersToParameters_Si19firstParameterIndexSb22anyOnSubquerySupportedSb23withDeleteRequiresUsingSb0p6UpdateR4FromS2ScSg19createAutoIncrementSb04dropkrM9TableNameSo13DateFormatterCSg13dateFormattertcfc">init(addNumbersToParameters:firstParameterIndex:anyOnSubquerySupported:withDeleteRequiresUsing:withUpdateRequiresFrom:createAutoIncrement:dropIndexRequiresOnTableName:dateFormatter:)</a>
+                    <a name="/s:10SwiftKuery12QueryBuilderCACSb22addNumbersToParameters_Si19firstParameterIndexSb22anyOnSubquerySupportedSb23withDeleteRequiresUsingSb0p6UpdateR4FromAA13ColumnCreator_p06columnD0Sb04dropkrM9TableNameSo13DateFormatterCSg13dateFormattertcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(addNumbersToParameters:firstParameterIndex:anyOnSubquerySupported:withDeleteRequiresUsing:withUpdateRequiresFrom:columnBuilder:dropIndexRequiresOnTableName:dateFormatter:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery12QueryBuilderCACSb22addNumbersToParameters_Si19firstParameterIndexSb22anyOnSubquerySupportedSb23withDeleteRequiresUsingSb0p6UpdateR4FromAA13ColumnCreator_p06columnD0Sb04dropkrM9TableNameSo13DateFormatterCSg13dateFormattertcfc">init(addNumbersToParameters:firstParameterIndex:anyOnSubquerySupported:withDeleteRequiresUsing:withUpdateRequiresFrom:columnBuilder:dropIndexRequiresOnTableName:dateFormatter:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -780,7 +783,7 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">addNumbersToParameters</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">firstParameterIndex</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">anyOnSubquerySupported</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span>
-            <span class="nv">withDeleteRequiresUsing</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">withUpdateRequiresFrom</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">createAutoIncrement</span><span class="p">:</span> <span class="p">((</span><span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+            <span class="nv">withDeleteRequiresUsing</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">withUpdateRequiresFrom</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">columnBuilder</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ColumnCreator.html">ColumnCreator</a></span><span class="p">,</span>
             <span class="nv">dropIndexRequiresOnTableName</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">dateFormatter</span><span class="p">:</span> <span class="kt">DateFormatter</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
@@ -968,7 +971,7 @@ with the numbered parameter marker (e.g., &lsquo;?&rsquo;).</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-24)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2019-01-07)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

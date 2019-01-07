@@ -65,6 +65,9 @@
                 <a class="nav-group-task-link" href="Classes/ConnectionPoolConnection.html">ConnectionPoolConnection</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/DummyColumBuilder.html">DummyColumBuilder</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/Migration.html">Migration</a>
               </li>
               <li class="nav-group-task">
@@ -72,6 +75,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/QueryBuilder/QuerySubstitutionNames.html">– QuerySubstitutionNames</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/ResultSet.html">ResultSet</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/Table.html">Table</a>
@@ -292,6 +298,9 @@
                 <a class="nav-group-task-link" href="Protocols/Buildable.html">Buildable</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/ColumnCreator.html">ColumnCreator</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/ConditionalClause.html">ConditionalClause</a>
               </li>
               <li class="nav-group-task">
@@ -364,12 +373,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/RawField.html">RawField</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/ResultSet.html">ResultSet</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/RowSequence.html">RowSequence</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/SQLDate.html">SQLDate</a>
@@ -629,6 +632,34 @@ A <code>ConnectionPoolConnection</code> instance is created by calling <code>con
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery17DummyColumBuilderC"></a>
+                    <a name="//apple_ref/swift/Class/DummyColumBuilder" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery17DummyColumBuilderC">DummyColumBuilder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/DummyColumBuilder.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">DummyColumBuilder</span> <span class="p">:</span> <span class="kt"><a href="Protocols/ColumnCreator.html">ColumnCreator</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="task-group">
@@ -764,6 +795,45 @@ The <code>queryBuilder</code> is then used to create a string description of the
             </div>
             <div class="task-group">
               <div class="task-name-container">
+                <a name="/ResultSet"></a>
+                <a name="//apple_ref/swift/Section/ResultSet" class="dashAnchor"></a>
+                <a href="#/ResultSet">
+                  <h3 class="section-name">ResultSet</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10SwiftKuery9ResultSetC"></a>
+                    <a name="//apple_ref/swift/Class/ResultSet" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10SwiftKuery9ResultSetC">ResultSet</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Represents a query result set. The rows are accessable either in a blocking fashion using a <code>RowSequence</code> or in a non-blocking fashion using nextRow() function.</p>
+
+                        <a href="Classes/ResultSet.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">ResultSet</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
                 <a name="/Table"></a>
                 <a name="//apple_ref/swift/Section/Table" class="dashAnchor"></a>
                 <a href="#/Table">
@@ -822,7 +892,7 @@ To reference a table, you must implement this class and define the table name as
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2018-04-24)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external">IBM</a>. All rights reserved. (Last updated: 2019-01-07)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
