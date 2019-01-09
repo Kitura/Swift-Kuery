@@ -44,7 +44,8 @@ struct Utils {
             }
             return "'\(String(describing: value))'"
         default:
-            return String(describing: item)
+            let val = String(describing: item)
+            return val == "nil" ? queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.null.rawValue] : val
         }
     }
         
