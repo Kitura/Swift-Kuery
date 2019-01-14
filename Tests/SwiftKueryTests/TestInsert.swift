@@ -67,13 +67,6 @@ class TestInsert: XCTestCase {
         query = "INSERT INTO \"tableInsert\" (\"a\", \"b\") VALUES ('banana', 17) RETURNING *"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
-        let optionalString: String? = nil
-        i = Insert(into: t, columns: [t.a, t.b], values: ["banana", optionalString as Any])
-            .suffix("RETURNING *")
-        kuery = connection.descriptionOf(query: i)
-        query = "INSERT INTO \"tableInsert\" (\"a\", \"b\") VALUES ('banana', NULL) RETURNING *"
-        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
-        
         i = Insert(into: t, rows: [["apple", 17], ["banana", -7], ["banana", 27]])
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO \"tableInsert\" VALUES ('apple', 17), ('banana', -7), ('banana', 27)"

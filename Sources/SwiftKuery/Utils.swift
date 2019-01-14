@@ -29,7 +29,10 @@ struct Utils {
         }
     }
     
-    static func packType(_ item: Any, queryBuilder: QueryBuilder) throws -> String {
+    static func packType(_ item: Any?, queryBuilder: QueryBuilder) throws -> String {
+        guard let item = item else {
+            return "NULL"
+        }
         switch item {
         case let val as String:
             return "'\(val)'"
@@ -44,8 +47,9 @@ struct Utils {
             }
             return "'\(String(describing: value))'"
         default:
-            let val = String(describing: item)
-            return val == "nil" ? "NULL" : val
+            //let val = String(describing: item)
+            //return val == "nil" ? "NULL" : val
+            return String(describing: item)
         }
     }
         
