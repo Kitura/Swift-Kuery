@@ -134,7 +134,11 @@ class TestInsert: XCTestCase {
         var query = "INSERT INTO \"tableInsert\" VALUES (NULL, NULL)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
 
+        #if swift(>=4.1.0)
         i = Insert(into: t, values: [optionalString, optionalInt])
+        #else
+        i = Insert(into: t, optionalValues: [optionalString, optionalInt])
+        #endif
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO \"tableInsert\" VALUES (NULL, NULL)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")

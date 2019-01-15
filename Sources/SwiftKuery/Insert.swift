@@ -76,7 +76,7 @@ public struct Insert: Query {
         }
         self.returnID = returnID
     }
-    
+
     /// Initialize an instance of Insert.
     ///
     /// - Parameter into: The table to insert rows.
@@ -84,7 +84,7 @@ public struct Insert: Query {
     public init(into table: Table, values: Any?..., returnID: Bool=false) {
         self.init(into: table, columns: nil, values: values, returnID: returnID)
     }
-    
+    #if swift(>=4.1.0)
     /// Initialize an instance of Insert.
     ///
     /// - Parameter into: The table to insert rows.
@@ -92,6 +92,15 @@ public struct Insert: Query {
     public init(into table: Table, values: [Any?], returnID: Bool=false) {
         self.init(into: table, columns: nil, values: values, returnID: returnID)
     }
+    #else
+    /// Initialize an instance of Insert.
+    ///
+    /// - Parameter into: The table to insert rows.
+    /// - Parameter values: An array of values (the row) to insert.
+    public init(into table: Table, optionalValues: [Any?], returnID: Bool=false) {
+        self.init(into: table, columns: nil, values: optionalValues, returnID: returnID)
+    }
+    #endif
 
     /// Initialize an instance of Insert.
     ///
