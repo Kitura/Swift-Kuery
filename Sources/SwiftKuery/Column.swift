@@ -14,6 +14,7 @@
  limitations under the License.
  */
 
+import Foundation
 // MARK: Column
 
 /**
@@ -32,6 +33,10 @@ In this example, a person `Table` class, containing three instances of the `Colu
  ```
  */
 public class Column: Field, IndexColumn {
+
+    // A value substituted as the default value for all column definitions. If not overidden equates to NULL.
+    private static let globalDefault: Any? = UUID.init()
+
     // MARK: Column Parameters
     /// The name of the column.
     public let name: String
@@ -97,7 +102,7 @@ public class Column: Field, IndexColumn {
      - Parameter check: The expression to check for values inserted into the column. Defaults to nil.
      - Parameter collate: The collation rule for the column. Defaults to nil.
      */
-    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, check: String? = nil, collate: String? = nil) {
+    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = Column.getDefaultVal(), check: String? = nil, collate: String? = nil) {
         self.name = name
         self.type = type
         self.length = length
@@ -108,6 +113,13 @@ public class Column: Field, IndexColumn {
         self.defaultValue = defaultValue
         self.checkExpression = check
         self.collate = collate
+    }
+
+    /**
+     Global static func that returns the global default identifier value for all columns
+    */
+    public static func getDefaultVal() -> Any? {
+        return globalDefault
     }
     
     //MARK: Column Decription Functions

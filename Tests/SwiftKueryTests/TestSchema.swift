@@ -223,7 +223,7 @@ class TestSchema: XCTestCase {
 
         let nilValueTable = Table6()
         createStmt = createTable(nilValueTable, connection: connection)
-        expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text DEFAULT NULL)"
+        expectedCreateStmt = "CREATE TABLE \"table6\" (\"a\" text DEFAULT NULL)"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
     }
     

@@ -244,8 +244,14 @@ class TestColumnBuilder : ColumnCreator {
         if column.isUnique {
             result += " UNIQUE"
         }
-        if let defaultValue = column.defaultValue {
-            result += " DEFAULT " + Utils.packType(defaultValue)
+        switch column.defaultValue {
+        case let defVal as UUID:
+            if defVal == Column.getDefaultVal() as! UUID {
+                break
+            }
+            fallthrough
+        default:
+            result += " DEFAULT " + Utils.packType(column.defaultValue)
         }
         if let checkExpression = column.checkExpression {
             result += checkExpression.contains(column.name) ? " CHECK (" + checkExpression.replacingOccurrences(of: column.name, with: "\"\(column.name)\"") + ")" : " CHECK (" + checkExpression + ")"
