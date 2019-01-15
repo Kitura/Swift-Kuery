@@ -96,6 +96,14 @@ public struct Insert: Query {
     /// Initialize an instance of Insert.
     ///
     /// - Parameter into: The table to insert rows.
+    /// - Parameter values: An array of values (the row) to insert.
+    public init(into table: Table, values: [Any], returnID: Bool=false) {
+        self.init(into: table, columns: nil, values: values, returnID: returnID)
+    }
+
+    /// Initialize an instance of Insert.
+    ///
+    /// - Parameter into: The table to insert rows.
     /// - Parameter valueTuples: An array of (column, value) pairs to insert.
     public init(into table: Table, valueTuples: [(Column, Any?)], returnID: Bool=false) {
         var columnsArray = Array<Column>()
