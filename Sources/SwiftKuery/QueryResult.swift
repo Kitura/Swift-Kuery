@@ -92,8 +92,10 @@ public enum QueryResult {
             resultSet.getColumnTitles() { titles, error in
                 guard let columnTitles = titles else {
                     guard let error = error else {
+                        resultSet.done()
                         return onCompletion((nil, QueryError.noResult("Unable to retrieve Column titles")))
                     }
+                    resultSet.done()
                     return onCompletion((nil, QueryError.noResult(error.localizedDescription)))
                 }
                 return self.processRows(resultSet, titles: columnTitles, result: nil, onCompletion: onCompletion)
