@@ -120,10 +120,12 @@ public enum QueryResult {
                     resultSet.done()
                     return onCompletion((result, nil))
                 }
+                resultSet.done()
                 return onCompletion((nil, QueryError.noResult("Error fetching row: \(error.localizedDescription)")))
             }
             guard row.count == titles.count else {
                 // Column titles and value counts do not match
+                resultSet.done()
                 return onCompletion((nil, QueryError.noResult("Number of titles does not match number of values for row, unable to retrieve rows.")))
             }
             // myTitles will be updated with new column titles when a title collision occurs, for example if a JOIN results in columns from different table with the same name being included in the results. myTitles is then passed into the recursive call of processRows meaning we will only ever run collision handling when processing the first row of the results.
