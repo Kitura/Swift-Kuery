@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016, 2017, 2018
+ Copyright IBM Corporation 2016, 2017, 2018, 2019
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 import Foundation
 
-struct ForeignKey: Hashable, Buildable {
+struct ForeignKey: Buildable {
     var keyColumns: [Column]
     var refColumns: [Column]
     var keyNames: [String]
@@ -57,17 +57,6 @@ struct ForeignKey: Hashable, Buildable {
         return true
     }
 
-    public var hashValue: Int {
-        var hashvalue = "foreignKey".hashValue
-        for key in keyNames {
-            hashvalue = hashvalue ^ key.hashValue
-        }
-        for ref in refNames {
-            hashvalue = hashvalue ^ ref.hashValue
-        }
-        return hashvalue
-    }
-
     static public func == (lhs: ForeignKey, rhs: ForeignKey) -> Bool {
         // Foreign keys cannot span databases and we do not currently support temporary tables therefore checking key name and ref name sets match is sufficient to establish equality
         if !(Set(lhs.keyNames) == Set(rhs.keyNames)) {
@@ -89,4 +78,32 @@ struct ForeignKey: Hashable, Buildable {
         append += ")"
         return append
     }
+}
+
+extension ForeignKey: Hashable {
+
+    #if swift(>=4.2)
+    func hash(into hasher: inout Hasher) {
+        let baseHash = "foreignKey".hashValue
+        hasher.combine(baseHash)
+        for key in keyNames {
+            hasher.combine(baseHash ^ key.hashValue)
+        }
+        for ref in refNames {
+            hasher.combine(baseHash ^ ref.hashValue)
+        }
+    }
+    #else
+    public var hashValue: Int {
+        var hashvalue = "foreignKey".hashValue
+        for key in keyNames {
+            hashvalue = hashvalue ^ key.hashValue
+        }
+        for ref in refNames {
+            hashvalue = hashvalue ^ ref.hashValue
+        }
+        return hashvalue
+    }
+    #endif
+
 }
