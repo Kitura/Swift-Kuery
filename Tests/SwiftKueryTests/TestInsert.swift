@@ -50,7 +50,7 @@ class TestInsert: XCTestCase {
         var query = "INSERT INTO \"tableInsert\" VALUES ('apple', 10)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
-        i = Insert(into: t, values: ["apple", 10])
+        i = Insert(into: t, optionalValues: ["apple", 10])
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO \"tableInsert\" VALUES ('apple', 10)"
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
@@ -67,7 +67,7 @@ class TestInsert: XCTestCase {
         XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
         
         let optionalString: String? = nil
-        i = Insert(into: t, columns: [t.a, t.b], values: ["banana", optionalString as Any])
+        i = Insert(into: t, columns: [t.a, t.b], values: ["banana", optionalString])
             .suffix("RETURNING *")
         kuery = connection.descriptionOf(query: i)
         query = "INSERT INTO \"tableInsert\" (\"a\", \"b\") VALUES ('banana', NULL) RETURNING *"

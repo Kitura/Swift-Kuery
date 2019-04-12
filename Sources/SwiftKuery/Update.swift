@@ -28,7 +28,7 @@ public struct Update: Query {
     /// A String with a clause to be appended to the end of the query.
     public private (set) var suffix: QuerySuffixProtocol?
 
-    private let valueTuples: [(column: Column, value: Any)]
+    private let valueTuples: [(column: Column, value: Any?)]
 
     /// An array of `AuxiliaryTable` which will be used in a query with a WITH clause.
     public private (set) var with: [AuxiliaryTable]?
@@ -40,7 +40,7 @@ public struct Update: Query {
     /// - Parameter table: The table to update.
     /// - Parameter set: An array of (column, value) tuples to set.
     /// - Parameter conditions: An optional where clause to apply.
-    public init(_ table: Table, set: [(Column, Any)], where conditions: QueryFilterProtocol?=nil) {
+    public init(_ table: Table, set: [(Column, Any?)], where conditions: QueryFilterProtocol?=nil) {
         self.table = table
         self.valueTuples = set
         self.whereClause = conditions

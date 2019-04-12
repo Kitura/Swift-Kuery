@@ -244,8 +244,8 @@ class TestColumnBuilder : ColumnCreator {
         if column.isUnique {
             result += " UNIQUE"
         }
-        if let defaultValue = column.defaultValue {
-            result += " DEFAULT " + Utils.packType(defaultValue)
+        if let defaultValue = getDefaultValue(for: column, queryBuilder: queryBuilder) {
+            result += " DEFAULT " + defaultValue
         }
         if let checkExpression = column.checkExpression {
             result += checkExpression.contains(column.name) ? " CHECK (" + checkExpression.replacingOccurrences(of: column.name, with: "\"\(column.name)\"") + ")" : " CHECK (" + checkExpression + ")"

@@ -26,4 +26,45 @@ public protocol ColumnCreator {
     /// - Parameter column: The column being built
     /// - Returns: A string representation of the column for the implementing database or nil if it cannot be built
     func buildColumn(for column: Column, using queryBuilder: QueryBuilder) -> String?
+
+    func packType(_ item: Any, queryBuilder: QueryBuilder) throws -> String
+
+    func getDefaultValue(for column: Column, queryBuilder: QueryBuilder) throws -> String?
+}
+
+public extension ColumnCreator {
+
+    func getDefaultValue(for column: Column, queryBuilder: QueryBuilder) -> String? {
+        guard let defaultValue = column.defaultValue else {
+            if column.nullDefaultValue {
+                return "NULL"
+            }
+            return nil
+        }
+        do{
+            return try packType(defaultValue, queryBuilder: queryBuilder)
+        } catch {
+            return nil
+        }
+    }
+
+    func packType(_ item: Any, queryBuilder: QueryBuilder) throws -> String {
+        switch item {
+        case let val as String:
+            return "'\(val)'"
+        case let val as Bool:
+            return val ? queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.booleanTrue.rawValue]
+                : queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.booleanFalse.rawValue]
+        case let val as Parameter:
+            return try val.build(queryBuilder: queryBuilder)
+        case let value as Date:
+            if let dateFormatter = queryBuilder.dateFormatter {
+                return dateFormatter.string(from: value)
+            }
+            return "'\(String(describing: value))'"
+        default:
+            return String(describing: item)
+        }
+    }
+
 }

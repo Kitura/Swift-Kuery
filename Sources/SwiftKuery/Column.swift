@@ -32,6 +32,9 @@ In this example, a person `Table` class, containing three instances of the `Colu
  ```
  */
 public class Column: Field, IndexColumn {
+    // Property denoting whether default value is NULL
+    public let nullDefaultValue: Bool
+
     // MARK: Column Parameters
     /// The name of the column.
     public let name: String
@@ -97,7 +100,8 @@ public class Column: Field, IndexColumn {
      - Parameter check: The expression to check for values inserted into the column. Defaults to nil.
      - Parameter collate: The collation rule for the column. Defaults to nil.
      */
-    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, check: String? = nil, collate: String? = nil) {
+    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, nullDefaultValue: Bool = false, check: String? = nil, collate: String? = nil) {
+        self.nullDefaultValue = nullDefaultValue
         self.name = name
         self.type = type
         self.length = length
