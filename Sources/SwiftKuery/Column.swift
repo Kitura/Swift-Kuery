@@ -214,7 +214,7 @@ public class Column: Field, IndexColumn {
     public func `as`(_ newName: String) -> Column {
         let new = Column(name, type, length: length, autoIncrement: autoIncrement,
                          primaryKey: isPrimaryKey, notNull: isNotNullable, unique: isUnique,
-                         defaultValue: defaultValue, check: checkExpression, collate: collate)
+                         defaultValue: defaultValue, nullDefaultValue: nullDefaultValue, check: checkExpression, collate: collate)
         new.alias = newName
         new._table = table
         return new
