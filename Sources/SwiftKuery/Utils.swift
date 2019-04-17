@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016, 2017
+ Copyright IBM Corporation 2016, 2017, 2018, 2019
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -51,8 +51,6 @@ struct Utils {
             return "'\(String(describing: value))'"
         default:
             return String(describing: item)
-            //let val = String(describing: item)
-            //return val == "nil" ? "NULL" : val
         }
     }
         

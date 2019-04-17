@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2018
+ Copyright IBM Corporation 2018, 2019
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -27,8 +27,19 @@ public protocol ColumnCreator {
     /// - Returns: A string representation of the column for the implementing database or nil if it cannot be built
     func buildColumn(for column: Column, using queryBuilder: QueryBuilder) -> String?
 
+    /// Build an appropriate representation of a passed value for the database
+    /// A default implemetation is provided that can be overriden should a
+    /// plugin require non-common behaviour
+    ///
+    /// - Parameter item: The value to convert
+    /// - Returns: A string representing the value that can be passed into the database
     func packType(_ item: Any, queryBuilder: QueryBuilder) throws -> String
 
+    /// Get the dafault value for a column
+    ///
+    /// - Parameter for: The Column to get the default value for
+    /// - Parameter queryBuilder: The plugin specific queryBuilder
+    /// - Returns: A string representing the default value for the column or nil if no default value is set
     func getDefaultValue(for column: Column, queryBuilder: QueryBuilder) throws -> String?
 }
 

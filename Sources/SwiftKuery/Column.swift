@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016, 2017, 2018
+ Copyright IBM Corporation 2016, 2017, 2018, 2019
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ In this example, a person `Table` class, containing three instances of the `Colu
  */
 public class Column: Field, IndexColumn {
     // Property denoting whether default value is NULL
+    // If set to true a `nil` value for the `defaultValue` property will be interpreted as `NULL`
     public let nullDefaultValue: Bool
 
     // MARK: Column Parameters
