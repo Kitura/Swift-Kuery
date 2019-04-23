@@ -52,7 +52,7 @@ public extension ColumnCreator {
             }
             return nil
         }
-        do{
+        do {
             return try packType(defaultValue, queryBuilder: queryBuilder)
         } catch {
             return nil
