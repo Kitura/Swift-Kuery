@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2017
+ Copyright IBM Corporation 2017, 2018, 2019
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -70,6 +70,11 @@ class TestSchema: XCTestCase {
         let tableName = "table5"
         let a = Column("a", Char.self)
         let b = Column("b")
+    }
+
+    class Table6: Table {
+        let tableName = "table6"
+        let a = Column("a", String.self, defaultValue: nil, nullDefaultValue: true)
     }
 
     func testMultipleForeignKeys() {
@@ -214,6 +219,11 @@ class TestSchema: XCTestCase {
         let connectionWithAutoIncrement = createConnection(createAutoIncrement: createAutoIncrement)
         createStmt = createTable(t1, connection: connectionWithAutoIncrement)
         expectedCreateStmt = "CREATE TABLE \"table1\" (\"a\" text PRIMARY KEY DEFAULT 'qiwi' COLLATE \"en_US\", \"b\" integer AUTO_INCREMENT, \"c\" double DEFAULT 4.95 CHECK (\"c\" > 0))"
+        XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
+
+        let nilValueTable = Table6()
+        createStmt = createTable(nilValueTable, connection: connection)
+        expectedCreateStmt = "CREATE TABLE \"table6\" (\"a\" text DEFAULT NULL)"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
     }
     

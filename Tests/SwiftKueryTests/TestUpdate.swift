@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016, 2017
+ Copyright IBM Corporation 2016, 2017, 2018, 2019
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ class TestUpdate: XCTestCase {
         return [
             ("testUpdateAndDelete", testUpdateAndDelete),
             ("testUpdateAndDeleteWith", testUpdateAndDeleteWith),
+            ("testUpdateNilValues", testUpdateNilValues),
         ]
     }
     
@@ -159,5 +160,37 @@ class TestUpdate: XCTestCase {
         } catch {
             XCTFail("Other than syntax error.")
         }
+    }
+
+    func testUpdateNilValues () {
+        let t = MyTable()
+        let connection = createConnection()
+
+        let optionalString: String? = nil
+        let optionalInt: Int? = nil
+        var u = Update(t, set: [(t.a, optionalString as Any), (t.b, optionalInt as Any)])
+            .where(t.a == "banana")
+        var kuery = connection.descriptionOf(query: u)
+        var query = "UPDATE \"tableUpdate\" SET \"a\" = NULL, \"b\" = NULL WHERE \"tableUpdate\".\"a\" = 'banana'"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        u = Update(t, set: [(t.a, optionalString as Any), (t.b, optionalInt as Any)])
+            .where(t.a == "banana")
+            .suffix("RETURNING *")
+        kuery = connection.descriptionOf(query: u)
+        query = "UPDATE \"tableUpdate\" SET \"a\" = NULL, \"b\" = NULL WHERE \"tableUpdate\".\"a\" = 'banana' RETURNING *"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        u = Update(t, set: [(t.a, optionalString as Any), (t.b, optionalInt as Any)])
+            .suffix("RETURNING b,a")
+        kuery = connection.descriptionOf(query: u)
+        query = "UPDATE \"tableUpdate\" SET \"a\" = NULL, \"b\" = NULL RETURNING b,a"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        u = Update(t, set: [(t.a, optionalString as Any), (t.b, optionalInt as Any)])
+            .suffix("RETURNING tableUpdate.b")
+        kuery = connection.descriptionOf(query: u)
+        query = "UPDATE \"tableUpdate\" SET \"a\" = NULL, \"b\" = NULL RETURNING tableUpdate.b"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
 }

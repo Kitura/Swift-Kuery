@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2016
+ * Copyright IBM Corporation 2016, 2017, 2018, 2019
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -244,8 +244,8 @@ class TestColumnBuilder : ColumnCreator {
         if column.isUnique {
             result += " UNIQUE"
         }
-        if let defaultValue = column.defaultValue {
-            result += " DEFAULT " + Utils.packType(defaultValue)
+        if let defaultValue = getDefaultValue(for: column, queryBuilder: queryBuilder) {
+            result += " DEFAULT " + defaultValue
         }
         if let checkExpression = column.checkExpression {
             result += checkExpression.contains(column.name) ? " CHECK (" + checkExpression.replacingOccurrences(of: column.name, with: "\"\(column.name)\"") + ")" : " CHECK (" + checkExpression + ")"

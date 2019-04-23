@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016, 2017
+ Copyright IBM Corporation 2016, 2017, 2018, 2019
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ class TestInsert: XCTestCase {
         return [
             ("testInsert", testInsert),
             ("testInsertWith", testInsertWith),
+            ("testInsertNilValue", testInsertNilValue),
         ]
     }
         
@@ -127,5 +128,38 @@ class TestInsert: XCTestCase {
         } catch {
             XCTFail("Other than syntax error.")
         }
+    }
+
+    func testInsertNilValue() {
+        let t = MyTable()
+        let connection = createConnection()
+
+        let optionalString: String? = nil
+        let optionalInt: Int? = nil
+        var i = Insert(into: t, values: optionalString as Any, optionalInt as Any)
+        var kuery = connection.descriptionOf(query: i)
+        var query = "INSERT INTO \"tableInsert\" VALUES (NULL, NULL)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        i = Insert(into: t, values: [optionalString as Any, optionalInt as Any])
+        kuery = connection.descriptionOf(query: i)
+        query = "INSERT INTO \"tableInsert\" VALUES (NULL, NULL)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        i = Insert(into: t, valueTuples: (t.a, optionalString as Any), (t.b, optionalInt as Any))
+        kuery = connection.descriptionOf(query: i)
+        query = "INSERT INTO \"tableInsert\" (\"a\", \"b\") VALUES (NULL, NULL)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        i = Insert(into: t, columns: [t.a, t.b], values: [optionalString as Any, optionalInt as Any])
+            .suffix("RETURNING *")
+        kuery = connection.descriptionOf(query: i)
+        query = "INSERT INTO \"tableInsert\" (\"a\", \"b\") VALUES (NULL, NULL) RETURNING *"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
+
+        i = Insert(into: t, rows: [[optionalString as Any, optionalInt as Any], [optionalString as Any, optionalInt as Any], [optionalString as Any, optionalInt as Any]])
+        kuery = connection.descriptionOf(query: i)
+        query = "INSERT INTO \"tableInsert\" VALUES (NULL, NULL), (NULL, NULL), (NULL, NULL)"
+        XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
     }
 }
