@@ -74,8 +74,7 @@ public extension ColumnCreator {
             }
             return "'\(String(describing: value))'"
         default:
-            let val = String(describing: item)
-            return val == "nil" ? "NULL" : val
+            return String(describing: item)
         }
     }
 }
