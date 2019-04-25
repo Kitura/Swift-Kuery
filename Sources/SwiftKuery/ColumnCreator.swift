@@ -28,14 +28,14 @@ public protocol ColumnCreator {
     func buildColumn(for column: Column, using queryBuilder: QueryBuilder) -> String?
 
     /// Build an appropriate representation of a passed value for the database
-    /// A default implemetation is provided that can be overriden should a
+    /// A default implementation is provided that can be overriden should a
     /// plugin require non-common behaviour
     ///
     /// - Parameter item: The value to convert
     /// - Returns: A string representing the value that can be passed into the database
     func packType(_ item: Any, queryBuilder: QueryBuilder) throws -> String
 
-    /// Get the dafault value for a column
+    /// Get the default value for a column
     ///
     /// - Parameter for: The Column to get the default value for
     /// - Parameter queryBuilder: The plugin specific queryBuilder
