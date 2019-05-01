@@ -1,5 +1,5 @@
 /**
- Copyright IBM Corporation 2016, 2017, 2018
+ Copyright IBM Corporation 2016, 2017, 2018, 2019
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -59,6 +59,10 @@ public class Column: Field, IndexColumn {
     
     /// The default value of the column.
     public let defaultValue: Any?
+
+    /// Property denoting whether default value is NULL
+    /// If set to true a `nil` value for the `defaultValue` property will be interpreted as `NULL`
+    public let nullDefaultValue: Bool
     
     /// An indication whether the column autoincrements.
     public let autoIncrement: Bool
@@ -94,10 +98,11 @@ public class Column: Field, IndexColumn {
      - Parameter notNull: An indication whether the column is not nullable. Defaults to false.
      - Parameter unique: An indication whether the column values have to be unique. Defaults to false.
      - Parameter defaultValue: The default value of the column. Defaults to nil.
+     - Parameter nullDefaultValue: Property denoting whether default value is NULL. Defaults to false.
      - Parameter check: The expression to check for values inserted into the column. Defaults to nil.
      - Parameter collate: The collation rule for the column. Defaults to nil.
      */
-    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, check: String? = nil, collate: String? = nil) {
+    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, nullDefaultValue: Bool = false, check: String? = nil, collate: String? = nil) {
         self.name = name
         self.type = type
         self.length = length
@@ -106,6 +111,7 @@ public class Column: Field, IndexColumn {
         self.isNotNullable = notNull
         self.isUnique = unique
         self.defaultValue = defaultValue
+        self.nullDefaultValue = nullDefaultValue
         self.checkExpression = check
         self.collate = collate
     }
@@ -210,7 +216,7 @@ public class Column: Field, IndexColumn {
     public func `as`(_ newName: String) -> Column {
         let new = Column(name, type, length: length, autoIncrement: autoIncrement,
                          primaryKey: isPrimaryKey, notNull: isNotNullable, unique: isUnique,
-                         defaultValue: defaultValue, check: checkExpression, collate: collate)
+                         defaultValue: defaultValue, nullDefaultValue: nullDefaultValue, check: checkExpression, collate: collate)
         new.alias = newName
         new._table = table
         return new
