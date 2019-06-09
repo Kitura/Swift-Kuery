@@ -125,6 +125,12 @@ public class QueryBuilder {
 
     /// DateFormatter to convert between date and string instances.
     public let dateFormatter: DateFormatter?
+    
+    /// An indication whether unsigned integerers are supported
+    public let supportsUnsignedIntegers: Bool
+    
+    /// An indication whether unsigned tinyint (1 byte integers) are supported
+    public let supportsTinyInt: Bool
 
     // MARK: Initializer
     /**
@@ -146,7 +152,8 @@ public class QueryBuilder {
     */
     public init(addNumbersToParameters: Bool = true, firstParameterIndex: Int = 1, anyOnSubquerySupported: Bool = true,
                 withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, columnBuilder: ColumnCreator,
-                dropIndexRequiresOnTableName: Bool = false, dateFormatter: DateFormatter? = nil) {
+                dropIndexRequiresOnTableName: Bool = false, dateFormatter: DateFormatter? = nil,
+                supportsUnsignedIntegers: Bool = false,  supportsTinyInt: Bool = false) {
         substitutions = Array(repeating: "", count: QuerySubstitutionNames.namesCount.rawValue)
         substitutions[QuerySubstitutionNames.ucase.rawValue] = "UCASE"
         substitutions[QuerySubstitutionNames.lcase.rawValue] = "LCASE"
@@ -173,6 +180,8 @@ public class QueryBuilder {
         self.columnBuilder = columnBuilder
         self.dropIndexRequiresOnTableName = dropIndexRequiresOnTableName
         self.dateFormatter = dateFormatter
+        self.supportsUnsignedIntegers = supportsUnsignedIntegers
+        self.supportsTinyInt = supportsTinyInt
     }
     
     // MARK: Update substitutions

@@ -82,6 +82,19 @@ public struct Timestamp: SQLDataType {
     }
 }
 
+extension Int8: SQLDataType {
+    /// Return database specific representation of the int16 type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        if queryBuilder.supportsTinyInt {
+            return "tinyint"
+        }
+        return Int16.create(queryBuilder: queryBuilder)
+    }
+}
+
 extension Int16: SQLDataType {
     /// Return database specific representation of the int16 type using `QueryBuilder`.
     ///
@@ -109,6 +122,58 @@ extension Int64: SQLDataType {
     /// - Returns: A String representation of the type.
     public static func create(queryBuilder: QueryBuilder) -> String {
         return "bigint"
+    }
+}
+
+extension UInt8: SQLDataType {
+    /// Return database specific representation of the int16 type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        if queryBuilder.supportsUnsignedIntegers {
+            return Int8.create(queryBuilder: queryBuilder) + " unsigned"
+        }
+        return Int8.create(queryBuilder: queryBuilder)
+    }
+}
+
+extension UInt16: SQLDataType {
+    /// Return database specific representation of the int16 type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        if queryBuilder.supportsUnsignedIntegers {
+            return Int16.create(queryBuilder: queryBuilder) + " unsigned"
+        }
+        return Int16.create(queryBuilder: queryBuilder)
+    }
+}
+
+extension UInt32: SQLDataType {
+    /// Return database specific representation of the int32 type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        if queryBuilder.supportsUnsignedIntegers {
+            return Int32.create(queryBuilder: queryBuilder) + " unsigned"
+        }
+        return Int32.create(queryBuilder: queryBuilder)
+    }
+}
+
+extension UInt64: SQLDataType {
+    /// Return database specific representation of the int32 type using `QueryBuilder`.
+    ///
+    /// - Parameter queryBuilder: The QueryBuilder to use.
+    /// - Returns: A String representation of the type.
+    public static func create(queryBuilder: QueryBuilder) -> String {
+        if queryBuilder.supportsUnsignedIntegers {
+            return Int64.create(queryBuilder: queryBuilder) + " unsigned"
+        }
+        return Int64.create(queryBuilder: queryBuilder)
     }
 }
 

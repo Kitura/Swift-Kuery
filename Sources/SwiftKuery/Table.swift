@@ -411,4 +411,8 @@ open class Table: Buildable {
         }
         return true
     }
+    
+    public func column(name: String) -> Column? {
+        return columns.first(where: {$0.name == name})
+    }
 }
