@@ -253,6 +253,9 @@ class TestColumnBuilder : ColumnCreator {
         if let collate = column.collate {
             result += " COLLATE \"" + collate + "\""
         }
+        if let _ = column.lastUpdated {
+            result += " ON UPDATE NOW()"
+        }
         return result
     }
 }

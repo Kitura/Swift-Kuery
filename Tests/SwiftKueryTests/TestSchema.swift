@@ -23,6 +23,7 @@ class TestSchema: XCTestCase {
         return [
             ("testMultipleForeignKeys", testMultipleForeignKeys),
             ("testCreateTable", testCreateTable),
+            ("testTimestampColumns", testTimestampColumns),
         ]
     }
     
@@ -75,6 +76,34 @@ class TestSchema: XCTestCase {
     class Table6: Table {
         let tableName = "table6"
         let a = Column("a", String.self, defaultValue: nil, nullDefaultValue: true)
+    }
+
+    // Table7 and Table8 are used for testing the support for `last updated` and `created at` columns
+    class Table7: Table {
+        let tableName = "table7"
+        let a = Column("a", Int64.self, primaryKey: true)
+        let b = Column("lastupdated", Timestamp.self, lastUpdated: true)
+        let c = Column("createdat", Timestamp.self, createdAt: true)
+    }
+
+    class Table8: Table {
+        let tableName = "table8"
+        let a = Column("a", Int64.self, primaryKey: true)
+    }
+
+    func testTimestampColumns() {
+        let connection = createConnection()
+
+        var t7 = Table7()
+        var t8 = Table8(lastUpdated: true, createdAt: true)
+
+        var createStmt = createTable(t7, connection: connection)
+        var expectedCreateStatement = "CREATE TABLE \"table7\" (\"a\" integer PRIMARY KEY, \"b\" timestamp DEFAULT NOW() ON UPDATE NOW(), \"c\" timestamp DEFAULT NOW()"
+        XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
+
+        createStmt = createTable(t8, connection: connection)
+        expectedCreateStatement = "CREATE TABLE \"table8\" (\"a\" integer PRIMARY KEY, \"b\" timestamp DEFAULT NOW() ON UPDATE NOW(), \"c\" timestamp DEFAULT NOW()"
+        XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
     }
 
     func testMultipleForeignKeys() {
