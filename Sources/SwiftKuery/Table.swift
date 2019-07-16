@@ -59,7 +59,7 @@ open class Table: Buildable {
     // MARK: Initializer
     /// Initialize an instance of Table.
     /// - Parameter name: The name of the table (Optional).
-    public required init(name: String? = nil) {
+    public required init(name: String? = nil, lastUpdated: Bool = false, createdAt: Bool = false) {
         columns = [Column]()
         let mirror = Mirror(reflecting: self)
         for child in mirror.children {

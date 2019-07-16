@@ -94,15 +94,15 @@ class TestSchema: XCTestCase {
     func testTimestampColumns() {
         let connection = createConnection()
 
-        var t7 = Table7()
-        var t8 = Table8(lastUpdated: true, createdAt: true)
+        let t7 = Table7()
+        let t8 = Table8(lastUpdated: true, createdAt: true)
 
         var createStmt = createTable(t7, connection: connection)
-        var expectedCreateStatement = "CREATE TABLE \"table7\" (\"a\" integer PRIMARY KEY, \"b\" timestamp DEFAULT NOW() ON UPDATE NOW(), \"c\" timestamp DEFAULT NOW()"
+        var expectedCreateStmt = "CREATE TABLE \"table7\" (\"a\" integer PRIMARY KEY, \"b\" timestamp DEFAULT NOW() ON UPDATE NOW(), \"c\" timestamp DEFAULT NOW()"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
 
         createStmt = createTable(t8, connection: connection)
-        expectedCreateStatement = "CREATE TABLE \"table8\" (\"a\" integer PRIMARY KEY, \"b\" timestamp DEFAULT NOW() ON UPDATE NOW(), \"c\" timestamp DEFAULT NOW()"
+        expectedCreateStmt = "CREATE TABLE \"table8\" (\"a\" integer PRIMARY KEY, \"b\" timestamp DEFAULT NOW() ON UPDATE NOW(), \"c\" timestamp DEFAULT NOW()"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
     }
 

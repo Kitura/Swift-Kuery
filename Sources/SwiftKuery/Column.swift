@@ -72,6 +72,12 @@ public class Column: Field, IndexColumn {
     
     /// The collation rule for the column.
     public let collate: String?
+
+    /// Indicates whether this is a last updated timestamp column
+    public let lastUpdated: Bool?
+
+    /// Indicates whether this is a created at timestamp column
+    public let createdAt: Bool?
     
     /// The table to which the column belongs.
     public var table: Table {
@@ -101,8 +107,10 @@ public class Column: Field, IndexColumn {
      - Parameter nullDefaultValue: Property denoting whether default value is NULL. Defaults to false.
      - Parameter check: The expression to check for values inserted into the column. Defaults to nil.
      - Parameter collate: The collation rule for the column. Defaults to nil.
+     - Parameter lastUpdated: An indication whether the column is a timestamp for last update
+     - Parameter createdAt: An indication whether the column is a timestamp for created at
      */
-    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, nullDefaultValue: Bool = false, check: String? = nil, collate: String? = nil) {
+    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, nullDefaultValue: Bool = false, check: String? = nil, collate: String? = nil, lastUpdated: Bool? = nil, createdAt: Bool? = nil) {
         self.name = name
         self.type = type
         self.length = length
@@ -114,6 +122,8 @@ public class Column: Field, IndexColumn {
         self.nullDefaultValue = nullDefaultValue
         self.checkExpression = check
         self.collate = collate
+        self.lastUpdated = lastUpdated
+        self.createdAt = createdAt
     }
     
     //MARK: Column Decription Functions
