@@ -74,6 +74,16 @@ open class Table: Buildable {
             }
         }
 
+        if lastUpdated {
+            let lastUpdatedColumn = Column("lastUpdated", Timestamp.self, lastUpdated: true)
+            columns.append(lastUpdatedColumn)
+        }
+
+        if createdAt {
+            let createdAtColumn = Column("createdAt", Timestamp.self, createdAt: true)
+            columns.append(createdAtColumn)
+        }
+
         if let name = name {
             _name = name
         }

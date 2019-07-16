@@ -82,8 +82,8 @@ class TestSchema: XCTestCase {
     class Table7: Table {
         let tableName = "table7"
         let a = Column("a", Int64.self, primaryKey: true)
-        let b = Column("lastupdated", Timestamp.self, lastUpdated: true)
-        let c = Column("createdat", Timestamp.self, createdAt: true)
+        let b = Column("b", Timestamp.self, lastUpdated: true)
+        let c = Column("c", Timestamp.self, createdAt: true)
     }
 
     class Table8: Table {
@@ -98,11 +98,11 @@ class TestSchema: XCTestCase {
         let t8 = Table8(lastUpdated: true, createdAt: true)
 
         var createStmt = createTable(t7, connection: connection)
-        var expectedCreateStmt = "CREATE TABLE \"table7\" (\"a\" integer PRIMARY KEY, \"b\" timestamp DEFAULT NOW() ON UPDATE NOW(), \"c\" timestamp DEFAULT NOW()"
+        var expectedCreateStmt = "CREATE TABLE \"table7\" (\"a\" bigint PRIMARY KEY, \"b\" timestamp DEFAULT NOW() ON UPDATE NOW(), \"c\" timestamp DEFAULT NOW())"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
 
         createStmt = createTable(t8, connection: connection)
-        expectedCreateStmt = "CREATE TABLE \"table8\" (\"a\" integer PRIMARY KEY, \"b\" timestamp DEFAULT NOW() ON UPDATE NOW(), \"c\" timestamp DEFAULT NOW()"
+        expectedCreateStmt = "CREATE TABLE \"table8\" (\"a\" bigint PRIMARY KEY, \"lastUpdated\" timestamp DEFAULT NOW() ON UPDATE NOW(), \"createdAt\" timestamp DEFAULT NOW())"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
     }
 

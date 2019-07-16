@@ -246,6 +246,8 @@ class TestColumnBuilder : ColumnCreator {
         }
         if let defaultValue = getDefaultValue(for: column, queryBuilder: queryBuilder) {
             result += " DEFAULT " + defaultValue
+        } else if column.lastUpdated || column.createdAt {
+            result += " DEFAULT NOW()"
         }
         if let checkExpression = column.checkExpression {
             result += checkExpression.contains(column.name) ? " CHECK (" + checkExpression.replacingOccurrences(of: column.name, with: "\"\(column.name)\"") + ")" : " CHECK (" + checkExpression + ")"
@@ -253,7 +255,7 @@ class TestColumnBuilder : ColumnCreator {
         if let collate = column.collate {
             result += " COLLATE \"" + collate + "\""
         }
-        if let _ = column.lastUpdated {
+        if column.lastUpdated {
             result += " ON UPDATE NOW()"
         }
         return result

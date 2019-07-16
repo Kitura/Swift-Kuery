@@ -74,10 +74,10 @@ public class Column: Field, IndexColumn {
     public let collate: String?
 
     /// Indicates whether this is a last updated timestamp column
-    public let lastUpdated: Bool?
+    public let lastUpdated: Bool
 
     /// Indicates whether this is a created at timestamp column
-    public let createdAt: Bool?
+    public let createdAt: Bool
     
     /// The table to which the column belongs.
     public var table: Table {
@@ -110,7 +110,7 @@ public class Column: Field, IndexColumn {
      - Parameter lastUpdated: An indication whether the column is a timestamp for last update
      - Parameter createdAt: An indication whether the column is a timestamp for created at
      */
-    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, nullDefaultValue: Bool = false, check: String? = nil, collate: String? = nil, lastUpdated: Bool? = nil, createdAt: Bool? = nil) {
+    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, nullDefaultValue: Bool = false, check: String? = nil, collate: String? = nil, lastUpdated: Bool = false, createdAt: Bool = false) {
         self.name = name
         self.type = type
         self.length = length
