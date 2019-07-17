@@ -290,6 +290,8 @@ open class Table: Buildable {
                 // Call addLastUpdatedTrigger if a lastUpdated column is present in the table.
                 if !((self.columns.filter { $0.lastUpdated == true }).isEmpty) {
                     return connection.addLastUpdatedTrigger(for: self, onCompletion: onCompletion)
+                } else {
+                    return onCompletion(result)
                 }
             }
         }
