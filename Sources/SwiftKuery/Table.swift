@@ -102,12 +102,12 @@ open class Table: Buildable {
 
     // Function to add lastUpdated and createdAt columns if they are not already defined.
     private func addTimestampColumns(_ lastUpdated: Bool, _ createdAt: Bool) {
-        if lastUpdated && (columns.filter { $0.lastUpdated == true }).isEmpty {
+        if lastUpdated {
             let lastUpdatedColumn = Column("lastUpdated", Timestamp.self, lastUpdated: true)
             columns.append(lastUpdatedColumn)
         }
 
-        if createdAt && (columns.filter { $0.createdAt == true }).isEmpty {
+        if createdAt  {
             let createdAtColumn = Column("createdAt", Timestamp.self, createdAt: true)
             columns.append(createdAtColumn)
         }
@@ -282,8 +282,16 @@ open class Table: Buildable {
     public func create(connection: Connection, onCompletion: @escaping ((QueryResult) -> ())) {
         do {
             let query = try description(connection: connection)
-            connection.execute(query, onCompletion: onCompletion)
-            // We need to call a plugin implementated function that will create a trigger when the table has a lastupdated column. The protocol needs a default implementation that logs a warning and simply returns success. Plugins that use triggers will override the default with code to create a trigger. Plugins requiring triggers will also need to add an initialisation of the trigger function somewhere.
+            connection.execute(query) { result in
+                guard result.success else {
+                    // Pass error to completion handler.
+                    return onCompletion(result)
+                }
+                // Call addLastUpdatedTrigger if a lastUpdated column is present in the table.
+                if !((self.columns.filter { $0.lastUpdated == true }).isEmpty) {
+                    return connection.addLastUpdatedTrigger(for: self, onCompletion: onCompletion)
+                }
+            }
         }
         catch {
             onCompletion(.error(QueryError.syntaxError("\(error)")))

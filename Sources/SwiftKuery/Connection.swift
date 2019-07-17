@@ -155,6 +155,13 @@ public protocol Connection: AnyObject {
     /// - Parameter savepoint: The name of the savepoint to release.
     /// - Parameter onCompletion: The function to be called when the execution of release savepoint command has completed.
     func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ()))
+
+    /// Add a trigger for updating the lastUpdated column on a table.
+    ///
+    /// A plugin can simply return `QueryResult.success` if it does not require a trigger. In this instance the syntax for the update should be applied in the plugins implemnentation of `ColumnBuilder`.
+    /// - Parameter for: The table the tirgger should be added to.
+    /// - Parameter onCompletion: The function to be called when the addition of the trigger has been completed.
+    func addLastUpdatedTrigger(for table: Table, onCompletion: @escaping ((QueryResult) -> ()))
 }
 
 public extension Connection {

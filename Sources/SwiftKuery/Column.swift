@@ -74,10 +74,10 @@ public class Column: Field, IndexColumn {
     public let collate: String?
 
     /// Indicates whether this is a last updated timestamp column
-    public let lastUpdated: Bool
+    internal let lastUpdated: Bool
 
     /// Indicates whether this is a created at timestamp column
-    public let createdAt: Bool
+    internal let createdAt: Bool
     
     /// The table to which the column belongs.
     public var table: Table {
@@ -110,7 +110,23 @@ public class Column: Field, IndexColumn {
      - Parameter lastUpdated: An indication whether the column is a timestamp for last update
      - Parameter createdAt: An indication whether the column is a timestamp for created at
      */
-    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, nullDefaultValue: Bool = false, check: String? = nil, collate: String? = nil, lastUpdated: Bool = false, createdAt: Bool = false) {
+    public init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, nullDefaultValue: Bool = false, check: String? = nil, collate: String? = nil) {
+        self.name = name
+        self.type = type
+        self.length = length
+        self.autoIncrement = autoIncrement
+        self.isPrimaryKey = primaryKey
+        self.isNotNullable = notNull
+        self.isUnique = unique
+        self.defaultValue = defaultValue
+        self.nullDefaultValue = nullDefaultValue
+        self.checkExpression = check
+        self.collate = collate
+        self.lastUpdated = false
+        self.createdAt = false
+    }
+
+    internal init(_ name: String, _ type: SQLDataType.Type? = nil, length: Int? = nil, autoIncrement: Bool = false, primaryKey: Bool = false, notNull: Bool = false, unique: Bool = false, defaultValue: Any? = nil, nullDefaultValue: Bool = false, check: String? = nil, collate: String? = nil, lastUpdated: Bool = false, createdAt: Bool = false) {
         self.name = name
         self.type = type
         self.length = length

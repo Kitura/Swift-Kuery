@@ -392,6 +392,15 @@ public class ConnectionPoolConnection: Connection {
             self.runCompletionHandlerRetainingConnection(result: result, onCompletion: onCompletion)
         }
     }
+
+    public func addLastUpdatedTrigger(for table: Table, onCompletion: @escaping ((QueryResult) -> ())) {
+        guard let connection = self.connection else {
+            return runCompletionHandler(.error(QueryError.connection("Connection is disconnected")), onCompletion: onCompletion)
+        }
+        connection.addLastUpdatedTrigger(for: table) { result in
+            self.runCompletionHandlerRetainingConnection(result: result, onCompletion: onCompletion)
+        }
+    }
 }
 
 public class DummyColumBuilder : ColumnCreator {

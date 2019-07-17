@@ -78,31 +78,18 @@ class TestSchema: XCTestCase {
         let a = Column("a", String.self, defaultValue: nil, nullDefaultValue: true)
     }
 
-    // Table7 and Table8 are used for testing the support for `last updated` and `created at` columns
     class Table7: Table {
         let tableName = "table7"
-        let a = Column("a", Int64.self, primaryKey: true)
-        let b = Column("b", Timestamp.self, lastUpdated: true)
-        let c = Column("c", Timestamp.self, createdAt: true)
-    }
-
-    class Table8: Table {
-        let tableName = "table8"
         let a = Column("a", Int64.self, primaryKey: true)
     }
 
     func testTimestampColumns() {
         let connection = createConnection()
 
-        let t7 = Table7()
-        let t8 = Table8(lastUpdated: true, createdAt: true)
+        let t7 = Table7(lastUpdated: true, createdAt: true)
 
-        var createStmt = createTable(t7, connection: connection)
-        var expectedCreateStmt = "CREATE TABLE \"table7\" (\"a\" bigint PRIMARY KEY, \"b\" timestamp DEFAULT NOW() ON UPDATE NOW(), \"c\" timestamp DEFAULT NOW())"
-        XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
-
-        createStmt = createTable(t8, connection: connection)
-        expectedCreateStmt = "CREATE TABLE \"table8\" (\"a\" bigint PRIMARY KEY, \"lastUpdated\" timestamp DEFAULT NOW() ON UPDATE NOW(), \"createdAt\" timestamp DEFAULT NOW())"
+        let createStmt = createTable(t7, connection: connection)
+        let expectedCreateStmt = "CREATE TABLE \"table7\" (\"a\" bigint PRIMARY KEY, \"lastUpdated\" timestamp DEFAULT NOW() ON UPDATE NOW(), \"createdAt\" timestamp DEFAULT NOW())"
         XCTAssertEqual(createStmt, expectedCreateStmt, "\nError in table creation: \n\(createStmt) \ninstead of \n\(expectedCreateStmt)")
     }
 

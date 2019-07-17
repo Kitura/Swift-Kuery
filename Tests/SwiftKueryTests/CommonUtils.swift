@@ -135,6 +135,8 @@ class TestConnection: Connection {
     func execute(preparedStatement: PreparedStatement, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {}
 
     func release(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}
+
+    func addLastUpdatedTrigger(for table: Table, onCompletion: @escaping ((QueryResult) -> ())) { }
 }
 
 class TestResultFetcher: ResultFetcher {
