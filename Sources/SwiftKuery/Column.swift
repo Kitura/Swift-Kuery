@@ -77,7 +77,7 @@ public class Column: Field, IndexColumn {
     public private (set) var lastUpdated: Bool
 
     /// Indicates whether this is a created at timestamp column
-    internal let createdAt: Bool
+    public private (set) var createdAt: Bool
     
     /// The table to which the column belongs.
     public var table: Table {
