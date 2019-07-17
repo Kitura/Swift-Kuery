@@ -74,7 +74,7 @@ public class Column: Field, IndexColumn {
     public let collate: String?
 
     /// Indicates whether this is a last updated timestamp column
-    internal let lastUpdated: Bool
+    public private (set) var lastUpdated: Bool
 
     /// Indicates whether this is a created at timestamp column
     internal let createdAt: Bool
