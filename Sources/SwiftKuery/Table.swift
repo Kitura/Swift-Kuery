@@ -74,15 +74,7 @@ open class Table: Buildable {
             }
         }
 
-        if lastUpdated {
-            let lastUpdatedColumn = Column("lastUpdated", Timestamp.self, lastUpdated: true)
-            columns.append(lastUpdatedColumn)
-        }
-
-        if createdAt {
-            let createdAtColumn = Column("createdAt", Timestamp.self, createdAt: true)
-            columns.append(createdAtColumn)
-        }
+        addTimestampColumns(lastUpdated, createdAt)
 
         if let name = name {
             _name = name
@@ -95,7 +87,7 @@ open class Table: Buildable {
     /// and an array of Columns.
     /// - Parameter tableName: The name of the table.
     /// - Parameter columns: The array of columns inside the table.
-    public required init(tableName: String, columns: [Column]) {
+    public required init(tableName: String, columns: [Column], lastUpdated: Bool = false, createdAt: Bool = false) {
         self._name = tableName
         self.columns = columns
         for column in columns {
@@ -104,7 +96,21 @@ open class Table: Buildable {
                 columnsWithPrimaryKeyProperty += 1
             }
         }
+        addTimestampColumns(lastUpdated, createdAt)
         verifyTableProperties()
+    }
+
+    // Function to add lastUpdated and createdAt columns if they are not already defined.
+    private func addTimestampColumns(_ lastUpdated: Bool, _ createdAt: Bool) {
+        if lastUpdated && (columns.filter { $0.lastUpdated == true }).isEmpty {
+            let lastUpdatedColumn = Column("lastUpdated", Timestamp.self, lastUpdated: true)
+            columns.append(lastUpdatedColumn)
+        }
+
+        if createdAt && (columns.filter { $0.createdAt == true }).isEmpty {
+            let createdAtColumn = Column("createdAt", Timestamp.self, createdAt: true)
+            columns.append(createdAtColumn)
+        }
     }
 
     /// Verifies that the properties have been correctly set
@@ -277,6 +283,7 @@ open class Table: Buildable {
         do {
             let query = try description(connection: connection)
             connection.execute(query, onCompletion: onCompletion)
+            // We need to call a plugin implementated function that will create a trigger when the table has a lastupdated column. The protocol needs a default implementation that logs a warning and simply returns success. Plugins that use triggers will override the default with code to create a trigger. Plugins requiring triggers will also need to add an initialisation of the trigger function somewhere.
         }
         catch {
             onCompletion(.error(QueryError.syntaxError("\(error)")))
