@@ -226,6 +226,6 @@ public func mid(_ field: AggregateColumnExpression, start: Int, length: Int) -> 
 ///
 /// - Parameter field: The `AggregateColumnExpression` to apply the function on.
 /// - Returns: An instance of `AggregateColumnExpression`.
-public func group_concat(_ field: AggregateColumnExpression) -> AggregateColumnExpression {
+public func group_concat(_ field: Field) -> AggregateColumnExpression {
     return AggregateColumnExpression(.group_concat(field: field))
 }
