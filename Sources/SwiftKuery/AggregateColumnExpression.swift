@@ -70,6 +70,8 @@ public struct AggregateColumnExpression: Field {
         case mid(field: Field, start: Int, length: Int)
         /// The SQL LEN function.
         case len(field: Field)
+        /// The SQL GROUP_CONCAT function.
+        case group_concat(field: Field)
         
         /// Build the query component using `QueryBuilder`.
         ///
@@ -104,6 +106,8 @@ public struct AggregateColumnExpression: Field {
                 return try "MID(" + field.build(queryBuilder: queryBuilder) + ", \(start), \(length))"
             case .len(let field):
                 return try "LEN(" + field.build(queryBuilder: queryBuilder) + ")"
+            case .group_concat(let field):
+                return try "GROUP_CONCAT(" + field.build(queryBuilder: queryBuilder) + ")"
             }
         }
     }
@@ -218,4 +222,10 @@ public func mid(_ field: AggregateColumnExpression, start: Int, length: Int) -> 
     return AggregateColumnExpression(.mid(field: field, start: start, length: length))
 }
 
-
+/// Create a `AggregateColumnExpression` using the GROUP_CONCAT function.
+///
+/// - Parameter field: The `AggregateColumnExpression` to apply the function on.
+/// - Returns: An instance of `AggregateColumnExpression`.
+public func group_concat(_ field: AggregateColumnExpression) -> AggregateColumnExpression {
+    return AggregateColumnExpression(.group_concat(field: field))
+}
