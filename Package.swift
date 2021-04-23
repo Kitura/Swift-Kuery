@@ -2,7 +2,7 @@
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 /**
- * Copyright IBM Corporation 2016-2019
+ * Copyright IBM Corporation and the Kitura project authors 2016-2020
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/IBM-Swift/LoggerAPI.git", from: "1.7.0"),
+        .package(url: "https://github.com/Kitura/LoggerAPI.git", from: "1.9.200"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target defines a module or a test suite.
