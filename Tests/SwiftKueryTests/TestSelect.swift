@@ -218,11 +218,6 @@ class TestSelect: XCTestCase {
         let t = MyTable()
         let connection = createConnection()
         
-        // var s = Select(from: t)
-        // var kuery = connection.descriptionOf(query: s)
-        // var query = "SELECT * FROM \"tableSelect\""
-        // XCTAssertEqual(kuery, query, "\nError in query construction: \n\(kuery) \ninstead of \n\(query)")
-        
         var s = Select.count(from: t)
         var kuery = connection.descriptionOf(query: s)
         var query = "SELECT COUNT(id) FROM \"tableSelect\""
